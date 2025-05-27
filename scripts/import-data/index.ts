@@ -29,7 +29,7 @@ async function writeEventMarkdown(
   relatedPhotos: Photo[],
 ): Promise<{ markdownUpdated: boolean; imagesDownloaded: number; imagesUnchanged: number }> {
   const slug = slugify(`${event.id}-${event.title}`, { lower: true, strict: true });
-  const eventDir = path.join("src", "events", slug);
+  const eventDir = path.join("src", "content", "events", slug);
   await fs.mkdir(eventDir, { recursive: true });
 
   const mdPath = path.join(eventDir, "event.md");
@@ -158,7 +158,7 @@ async function main() {
 
       if (result.markdownUpdated) {
         const slug = slugify(`${event.id}-${event.title}`, { lower: true, strict: true });
-        const mdPath = path.join("src", "events", slug, "event.md");
+        const mdPath = path.join("src", "content", "events", slug, "event.md");
         if (existsSync(mdPath)) {
           stats.markdownUpdated++;
         } else {
