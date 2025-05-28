@@ -3,6 +3,7 @@ import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
 import EventDetails from "./EventDetails.astro";
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 import { getEvents } from "../data";
 import Link from "./Link.astro";
 import EventGallery from "./EventGallery.astro";
@@ -19,26 +20,77 @@ const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : 
 <PageLayout title={`${event.title} - Events`}>
   <Section>
     <div class="flex justify-between items-center mb-8">
-      <div class="flex gap-4">
-        {
-          prevEvent && (
-            <Link href={`/events/${prevEvent.id}`} class="btn btn-soft gap-2">
-              <Icon name="lucide:chevron-left" size={20} />
-              Next Event
-            </Link>
-          )
-        }
-      </div>
-      <div class="flex gap-4">
-        {
-          nextEvent && (
-            <Link href={`/events/${nextEvent.id}`} class="btn btn-soft gap-2">
-              Previous Event
-              <Icon name="lucide:chevron-right" size={20} />
-            </Link>
-          )
-        }
-      </div>
+      <!-- Previous Event (on the left) -->
+      {
+        prevEvent && (
+          <Link
+            href={`/events/${prevEvent.id}`}
+            class="btn btn-soft flex items-center gap-3 px-3 py-2"
+          >
+            <!-- Arrow -->
+            <Icon name="lucide:chevron-left" size={20} />
+
+            <!-- Thumbnail -->
+            <figure class="w-10 h-10 flex-shrink-0 overflow-hidden rounded bg-base-300">
+              <Image
+                src={prevEvent.cover}
+                alt={prevEvent.title}
+                width={80}
+                height={80}
+                class="w-full h-full object-cover"
+              />
+            </figure>
+
+            <!-- Text -->
+            <div class="flex flex-col text-left max-w-[50%]">
+              <span class="text-sm font-semibold truncate">{prevEvent.title}</span>
+              <span class="text-xs opacity-70">
+                {new Date(prevEvent.dateTime).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+          </Link>
+        )
+      }
+
+      <!-- Next Event (on the right) -->
+      {
+        nextEvent && (
+          <Link
+            href={`/events/${nextEvent.id}`}
+            class="btn btn-soft flex items-center gap-3 px-3 py-2"
+          >
+            <!-- Text -->
+            <div class="flex flex-col text-right max-w-[50%]">
+              <span class="text-sm font-semibold truncate">{nextEvent.title}</span>
+              <span class="text-xs opacity-70">
+                {new Date(nextEvent.dateTime).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </span>
+            </div>
+
+            <!-- Thumbnail -->
+            <figure class="w-10 h-10 flex-shrink-0 overflow-hidden rounded bg-base-300">
+              <Image
+                src={nextEvent.cover}
+                alt={nextEvent.title}
+                width={80}
+                height={80}
+                class="w-full h-full object-cover"
+              />
+            </figure>
+
+            <!-- Arrow -->
+            <Icon name="lucide:chevron-right" size={20} />
+          </Link>
+        )
+      }
     </div>
     <EventDetails event={event} />
   </Section>
