@@ -29,11 +29,7 @@ export type Event = {
   duration: number;
   feeSettings: null;
   id: string;
-  image: {
-    file: string;
-    res: [number, number][];
-    corners: string[];
-  };
+  image?: { file: string };
   maxTickets: number;
   numberOfAllowedGuests: number;
   time: number;

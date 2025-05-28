@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
-    "import": "npx tsx ./scripts/import-data"
+    "import": "npx tsx ./scripts/import-data",
+    "clear": "npx tsx ./scripts/import-data/clear"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.5",

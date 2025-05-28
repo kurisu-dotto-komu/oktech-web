@@ -1,18 +1,32 @@
-import path from "node:path";
 import fs from "node:fs/promises";
+import path from "node:path";
 import { existsSync } from "node:fs";
 import slugify from "slugify";
 import matter from "gray-matter";
 import { stringify as yamlStringify } from "yaml";
 
 import type { Event, EventJSON, Photo, PhotoJSON } from "./types";
+import { PUBLIC_BASE, EVENTS_BASE_DIR, EVENTS_URL, PHOTOS_URL } from "./constants";
 
-const EVENTS_URL = "https://owddm.com/public/events.json";
-const PHOTOS_URL = "https://owddm.com/public/photos.json";
-const PUBLIC_BASE = "https://owddm.com/public/";
+// Global statistics object that will be mutated by helper functions throughout the import run
+const stats = {
+  markdownCreated: 0,
+  markdownUpdated: 0,
+  markdownUnchanged: 0,
+  galleryImagesDownloaded: 0,
+  galleryImagesUnchanged: 0,
+  galleryImagesDeleted: 0,
+  metadataCreated: 0,
+  metadataUnchanged: 0,
+  metadataNotApplicable: 0,
+  totalEvents: 0,
+};
 
 async function downloadImage(remotePath: string, localPath: string): Promise<boolean> {
-  if (existsSync(localPath)) return false; // already downloaded
+  if (existsSync(localPath)) {
+    stats.galleryImagesUnchanged++;
+    return false; // already downloaded
+  }
 
   const res = await fetch(`${PUBLIC_BASE}${remotePath}`);
   if (!res.ok) throw new Error(`Failed to fetch ${remotePath}: ${res.status}`);
@@ -20,111 +34,144 @@ async function downloadImage(remotePath: string, localPath: string): Promise<boo
   await fs.mkdir(path.dirname(localPath), { recursive: true });
   await fs.writeFile(localPath, new Uint8Array(arrayBuf));
   console.log(`Downloaded image → ${localPath}`);
+  stats.galleryImagesDownloaded++;
   return true; // newly downloaded
 }
 
-async function writeEventMarkdown(
-  event: Event,
-  groupKey: string,
-  relatedPhotos: Photo[],
-): Promise<{ markdownUpdated: boolean; imagesDownloaded: number; imagesUnchanged: number }> {
+async function processGallery(eventDir: string, photos: Photo[]) {
+  const galleryDir = path.join(eventDir, "gallery");
+
+  if (photos.length > 0) {
+    await fs.mkdir(galleryDir, { recursive: true });
+
+    for (const photo of photos) {
+      const galleryImageFileName = path.basename(photo.file);
+      const galleryImageLocalPath = path.join(galleryDir, galleryImageFileName);
+      await downloadImage(photo.file, galleryImageLocalPath);
+      if (photo.caption) {
+        const yamlPath = `${galleryImageLocalPath}.yaml`;
+        const yamlContent = yamlStringify({ caption: photo.caption }, { lineWidth: 0 });
+
+        if (!existsSync(yamlPath)) {
+          await fs.writeFile(yamlPath, yamlContent);
+          stats.metadataCreated++;
+        } else {
+          const existingYaml = await fs.readFile(yamlPath, "utf-8");
+          if (existingYaml !== yamlContent) {
+            await fs.writeFile(yamlPath, yamlContent);
+            stats.metadataCreated++; // Count as created even if overwriting, for simplicity in stats
+          } else {
+            stats.metadataUnchanged++;
+          }
+        }
+      } else {
+        stats.metadataNotApplicable++;
+      }
+    }
+  }
+
+  // Clean up any local files that are no longer part of the gallery for this event
+  if (existsSync(galleryDir)) {
+    // Build a set of filenames that should exist after this import
+    const expectedFiles = new Set<string>();
+    for (const photo of photos) {
+      const base = path.basename(photo.file);
+      expectedFiles.add(base);
+      if (photo.caption) {
+        expectedFiles.add(`${base}.yaml`);
+      }
+    }
+
+    const currentFiles = await fs.readdir(galleryDir);
+    for (const fileName of currentFiles) {
+      if (!expectedFiles.has(fileName)) {
+        await fs.unlink(path.join(galleryDir, fileName));
+        stats.galleryImagesDeleted++;
+        console.log(`Removed stale gallery file → ${path.join(galleryDir, fileName)}`);
+      }
+    }
+
+    // If the directory is empty after cleanup, remove it to keep things tidy
+    const remainingFiles = await fs.readdir(galleryDir);
+    if (remainingFiles.length === 0) {
+      try {
+        await fs.rmdir(galleryDir);
+      } catch (err) {
+        console.error(`Failed to remove empty gallery ${galleryDir}:`, err);
+      }
+    }
+  }
+
+  // No further action needed here – directory removal is handled above.
+}
+
+async function processEvent(event: Event, group: string, photos: Photo[]): Promise<void> {
   const slug = slugify(`${event.id}-${event.title}`, { lower: true, strict: true });
-  const eventDir = path.join("src", "content", "events", slug);
+  const eventDir = path.join(EVENTS_BASE_DIR, slug);
   await fs.mkdir(eventDir, { recursive: true });
+  const mdPath = path.join(EVENTS_BASE_DIR, slug, "event.md");
 
-  const mdPath = path.join(eventDir, "event.md");
-
-  const headerImageName = event.image?.file
-    ? `${path.parse(event.image.file).name}${path.extname(event.image.file)}`
-    : undefined;
-
-  // decorate the object, using a nice order.
-
+  // conver the date to Japan timezone
   const newFrontmatter: Record<string, unknown> = {
     title: event.title,
-    time: new Date(event.time).toISOString(),
+    date: new Date(event.time).toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      timeZone: "Asia/Tokyo",
+    }),
+    time: new Date(event.time)
+      .toLocaleTimeString("en-CA", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: "Asia/Tokyo",
+      })
+      .replace(":", ""),
   };
 
-  // Add optional fields only if they have values
   if (event.duration) {
     newFrontmatter.duration = Math.round(event.duration / 60000);
   }
-  if (headerImageName) {
-    newFrontmatter.image = `./gallery/${headerImageName}`;
+
+  if (event.image && event.image.file) {
+    const coverBasename = path.basename(event.image.file);
+    newFrontmatter.cover = `./${coverBasename}`;
+    const coverLocalPath = path.join(eventDir, coverBasename);
+    await downloadImage(event.image.file, coverLocalPath);
   }
+
   if (event.topics && event.topics.length > 0) {
     newFrontmatter.topics = event.topics;
   }
 
   newFrontmatter.id = parseInt(event.id);
-  newFrontmatter.group = parseInt(groupKey);
+  newFrontmatter.group = parseInt(group);
   newFrontmatter.venue = parseInt(event.venue);
-
-  let content = "";
-  let markdownUpdated = false;
 
   if (existsSync(mdPath)) {
     const existing = matter.read(mdPath);
     const { description, ...existingWithoutDescription } = existing.data;
+    const currentDescription = event.description ?? description ?? "";
     const merged = { ...existingWithoutDescription, ...newFrontmatter };
-    content = matter.stringify(`\n${event.description}`, merged);
 
-    // Check if content has actually changed
+    const content = matter.stringify(`\n${currentDescription}`, merged);
     const existingContent = await fs.readFile(mdPath, "utf-8");
-    markdownUpdated = content !== existingContent;
+    if (content !== existingContent) {
+      await fs.writeFile(mdPath, content);
+      console.log(`Updated markdown → ${mdPath}`);
+      stats.markdownUpdated++;
+    }
   } else {
-    content = matter.stringify(`\n${event.description}`, newFrontmatter);
-    markdownUpdated = true; // new file
-  }
-
-  if (markdownUpdated) {
+    const content = matter.stringify(`\n${event.description}`, newFrontmatter);
     await fs.writeFile(mdPath, content);
-    console.log(`Updated markdown → ${mdPath}`);
+    console.log(`Created markdown → ${mdPath}`);
+    stats.markdownCreated++;
   }
 
-  // Prepare list of images to download (header + gallery)
-  const images: { remote: string; local: string; metadata?: Photo }[] = [];
+  await processGallery(eventDir, photos);
 
-  if (event.image?.file) {
-    const localName = headerImageName as string;
-    images.push({
-      remote: event.image.file,
-      local: path.join(eventDir, "gallery", localName),
-    });
-  }
-
-  relatedPhotos.forEach((photo) => {
-    const localName = `${path.parse(photo.file).name}${path.extname(photo.file)}`;
-    images.push({
-      remote: photo.file,
-      local: path.join(eventDir, "gallery", localName),
-      metadata: photo,
-    });
-  });
-
-  let imagesDownloaded = 0;
-  let imagesUnchanged = 0;
-  for (const img of images) {
-    const downloaded = await downloadImage(img.remote, img.local);
-    if (downloaded) {
-      imagesDownloaded++;
-    } else {
-      imagesUnchanged++;
-    }
-
-    // Write metadata YAML file for gallery images
-    if (img.metadata?.caption) {
-      const yamlPath = `${img.local}.yaml`;
-      const yamlContent = yamlStringify({ caption: img.metadata.caption }, { lineWidth: 0 });
-
-      if (!existsSync(yamlPath)) {
-        await fs.writeFile(yamlPath, yamlContent);
-        console.log(`Created metadata → ${yamlPath}`);
-      }
-    }
-  }
-
-  return { markdownUpdated, imagesDownloaded, imagesUnchanged };
+  return;
 }
 
 async function main() {
@@ -133,7 +180,6 @@ async function main() {
     fetch(PHOTOS_URL).then((r) => r.json()) as Promise<PhotoJSON>,
   ]);
 
-  // Build a quick lookup for photos by event id
   const photosByEvent: Record<string, Photo[]> = {};
   Object.values(photosJSON.groups).forEach((grp) => {
     const list = photosByEvent[grp.event] ?? [];
@@ -141,45 +187,16 @@ async function main() {
     photosByEvent[grp.event] = list;
   });
 
-  let stats = {
-    markdownCreated: 0,
-    markdownUpdated: 0,
-    markdownUnchanged: 0,
-    imagesDownloaded: 0,
-    imagesUnchanged: 0,
-    totalEvents: 0,
-  };
-
-  for (const [groupKey, groupData] of Object.entries(eventsJSON.groups)) {
+  for (const [group, groupData] of Object.entries(eventsJSON.groups)) {
     for (const event of groupData.events) {
       stats.totalEvents++;
-      const relatedPhotos = photosByEvent[event.id] ?? [];
-      const result = await writeEventMarkdown(event, groupKey, relatedPhotos);
-
-      if (result.markdownUpdated) {
-        const slug = slugify(`${event.id}-${event.title}`, { lower: true, strict: true });
-        const mdPath = path.join("src", "content", "events", slug, "event.md");
-        if (existsSync(mdPath)) {
-          stats.markdownUpdated++;
-        } else {
-          stats.markdownCreated++;
-        }
-      } else {
-        stats.markdownUnchanged++;
-      }
-
-      stats.imagesDownloaded += result.imagesDownloaded;
-      stats.imagesUnchanged += result.imagesUnchanged;
+      const photos = photosByEvent[event.id] ?? [];
+      await processEvent(event, group, photos);
     }
   }
 
-  console.log("\n📊 Import Summary:");
-  console.log(`Events processed: ${stats.totalEvents}`);
-  console.log(`Markdown files created: ${stats.markdownCreated}`);
-  console.log(`Markdown files updated: ${stats.markdownUpdated}`);
-  console.log(`Markdown files unchanged: ${stats.markdownUnchanged}`);
-  console.log(`Images downloaded: ${stats.imagesDownloaded}`);
-  console.log(`Images unchanged: ${stats.imagesUnchanged}`);
+  console.log("\nImport Summary:");
+  console.log(stats);
 }
 
 main().catch((err) => {
