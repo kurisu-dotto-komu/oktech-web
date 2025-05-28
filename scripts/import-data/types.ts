@@ -74,7 +74,7 @@ export type EventJSON = {
 
 export type Photo = {
   file: string;
-  caption: string;
+  caption?: string;
   res: [number, number][];
   corners: string[];
 };
@@ -83,7 +83,7 @@ export type PhotoJSON = {
   groups: {
     [key: string]: {
       content: string;
-      event: string;
+      event?: string;
       photos: Photo[];
       timestamp: number;
     };

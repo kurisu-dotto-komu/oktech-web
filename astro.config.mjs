@@ -18,4 +18,12 @@ export default defineConfig({
   redirects: {
     discord: "https://discord.com/invite/k8xj8d75f6",
   },
+  experimental: {
+    responsiveImages: true,
+    clientPrerender: true,
+  },
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
 });

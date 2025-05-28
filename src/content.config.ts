@@ -5,6 +5,7 @@ const events = defineCollection({
   loader: async () => {
     const imports = await import.meta.glob("/content/events/**/event.md", { eager: true });
     return Object.entries(imports).map(([fileName, module]) => {
+      // console.log({ module });
       const basePath = fileName.replace("/event.md", "");
       const slug = basePath.split("/").pop() as string;
       const { frontmatter } = module as { frontmatter: Record<string, unknown> };
@@ -20,13 +21,14 @@ const events = defineCollection({
       };
     });
   },
-  schema: z.object({
-    id: z.string(),
-    title: z.string(),
-    dateTime: z.date(),
-    duration: z.number().optional(),
-    cover: z.string().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      dateTime: z.date(),
+      duration: z.number().optional(),
+      cover: image(),
+    }),
 });
 
 const eventGalleryImage = defineCollection({
@@ -45,15 +47,17 @@ const eventGalleryImage = defineCollection({
         | undefined;
       const imageMetadata = metaDataModule?.default as Record<string, unknown>;
       const event = id.split("/").slice(0, -2).pop();
-      return { ...imageMetadata, id, event, path: id };
+      // console.log({ event });
+      return { ...imageMetadata, id, event, image: id };
     });
   },
-  schema: z.object({
-    id: z.string(),
-    path: z.string(),
-    event: reference("events"),
-    caption: z.string().optional(), // todo add more metadatas?
-  }),
+  schema: ({ image }) =>
+    z.object({
+      id: z.string(),
+      image: image(),
+      event: reference("events"),
+      caption: z.string().optional(), // todo add more metadatas?
+    }),
 });
 
 export const collections = { events, eventGalleryImage };

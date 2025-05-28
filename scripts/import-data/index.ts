@@ -6,7 +6,7 @@ import matter from "gray-matter";
 import { stringify as yamlStringify } from "yaml";
 
 import type { Event, EventJSON, Photo, PhotoJSON } from "./types";
-import { PUBLIC_BASE, EVENTS_BASE_DIR, EVENTS_URL, PHOTOS_URL } from "./constants";
+import { PUBLIC_BASE, EVENTS_BASE_DIR, EVENTS_URL, PHOTOS_URL, INFER_EVENTS } from "./constants";
 
 // Global statistics object that will be mutated by helper functions throughout the import run
 const stats = {
@@ -177,6 +177,29 @@ async function processEvent(event: Event, group: string, photos: Photo[]): Promi
   return;
 }
 
+// Attempt to infer the most likely event for a set of photos based on the upload timestamp.
+// Strategy: choose the event whose start time is the closest *before* the photo timestamp.
+// Returns the matching event and its parent group id, or null if no plausible match is found.
+function inferEventByTimestamp(
+  timestamp: number,
+  eventsJSON: EventJSON,
+): { event: Event; groupId: string } | null {
+  let closestMatch: { event: Event; groupId: string } | null = null;
+  let smallestPositiveDiff = Number.POSITIVE_INFINITY;
+
+  for (const [groupId, groupData] of Object.entries(eventsJSON.groups)) {
+    for (const ev of groupData.events) {
+      const diff = timestamp - ev.time;
+      if (diff >= 0 && diff < smallestPositiveDiff) {
+        smallestPositiveDiff = diff;
+        closestMatch = { event: ev, groupId };
+      }
+    }
+  }
+
+  return closestMatch;
+}
+
 async function main() {
   const [eventsJSON, photosJSON] = await Promise.all([
     fetch(EVENTS_URL).then((r) => r.json()) as Promise<EventJSON>,
@@ -184,16 +207,39 @@ async function main() {
   ]);
 
   const photosByEvent: Record<string, Photo[]> = {};
+
   Object.values(photosJSON.groups).forEach((grp) => {
-    const list = photosByEvent[grp.event] ?? [];
-    list.push(...grp.photos);
-    photosByEvent[grp.event] = list;
+    if (grp.event) {
+      // Event id explicitly provided – straightforward grouping
+      const list = photosByEvent[grp.event] ?? [];
+      list.push(...grp.photos);
+      photosByEvent[grp.event] = list;
+    } else if (INFER_EVENTS) {
+      // Attempt to infer the event based on timestamp
+      const inferred = inferEventByTimestamp(grp.timestamp, eventsJSON);
+      if (inferred) {
+        console.log(
+          `Inferred photos batch (timestamp: ${grp.timestamp}) → event ${inferred.event.id} (${inferred.event.title})`,
+        );
+        // Merge photos into the correct event entry
+        const list = photosByEvent[inferred.event.id] ?? [];
+        list.push(...grp.photos);
+        photosByEvent[inferred.event.id] = list;
+      } else {
+        console.warn(`Could not infer event for photos batch with timestamp ${grp.timestamp}`);
+      }
+    } else {
+      console.log(
+        `Skipping photos batch (timestamp: ${grp.timestamp}) because INFER_EVENTS is disabled and no event id present.`,
+      );
+    }
   });
 
   for (const [group, groupData] of Object.entries(eventsJSON.groups)) {
     for (const event of groupData.events) {
       stats.totalEvents++;
       const photos = photosByEvent[event.id] ?? [];
+
       await processEvent(event, group, photos);
     }
   }

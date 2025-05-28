@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { THEMES } from "./config";
+import { getCollection, type InferEntrySchema } from "astro:content";
 
 export const FAKER_COUNT = 99;
 
@@ -67,22 +68,6 @@ export type Member = {
   };
 };
 
-export type Event = {
-  id: string;
-  title: string;
-  date: string;
-  time: string;
-  location: string;
-  description: string;
-  coverImage: string;
-  speakers: Member[];
-  url?: string;
-  gallery?: {
-    src: string;
-    description: string;
-  }[];
-};
-
 function generateMember(id: string): Member {
   // Seed faker with the member ID to get consistent data
   faker.seed(parseInt(id.replace(/\D/g, "") || "0", 10));
@@ -142,48 +127,13 @@ function generateMember(id: string): Member {
   };
 }
 
-function generateEvent(id: string): Event {
-  // Seed faker with the event ID to get consistent data
-  faker.seed(parseInt(id.replace(/\D/g, "") || "0", 10));
-
-  // Generate gallery with 0 or 4-20 images
-  const hasGallery = faker.number.int(100) < 80; // 80% chance of having a gallery
-  const galleryCount = hasGallery ? faker.number.int({ min: 4, max: 20 }) : 0;
-  const gallery = hasGallery
-    ? Array.from({ length: galleryCount }, () => ({
-        src: faker.image.urlPicsumPhotos({ width: 800, height: 600 }),
-        description: faker.lorem.sentence(),
-      }))
-    : undefined;
-
-  return {
-    id,
-    title: faker.company.catchPhrase(),
-    date: faker.date.future().toISOString(),
-    time: faker.date.future().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
-    location: `${faker.location.city()} Convention Center`,
-    description: faker.lorem.paragraph(),
-    coverImage: faker.image.urlPicsumPhotos({ width: 800, height: 400 }),
-    speakers: [],
-    gallery,
-  };
-}
-
 export const members: Member[] = Array.from({ length: FAKER_COUNT }, (_, index) =>
   generateMember(index.toString()),
 );
 
-export const events: Event[] = Array.from({ length: FAKER_COUNT }, (_, index) =>
-  generateEvent(index.toString()),
-);
+export type Event = InferEntrySchema<"events">;
 
-// for each event, atttach 1-4 random members, and add this event to the member's events array
-events.forEach((event) => {
-  event.speakers = faker.helpers.arrayElements(members, { min: 1, max: 4 });
-  event.speakers.forEach((speaker) => {
-    speaker.events.push(event);
-    if (!speaker.roles.includes("speaker")) {
-      speaker.roles.push("speaker");
-    }
-  });
-});
+export async function getEvents(): Promise<Event[]> {
+  const allEvents = await getCollection("events");
+  return allEvents.reverse().map(({ data }) => data);
+}

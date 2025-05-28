@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import { type Event } from "../data";
+import { getCollection } from "astro:content";
 
 interface Props {
   event: Event;
@@ -7,17 +9,23 @@ interface Props {
 }
 
 const { event } = Astro.props;
+
+// Fetch gallery images related to this event
+const galleryImages = await getCollection(
+  "eventGalleryImage",
+  (img) => img.data.event.id === event.id,
+);
 ---
 
 {
-  event.gallery?.map((item) => (
-    <div class="tooltip" data-tip={item.description}>
-      <img
-        src={item.src}
-        alt={item.description}
-        class="w-full aspect-[4/3] object-cover rounded-lg hover:opacity-90 transition-opacity bg-base-300"
-        loading="lazy"
-      />
-    </div>
+  galleryImages.map((img) => (
+    <Image
+      src={img.data.image}
+      alt={img.data.caption ?? ""}
+      class="w-full aspect-[4/3] object-cover rounded-lg hover:opacity-90 transition-opacity bg-base-300"
+      loading="lazy"
+      width={512}
+      height={512}
+    />
   ))
 }
