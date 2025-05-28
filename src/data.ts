@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { THEMES } from "./config";
 import { getCollection, type InferEntrySchema } from "astro:content";
 
-export const FAKER_COUNT = 99;
+export const FAKER_COUNT = 50;
 
 // Predefined lists
 const PROGRAMMING_LANGUAGES = [
@@ -115,7 +115,10 @@ function generateMember(id: string): Member {
     skills: faker.helpers.arrayElements(PROGRAMMING_LANGUAGES, { min: 0, max: 8 }),
     location: `${faker.location.city()}, ${faker.location.country()}`,
     email: faker.internet.email(),
-    roles: faker.helpers.arrayElements(POSSIBLE_ROLES, { min: 0, max: 3 }),
+    roles: faker.helpers.arrayElements(
+      POSSIBLE_ROLES.filter((r) => r !== "speaker"),
+      { min: 0, max: 3 },
+    ),
     theme: faker.helpers.arrayElement(THEMES),
     events: [],
     links: {
@@ -127,9 +130,41 @@ function generateMember(id: string): Member {
   };
 }
 
-export const members: Member[] = Array.from({ length: FAKER_COUNT }, (_, index) =>
-  generateMember(index.toString()),
-);
+export const members: Member[] = [
+  // Real speakers imported from the content collection
+  ...(await (async () => {
+    const speakers = await getCollection("speakers");
+    return speakers.map(({ data }) => {
+      return {
+        id: data.id,
+        gender: "male" as ReturnType<typeof faker.person.sexType>,
+        name: data.name,
+        jobTitle: "Guest Speaker",
+        company: "",
+        department: "",
+        bio: data.bio ?? "",
+        avatar:
+          (data.avatar as unknown as string) ??
+          "https://placehold.co/400x600?text=Speaker",
+        skills: (data.skills as string[]) ?? [],
+        location: "Osaka, Japan",
+        email: "",
+        roles: ["speaker"],
+        theme: (data.theme as string) ?? "pastel",
+        events: [], // linking to events later
+        links: {},
+      } satisfies Member;
+    });
+  })()),
+  // Faker generated community members (without any speakers)
+  ...(() => {
+    const arr: Member[] = [];
+    for (let i = 0; i < FAKER_COUNT; i++) {
+      arr.push(generateMember(i.toString()));
+    }
+    return arr;
+  })(),
+];
 
 export type Event = InferEntrySchema<"events">;
 

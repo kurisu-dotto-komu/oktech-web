@@ -60,4 +60,63 @@ const eventGalleryImage = defineCollection({
     }),
 });
 
-export const collections = { events, eventGalleryImage };
+const speakers = defineCollection({
+  loader: async () => {
+    // Load every speaker markdown file located at `/content/speakers/**/speaker.md`
+    // The folder name will be used as the unique slug / id for the speaker.
+    const imports = await import.meta.glob("/content/speakers/**/speaker.md", {
+      eager: true,
+    });
+
+    return Object.entries(imports).map(([fileName, module]) => {
+      const basePath = fileName.replace("/speaker.md", "");
+      const slug = basePath.split("/").pop() as string;
+
+      const { frontmatter, default: body } = module as {
+        frontmatter: Record<string, unknown>;
+        default: { render: () => { html: string } };
+      };
+
+      const avatar = frontmatter.avatar
+        ? path.join(basePath, frontmatter.avatar as string)
+        : undefined;
+
+      // When optional properties don't exist yet, fall back to safe placeholders.
+      const theme = (frontmatter.theme as string | undefined) ?? "pastel";
+      const skills = (frontmatter.skills as string[] | undefined) ?? [];
+      const events = (frontmatter.events as string[] | undefined) ?? [];
+
+      // Extract a plain-text version of the markdown body to use as a simple bio.
+      // `body.render()` gives us HTML – strip tags for now because we only need raw text.
+      let bio: string | undefined;
+      try {
+        const html = body.render().html as string;
+        bio = html.replace(/<[^>]*>/g, "").trim();
+      } catch {
+        bio = undefined;
+      }
+
+      return {
+        id: slug,
+        name: frontmatter.name as string,
+        skills,
+        events,
+        avatar,
+        theme,
+        bio,
+      };
+    });
+  },
+  schema: ({ image }) =>
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      skills: z.array(z.string()).optional(),
+      events: z.array(z.string()).optional(), // will be linked later via reference
+      avatar: image().optional(),
+      theme: z.string().optional(),
+      bio: z.string().optional(),
+    }),
+});
+
+export const collections = { events, eventGalleryImage, speakers };
