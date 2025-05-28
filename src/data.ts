@@ -1,3 +1,4 @@
+import { THEMES } from "./config";
 import { getCollection, type InferEntrySchema } from "astro:content";
 
 export const ROLE_CONFIGS = {
@@ -53,6 +54,11 @@ export async function getMembers(): Promise<Member[]> {
   const speakers = await getCollection("speakers");
 
   return speakers.map(({ data }) => {
+    // Use a hash of the speaker's ID to deterministically select a theme
+    const hash = data.id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const themeIndex = hash % THEMES.length;
+    const theme = THEMES[themeIndex];
+
     return {
       id: data.id,
       name: data.name,
@@ -65,7 +71,7 @@ export async function getMembers(): Promise<Member[]> {
       location: "Osaka, Japan",
       email: "",
       roles: ["speaker"],
-      theme: (data.theme as string) ?? "pastel",
+      theme: theme,
       events: [], // linking to events later
       links: {},
     } satisfies Member;

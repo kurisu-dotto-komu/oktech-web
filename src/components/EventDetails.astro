@@ -11,13 +11,7 @@ interface Props {
 
 const { event } = Astro.props;
 
-const markdown = await import(`../../content/events/${event.id}/event.md`);
-
-if (!markdown) {
-  throw new Error(`Event with id ${event.id} not found`);
-}
-
-const { Content } = await render(markdown);
+const { Content } = await import(`../../content/events/${event.id}/event.md`);
 ---
 
 <div class="w-full flex flex-col gap-8">
@@ -41,7 +35,6 @@ const { Content } = await render(markdown);
       <h1 class="hidden md:block text-4xl font-bold pt-6">{event.title}</h1>
       <div class="flex flex-col gap-4 max-w-none">
         <Content />
-        <!-- {JSON.stringify({ entry, event })} -->
       </div>
     </div>
 

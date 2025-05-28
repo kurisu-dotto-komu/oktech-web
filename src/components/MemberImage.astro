@@ -7,11 +7,12 @@ interface Props {
   class?: string;
 }
 
-const { member, class: extraClass = "" } = Astro.props as Props;
+const { member, class: extraClass = "rounded-lg" } = Astro.props as Props;
 ---
 
 <div
-  class={`overflow-hidden flex items-center justify-center bg-primary text-primary-content rounded-lg ${extraClass}`}
+  data-theme={member.theme}
+  class={`overflow-hidden flex items-center justify-center bg-primary text-primary-content w-full h-full ${extraClass}`}
 >
   {
     member.avatar && member.avatar.length > 0 ? (
