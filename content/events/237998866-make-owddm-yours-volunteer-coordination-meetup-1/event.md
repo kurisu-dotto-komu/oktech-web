@@ -1,10 +1,9 @@
 ---
 title: 'Make OWDDM yours - Volunteer Coordination Meetup #1'
-date: '2017-03-06'
-time: '2030'
+dateTime: '2017-03-06 20:30'
 duration: 60
 cover: ./506739.webp
-id: 237998866
+meetupId: 237998866
 group: 15632202
 venue: 25085262
 ---

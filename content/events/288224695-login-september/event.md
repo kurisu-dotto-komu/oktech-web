@@ -1,7 +1,6 @@
 ---
 title: Login September
-date: '2022-09-24'
-time: '1600'
+dateTime: '2022-09-24 16:00'
 duration: 120
 cover: ./745086.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - UI Design
   - Web Design
   - Web Development
-id: 288224695
+meetupId: 288224695
 group: 36450361
 venue: 27382018
 ---

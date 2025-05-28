@@ -1,10 +1,9 @@
 ---
 title: June Osaka Web Dev & Design Meetup
-date: '2019-06-29'
-time: '1800'
+dateTime: '2019-06-29 18:00'
 duration: 120
 cover: ./506739.webp
-id: 262191703
+meetupId: 262191703
 group: 15632202
 venue: 26378946
 ---

@@ -1,7 +1,6 @@
 ---
 title: Colorful Web Meetup
-date: '2023-06-17'
-time: '1700'
+dateTime: '2023-06-17 17:00'
 duration: 120
 cover: ./983535.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 292890108
+meetupId: 292890108
 group: 15632202
 venue: 27553394
 ---

@@ -1,10 +1,9 @@
 ---
 title: Monthly Meetup in October!
-date: '2014-10-18'
-time: '1600'
+dateTime: '2014-10-18 16:00'
 duration: 120
 cover: ./506739.webp
-id: 209173132
+meetupId: 209173132
 group: 15632202
 venue: 22577042
 ---

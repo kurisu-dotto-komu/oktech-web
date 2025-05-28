@@ -1,7 +1,6 @@
 ---
 title: State of HTML
-date: '2024-05-11'
-time: '1700'
+dateTime: '2024-05-11 17:00'
 duration: 120
 cover: ./598643.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Open Source
   - Software Development
   - Web Design
-id: 300583797
+meetupId: 300583797
 group: 36450361
 venue: 27585838
 ---

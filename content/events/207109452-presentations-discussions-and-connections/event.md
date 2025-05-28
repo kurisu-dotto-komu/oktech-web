@@ -1,9 +1,8 @@
 ---
 title: 'Presentations, Discussions and Connections'
-date: '2014-09-20'
-time: '1800'
+dateTime: '2014-09-20 18:00'
 cover: ./506739.webp
-id: 207109452
+meetupId: 207109452
 group: 15632202
 venue: 22372122
 ---

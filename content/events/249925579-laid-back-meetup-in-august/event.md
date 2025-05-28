@@ -1,10 +1,9 @@
 ---
 title: Laid-back meetup in August
-date: '2018-08-25'
-time: '1800'
+dateTime: '2018-08-25 18:00'
 duration: 120
 cover: ./506739.webp
-id: 249925579
+meetupId: 249925579
 group: 15632202
 venue: 24213835
 ---

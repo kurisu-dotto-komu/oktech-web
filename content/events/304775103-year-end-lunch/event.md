@@ -1,10 +1,9 @@
 ---
 title: Year-End Lunch
-date: '2024-12-20'
-time: '1200'
+dateTime: '2024-12-20 12:00'
 duration: 120
 cover: ./010473.webp
-id: 304775103
+meetupId: 304775103
 group: 36450361
 venue: 27929005
 ---

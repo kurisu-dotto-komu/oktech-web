@@ -1,10 +1,9 @@
 ---
 title: New Year Hacking Day!
-date: '2016-01-23'
-time: '1230'
+dateTime: '2016-01-23 12:30'
 duration: 360
 cover: ./506739.webp
-id: 228102170
+meetupId: 228102170
 group: 15632202
 venue: 24213835
 ---

@@ -1,7 +1,6 @@
 ---
 title: End of Year 2024
-date: '2024-12-14'
-time: '1830'
+dateTime: '2024-12-14 18:30'
 duration: 120
 cover: ./923448.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - Web Design
   - Web Development
   - Web Technology
-id: 304523898
+meetupId: 304523898
 group: 15632202
 venue: 27929713
 ---

@@ -1,13 +1,12 @@
 ---
 title: Kiyotakigawa Escape
-date: '2024-09-29'
-time: 0930
+dateTime: '2024-09-29 09:30'
 duration: 420
 cover: ./033392.webp
 topics:
   - Hiking
   - Technology
-id: 302939361
+meetupId: 302939361
 group: 36450361
 venue: 27043438
 ---

@@ -1,7 +1,6 @@
 ---
 title: Surveys and Keyboards
-date: '2023-04-21'
-time: '1800'
+dateTime: '2023-04-21 18:00'
 duration: 150
 cover: ./506744.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Technology
   - Web Design
   - Web Development
-id: 292526286
+meetupId: 292526286
 group: 36450361
 venue: 27544400
 ---

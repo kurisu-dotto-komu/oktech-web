@@ -1,7 +1,6 @@
 ---
 title: Light December Talks
-date: '2023-12-10'
-time: '1800'
+dateTime: '2023-12-10 18:00'
 duration: 180
 cover: ./812304.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - PHP
   - Software Development
   - Web Design
-id: 297504081
+meetupId: 297504081
 group: 36450361
 venue: 27705586
 ---

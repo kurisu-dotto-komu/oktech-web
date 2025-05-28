@@ -1,10 +1,9 @@
 ---
 title: Talking the new Basics
-date: '2016-04-23'
-time: '1800'
+dateTime: '2016-04-23 18:00'
 duration: 120
 cover: ./506739.webp
-id: 230012291
+meetupId: 230012291
 group: 15632202
 venue: 24213835
 ---

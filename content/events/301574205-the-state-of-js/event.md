@@ -1,7 +1,6 @@
 ---
 title: The State of JS
-date: '2024-07-20'
-time: '1700'
+dateTime: '2024-07-20 17:00'
 duration: 120
 cover: ./274679.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Team Building
   - Technology
   - Workplace
-id: 301574205
+meetupId: 301574205
 group: 15632202
 venue: 24529555
 ---

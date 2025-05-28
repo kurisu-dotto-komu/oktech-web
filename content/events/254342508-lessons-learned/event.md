@@ -1,10 +1,9 @@
 ---
 title: 'Lessons Learned '
-date: '2018-09-22'
-time: '1800'
+dateTime: '2018-09-22 18:00'
 duration: 120
 cover: ./280682.webp
-id: 254342508
+meetupId: 254342508
 group: 15632202
 venue: 25928725
 ---

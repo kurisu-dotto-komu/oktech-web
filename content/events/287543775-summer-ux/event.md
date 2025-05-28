@@ -1,7 +1,6 @@
 ---
 title: Summer UX
-date: '2022-08-27'
-time: '1600'
+dateTime: '2022-08-27 16:00'
 duration: 120
 cover: ./968416.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - User Experience
   - Web Standards
-id: 287543775
+meetupId: 287543775
 group: 36450361
 venue: 27382018
 ---

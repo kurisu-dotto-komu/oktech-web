@@ -1,7 +1,6 @@
 ---
 title: UI culture and Airplanes
-date: '2022-10-29'
-time: '1700'
+dateTime: '2022-10-29 17:00'
 duration: 120
 cover: ./382924.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - Open Source
   - UI Design
   - Web Design
-id: 288755079
+meetupId: 288755079
 group: 36450361
 venue: 27423406
 ---

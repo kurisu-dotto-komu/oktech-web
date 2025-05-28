@@ -1,7 +1,6 @@
 ---
 title: With No-Code to Business
-date: '2023-05-20'
-time: '1700'
+dateTime: '2023-05-20 17:00'
 duration: 120
 cover: ./760988.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Surveying
   - Technology Startups
   - Web Design
-id: 293291174
+meetupId: 293291174
 group: 36450361
 venue: 27573606
 ---

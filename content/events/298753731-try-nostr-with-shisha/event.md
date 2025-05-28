@@ -1,7 +1,6 @@
 ---
 title: Try Nostr with Shisha
-date: '2024-01-31'
-time: '1800'
+dateTime: '2024-01-31 18:00'
 duration: 120
 cover: ./680898.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Social Networking
   - Web 3.0
   - Web Technology
-id: 298753731
+meetupId: 298753731
 group: 36450361
 venue: 27739757
 ---

@@ -1,10 +1,9 @@
 ---
 title: Autumn Discussion for Awesome Techies
-date: '2017-10-21'
-time: '1800'
+dateTime: '2017-10-21 18:00'
 duration: 120
 cover: ./506739.webp
-id: 242801823
+meetupId: 242801823
 group: 15632202
 venue: 25511520
 ---

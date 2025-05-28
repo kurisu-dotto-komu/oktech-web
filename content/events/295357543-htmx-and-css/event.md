@@ -1,10 +1,9 @@
 ---
 title: HTMX & CSS
-date: '2023-08-26'
-time: '1700'
+dateTime: '2023-08-26 17:00'
 duration: 120
 cover: ./211650.webp
-id: 295357543
+meetupId: 295357543
 group: 15632202
 venue: 24529555
 ---

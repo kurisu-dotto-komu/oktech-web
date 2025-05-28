@@ -1,7 +1,6 @@
 ---
 title: Martian Summer
-date: '2022-08-20'
-time: '1645'
+dateTime: '2022-08-20 16:45'
 duration: 150
 cover: ./968216.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Web Design
   - Web Development
   - Web Technology
-id: 287537418
+meetupId: 287537418
 group: 15632202
 venue: 27370028
 ---

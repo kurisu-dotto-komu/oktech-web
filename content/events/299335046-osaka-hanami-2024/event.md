@@ -1,7 +1,6 @@
 ---
 title: Osaka Hanami 2024
-date: '2024-03-30'
-time: '1100'
+dateTime: '2024-03-30 11:00'
 duration: 240
 cover: ./553379.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 299335046
+meetupId: 299335046
 group: 15632202
 venue: 27394125
 ---

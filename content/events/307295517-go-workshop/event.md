@@ -1,7 +1,6 @@
 ---
 title: Go Workshop
-date: '2025-06-21'
-time: '1300'
+dateTime: '2025-06-21 13:00'
 duration: 300
 cover: ./383092.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 307295517
+meetupId: 307295517
 group: 15632202
 venue: 27553394
 ---

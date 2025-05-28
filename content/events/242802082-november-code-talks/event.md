@@ -1,10 +1,9 @@
 ---
 title: November code talks
-date: '2017-11-25'
-time: '1800'
+dateTime: '2017-11-25 18:00'
 duration: 120
 cover: ./506739.webp
-id: 242802082
+meetupId: 242802082
 group: 15632202
 venue: 24529555
 ---

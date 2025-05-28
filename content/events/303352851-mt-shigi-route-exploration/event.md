@@ -1,10 +1,9 @@
 ---
 title: Mt. Shigi Route Exploration
-date: '2024-10-20'
-time: 0845
+dateTime: '2024-10-20 08:45'
 duration: 495
 cover: ./434508.webp
-id: 303352851
+meetupId: 303352851
 group: 15632202
 venue: 27278002
 ---

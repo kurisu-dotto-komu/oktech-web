@@ -1,7 +1,6 @@
 ---
 title: How and when React
-date: '2024-02-17'
-time: '1700'
+dateTime: '2024-02-17 17:00'
 duration: 180
 cover: ./848552.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 298932038
+meetupId: 298932038
 group: 36450361
 venue: 27513738
 ---

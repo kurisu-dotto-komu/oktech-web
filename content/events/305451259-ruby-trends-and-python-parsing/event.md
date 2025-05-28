@@ -1,7 +1,6 @@
 ---
 title: Ruby Trends and Python Parsing
-date: '2025-03-22'
-time: '1700'
+dateTime: '2025-03-22 17:00'
 duration: 120
 cover: ./886088.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - Python
   - Web Design
   - Web Development
-id: 305451259
+meetupId: 305451259
 group: 15632202
 venue: 24529555
 ---

@@ -1,10 +1,9 @@
 ---
 title: May friendly talks
-date: '2017-05-27'
-time: '1800'
+dateTime: '2017-05-27 18:00'
 duration: 120
 cover: ./506739.webp
-id: 239372163
+meetupId: 239372163
 group: 15632202
 venue: 24213835
 ---

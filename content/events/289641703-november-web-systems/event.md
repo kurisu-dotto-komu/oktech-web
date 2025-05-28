@@ -1,7 +1,6 @@
 ---
 title: November Web Systems
-date: '2022-11-19'
-time: '1700'
+dateTime: '2022-11-19 17:00'
 duration: 120
 cover: ./470361.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 289641703
+meetupId: 289641703
 group: 15632202
 venue: 27370028
 ---

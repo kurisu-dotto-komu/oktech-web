@@ -1,7 +1,6 @@
 ---
 title: Osaka Hanami 2025
-date: '2025-04-06'
-time: '1000'
+dateTime: '2025-04-06 10:00'
 duration: 300
 cover: ./991938.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 305805233
+meetupId: 305805233
 group: 15632202
 venue: 27964003
 ---

@@ -1,9 +1,8 @@
 ---
 title: OWDDM August Meetup
-date: '2017-08-26'
-time: '1800'
+dateTime: '2017-08-26 18:00'
 cover: ./506739.webp
-id: 240569746
+meetupId: 240569746
 group: 15632202
 venue: 24213835
 ---

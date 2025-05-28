@@ -1,7 +1,6 @@
 ---
 title: Data with Pandas
-date: '2025-01-11'
-time: '1700'
+dateTime: '2025-01-11 17:00'
 duration: 120
 cover: ./481747.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - Python
   - Web Design
   - Web Development
-id: 305361716
+meetupId: 305361716
 group: 15632202
 venue: 24529555
 ---

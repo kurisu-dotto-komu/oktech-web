@@ -1,9 +1,8 @@
 ---
 title: Autumn Web Exchange
-date: '2015-10-31'
-time: '1800'
+dateTime: '2015-10-31 18:00'
 cover: ./506739.webp
-id: 225647457
+meetupId: 225647457
 group: 15632202
 venue: 22577042
 ---

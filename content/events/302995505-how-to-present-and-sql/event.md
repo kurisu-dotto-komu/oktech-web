@@ -1,7 +1,6 @@
 ---
 title: How to Present and SQL
-date: '2024-11-16'
-time: '1700'
+dateTime: '2024-11-16 17:00'
 duration: 150
 cover: ./394023.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 302995505
+meetupId: 302995505
 group: 15632202
 venue: 27553394
 ---

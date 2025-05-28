@@ -1,9 +1,8 @@
 ---
 title: Late autumn talks with design and code
-date: '2016-11-26'
-time: '1900'
+dateTime: '2016-11-26 19:00'
 cover: ./506739.webp
-id: 235173899
+meetupId: 235173899
 group: 15632202
 venue: 24870768
 ---

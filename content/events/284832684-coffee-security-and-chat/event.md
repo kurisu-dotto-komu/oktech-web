@@ -1,14 +1,13 @@
 ---
 title: 'Coffee, Security and Chat'
-date: '2022-04-02'
-time: '1030'
+dateTime: '2022-04-02 10:30'
 duration: 90
 cover: ./904983.webp
 topics:
   - API
   - Automation
   - Web Security
-id: 284832684
+meetupId: 284832684
 group: 15632202
 venue: 26459185
 ---

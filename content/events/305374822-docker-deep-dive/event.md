@@ -1,7 +1,6 @@
 ---
 title: Docker Deep Dive
-date: '2025-02-15'
-time: '1700'
+dateTime: '2025-02-15 17:00'
 duration: 120
 cover: ./512189.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 305374822
+meetupId: 305374822
 group: 15632202
 venue: 27553394
 ---

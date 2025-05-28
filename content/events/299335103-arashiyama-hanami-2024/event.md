@@ -1,7 +1,6 @@
 ---
 title: Arashiyama Hanami 2024
-date: '2024-03-24'
-time: '1300'
+dateTime: '2024-03-24 13:00'
 duration: 240
 cover: ./888292.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - PHP
   - Software Development
   - Web Design
-id: 299335103
+meetupId: 299335103
 group: 36450361
 venue: 27764496
 ---

@@ -1,7 +1,6 @@
 ---
 title: Hiding from the heat (Login UX & Live Coding)
-date: '2022-07-23'
-time: '1700'
+dateTime: '2022-07-23 17:00'
 duration: 120
 cover: ./704122.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 287156985
+meetupId: 287156985
 group: 15632202
 venue: 27370028
 ---

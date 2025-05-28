@@ -1,7 +1,6 @@
 ---
 title: Gamepad KPI's
-date: '2023-01-21'
-time: '1700'
+dateTime: '2023-01-21 17:00'
 duration: 120
 cover: ./762650.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 290682636
+meetupId: 290682636
 group: 15632202
 venue: 27370028
 ---

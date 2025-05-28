@@ -1,7 +1,6 @@
 ---
 title: Visual Tests and Networking
-date: '2023-09-23'
-time: '1700'
+dateTime: '2023-09-23 17:00'
 duration: 120
 cover: ./709185.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 295693488
+meetupId: 295693488
 group: 15632202
 venue: 27553394
 ---

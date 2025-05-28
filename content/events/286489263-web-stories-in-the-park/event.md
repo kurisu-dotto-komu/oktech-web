@@ -1,7 +1,6 @@
 ---
 title: Web-Stories in the Park
-date: '2022-07-09'
-time: '1500'
+dateTime: '2022-07-09 15:00'
 duration: 120
 cover: ./734800.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 286489263
+meetupId: 286489263
 group: 15632202
 venue: 26936190
 ---

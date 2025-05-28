@@ -1,7 +1,6 @@
 ---
 title: All Hallows Eve Social
-date: '2023-10-28'
-time: '1700'
+dateTime: '2023-10-28 17:00'
 duration: 180
 cover: ./796490.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - ReactJS
   - Typescript
   - Web Design
-id: 296487079
+meetupId: 296487079
 group: 36450361
 venue: 27585838
 ---

@@ -1,7 +1,6 @@
 ---
 title: JavaScript dependency future and TypeScript at the Café
-date: '2022-05-28'
-time: '1730'
+dateTime: '2022-05-28 17:30'
 duration: 90
 cover: ./531734.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Internet Professionals
   - Software Development
   - Web Development
-id: 285938706
+meetupId: 285938706
 group: 15632202
 venue: 27310813
 ---

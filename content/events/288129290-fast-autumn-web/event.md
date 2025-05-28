@@ -1,7 +1,6 @@
 ---
 title: Fast Autumn Web
-date: '2022-09-17'
-time: '1615'
+dateTime: '2022-09-17 16:15'
 duration: 150
 cover: ./659715.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 288129290
+meetupId: 288129290
 group: 15632202
 venue: 27370028
 ---

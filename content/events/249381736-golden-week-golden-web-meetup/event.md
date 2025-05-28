@@ -1,10 +1,9 @@
 ---
 title: 'Golden Week Golden Web Meetup '
-date: '2018-04-28'
-time: '1800'
+dateTime: '2018-04-28 18:00'
 duration: 120
 cover: ./506739.webp
-id: 249381736
+meetupId: 249381736
 group: 15632202
 venue: 24213835
 ---

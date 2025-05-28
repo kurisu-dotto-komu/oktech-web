@@ -1,9 +1,8 @@
 ---
 title: OWDDM ✕ HNKansai − End of Year Party
-date: '2016-12-16'
-time: '1930'
+dateTime: '2016-12-16 19:30'
 cover: ./506739.webp
-id: 236107100
+meetupId: 236107100
 group: 15632202
 venue: 24945450
 ---

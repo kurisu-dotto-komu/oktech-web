@@ -1,12 +1,11 @@
 ---
 title: Creative Combo Mixer
-date: '2022-09-07'
-time: '1900'
+dateTime: '2022-09-07 19:00'
 duration: 120
 cover: ./572066.webp
 topics:
   - Web Design
-id: 288045345
+meetupId: 288045345
 group: 15632202
 venue: 27398802
 ---

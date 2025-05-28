@@ -1,10 +1,9 @@
 ---
 title: 'OWDDM: Let''s start off the new year right'
-date: '2018-02-24'
-time: '1800'
+dateTime: '2018-02-24 18:00'
 duration: 120
 cover: ./506739.webp
-id: 247246264
+meetupId: 247246264
 group: 15632202
 venue: 24213835
 ---

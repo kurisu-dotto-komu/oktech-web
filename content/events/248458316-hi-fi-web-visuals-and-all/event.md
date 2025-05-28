@@ -1,10 +1,9 @@
 ---
 title: Hi-fi Web - Visuals and all
-date: '2018-03-31'
-time: '1800'
+dateTime: '2018-03-31 18:00'
 duration: 120
 cover: ./506739.webp
-id: 248458316
+meetupId: 248458316
 group: 15632202
 venue: 24213835
 ---

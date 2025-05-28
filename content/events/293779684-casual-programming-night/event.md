@@ -1,7 +1,6 @@
 ---
 title: (Casual)  Programming Night
-date: '2023-05-30'
-time: '1700'
+dateTime: '2023-05-30 17:00'
 duration: 240
 cover: ./506739.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 293779684
+meetupId: 293779684
 group: 15632202
 venue: 27584681
 ---

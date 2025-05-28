@@ -1,10 +1,9 @@
 ---
 title: Relaxed web talks
-date: '2015-08-29'
-time: '1800'
+dateTime: '2015-08-29 18:00'
 duration: 120
 cover: ./506739.webp
-id: 224252563
+meetupId: 224252563
 group: 15632202
 venue: 23994174
 ---

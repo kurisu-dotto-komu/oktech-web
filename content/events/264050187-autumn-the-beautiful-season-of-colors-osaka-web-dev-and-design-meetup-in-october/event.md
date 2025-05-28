@@ -2,11 +2,10 @@
 title: >-
   Autumn the beautiful season of colors - Osaka Web Dev & Design Meetup in
   October
-date: '2019-10-26'
-time: '1800'
+dateTime: '2019-10-26 18:00'
 duration: 120
 cover: ./033876.webp
-id: 264050187
+meetupId: 264050187
 group: 15632202
 venue: 26262059
 ---

@@ -1,7 +1,6 @@
 ---
 title: 'How to Get into Tech: Part 1'
-date: '2024-01-27'
-time: '1700'
+dateTime: '2024-01-27 17:00'
 duration: 150
 cover: ./457344.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 297676223
+meetupId: 297676223
 group: 15632202
 venue: 24529555
 ---

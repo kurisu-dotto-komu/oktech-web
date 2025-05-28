@@ -1,7 +1,6 @@
 ---
 title: Rust for the Web
-date: '2024-01-13'
-time: '1700'
+dateTime: '2024-01-13 17:00'
 duration: 120
 cover: ./354252.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 297610678
+meetupId: 297610678
 group: 36450361
 venue: 27513738
 ---

@@ -1,7 +1,6 @@
 ---
 title: '#IVSKyoto2023, machine learning, and open source funding'
-date: '2023-07-29'
-time: '1730'
+dateTime: '2023-07-29 17:30'
 duration: 120
 cover: ./506744.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - New Technology
   - Open Source
   - Software Development
-id: 294488629
+meetupId: 294488629
 group: 36450361
 venue: 27621042
 ---

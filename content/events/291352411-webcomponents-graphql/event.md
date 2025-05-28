@@ -1,7 +1,6 @@
 ---
 title: WebComponents + GraphQL
-date: '2023-02-18'
-time: '1700'
+dateTime: '2023-02-18 17:00'
 duration: 120
 cover: ./439755.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 291352411
+meetupId: 291352411
 group: 15632202
 venue: 27370028
 ---

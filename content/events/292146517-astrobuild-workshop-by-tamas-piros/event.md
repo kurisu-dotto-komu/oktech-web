@@ -1,7 +1,6 @@
 ---
 title: Astro.build Workshop by Tamas Piros
-date: '2023-05-19'
-time: '1900'
+dateTime: '2023-05-19 19:00'
 duration: 150
 cover: ./830928.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 292146517
+meetupId: 292146517
 group: 15632202
 venue: 27553394
 ---

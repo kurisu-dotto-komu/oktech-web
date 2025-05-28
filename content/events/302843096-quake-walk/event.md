@@ -1,13 +1,12 @@
 ---
 title: Quake Walk
-date: '2024-08-25'
-time: 0945
+dateTime: '2024-08-25 09:45'
 duration: 435
 cover: ./932303.webp
 topics:
   - Injury Prevention
   - Walking
-id: 302843096
+meetupId: 302843096
 group: 15632202
 venue: 27868919
 ---

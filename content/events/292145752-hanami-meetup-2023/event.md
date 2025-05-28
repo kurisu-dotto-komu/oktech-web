@@ -1,7 +1,6 @@
 ---
 title: Hanami Meetup 2023
-date: '2023-03-25'
-time: '1400'
+dateTime: '2023-03-25 14:00'
 duration: 300
 cover: ./192450.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - User Experience
   - Web Design
-id: 292145752
+meetupId: 292145752
 group: 36450361
 venue: 25472037
 ---

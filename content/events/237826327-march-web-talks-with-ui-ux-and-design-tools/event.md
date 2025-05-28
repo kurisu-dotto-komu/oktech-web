@@ -1,10 +1,9 @@
 ---
 title: March web talks with UI/ UX and design tools
-date: '2017-03-25'
-time: '1800'
+dateTime: '2017-03-25 18:00'
 duration: 120
 cover: ./506739.webp
-id: 237826327
+meetupId: 237826327
 group: 15632202
 venue: 24213835
 ---

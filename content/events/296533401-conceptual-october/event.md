@@ -1,7 +1,6 @@
 ---
 title: Conceptual October
-date: '2023-10-21'
-time: '1700'
+dateTime: '2023-10-21 17:00'
 duration: 120
 cover: ./353221.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 296533401
+meetupId: 296533401
 group: 15632202
 venue: 24529555
 ---

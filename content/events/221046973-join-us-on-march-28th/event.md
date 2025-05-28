@@ -1,9 +1,8 @@
 ---
 title: Join Us On March 28th
-date: '2015-03-28'
-time: '1715'
+dateTime: '2015-03-28 17:15'
 cover: ./506739.webp
-id: 221046973
+meetupId: 221046973
 group: 15632202
 venue: 22577042
 ---

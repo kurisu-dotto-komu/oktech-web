@@ -1,7 +1,6 @@
 ---
 title: 'How to Get into Tech: Part 2'
-date: '2024-02-17'
-time: '1700'
+dateTime: '2024-02-17 17:00'
 duration: 120
 cover: ./814765.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 298753297
+meetupId: 298753297
 group: 15632202
 venue: 27553394
 ---

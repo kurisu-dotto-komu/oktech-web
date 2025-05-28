@@ -1,7 +1,6 @@
 ---
 title: Collaborative QA
-date: '2024-10-12'
-time: '1700'
+dateTime: '2024-10-12 17:00'
 duration: 120
 cover: ./594749.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - New Technology
   - Web Design
   - Web Development
-id: 302995442
+meetupId: 302995442
 group: 15632202
 venue: 24529555
 ---

@@ -1,7 +1,6 @@
 ---
 title: Beginning Perspectives in March!
-date: '2023-03-18'
-time: '1700'
+dateTime: '2023-03-18 17:00'
 duration: 120
 cover: ./142821.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 291352432
+meetupId: 291352432
 group: 15632202
 venue: 27370028
 ---

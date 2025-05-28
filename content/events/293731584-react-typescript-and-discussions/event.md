@@ -1,7 +1,6 @@
 ---
 title: 'React, TypeScript and Discussions'
-date: '2023-06-24'
-time: '1700'
+dateTime: '2023-06-24 17:00'
 duration: 180
 cover: ./801628.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - ReactJS
   - Typescript
   - Web Design
-id: 293731584
+meetupId: 293731584
 group: 36450361
 venue: 27585838
 ---

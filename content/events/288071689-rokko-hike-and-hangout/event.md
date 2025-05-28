@@ -1,7 +1,6 @@
 ---
 title: Rokko Hike and Hangout
-date: '2022-10-01'
-time: 0810
+dateTime: '2022-10-01 08:10'
 duration: 575
 cover: ./209916.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 288071689
+meetupId: 288071689
 group: 15632202
 venue: 27024215
 ---

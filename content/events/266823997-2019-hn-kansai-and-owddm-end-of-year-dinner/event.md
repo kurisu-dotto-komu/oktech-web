@@ -1,10 +1,9 @@
 ---
 title: 2019 HN Kansai & OWDDM End of Year Dinner
-date: '2019-12-14'
-time: '1800'
+dateTime: '2019-12-14 18:00'
 duration: 180
 cover: ./073324.webp
-id: 266823997
+meetupId: 266823997
 group: 15632202
 venue: 25620385
 ---

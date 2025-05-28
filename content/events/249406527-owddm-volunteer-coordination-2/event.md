@@ -1,10 +1,9 @@
 ---
 title: 'OWDDM Volunteer Coordination #2'
-date: '2018-04-16'
-time: '1900'
+dateTime: '2018-04-16 19:00'
 duration: 120
 cover: ./506739.webp
-id: 249406527
+meetupId: 249406527
 group: 15632202
 venue: 25085262
 ---

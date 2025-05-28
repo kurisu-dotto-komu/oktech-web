@@ -1,9 +1,8 @@
 ---
 title: Kick-Off 2015 Meetup
-date: '2015-01-24'
-time: '1600'
+dateTime: '2015-01-24 16:00'
 cover: ./506739.webp
-id: 219327553
+meetupId: 219327553
 group: 15632202
 venue: 22577042
 ---

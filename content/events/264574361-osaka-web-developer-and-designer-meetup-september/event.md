@@ -1,10 +1,9 @@
 ---
 title: Osaka Web Developer & Designer Meetup - September
-date: '2019-09-28'
-time: '1830'
+dateTime: '2019-09-28 18:30'
 duration: 120
 cover: ./506739.webp
-id: 264574361
+meetupId: 264574361
 group: 15632202
 venue: 26539881
 ---

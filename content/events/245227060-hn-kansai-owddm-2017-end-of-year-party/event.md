@@ -1,10 +1,9 @@
 ---
 title: HN Kansai + OWDDM 2017 End of Year Party
-date: '2017-12-09'
-time: '1930'
+dateTime: '2017-12-09 19:30'
 duration: 120
 cover: ./506739.webp
-id: 245227060
+meetupId: 245227060
 group: 15632202
 venue: 25620385
 ---

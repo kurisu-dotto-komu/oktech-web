@@ -1,7 +1,6 @@
 ---
 title: Cross Cultural Teams
-date: '2024-05-18'
-time: '1900'
+dateTime: '2024-05-18 19:00'
 duration: 120
 cover: ./093695.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Team Building
   - Technology
   - Workplace
-id: 300388533
+meetupId: 300388533
 group: 15632202
 venue: 24529555
 ---

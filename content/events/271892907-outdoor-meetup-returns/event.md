@@ -1,10 +1,9 @@
 ---
 title: Outdoor Meetup Returns
-date: '2020-09-26'
-time: '1500'
+dateTime: '2020-09-26 15:00'
 duration: 120
 cover: ./901481.webp
-id: 271892907
+meetupId: 271892907
 group: 15632202
 venue: 26936190
 ---

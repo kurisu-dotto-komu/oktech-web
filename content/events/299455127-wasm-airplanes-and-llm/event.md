@@ -1,7 +1,6 @@
 ---
 title: WASM Airplanes and LLM
-date: '2024-03-16'
-time: '1700'
+dateTime: '2024-03-16 17:00'
 duration: 180
 cover: ./463552.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 299455127
+meetupId: 299455127
 group: 36450361
 venue: 27513738
 ---

@@ -1,10 +1,9 @@
 ---
 title: 'OWDDM April 2019 Meetup '
-date: '2019-04-27'
-time: '1800'
+dateTime: '2019-04-27 18:00'
 duration: 120
 cover: ./712718.webp
-id: 260877986
+meetupId: 260877986
 group: 15632202
 venue: 26262059
 ---

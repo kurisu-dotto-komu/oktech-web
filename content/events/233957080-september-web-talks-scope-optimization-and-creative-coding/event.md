@@ -1,9 +1,8 @@
 ---
 title: 'September web talks - Scope, Optimization, and Creative Coding'
-date: '2016-09-24'
-time: '1800'
+dateTime: '2016-09-24 18:00'
 cover: ./506739.webp
-id: 233957080
+meetupId: 233957080
 group: 15632202
 venue: 24213835
 ---

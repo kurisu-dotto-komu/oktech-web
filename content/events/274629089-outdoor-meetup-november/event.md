@@ -1,10 +1,9 @@
 ---
 title: Outdoor Meetup November
-date: '2020-11-21'
-time: '1500'
+dateTime: '2020-11-21 15:00'
 duration: 120
 cover: ./901481.webp
-id: 274629089
+meetupId: 274629089
 group: 15632202
 venue: 26936190
 ---

@@ -1,7 +1,6 @@
 ---
 title: OWDDM × HN Kansai - Hacker Hanami in Osaka
-date: '2023-04-01'
-time: '1200'
+dateTime: '2023-04-01 12:00'
 duration: 420
 cover: ./334029.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 292274060
+meetupId: 292274060
 group: 15632202
 venue: 27394125
 ---

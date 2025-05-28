@@ -1,7 +1,6 @@
 ---
 title: Mechanical Keyboard Social
-date: '2023-09-30'
-time: '1700'
+dateTime: '2023-09-30 17:00'
 duration: 180
 cover: ./822720.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - ReactJS
   - Typescript
   - Web Design
-id: 295865712
+meetupId: 295865712
 group: 36450361
 venue: 27585838
 ---

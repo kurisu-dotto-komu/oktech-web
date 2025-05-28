@@ -1,7 +1,6 @@
 ---
 title: Workshop Like S3
-date: '2024-06-22'
-time: '1700'
+dateTime: '2024-06-22 17:00'
 duration: 180
 cover: ./656528.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 301456891
+meetupId: 301456891
 group: 15632202
 venue: 27009944
 ---

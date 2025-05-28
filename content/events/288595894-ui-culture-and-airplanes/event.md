@@ -1,7 +1,6 @@
 ---
 title: UI culture and Airplanes
-date: '2022-10-15'
-time: '1645'
+dateTime: '2022-10-15 16:45'
 duration: 150
 cover: ./382348.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 288595894
+meetupId: 288595894
 group: 15632202
 venue: 27370028
 ---

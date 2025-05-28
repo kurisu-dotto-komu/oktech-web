@@ -1,7 +1,6 @@
 ---
 title: Key to Resume
-date: '2024-09-07'
-time: '1700'
+dateTime: '2024-09-07 17:00'
 duration: 120
 cover: ./823615.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 302750416
+meetupId: 302750416
 group: 15632202
 venue: 27553394
 ---

@@ -1,7 +1,6 @@
 ---
 title: Talk at the Café
-date: '2022-06-25'
-time: '1730'
+dateTime: '2022-06-25 17:30'
 duration: 90
 cover: ./036038.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - Internet Professionals
   - Software Development
   - Web Development
-id: 286728584
+meetupId: 286728584
 group: 15632202
 venue: 27310813
 ---

@@ -1,7 +1,6 @@
 ---
 title: End of Web-Year (Party) 2022
-date: '2022-12-30'
-time: '2000'
+dateTime: '2022-12-30 20:00'
 duration: 120
 cover: ./475265.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 290151616
+meetupId: 290151616
 group: 15632202
 venue: 27479006
 ---

@@ -1,10 +1,9 @@
 ---
 title: Spring time March Meetup - rekindle your passion for web development
-date: '2019-03-23'
-time: '1800'
+dateTime: '2019-03-23 18:00'
 duration: 120
 cover: ./506739.webp
-id: 259644459
+meetupId: 259644459
 group: 15632202
 venue: 26262059
 ---

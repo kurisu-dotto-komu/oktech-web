@@ -1,10 +1,9 @@
 ---
 title: 2020 - End of Year "Virtual" Party
-date: '2020-12-31'
-time: '2200'
+dateTime: '2020-12-31 22:00'
 duration: 120
 cover: ./121224.webp
-id: 275387371
+meetupId: 275387371
 group: 15632202
 venue: 26906060
 ---

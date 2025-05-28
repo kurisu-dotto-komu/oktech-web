@@ -1,9 +1,8 @@
 ---
 title: 'OWDDM: Escape the August heat at this month''s summer meetup in Osaka'
-date: '2016-08-27'
-time: '1800'
+dateTime: '2016-08-27 18:00'
 cover: ./506739.webp
-id: 233221987
+meetupId: 233221987
 group: 15632202
 venue: 24213835
 ---

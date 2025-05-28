@@ -1,10 +1,9 @@
 ---
 title: April's web developer talks
-date: '2015-04-25'
-time: '1600'
+dateTime: '2015-04-25 16:00'
 duration: 120
 cover: ./506739.webp
-id: 221648850
+meetupId: 221648850
 group: 15632202
 venue: 22577042
 ---

@@ -1,10 +1,9 @@
 ---
 title: Monthly Meetup in November!
-date: '2014-11-29'
-time: '1600'
+dateTime: '2014-11-29 16:00'
 duration: 120
 cover: ./506739.webp
-id: 216341542
+meetupId: 216341542
 group: 15632202
 venue: 22577042
 ---

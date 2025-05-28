@@ -1,7 +1,6 @@
 ---
 title: Rights and Unions
-date: '2025-04-19'
-time: '1700'
+dateTime: '2025-04-19 17:00'
 duration: 120
 cover: ./886141.webp
 topics:
@@ -9,7 +8,7 @@ topics:
   - Labor Unions
   - Web Development
   - Workplace
-id: 305451315
+meetupId: 305451315
 group: 15632202
 venue: 27553394
 ---

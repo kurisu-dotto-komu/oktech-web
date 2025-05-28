@@ -1,10 +1,9 @@
 ---
 title: OWDDM May 2018 Meetup
-date: '2018-05-26'
-time: '1800'
+dateTime: '2018-05-26 18:00'
 duration: 120
 cover: ./506739.webp
-id: 249925376
+meetupId: 249925376
 group: 15632202
 venue: 24870768
 ---

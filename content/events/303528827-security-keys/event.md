@@ -1,7 +1,6 @@
 ---
 title: Security Keys
-date: '2024-11-02'
-time: '1700'
+dateTime: '2024-11-02 17:00'
 duration: 120
 cover: ./594991.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 303528827
+meetupId: 303528827
 group: 36450361
 venue: 27513738
 ---

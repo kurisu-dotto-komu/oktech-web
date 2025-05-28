@@ -1,7 +1,6 @@
 ---
 title: Chrome Summer Photos
-date: '2023-07-22'
-time: '1700'
+dateTime: '2023-07-22 17:00'
 duration: 150
 cover: ./196039.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 294290319
+meetupId: 294290319
 group: 15632202
 venue: 27553394
 ---

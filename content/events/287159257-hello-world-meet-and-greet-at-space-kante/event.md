@@ -1,7 +1,6 @@
 ---
 title: Hello World - Meet & Greet at Space Kante
-date: '2022-07-16'
-time: '1500'
+dateTime: '2022-07-16 15:00'
 duration: 120
 cover: ./516520.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 287159257
+meetupId: 287159257
 group: 36450361
 venue: 27370201
 ---

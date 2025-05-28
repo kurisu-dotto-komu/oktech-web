@@ -1,9 +1,8 @@
 ---
 title: February 2015 Meetup
-date: '2015-02-28'
-time: '1600'
+dateTime: '2015-02-28 16:00'
 cover: ./506739.webp
-id: 220314026
+meetupId: 220314026
 group: 15632202
 venue: 22577042
 ---

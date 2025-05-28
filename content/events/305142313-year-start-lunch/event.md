@@ -1,10 +1,9 @@
 ---
 title: Year-Start Lunch
-date: '2025-01-10'
-time: '1200'
+dateTime: '2025-01-10 12:00'
 duration: 120
 cover: ./277879.webp
-id: 305142313
+meetupId: 305142313
 group: 36450361
 venue: 27929005
 ---

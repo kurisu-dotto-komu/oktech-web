@@ -1,7 +1,6 @@
 ---
 title: 'Workshop: Create a blog/portfolio in Astro and Hygraph'
-date: '2024-03-23'
-time: '1700'
+dateTime: '2024-03-23 17:00'
 duration: 150
 cover: ./478580.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 299334647
+meetupId: 299334647
 group: 15632202
 venue: 24529555
 ---

@@ -1,9 +1,8 @@
 ---
 title: Summer night with cool design and tech.
-date: '2016-07-30'
-time: '1800'
+dateTime: '2016-07-30 18:00'
 cover: ./506739.webp
-id: 232528649
+meetupId: 232528649
 group: 15632202
 venue: 24213835
 ---

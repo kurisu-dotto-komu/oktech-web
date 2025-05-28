@@ -1,7 +1,6 @@
 ---
 title: Vim and Noise
-date: '2024-04-13'
-time: '1700'
+dateTime: '2024-04-13 17:00'
 duration: 150
 cover: ./759804.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 299830334
+meetupId: 299830334
 group: 15632202
 venue: 27553394
 ---

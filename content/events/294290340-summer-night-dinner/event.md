@@ -1,12 +1,11 @@
 ---
 title: Summer Night Dinner
-date: '2023-07-07'
-time: '1900'
+dateTime: '2023-07-07 19:00'
 duration: 120
 cover: ./506739.webp
 topics:
   - Dinner
-id: 294290340
+meetupId: 294290340
 group: 15632202
 venue: 27606535
 ---

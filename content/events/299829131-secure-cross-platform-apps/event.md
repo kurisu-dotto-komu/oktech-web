@@ -1,7 +1,6 @@
 ---
 title: Secure Cross Platform Apps
-date: '2024-04-20'
-time: '1700'
+dateTime: '2024-04-20 17:00'
 duration: 180
 cover: ./757256.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - Software Development
   - Web Design
   - Web Development
-id: 299829131
+meetupId: 299829131
 group: 36450361
 venue: 27513738
 ---

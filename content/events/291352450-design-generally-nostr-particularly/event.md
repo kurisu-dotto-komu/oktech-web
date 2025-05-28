@@ -1,7 +1,6 @@
 ---
 title: 'Design generally, Nostr particularly'
-date: '2023-04-15'
-time: '1700'
+dateTime: '2023-04-15 17:00'
 duration: 120
 cover: ./794415.webp
 topics:
@@ -10,7 +9,7 @@ topics:
   - UX Design
   - Web Design
   - Web Development
-id: 291352450
+meetupId: 291352450
 group: 15632202
 venue: 27370028
 ---

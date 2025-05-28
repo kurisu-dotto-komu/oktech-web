@@ -1,9 +1,8 @@
 ---
 title: Spring Meetup - what is lurking behind those laptops?
-date: '2016-03-19'
-time: '1800'
+dateTime: '2016-03-19 18:00'
 cover: ./506739.webp
-id: 229405636
+meetupId: 229405636
 group: 15632202
 venue: 24213835
 ---
