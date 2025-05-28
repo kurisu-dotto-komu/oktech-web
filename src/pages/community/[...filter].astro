@@ -2,7 +2,7 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
 import MemberSummary from "../../components/MemberSummary.astro";
-import { members, POSSIBLE_ROLES, ROLE_CONFIGS, type Role } from "../../data";
+import { getMembers, POSSIBLE_ROLES, ROLE_CONFIGS, type Role } from "../../data";
 import { Icon } from "astro-icon/components";
 import Link from "../../components/Link.astro";
 
@@ -13,6 +13,8 @@ export function getStaticPaths() {
 }
 
 const { filter } = Astro.params;
+
+const members = await getMembers();
 
 const role = ROLE_CONFIGS[filter as Role];
 

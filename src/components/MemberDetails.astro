@@ -1,6 +1,7 @@
 ---
 import { type Member } from "../data";
 import MemberSocialLink from "./MemberSocialLink.astro";
+import MemberImage from "./MemberImage.astro";
 
 interface Props {
   member: Member;
@@ -11,11 +12,7 @@ const { member } = Astro.props;
 
 <div class="w-full flex flex-col md:flex-row gap-8">
   <figure class="md:w-1/3">
-    <img
-      src={member.avatar}
-      alt={member.name}
-      class="rounded-xl w-full h-[400px] object-cover shadow-lg"
-    />
+    <MemberImage member={member} class="w-full h-[400px] shadow-lg" />
   </figure>
 
   <div class="w-full flex flex-col gap-6">

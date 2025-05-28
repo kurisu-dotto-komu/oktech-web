@@ -1,10 +1,7 @@
 ---
 import type { Event } from "../data";
 import EventInfo from "./EventInfo.astro";
-import Lorem from "./Lorem.astro";
 import EventJoinButton from "./EventJoinButton.astro";
-import { getCollection } from "astro:content";
-import { getEntry } from "astro:content";
 import { render } from "astro:content";
 import { Image } from "astro:assets";
 
@@ -14,7 +11,7 @@ interface Props {
 
 const { event } = Astro.props;
 
-const markdown = await import(`/content/events/${event.id}/event.md`);
+const markdown = await import(`../../content/events/${event.id}/event.md`);
 
 if (!markdown) {
   throw new Error(`Event with id ${event.id} not found`);

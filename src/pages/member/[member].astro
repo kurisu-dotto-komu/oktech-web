@@ -3,17 +3,20 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
 import MemberDetails from "../../components/MemberDetails.astro";
 import { Icon } from "astro-icon/components";
-import { members, type Member } from "../../data";
+import { getMembers } from "../../data";
 import EventFeatured from "../../components/EventFeatured.astro";
 import Link from "../../components/Link.astro";
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const members = await getMembers();
   return members.map((member) => ({
     params: { member: member.id },
   }));
 }
 
 const { member: memberId } = Astro.params;
+
+const members = await getMembers();
 
 const currentIndex = members.findIndex((m) => m.id === memberId);
 const member = members[currentIndex];

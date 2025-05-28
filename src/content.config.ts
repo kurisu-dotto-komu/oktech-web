@@ -112,7 +112,7 @@ const speakers = defineCollection({
       id: z.string(),
       name: z.string(),
       skills: z.array(z.string()).optional(),
-      events: z.array(z.string()).optional(), // will be linked later via reference
+      events: z.array(z.number()).optional(), // will be linked later via reference
       avatar: image().optional(),
       theme: z.string().optional(),
       bio: z.string().optional(),

@@ -1,0 +1,23 @@
+---
+import { type Member } from "../data";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  member: Member;
+  class?: string;
+}
+
+const { member, class: extraClass = "" } = Astro.props as Props;
+---
+
+<div
+  class={`overflow-hidden flex items-center justify-center bg-primary text-primary-content rounded-lg ${extraClass}`}
+>
+  {
+    member.avatar && member.avatar.length > 0 ? (
+      <img src={member.avatar} alt={member.name} class="w-full h-full object-cover" />
+    ) : (
+      <Icon name="lucide:user" class="w-full h-full opacity-50" />
+    )
+  }
+</div>
