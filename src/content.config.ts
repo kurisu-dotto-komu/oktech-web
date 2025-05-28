@@ -62,11 +62,24 @@ const eventGalleryImage = defineCollection({
 
 const speakers = defineCollection({
   loader: async () => {
-    // Load every speaker markdown file located at `/content/speakers/**/speaker.md`
-    // The folder name will be used as the unique slug / id for the speaker.
     const imports = await import.meta.glob("/content/speakers/**/speaker.md", {
       eager: true,
     });
+
+    // Build lookup table of meetupId -> event slug once
+    const eventImports = await import.meta.glob("/content/events/**/event.md", {
+      eager: true,
+    });
+
+    const meetupIdToSlug = Object.fromEntries(
+      Object.entries(eventImports).map(([fileName, mod]) => {
+        const base = fileName.replace("/event.md", "");
+        const slug = base.split("/").pop() as string;
+        const { frontmatter } = mod as { frontmatter: Record<string, unknown> };
+        const meetupId = frontmatter.meetupId ? String(frontmatter.meetupId) : undefined;
+        return [meetupId, slug];
+      })
+    ) as Record<string | undefined, string>;
 
     return Object.entries(imports).map(([fileName, module]) => {
       const basePath = fileName.replace("/speaker.md", "");
@@ -84,8 +97,12 @@ const speakers = defineCollection({
       // When optional properties don't exist yet, fall back to safe placeholders.
       const theme = (frontmatter.theme as string | undefined) ?? "pastel";
       const skills = (frontmatter.skills as string[] | undefined) ?? [];
-      const events = (frontmatter.events as string[] | undefined) ?? [];
 
+      const rawEvents = (frontmatter.events as (string | number)[] | undefined) ?? [];
+      const events = rawEvents
+        .map((id) => meetupIdToSlug[String(id)])
+        .filter(Boolean) as string[];
+       
       // Extract a plain-text version of the markdown body to use as a simple bio.
       // `body.render()` gives us HTML – strip tags for now because we only need raw text.
       let bio: string | undefined;
@@ -112,7 +129,7 @@ const speakers = defineCollection({
       id: z.string(),
       name: z.string(),
       skills: z.array(z.string()).optional(),
-      events: z.array(z.number()).optional(), // will be linked later via reference
+      events: z.array(reference("events")).optional(),
       avatar: image().optional(),
       theme: z.string().optional(),
       bio: z.string().optional(),

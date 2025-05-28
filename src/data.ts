@@ -50,9 +50,20 @@ export type Member = {
 };
 
 export async function getMembers(): Promise<Member[]> {
-  const speakers = await getCollection("speakers");
+  const [speakers, events] = await Promise.all([
+    getCollection("speakers"),
+    getCollection("events"),
+  ]);
+
+  // Build a quick map for fast look-ups
+  const eventsById = new Map(events.map(({ data }) => [data.id, data]));
 
   return speakers.map(({ data }) => {
+    const rawEventIds = (data.events as string[] | undefined) ?? [];
+    const linkedEvents: Event[] = rawEventIds
+      .map((id) => eventsById.get(id))
+      .filter(Boolean) as Event[];
+
     return {
       id: data.id,
       name: data.name,
@@ -66,7 +77,7 @@ export async function getMembers(): Promise<Member[]> {
       email: "",
       roles: ["speaker"],
       theme: (data.theme as string) ?? "pastel",
-      events: [], // linking to events later
+      events: linkedEvents ?? [],
       links: {},
     } satisfies Member;
   });

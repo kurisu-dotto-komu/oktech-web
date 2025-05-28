@@ -3,9 +3,10 @@ import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
 import EventDetails from "./EventDetails.astro";
 import { Icon } from "astro-icon/components";
-import { getEvents } from "../data";
+import { getEvents, getMembers } from "../data";
 import Link from "./Link.astro";
 import EventGallery from "./EventGallery.astro";
+import MemberSummary from "./MemberSummary.astro";
 
 const { slug: eventId } = Astro.params;
 
@@ -14,6 +15,10 @@ const currentIndex = events.findIndex((e) => e.id === eventId);
 const event = events[currentIndex];
 const prevEvent = currentIndex > 0 ? events[currentIndex - 1] : null;
 const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : null;
+
+// Fetch members and find those linked to this event
+const members = await getMembers();
+const relatedMembers = members.filter((m) => m.events.some((e) => e.id === event.id));
 ---
 
 <PageLayout title={`${event.title} - Events`}>
@@ -45,4 +50,13 @@ const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : 
   <Section wide grid title="Gallery">
     <EventGallery event={event} />
   </Section>
+  {
+    relatedMembers.length > 0 && (
+      <Section wide grid title="Speakers">
+        {relatedMembers.map((member) => (
+          <MemberSummary member={member} />
+        ))}
+      </Section>
+    )
+  }
 </PageLayout>
