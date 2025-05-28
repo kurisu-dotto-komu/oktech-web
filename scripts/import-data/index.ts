@@ -50,7 +50,10 @@ async function processGallery(eventDir: string, photos: Photo[]) {
       await downloadImage(photo.file, galleryImageLocalPath);
       if (photo.caption) {
         const yamlPath = `${galleryImageLocalPath}.yaml`;
-        const yamlContent = yamlStringify({ caption: photo.caption }, { lineWidth: 0 });
+        const yamlContent = yamlStringify(
+          { caption: photo.caption },
+          { lineWidth: 0, defaultKeyType: "PLAIN", defaultStringType: "QUOTE_DOUBLE" },
+        );
 
         if (!existsSync(yamlPath)) {
           await fs.writeFile(yamlPath, yamlContent);
@@ -111,23 +114,23 @@ async function processEvent(event: Event, group: string, photos: Photo[]): Promi
   await fs.mkdir(eventDir, { recursive: true });
   const mdPath = path.join(EVENTS_BASE_DIR, slug, "event.md");
 
-  // conver the date to Japan timezone
+  const date = new Date(event.time).toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "Asia/Tokyo",
+  });
+  const time = new Date(event.time).toLocaleTimeString("en-CA", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Tokyo",
+  });
+  const dateTime = `${date} ${time}`;
+  // convert the date to Japan timezone for easier editing
   const newFrontmatter: Record<string, unknown> = {
     title: event.title,
-    date: new Date(event.time).toLocaleDateString("en-CA", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      timeZone: "Asia/Tokyo",
-    }),
-    time: new Date(event.time)
-      .toLocaleTimeString("en-CA", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-        timeZone: "Asia/Tokyo",
-      })
-      .replace(":", ""),
+    dateTime,
   };
 
   if (event.duration) {
@@ -145,7 +148,7 @@ async function processEvent(event: Event, group: string, photos: Photo[]): Promi
     newFrontmatter.topics = event.topics;
   }
 
-  newFrontmatter.id = parseInt(event.id);
+  newFrontmatter.meetupId = parseInt(event.id);
   newFrontmatter.group = parseInt(group);
   newFrontmatter.venue = parseInt(event.venue);
 

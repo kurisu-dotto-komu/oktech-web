@@ -1,0 +1,40 @@
+---
+import { getEntries } from "astro:content";
+import PageLayout from "../layouts/PageLayout.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
+// Get all entries from a collection.
+// Requires the name of the collection as an argument.
+const allEvents = await getCollection("events");
+const allEventImages = await getCollection("eventGalleryImage");
+
+const event = allEvents[0];
+const eventImage = allEventImages[0];
+
+const thisGalleryImages = await getCollection(
+  "eventGalleryImage",
+  (entry) => entry.data.event.id === event.id,
+);
+
+// const image = event.data.cover && (await import(event.data.cover));
+// const eventImages = getEntries(event.)
+---
+
+<PageLayout title="Test">
+  <pre>{JSON.stringify(event, null, 2)}</pre>
+  <pre>{JSON.stringify({thisGalleryImages}, null, 2)}</pre>
+  {
+    event.data.cover && (
+      <Image src={event.data.cover} alt={event.data.title} width={1024} height={1024} />
+    )
+  }
+  {
+    thisGalleryImages.map((image) => (
+      <div class="flex flex-col gap-2 p-2">
+        <Image src={image.data.path} alt={image.data.caption ?? ""} width={1024} height={1024} />
+        <p>{image.data.caption}</p>
+      </div>
+    ))
+  }
+</PageLayout>
