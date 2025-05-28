@@ -2,10 +2,9 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
 import EventDetails from "./EventDetails.astro";
-import { Icon } from "astro-icon/components";
-import { getEvents } from "../data";
-import Link from "./Link.astro";
 import EventGallery from "./EventGallery.astro";
+import PrevNextButton from "./PrevNextButton.astro";
+import { getEvents } from "../data";
 
 const { slug: eventId } = Astro.params;
 
@@ -18,27 +17,38 @@ const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : 
 
 <PageLayout title={`${event.title} - Events`}>
   <Section>
-    <div class="flex justify-between items-center mb-8">
-      <div class="flex gap-4">
-        {
-          prevEvent && (
-            <Link href={`/events/${prevEvent.id}`} class="btn btn-soft gap-2">
-              <Icon name="lucide:chevron-left" size={20} />
-              Next Event
-            </Link>
-          )
-        }
-      </div>
-      <div class="flex gap-4">
-        {
-          nextEvent && (
-            <Link href={`/events/${nextEvent.id}`} class="btn btn-soft gap-2">
-              Previous Event
-              <Icon name="lucide:chevron-right" size={20} />
-            </Link>
-          )
-        }
-      </div>
+    <div class="flex items-center mb-8 gap-4">
+      {
+        prevEvent && (
+          <PrevNextButton
+            url={`/events/${prevEvent.id}`}
+            image={prevEvent.cover}
+            title={prevEvent.title}
+            subtitle={new Date(prevEvent.dateTime).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+            direction="prev"
+          />
+        )
+      }
+
+      {
+        nextEvent && (
+          <PrevNextButton
+            url={`/events/${nextEvent.id}`}
+            image={nextEvent.cover}
+            title={nextEvent.title}
+            subtitle={new Date(nextEvent.dateTime).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+            direction="next"
+          />
+        )
+      }
     </div>
     <EventDetails event={event} />
   </Section>
