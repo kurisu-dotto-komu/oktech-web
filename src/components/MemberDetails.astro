@@ -30,11 +30,10 @@ const { member } = Astro.props;
           </div>
 
           <div class="flex flex-wrap gap-4">
-            <MemberSocialLink type="email" url={member.email} />
-            <MemberSocialLink type="website" url={member.links?.website} />
-            <MemberSocialLink type="github" url={member.links?.github} />
-            <MemberSocialLink type="twitter" url={member.links?.twitter} />
-            <MemberSocialLink type="linkedin" url={member.links?.linkedin} />
+            <MemberSocialLink link={{ text: member.email, href: `mailto:${member.email}`, icon: "lucide:mail" }} />
+            {member.links?.map((link) => (
+              <MemberSocialLink link={link} />
+            ))}
           </div>
 
           {

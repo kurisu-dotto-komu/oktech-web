@@ -60,11 +60,10 @@ export type Member = {
   theme: string;
   events: Event[];
   links?: {
-    github?: string;
-    twitter?: string;
-    linkedin?: string;
-    website?: string;
-  };
+    text: string;
+    href: string;
+    icon: string;
+  }[];
 };
 
 export type Event = {
@@ -133,12 +132,32 @@ function generateMember(id: string): Member {
     roles: faker.helpers.arrayElements(POSSIBLE_ROLES, { min: 0, max: 3 }),
     theme: faker.helpers.arrayElement(THEMES),
     events: [],
-    links: {
-      github: faker.helpers.maybe(() => `https://github.com/${username}`),
-      twitter: faker.helpers.maybe(() => `https://twitter.com/${username}`),
-      linkedin: faker.helpers.maybe(() => `https://linkedin.com/in/${username}`),
-      website: faker.helpers.maybe(() => `https://${username}.dev`),
-    },
+    links: (() => {
+      const links: { text: string; href: string; icon: string }[] = [];
+      const maybePush = (text: string | undefined, href: string | undefined, icon: string) => {
+        if (href) {
+          links.push({ text: text ?? href.replace(/^https?:\/\//, ""), href, icon });
+        }
+      };
+
+      // Personal website
+      const website = faker.helpers.maybe(() => `https://${username}.dev`);
+      maybePush(website?.replace(/^https?:\/\//, ""), website, "lucide:globe");
+
+      // GitHub
+      const github = faker.helpers.maybe(() => `https://github.com/${username}`);
+      maybePush(`@${username}`, github, "cib:github");
+
+      // Twitter / X
+      const twitter = faker.helpers.maybe(() => `https://twitter.com/${username}`);
+      maybePush(`@${username}`, twitter, "cib:twitter");
+
+      // LinkedIn
+      const linkedin = faker.helpers.maybe(() => `https://linkedin.com/in/${username}`);
+      maybePush("LinkedIn", linkedin, "cib:linkedin");
+
+      return links.length ? links : undefined;
+    })(),
   };
 }
 
