@@ -1,0 +1,30 @@
+---
+title: >-
+  Autumn the beautiful season of colors - Osaka Web Dev & Design Meetup in
+  October
+date: '2019-10-26'
+time: '1800'
+duration: 120
+cover: ./033876.webp
+id: 264050187
+group: 15632202
+venue: 26262059
+---
+
+Hi Everyone.
+
+The weather is getting cooler but the discussions are heating up!
+
+We will start with Mr. Jesse Katsumata who will talk about "Developing react-native efficiently in web" plus some live coding example
+.then(questionTime)
+
+break 10min
+
+Mr. Abe Harufumi will have a talk about Web Development in Japan and its Evolution of it
+.then(questionTime)
+
+at the End of the event, we will head a Bar and cheers together :-)
+
+The event will start at 18:00.
+
+The event is free. We are also accepting donations at the Izakaya

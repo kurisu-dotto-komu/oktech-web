@@ -1,0 +1,40 @@
+---
+title: 'Coffee, Security and Chat'
+date: '2022-04-02'
+time: '1030'
+duration: 90
+cover: ./904983.webp
+topics:
+  - API
+  - Automation
+  - Web Security
+id: 284832684
+group: 15632202
+venue: 26459185
+---
+
+We will be very happy to see you at the next Meetup, our first meeting of the year.
+
+Just to get together, chat about security in an enterprise environment and trade ideas/connections.
+
+At this time, the **slots for Presentations are still open**.
+
+So if you would like to:
+
+* present a lightning talk or
+* moderate a talk or
+* sell an idea/service, or
+* seek collaboration over a project you are working on,
+
+do let any of the Organizers know.
+
+Thanks.
+
+P.S: It's **bring-your-own-coffee** kinda of a place though.
+
+This is the address of the location as given by the owner:
+
+〒530-0014
+大阪府大阪市
+北区鶴野町４−１１
+朝日プラザ梅田
