@@ -5,7 +5,7 @@ import Link from "./Link.astro";
 
 interface Props {
   url: string;
-  image: ImageMetadata;
+  image?: ImageMetadata;
   title: string;
   subtitle?: string;
   direction: "prev" | "next";
@@ -22,11 +22,15 @@ const isNext = direction === "next";
 >
   <Icon name={`lucide:chevron-${isNext ? "right" : "left"}`} size={20} class="mx-4" />
 
-  <figure class="aspect-video h-full flex-shrink-0 overflow-hidden rounded bg-base-300">
-    <Image src={image} alt={title} width={80} height={80} class="w-full h-full object-cover" />
-  </figure>
+  {
+    image && (
+      <figure class="aspect-video h-full flex-shrink-0 overflow-hidden rounded bg-base-300">
+        <Image src={image} alt={title} width={80} height={80} class="w-full h-full object-cover" />
+      </figure>
+    )
+  }
 
-  <div class={`flex flex-col text-${isNext ? "right" : "left"} px-4`}>
+  <div class={`flex flex-col px-4 text-${isNext ? "right" : "left"} `}>
     <span class="text-base font-semibold truncate">{title}</span>
     {subtitle && <span class="text-sm opacity-70">{subtitle}</span>}
   </div>

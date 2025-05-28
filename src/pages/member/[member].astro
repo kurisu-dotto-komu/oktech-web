@@ -2,10 +2,10 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
 import MemberDetails from "../../components/MemberDetails.astro";
-import { Icon } from "astro-icon/components";
-import { getMembers } from "../../data";
+import PrevNextButton from "../../components/PrevNextButton.astro";
 import EventFeatured from "../../components/EventFeatured.astro";
 import Link from "../../components/Link.astro";
+import { getMembers } from "../../data";
 
 export async function getStaticPaths() {
   const members = await getMembers();
@@ -30,20 +30,22 @@ const nextMember = currentIndex < members.length - 1 ? members[currentIndex + 1]
       <div class="flex gap-4">
         {
           prevMember && (
-            <Link href={`/member/${prevMember.id}`} class="btn btn-soft gap-2">
-              <Icon name="lucide:chevron-left" size={20} />
-              Next Member
-            </Link>
+            <PrevNextButton
+              url={`/member/${prevMember.id}`}
+              title={prevMember.name}
+              direction="prev"
+            />
           )
         }
       </div>
       <div class="flex gap-4">
         {
           nextMember && (
-            <Link href={`/member/${nextMember.id}`} class="btn btn-soft gap-2">
-              Previous Member
-              <Icon name="lucide:chevron-right" size={20} />
-            </Link>
+            <PrevNextButton
+              url={`/member/${nextMember.id}`}
+              title={nextMember.name}
+              direction="next"
+            />
           )
         }
       </div>
