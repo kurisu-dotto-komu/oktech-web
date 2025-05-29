@@ -33,7 +33,7 @@ const { Content } = await import(`../../content/events/${event.id}/event.md`);
         />
       </figure>
       <h1 class="hidden md:block text-4xl font-bold pt-6">{event.title}</h1>
-      <div class="flex flex-col gap-4 max-w-none">
+      <div class="max-w-none prose prose-lg">
         <Content />
       </div>
     </div>

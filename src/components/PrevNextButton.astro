@@ -18,7 +18,7 @@ const isNext = direction === "next";
 
 <Link
   href={url}
-  class={`btn btn-soft h-16 items-center py-0 px-2 ${isNext ? "flex-row-reverse ml-auto" : ""}`}
+  class={`btn btn-soft h-16 py-0 px-2 ${isNext ? "flex-row-reverse ml-auto text-right" : "text-left"}`}
 >
   <Icon name={`lucide:chevron-${isNext ? "right" : "left"}`} size={20} class="mx-4" />
 
@@ -30,8 +30,8 @@ const isNext = direction === "next";
     )
   }
 
-  <div class={`flex flex-col px-4 text-${isNext ? "right" : "left"} `}>
-    <span class="text-base font-semibold truncate">{title}</span>
+  <div class={`flex flex-col px-4`}>
+    <span class="text-base font-semibold truncate max-w-50">{title}</span>
     {subtitle && <span class="text-sm opacity-70">{subtitle}</span>}
   </div>
 </Link>

@@ -5,7 +5,7 @@ import MemberDetails from "../../components/MemberDetails.astro";
 import PrevNextButton from "../../components/PrevNextButton.astro";
 import EventFeatured from "../../components/EventFeatured.astro";
 import Link from "../../components/Link.astro";
-import { getMembers } from "../../data";
+import { getEvents, getMembers } from "../../data";
 
 export async function getStaticPaths() {
   const members = await getMembers();
@@ -22,6 +22,11 @@ const currentIndex = members.findIndex((m) => m.id === memberId);
 const member = members[currentIndex];
 const prevMember = currentIndex > 0 ? members[currentIndex - 1] : null;
 const nextMember = currentIndex < members.length - 1 ? members[currentIndex + 1] : null;
+
+const events = await getEvents();
+const memberEvents = events.filter((event) =>
+  member.events.find((e) => event.id.startsWith(`${e}`)),
+);
 ---
 
 <PageLayout title={`${member.name} - Community`}>
@@ -53,10 +58,10 @@ const nextMember = currentIndex < members.length - 1 ? members[currentIndex + 1]
     <MemberDetails member={member} />
   </Section>
   {
-    member.events.length > 0 && (
-      <Section wide>
-        <div class="flex flex-col gap-12">
-          {member.events.map((event) => (
+    memberEvents.length > 0 && (
+      <Section title="Events">
+        <div class="flex flex-col gap-8 pt-8">
+          {memberEvents.map((event) => (
             <EventFeatured event={event} />
           ))}
         </div>

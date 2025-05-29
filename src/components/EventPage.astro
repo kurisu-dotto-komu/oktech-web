@@ -4,7 +4,9 @@ import Section from "./Section.astro";
 import EventDetails from "./EventDetails.astro";
 import EventGallery from "./EventGallery.astro";
 import PrevNextButton from "./PrevNextButton.astro";
-import { getEvents } from "../data";
+import { getEvents, getMembers } from "../data";
+import MemberSummary from "./MemberSummary.astro";
+import { getCollection } from "astro:content";
 
 const { slug: eventId } = Astro.params;
 
@@ -13,6 +15,15 @@ const currentIndex = events.findIndex((e) => e.id === eventId);
 const event = events[currentIndex];
 const prevEvent = currentIndex > 0 ? events[currentIndex - 1] : null;
 const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : null;
+
+const members = await getMembers();
+const eventSpeakers = members.filter((member) =>
+  member.events.find((e) => event.id.startsWith(`${e}`)),
+);
+const galleryImages = await getCollection(
+  "eventGalleryImage",
+  (img) => img.data.event.id === event.id,
+);
 ---
 
 <PageLayout title={`${event.title} - Events`}>
@@ -52,7 +63,20 @@ const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : 
     </div>
     <EventDetails event={event} />
   </Section>
-  <Section wide grid title="Gallery">
-    <EventGallery event={event} />
-  </Section>
+  {
+    eventSpeakers.length > 0 && (
+      <Section grid title="Speakers">
+        {eventSpeakers.map((speaker) => (
+          <MemberSummary member={speaker} />
+        ))}
+      </Section>
+    )
+  }
+  {
+    galleryImages && (
+      <Section wide grid title="Gallery">
+        <EventGallery event={event} />
+      </Section>
+    )
+  }
 </PageLayout>

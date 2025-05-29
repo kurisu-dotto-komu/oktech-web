@@ -41,7 +41,7 @@ export type Member = {
   email: string;
   roles: Role[];
   theme: string;
-  events: Event[];
+  events: number[];
   links?: {
     github?: string;
     twitter?: string;
@@ -72,7 +72,7 @@ export async function getMembers(): Promise<Member[]> {
       email: "",
       roles: ["speaker"],
       theme: theme,
-      events: [], // linking to events later
+      events: data.events ?? [],
       links: {},
     } satisfies Member;
   });
