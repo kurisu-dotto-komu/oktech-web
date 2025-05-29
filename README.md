@@ -1,5 +1,7 @@
 ## TODO
 
+Refactor components before merging
+
 - Its a work in progress and I will continue to develop.
 - Compared to proposed sitemap, we cover same content but reorder a bit for simplicity
 - Merge the events into a single list

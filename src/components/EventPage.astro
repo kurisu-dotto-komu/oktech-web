@@ -2,51 +2,78 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
 import EventDetails from "./EventDetails.astro";
-import { Icon } from "astro-icon/components";
-import { events } from "../data";
-import MemberSummary from "./MemberSummary.astro";
 import EventGallery from "./EventGallery.astro";
-import Link from "./Link.astro";
+import PrevNextButton from "./PrevNextButton.astro";
+import { getEvents, getMembers } from "../data";
+import MemberSummary from "./MemberSummary.astro";
+import { getCollection } from "astro:content";
 
 const { slug: eventId } = Astro.params;
 
+const events = await getEvents();
 const currentIndex = events.findIndex((e) => e.id === eventId);
 const event = events[currentIndex];
 const prevEvent = currentIndex > 0 ? events[currentIndex - 1] : null;
 const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : null;
+
+const members = await getMembers();
+const eventSpeakers = members.filter((member) =>
+  member.events.find((e) => event.id.startsWith(`${e}`)),
+);
+const galleryImages = await getCollection(
+  "eventGalleryImage",
+  (img) => img.data.event.id === event.id,
+);
 ---
 
 <PageLayout title={`${event.title} - Events`}>
   <Section>
-    <div class="flex justify-between items-center mb-8">
-      <div class="flex gap-4">
-        {
-          prevEvent && (
-            <Link href={`/events/${prevEvent.id}`} class="btn btn-soft gap-2">
-              <Icon name="lucide:chevron-left" size={20} />
-              Next Event
-            </Link>
-          )
-        }
-      </div>
-      <div class="flex gap-4">
-        {
-          nextEvent && (
-            <Link href={`/events/${nextEvent.id}`} class="btn btn-soft gap-2">
-              Previous Event
-              <Icon name="lucide:chevron-right" size={20} />
-            </Link>
-          )
-        }
-      </div>
+    <div class="flex items-center mb-8 gap-4">
+      {
+        prevEvent && (
+          <PrevNextButton
+            url={`/events/${prevEvent.id}`}
+            image={prevEvent.cover}
+            title={prevEvent.title}
+            subtitle={new Date(prevEvent.dateTime).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+            direction="prev"
+          />
+        )
+      }
+
+      {
+        nextEvent && (
+          <PrevNextButton
+            url={`/events/${nextEvent.id}`}
+            image={nextEvent.cover}
+            title={nextEvent.title}
+            subtitle={new Date(nextEvent.dateTime).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+            direction="next"
+          />
+        )
+      }
     </div>
     <EventDetails event={event} />
   </Section>
-  <Section grid title="Speakers">
-    {event.speakers.map((speaker) => <MemberSummary member={speaker} />)}
-  </Section>
   {
-    event.gallery && event.gallery.length > 0 && (
+    eventSpeakers.length > 0 && (
+      <Section grid title="Speakers">
+        {eventSpeakers.map((speaker) => (
+          <MemberSummary member={speaker} />
+        ))}
+      </Section>
+    )
+  }
+  {
+    galleryImages && (
       <Section wide grid title="Gallery">
         <EventGallery event={event} />
       </Section>

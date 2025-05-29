@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --host",
     "astro": "astro",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "import": "npx tsx ./scripts/import-data",
+    "clear": "npx tsx ./scripts/import-data/clear"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.5",
@@ -17,15 +19,20 @@
     "astro": "^5.7.5",
     "astro-icon": "^1.1.5",
     "daisyui": "^5.0.28",
+    "gray-matter": "^4.0.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "slugify": "^1.6.6",
     "tailwindcss": "^4.1.4",
-    "theme-change": "^2.5.0"
+    "theme-change": "^2.5.0",
+    "yaml": "^2.8.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.7.0",
     "@iconify-json/cib": "^1.2.2",
     "@iconify-json/lucide": "^1.2.39",
+    "@rollup/plugin-yaml": "^4.1.2",
+    "@tailwindcss/typography": "^0.5.16",
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1"
   }

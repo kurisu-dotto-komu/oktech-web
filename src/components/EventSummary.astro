@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 import { type Event } from "../data";
 import Link from "./Link.astro";
+import { Image } from "astro:assets";
 
 interface Props {
   event: Event;
@@ -10,9 +11,14 @@ interface Props {
 
 const { event, class: className } = Astro.props;
 
-const formattedDate = new Date(event.date).toLocaleDateString("en-US", {
+const dateObj = new Date(event.dateTime);
+const formattedDate = dateObj.toLocaleDateString("en-US", {
   month: "short",
   day: "numeric",
+});
+const formattedTime = dateObj.toLocaleTimeString("en-US", {
+  hour: "numeric",
+  minute: "2-digit",
 });
 ---
 
@@ -21,36 +27,21 @@ const formattedDate = new Date(event.date).toLocaleDateString("en-US", {
   class={`card card-border bg-base-100 hover-zoom ${className ?? ""}`}
 >
   <figure class="aspect-video w-full bg-base-300">
-    <img src={event.coverImage} alt="Event cover" class="w-full h-full object-cover" />
+    <Image
+      src={event.cover}
+      alt={event.title}
+      class="w-full h-full object-cover"
+      width={512}
+      height={512}
+    />
   </figure>
   <div class="card-body p-4 gap-4 flex flex-col">
     <h3 class="card-title text-lg">{event.title}</h3>
-    <div>
-      <p class="text-sm line-clamp-3">
-        {event.description}
-      </p>
-    </div>
-    <div class="flex flex-col gap-1 text-sm flex-grow">
+    <div class="flex flex-col gap-1 text-sm">
       <div class="flex gap-2 items-center">
         <Icon name="lucide:calendar" size={16} />
-        <span>{formattedDate} • {event.time}</span>
+        <span>{formattedDate} • {formattedTime}</span>
       </div>
-      <div class="flex gap-2 items-center">
-        <Icon name="lucide:map-pin" size={16} />
-        <span>{event.location}</span>
-      </div>
-    </div>
-
-    <div class="flex -space-x-2 mt-3">
-      {
-        event.speakers.map((speaker) => (
-          <div class="avatar" title={`${speaker.name}`}>
-            <div class="w-8 h-8 rounded-full ring-2 ring-base-100">
-              <img src={speaker.avatar} alt={speaker.name} />
-            </div>
-          </div>
-        ))
-      }
     </div>
   </div>
 </Link>

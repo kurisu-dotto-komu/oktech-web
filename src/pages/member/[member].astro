@@ -2,12 +2,13 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
 import MemberDetails from "../../components/MemberDetails.astro";
-import { Icon } from "astro-icon/components";
-import { members, type Member } from "../../data";
+import PrevNextButton from "../../components/PrevNextButton.astro";
 import EventFeatured from "../../components/EventFeatured.astro";
 import Link from "../../components/Link.astro";
+import { getEvents, getMembers } from "../../data";
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const members = await getMembers();
   return members.map((member) => ({
     params: { member: member.id },
   }));
@@ -15,10 +16,17 @@ export function getStaticPaths() {
 
 const { member: memberId } = Astro.params;
 
+const members = await getMembers();
+
 const currentIndex = members.findIndex((m) => m.id === memberId);
 const member = members[currentIndex];
 const prevMember = currentIndex > 0 ? members[currentIndex - 1] : null;
 const nextMember = currentIndex < members.length - 1 ? members[currentIndex + 1] : null;
+
+const events = await getEvents();
+const memberEvents = events.filter((event) =>
+  member.events.find((e) => event.id.startsWith(`${e}`)),
+);
 ---
 
 <PageLayout title={`${member.name} - Community`}>
@@ -27,20 +35,22 @@ const nextMember = currentIndex < members.length - 1 ? members[currentIndex + 1]
       <div class="flex gap-4">
         {
           prevMember && (
-            <Link href={`/member/${prevMember.id}`} class="btn btn-soft gap-2">
-              <Icon name="lucide:chevron-left" size={20} />
-              Next Member
-            </Link>
+            <PrevNextButton
+              url={`/member/${prevMember.id}`}
+              title={prevMember.name}
+              direction="prev"
+            />
           )
         }
       </div>
       <div class="flex gap-4">
         {
           nextMember && (
-            <Link href={`/member/${nextMember.id}`} class="btn btn-soft gap-2">
-              Previous Member
-              <Icon name="lucide:chevron-right" size={20} />
-            </Link>
+            <PrevNextButton
+              url={`/member/${nextMember.id}`}
+              title={nextMember.name}
+              direction="next"
+            />
           )
         }
       </div>
@@ -48,10 +58,10 @@ const nextMember = currentIndex < members.length - 1 ? members[currentIndex + 1]
     <MemberDetails member={member} />
   </Section>
   {
-    member.events.length > 0 && (
-      <Section wide>
-        <div class="flex flex-col gap-12">
-          {member.events.map((event) => (
+    memberEvents.length > 0 && (
+      <Section title="Events">
+        <div class="flex flex-col gap-8 pt-8">
+          {memberEvents.map((event) => (
             <EventFeatured event={event} />
           ))}
         </div>

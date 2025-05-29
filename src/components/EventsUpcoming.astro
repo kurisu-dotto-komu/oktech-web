@@ -1,7 +1,8 @@
 ---
 import Countdown from "./Countdown.tsx";
 import EventFeatured from "./EventFeatured.astro";
-import { events } from "../data";
+import { getEvents } from "../data";
+const events = await getEvents();
 const nextEvent = events[2];
 const countdownDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 ---
