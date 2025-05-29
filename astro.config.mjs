@@ -8,8 +8,9 @@ import yaml from '@rollup/plugin-yaml';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://owddm.com/chris-wireframe/",
-  base: "chris-wireframe",
+  site: process.env.VERCEL_URL? `https://${process.env.VERCEL_URL}` : "https://owddm.com/chris-wireframe/",
+  // TODO update this for prod. for now, if we're on vercel, we dont need a base path
+  base: process.env.VERCEL_URL ? "" : "chris-wireframe", 
   trailingSlash: "never",
   vite: {
     plugins: [tailwindcss(), yaml()],
