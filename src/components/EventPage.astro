@@ -32,7 +32,7 @@ const galleryImages = await getCollection(
       {
         prevEvent && (
           <PrevNextButton
-            url={`/events/${prevEvent.id}`}
+            url={`/event/${prevEvent.id}`}
             image={prevEvent.cover}
             title={prevEvent.title}
             subtitle={new Date(prevEvent.dateTime).toLocaleDateString("en-US", {
@@ -48,7 +48,7 @@ const galleryImages = await getCollection(
       {
         nextEvent && (
           <PrevNextButton
-            url={`/events/${nextEvent.id}`}
+            url={`/event/${nextEvent.id}`}
             image={nextEvent.cover}
             title={nextEvent.title}
             subtitle={new Date(nextEvent.dateTime).toLocaleDateString("en-US", {
