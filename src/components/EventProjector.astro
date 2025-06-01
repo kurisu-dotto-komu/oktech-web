@@ -1,0 +1,20 @@
+---
+import { getEvents } from "../data";
+import ProjectorLayout from "../layouts/ProjectorLayout.astro";
+import Fullscreen from "./Fullscreen";
+
+const { slug: eventId } = Astro.params;
+
+const events = await getEvents();
+const currentIndex = events.findIndex((e) => e.id === eventId);
+const event = events[currentIndex];
+// TODO get speakers
+---
+
+<ProjectorLayout title={`📺 ${event.title}`}>
+  <div class="relative flex flex-col gap-4 bg-red-200 aspect-video w-full">
+    <Fullscreen client:load />
+    <div class="text-2xl font-bold">{event.title}</div>
+    <div class="text-sm text-gray-500">{event.dateTime}</div>
+  </div>
+</ProjectorLayout>

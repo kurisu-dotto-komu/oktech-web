@@ -10,11 +10,11 @@ import Section from "./Section.astro";
 import EventsUpcoming from "./EventsUpcoming.astro";
 import EventFeatured from "./EventFeatured.astro";
 import EventGallery from "./EventGallery.astro";
-const { slug } = Astro.params;
+const { filters } = Astro.params;
 // TODO: we probably just want our own route here...
 // TODO: handle more filters
 const events = await getEvents();
-const gallery = slug === "gallery";
+const gallery = filters === "gallery";
 ---
 
 <PageLayout title="Events">

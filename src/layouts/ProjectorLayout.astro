@@ -1,0 +1,10 @@
+---
+import RootLayout from "./RootLayout.astro";
+const { title } = Astro.props;
+---
+
+<RootLayout title={title}>
+  <div class="min-h-screen flex flex-col">
+    <slot />
+  </div>
+</RootLayout>

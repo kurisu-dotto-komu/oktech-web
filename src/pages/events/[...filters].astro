@@ -1,0 +1,13 @@
+---
+import EventsPage from "../../components/EventsPage.astro";
+
+export async function getStaticPaths() {
+  return [
+    { params: { filters: undefined } },
+    { params: { filters: "gallery" } },
+    // { params: { filters: "list" } },
+  ];
+}
+---
+
+<EventsPage />
