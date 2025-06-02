@@ -13,18 +13,21 @@ const items = MENU.filter((item) => item.header !== false);
       <Link href="/" class="btn btn-ghost normal-case text-xl">{SITE.shortName}</Link>
     </div>
     <div class="navbar-end">
-      <div class="hidden lg:flex">
+      <div class="hidden md:flex">
         <ul class="menu menu-horizontal px-1">
           {
             items.map((item) => (
               <li>
-                <Link href={item.href}>{item.label}</Link>
+                <Link href={item.href}>
+                  {item.icon && <Icon name={item.icon} />}
+                  {item.label}
+                </Link>
               </li>
             ))
           }
         </ul>
       </div>
-      <div class="dropdown dropdown-end lg:hidden">
+      <div class="dropdown dropdown-end md:hidden">
         <label tabindex="0" class="btn btn-ghost">
           <Icon name="lucide:menu" size={24} />
         </label>
@@ -35,7 +38,10 @@ const items = MENU.filter((item) => item.header !== false);
           {
             items.map((item) => (
               <li>
-                <Link href={item.href}>{item.label}</Link>
+                <Link href={item.href}>
+                  {item.icon && <Icon name={item.icon} class="mr-1" />}
+                  {item.label}
+                </Link>
               </li>
             ))
           }

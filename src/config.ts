@@ -12,7 +12,7 @@ export const SITE = {
   },
 } as const;
 
-export const MENU: { label: string; href: string; header?: boolean }[] = [
+export const MENU: { label: string; href: string; header?: boolean; icon?: string }[] = [
   {
     label: "Home",
     href: "/",
@@ -21,14 +21,17 @@ export const MENU: { label: string; href: string; header?: boolean }[] = [
   {
     label: "Events",
     href: "/events",
+    icon: "lucide:calendar",
   },
   {
     label: "Community",
     href: "/community",
+    icon: "lucide:users",
   },
   {
     label: "About",
     href: "/about",
+    icon: "lucide:info",
   },
   {
     label: "Sitemap",
