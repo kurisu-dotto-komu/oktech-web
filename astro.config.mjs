@@ -3,15 +3,19 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import icon from "astro-icon";
-import yaml from '@rollup/plugin-yaml';
-
+import yaml from "@rollup/plugin-yaml";
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.VERCEL_URL? `https://${process.env.VERCEL_URL}` : "https://owddm.com/chris-wireframe/",
+  site: process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "https://owddm.com/chris-wireframe/",
   // TODO update this for prod. for now, if we're on vercel, we dont need a base path
-  base: process.env.VERCEL_URL ? "" : "chris-wireframe", 
+  base: process.env.VERCEL_URL ? "" : "chris-wireframe",
   trailingSlash: "never",
+  devToolbar: {
+    enabled: false,
+  },
   vite: {
     plugins: [tailwindcss(), yaml()],
   },
@@ -25,6 +29,6 @@ export default defineConfig({
   },
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: 'viewport',
+    defaultStrategy: "viewport",
   },
 });

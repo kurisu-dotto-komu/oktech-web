@@ -7,8 +7,9 @@ import Link from "./Link.astro";
 ---
 
 <footer class="bg-base-300 text-base-content">
-  <Container class="flex justify-between py-10">
-    <div class="flex flex-col gap-8">
+  <Container class="flex flex-col py-10 gap-8 sm:gap-4">
+    <!-- TOP ROW -->
+    <div class="flex justify-between items-center flex-col sm:flex-row gap-8">
       <nav class="flex gap-4">
         {
           MENU.map((item) => (
@@ -18,19 +19,20 @@ import Link from "./Link.astro";
           ))
         }
       </nav>
-      <div>
-        <span class="text-xl mr-2 font-bold">
+      <div class="flex gap-4 items-center">
+        <Socials />
+        <ThemePicker />
+      </div>
+    </div>
+    <!-- BOTTOM ROW -->
+    <div class="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">
+      <div class="gap-2 flex flex-col items-center sm:flex-row sm:items-baseline">
+        <span class="text-xl font-bold">
           {SITE.shortName}
         </span>
         <span class="text-xs">
           {SITE.longName}
         </span>
-      </div>
-    </div>
-    <div class="flex flex-col gap-8 items-end">
-      <div class="flex items-center gap-4">
-        <Socials />
-        <ThemePicker />
       </div>
       <div class="text-xs">
         <a
