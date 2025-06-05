@@ -1,5 +1,6 @@
+// Using custom compiler options instead of extending missing astro config
+
 {
-  "extends": "astro/tsconfigs/strict",
   "include": [
     ".astro/types.d.ts",
     "**/*"
@@ -11,6 +12,10 @@
     "target": "ES2017",
     "lib": ["ES2015", "DOM"],
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "react",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   }
 }
