@@ -1,6 +1,7 @@
 ---
 import PrevNextButton from "./PrevNextButton.astro";
 import { type EventData } from "../data";
+import { formatDate } from "../utils/date";
 
 interface Props {
   data?: EventData;
@@ -19,10 +20,8 @@ const direction = next ? "next" : "prev";
       url={`/event/${data.id}`}
       image={data.cover}
       title={data.title}
-      subtitle={new Date(data.dateTime).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
+      subtitle={formatDate(data.dateTime, {
+        options: { month: "short", day: "numeric", year: "numeric" },
       })}
     />
   )

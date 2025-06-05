@@ -1,24 +1,23 @@
 ---
 import { Icon } from "astro-icon/components";
 import { resolveEvent } from "../data";
+import { formatDate } from "../utils/date";
 
 const event = await resolveEvent(Astro);
-
-// TODO move this
-const formatDate = (dateObj: Date) => {
-  const date = dateObj;
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
 ---
 
 <div class="flex flex-col gap-4 md:p-4">
   <div class="flex rounded gap-2 items-center">
     <Icon name="lucide:clock" size={20} />
-    <span>{formatDate(event.data.dateTime)}</span>
+    <span>
+      {formatDate(event.data.dateTime, {
+        options: {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        },
+      })}
+    </span>
   </div>
 </div>
