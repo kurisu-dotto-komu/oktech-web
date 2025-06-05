@@ -8,6 +8,8 @@
     "dist"
   ],
   "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["ES2015", "DOM"],
     "jsx": "react-jsx",
     "jsxImportSource": "react"
   }
