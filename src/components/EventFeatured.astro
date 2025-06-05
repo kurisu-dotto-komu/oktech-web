@@ -1,16 +1,16 @@
 ---
 import { Icon } from "astro-icon/components";
-import { type Event } from "../data";
+import { resolveEvent } from "../data";
 import Link from "./Link.astro";
 import { Image } from "astro:assets";
 
 interface Props {
-  event: Event;
+  slug: string;
 }
 
-const { event } = Astro.props;
+const event = await resolveEvent(Astro);
 
-const dateObj = new Date(event.dateTime);
+const dateObj = new Date(event.data.dateTime);
 const formattedDate = dateObj.toLocaleDateString("en-US", {
   month: "short",
   day: "numeric",
@@ -31,7 +31,7 @@ const formattedTime = dateObj.toLocaleTimeString("en-US", {
   <div class="lg:w-1/3">
     <figure class="aspect-video lg:aspect-auto w-full h-full">
       <Image
-        src={event.cover}
+        src={event.data.cover}
         alt="Event cover"
         class="bg-base-300 w-full h-full object-cover"
         width={512}
@@ -46,7 +46,7 @@ const formattedTime = dateObj.toLocaleTimeString("en-US", {
       <div class="flex flex-col h-full md:flex-row">
         <!-- Left side - Event Details -->
         <div class="flex flex-col p-6 md:w-2/3">
-          <h3 class="card-title text-2xl mb-4">{event.title}</h3>
+          <h3 class="card-title text-2xl mb-4">{event.data.title}</h3>
 
           <div class="flex flex-col gap-3 text-base mb-6">
             <div class="flex gap-2 items-center">

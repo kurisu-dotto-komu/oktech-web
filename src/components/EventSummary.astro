@@ -1,17 +1,18 @@
 ---
 import { Icon } from "astro-icon/components";
-import { type Event } from "../data";
+import { resolveEvent } from "../data";
 import Link from "./Link.astro";
 import { Image } from "astro:assets";
 
 interface Props {
-  event: Event;
+  slug?: string;
   class?: string;
 }
 
-const { event, class: className } = Astro.props;
+const event = await resolveEvent(Astro);
+const { class: className } = Astro.props;
 
-const dateObj = new Date(event.dateTime);
+const dateObj = new Date(event.data.dateTime);
 const formattedDate = dateObj.toLocaleDateString("en-US", {
   month: "short",
   day: "numeric",
@@ -28,15 +29,15 @@ const formattedTime = dateObj.toLocaleTimeString("en-US", {
 >
   <figure class="aspect-video w-full bg-base-300">
     <Image
-      src={event.cover}
-      alt={event.title}
+      src={event.data.cover}
+      alt={event.data.title}
       class="w-full h-full object-cover"
       width={512}
       height={512}
     />
   </figure>
   <div class="card-body p-4 gap-4 flex flex-col">
-    <h3 class="card-title text-lg">{event.title}</h3>
+    <h3 class="card-title text-lg">{event.data.title}</h3>
     <div class="flex flex-col gap-1 text-sm">
       <div class="flex gap-2 items-center">
         <Icon name="lucide:calendar" size={16} />

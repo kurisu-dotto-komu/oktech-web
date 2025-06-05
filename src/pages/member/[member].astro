@@ -62,7 +62,7 @@ const memberEvents = events.filter((event) =>
       <Section title="Events">
         <div class="flex flex-col gap-8 pt-8">
           {memberEvents.map((event) => (
-            <EventFeatured event={event} />
+            <EventFeatured slug={event.id} />
           ))}
         </div>
       </Section>

@@ -1,5 +1,6 @@
+import type { AstroGlobal } from "astro";
 import { THEMES } from "./config";
-import { getCollection, type InferEntrySchema } from "astro:content";
+import { getCollection, getEntry, type InferEntrySchema } from "astro:content";
 
 export const ROLE_CONFIGS = {
   volunteer: {
@@ -78,9 +79,31 @@ export async function getMembers(): Promise<Member[]> {
   });
 }
 
-export type Event = InferEntrySchema<"events">;
+export type EventEntry = Awaited<ReturnType<typeof getEvent>>;
+export type EventData = InferEntrySchema<"events">;
 
-export async function getEvents(): Promise<Event[]> {
+export async function getEvents() {
   const allEvents = await getCollection("events");
-  return allEvents.reverse().map(({ data }) => data);
+  return allEvents.reverse();
+}
+
+export async function getEvent(slug: string | undefined) {
+  if (!slug) {
+    throw "Slug not defined";
+  }
+  const event = await getEntry("events", slug);
+  if (!event) {
+    throw `No even found for slug ${slug}`;
+  }
+
+  return event;
+}
+
+export async function resolveEvent({ params, props }: AstroGlobal) {
+  // pull the ID if it's passed, otherwise, use the path's `slug` param
+  const slug = props.slug ?? params.slug;
+  if (!slug) {
+    throw `Slug not defined ${JSON.stringify({ params, props })}`;
+  }
+  return await getEvent(slug);
 }

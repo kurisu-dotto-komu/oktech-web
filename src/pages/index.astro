@@ -3,7 +3,6 @@ import Section from "../components/Section.astro";
 import Hero from "../components/Hero.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import { getEvents } from "../data";
-import Container from "../components/Container.astro";
 import EventSummary from "../components/EventSummary.astro";
 import LandingStats from "../components/LandingStats.astro";
 import EventsUpcoming from "../components/EventsUpcoming.astro";
@@ -44,7 +43,7 @@ const events = await getEvents();
       events
         .slice(5, 9)
         .map((event, i) => (
-          <EventSummary class={i > 2 ? "lg:hidden xl:block" : undefined} event={event} />
+          <EventSummary class={i > 2 ? "lg:hidden xl:block" : undefined} slug={event.id} />
         ))
     }
   </Section>

@@ -1,14 +1,15 @@
 ---
-import { Image } from "astro:assets";
-import { type Event } from "../data";
+import Section from "./Section.astro";
+import { resolveEvent } from "../data";
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
 interface Props {
-  event: Event;
+  slug?: string;
   class?: string;
 }
 
-const { event } = Astro.props;
+const event = await resolveEvent(Astro);
 
 // todo sort by date
 const galleryImages = await getCollection(
@@ -18,16 +19,18 @@ const galleryImages = await getCollection(
 ---
 
 {
-  galleryImages
-    .reverse()
-    .map((img) => (
-      <Image
-        src={img.data.image}
-        alt={img.data.caption ?? ""}
-        class="w-full aspect-[4/3] object-cover rounded-lg hover:opacity-90 transition-opacity bg-base-300"
-        loading="lazy"
-        width={512}
-        height={512}
-      />
-    ))
+  galleryImages.length > 0 && (
+    <Section wide grid title="Gallery">
+      {galleryImages.reverse().map((img) => (
+        <Image
+          src={img.data.image}
+          alt={img.data.caption ?? ""}
+          class="w-full aspect-[4/3] object-cover rounded-lg hover:opacity-90 transition-opacity bg-base-300"
+          loading="lazy"
+          width={512}
+          height={512}
+        />
+      ))}
+    </Section>
+  )
 }

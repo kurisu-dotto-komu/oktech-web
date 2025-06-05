@@ -1,13 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
-import type { Event } from "../data";
+import { resolveEvent } from "../data";
 
-interface Props {
-  event: Event;
-}
+const event = await resolveEvent(Astro);
 
-const { event } = Astro.props;
-
+// TODO move this
 const formatDate = (dateObj: Date) => {
   const date = dateObj;
   return date.toLocaleDateString("en-US", {
@@ -22,6 +19,6 @@ const formatDate = (dateObj: Date) => {
 <div class="flex flex-col gap-4 md:p-4">
   <div class="flex rounded gap-2 items-center">
     <Icon name="lucide:clock" size={20} />
-    <span>{formatDate(event.dateTime)}</span>
+    <span>{formatDate(event.data.dateTime)}</span>
   </div>
 </div>

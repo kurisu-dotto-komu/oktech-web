@@ -3,7 +3,8 @@ import Countdown from "./Countdown.tsx";
 import EventFeatured from "./EventFeatured.astro";
 import { getEvents } from "../data";
 const events = await getEvents();
-const nextEvent = events[2];
+// TODO check for futureness
+const nextEvent = events[0];
 const countdownDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 ---
 
@@ -14,5 +15,5 @@ const countdownDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     <div class="text-lg">Next event starts in</div>
     <Countdown client:load targetDate={countdownDate} />
   </div>
-  <EventFeatured event={nextEvent} />
+  <EventFeatured slug={nextEvent.data.id} />
 </div>

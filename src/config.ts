@@ -71,6 +71,13 @@ export const SOCIALS = [
     label: "Meetup",
     description: "RSVP our next event on Meetup.com",
   },
+
+  {
+    icon: "cib:linkedin",
+    href: "#",
+    label: "LinkedIn",
+    description: "Todo",
+  },
 ] as const;
 
 export const THEMES = [
