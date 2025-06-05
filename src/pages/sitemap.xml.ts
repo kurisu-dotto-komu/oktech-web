@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { getEvents, POSSIBLE_ROLES } from "../data";
 
 // Minimal declaration for `process.env` to satisfy TypeScript without Node typings
