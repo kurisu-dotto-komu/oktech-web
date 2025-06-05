@@ -1,0 +1,39 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { getEvents, getMembers } from "../data";
+
+const events = await getEvents();
+const members = await getMembers();
+
+const staticPages = [
+  { url: "/", label: "Home" },
+  { url: "/events", label: "Events" },
+  { url: "/community", label: "Community" },
+];
+---
+
+<PageLayout title="Sitemap">
+  <section class="prose max-w-none">
+    <h1>Sitemap</h1>
+    <h2>Pages</h2>
+    <ul>
+      {staticPages.map((page) => (
+        <li><a href={page.url}>{page.label}</a></li>
+      ))}
+    </ul>
+
+    <h2>Events</h2>
+    <ul>
+      {events.map((event) => (
+        <li><a href={`/event/${event.id}`}>{event.title ?? event.id}</a></li>
+      ))}
+    </ul>
+
+    <h2>Community Members</h2>
+    <ul>
+      {members.map((member) => (
+        <li><a href={`/member/${member.id}`}>{member.name}</a></li>
+      ))}
+    </ul>
+  </section>
+</PageLayout>

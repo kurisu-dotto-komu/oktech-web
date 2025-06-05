@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import icon from "astro-icon";
 import yaml from '@rollup/plugin-yaml';
+import sitemap from "@astrojs/sitemap";
 
 
 // https://astro.build/config
@@ -15,7 +16,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss(), yaml()],
   },
-  integrations: [react(), icon()],
+  integrations: [react(), icon(), sitemap({ exclude: ['/sitemap'] })],
   redirects: {
     discord: "https://discord.com/invite/k8xj8d75f6",
   },
