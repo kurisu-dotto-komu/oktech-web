@@ -1,18 +1,48 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import Link from "../components/Link.astro";
-import { generateSitemapURLs } from "../utils/sitemap";
+import { POSSIBLE_ROLES, ROLE_CONFIGS, getEvents, getMembers } from "../data";
 
-const urls = await generateSitemapURLs();
+// Build sitemap entries with titles where possible
+
+const staticPages = [
+  { href: "/", title: "Home" },
+  { href: "/about", title: "About" },
+  { href: "/events", title: "Events" },
+  { href: "/community", title: "Community" },
+  { href: "/sitemap", title: "Sitemap (human)" },
+  { href: "/sitemap.xml", title: "Sitemap (XML)" },
+];
+
+const rolePages = POSSIBLE_ROLES.map((role) => ({
+  href: `/community/${role}`,
+  title: ROLE_CONFIGS[role].plural,
+}));
+
+const events = await getEvents();
+const eventPages = events.map(({ id, data }) => ({
+  href: `/event/${id}`,
+  title: data.title as string,
+}));
+
+const members = await getMembers();
+const memberPages = members.map((m) => ({
+  href: `/member/${m.id}`,
+  title: m.name,
+}));
+
+const pages = [...staticPages, ...rolePages, ...eventPages, ...memberPages];
 ---
 
 <PageLayout title="Sitemap">
   <div class="container mx-auto px-4 py-8 prose">
     <h1>Sitemap</h1>
-    <p>This page lists every accessible route on the website for easy navigation.</p>
+    <p>This page lists every accessible route on the website for easy navigation. You can also download the
+      <Link href="/sitemap.xml">machine-readable XML sitemap</Link>.
+    </p>
     <ul>
-      {urls.map((href) => (
-        <li><Link href={href}>{href}</Link></li>
+      {pages.map((page) => (
+        <li><Link href={page.href}>{page.title}</Link> <span class="text-sm text-gray-500">({page.href})</span></li>
       ))}
     </ul>
   </div>
