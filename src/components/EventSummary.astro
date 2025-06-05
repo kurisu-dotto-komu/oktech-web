@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 import { resolveEvent } from "../data";
 import Link from "./Link.astro";
 import { Image } from "astro:assets";
+import { formatDate, formatTime } from "../utils/formatDate";
 
 interface Props {
   slug?: string;
@@ -12,15 +13,8 @@ interface Props {
 const event = await resolveEvent(Astro);
 const { class: className } = Astro.props;
 
-const dateObj = new Date(event.data.dateTime);
-const formattedDate = dateObj.toLocaleDateString("en-US", {
-  month: "short",
-  day: "numeric",
-});
-const formattedTime = dateObj.toLocaleTimeString("en-US", {
-  hour: "numeric",
-  minute: "2-digit",
-});
+const formattedDate = formatDate(event.data.dateTime, "short-no-year");
+const formattedTime = formatTime(event.data.dateTime);
 ---
 
 <Link
