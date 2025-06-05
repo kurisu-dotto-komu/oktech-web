@@ -1,9 +1,13 @@
+/// <reference types="node" />
 import { getEvents, POSSIBLE_ROLES } from "../data";
 
+// Minimal declaration for `process.env` to satisfy TypeScript without Node typings
+declare const process: { env: Record<string, string | undefined> };
+
 export async function GET() {
-  // Base site URL from the Astro runtime, falls back to root when not set (e.g. in dev).
-  const site = (import.meta as any).env.SITE as string | undefined;
-  const base = site ? site.replace(/\/?$/, "/") : "/";
+  // Derive the canonical site URL. Prefer an explicit SITE environment variable, then Vercel URL when deployed.
+  const envSite = process.env.SITE ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
+  const base = envSite ? envSite.replace(/\/?$/, "/") : "/";
 
   const urls: string[] = [];
 
