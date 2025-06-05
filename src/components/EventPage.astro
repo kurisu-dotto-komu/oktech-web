@@ -7,6 +7,7 @@ import PrevNextButton from "./PrevNextButton.astro";
 import { getEvents, getMembers } from "../data";
 import MemberSummary from "./MemberSummary.astro";
 import { getCollection } from "astro:content";
+import { formatDate } from "../utils/formatDate";
 
 const { slug: eventId } = Astro.params;
 
@@ -35,7 +36,7 @@ const galleryImages = await getCollection(
             url={`/event/${prevEvent.id}`}
             image={prevEvent.cover}
             title={prevEvent.title}
-            subtitle={new Date(prevEvent.dateTime).toLocaleDateString("en-US", {
+            subtitle={formatDate(prevEvent.dateTime, {
               month: "short",
               day: "numeric",
               year: "numeric",
@@ -51,7 +52,7 @@ const galleryImages = await getCollection(
             url={`/event/${nextEvent.id}`}
             image={nextEvent.cover}
             title={nextEvent.title}
-            subtitle={new Date(nextEvent.dateTime).toLocaleDateString("en-US", {
+            subtitle={formatDate(nextEvent.dateTime, {
               month: "short",
               day: "numeric",
               year: "numeric",
