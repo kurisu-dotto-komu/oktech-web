@@ -9,7 +9,8 @@
     "astro": "astro",
     "format": "prettier --write .",
     "import": "npx tsx ./scripts/import-data",
-    "clear": "npx tsx ./scripts/import-data/clear"
+    "clear": "npx tsx ./scripts/import-data/clear",
+    "screenshot": "npx tsx ./scripts/screenshot.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.5",
@@ -34,6 +35,8 @@
     "@iconify-json/lucide": "^1.2.39",
     "@rollup/plugin-yaml": "^4.1.2",
     "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^22.15.29",
+    "playwright": "^1.52.0",
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1"
   }
