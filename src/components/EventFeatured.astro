@@ -12,9 +12,7 @@ interface Props {
 const event = await resolveEvent(Astro);
 
 const dateObj = new Date(event.data.dateTime);
-const formattedDate = formatDate(dateObj, {
-  options: { month: "short", day: "numeric" },
-});
+const formattedDate = formatDate(dateObj, "short");
 const formattedTime = dateObj.toLocaleTimeString("en-US", {
   hour: "numeric",
   minute: "2-digit",

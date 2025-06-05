@@ -20,9 +20,7 @@ const direction = next ? "next" : "prev";
       url={`/event/${data.id}`}
       image={data.cover}
       title={data.title}
-      subtitle={formatDate(data.dateTime, {
-        options: { month: "short", day: "numeric", year: "numeric" },
-      })}
+      subtitle={formatDate(data.dateTime, "long")}
     />
   )
 }

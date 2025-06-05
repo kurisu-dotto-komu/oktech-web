@@ -1,37 +1,31 @@
 export const DEFAULT_LOCALE = "en-US";
-export const DEFAULT_OPTIONS: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
+
+type Preset = "short" | "long";
+
+const PRESET_OPTIONS: Record<Preset, Intl.DateTimeFormatOptions> = {
+  short: {
+    month: "short",
+    day: "numeric",
+  },
+  long: {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  },
 };
 
-export interface FormatDateParams {
-  /**
-   * BCP 47 language tag to be passed to Intl.DateTimeFormat.
-   * Defaults to `en-US`.
-   */
-  locale?: string;
-  /**
-   * Intl.DateTimeFormat options to control the output.
-   * Defaults to `{ year: "numeric", month: "long", day: "numeric" }`.
-   */
-  options?: Intl.DateTimeFormatOptions;
-}
-
 /**
- * formatDate
- * -----------
- * Formats a date using `toLocaleDateString` but centralises the default locale
- * and formatting options so that they can be configured in one place.
+ * Formats a date using predefined option presets.
  *
- * @example
- *   formatDate("2024-05-01"); // -> "May 1, 2024"
- *   formatDate(myDate, { options: { month: "short", day: "numeric" } }); // -> "May 1"
+ * @param date   Date value or something coercible to a Date.
+ * @param preset Choose a preset: "short" (e.g. May 8) or "long" (e.g. May 8, 2025).
+ * @param locale Optional BCP-47 locale. Defaults to en-US.
  */
 export function formatDate(
   date: Date | string | number,
-  { locale = DEFAULT_LOCALE, options = DEFAULT_OPTIONS }: FormatDateParams = {},
+  preset: Preset = "long",
+  locale: string = DEFAULT_LOCALE,
 ): string {
   const dateObj = date instanceof Date ? date : new Date(date);
-  return dateObj.toLocaleDateString(locale, options);
+  return dateObj.toLocaleDateString(locale, PRESET_OPTIONS[preset]);
 }

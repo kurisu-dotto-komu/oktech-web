@@ -10,14 +10,7 @@ const event = await resolveEvent(Astro);
   <div class="flex rounded gap-2 items-center">
     <Icon name="lucide:clock" size={20} />
     <span>
-      {formatDate(event.data.dateTime, {
-        options: {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        },
-      })}
+      {formatDate(event.data.dateTime, "long")}
     </span>
   </div>
 </div>

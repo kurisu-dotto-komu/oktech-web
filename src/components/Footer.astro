@@ -41,9 +41,7 @@ import { formatDate } from "../utils/date";
           target="_blank"
           class="link link-hover"
           >Built with <code class="badge badge-xs">{`<3`}</code> on
-          {formatDate(new Date(), {
-            options: { year: "numeric", month: "long", day: "numeric" },
-          })}
+          {formatDate(new Date(), "long")}
         </a>
       </div>
     </div>
