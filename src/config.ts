@@ -17,6 +17,7 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
     label: "Home",
     href: "/",
     header: false,
+    icon: "lucide:home",
   },
   {
     label: "Events",
@@ -37,6 +38,13 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
     label: "Sitemap",
     href: "/sitemap",
     header: false,
+    icon: "lucide:map",
+  },
+  {
+    label: "RSS",
+    href: "/rss.xml",
+    header: false,
+    icon: "lucide:rss",
   },
 ];
 

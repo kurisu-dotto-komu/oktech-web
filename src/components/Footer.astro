@@ -5,16 +5,18 @@ import Container from "./Container.astro";
 import { MENU, SITE } from "../config";
 import Link from "./Link.astro";
 import { formatDate } from "../utils/formatDate";
+import { Icon } from "astro-icon/components";
 ---
 
 <footer class="bg-base-300 text-base-content">
   <Container class="flex flex-col py-10 gap-8 sm:gap-4">
     <!-- TOP ROW -->
     <div class="flex justify-between items-center flex-col sm:flex-row gap-8">
-      <nav class="flex gap-4">
+      <nav class="flex gap-4 flex-wrap">
         {
           MENU.map((item) => (
-            <Link href={item.href} class="link link-hover">
+            <Link href={item.href} class="link link-hover flex items-center gap-1">
+              {item.icon && <Icon name={item.icon} size={16} />}
               {item.label}
             </Link>
           ))
