@@ -1,28 +1,9 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import Link from "../components/Link.astro";
-import { getEvents, POSSIBLE_ROLES } from "../data";
+import { generateSitemapURLs } from "../utils/sitemap";
 
-const events = await getEvents();
-
-const staticPages = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Events", href: "/events" },
-  { label: "Community", href: "/community" },
-];
-
-const communityPages = POSSIBLE_ROLES.map((role) => ({
-  label: `Community – ${role.charAt(0).toUpperCase() + role.slice(1)}`,
-  href: `/community/${role}`,
-}));
-
-const eventPages = events.map(({ id, data }) => ({
-  label: `Event – ${data.title}`,
-  href: `/event/${id}`,
-}));
-
-const allPages = [...staticPages, ...communityPages, ...eventPages];
+const urls = await generateSitemapURLs();
 ---
 
 <PageLayout title="Sitemap">
@@ -30,8 +11,8 @@ const allPages = [...staticPages, ...communityPages, ...eventPages];
     <h1>Sitemap</h1>
     <p>This page lists every accessible route on the website for easy navigation.</p>
     <ul>
-      {allPages.map((page) => (
-        <li><Link href={page.href}>{page.label}</Link></li>
+      {urls.map((href) => (
+        <li><Link href={href}>{href}</Link></li>
       ))}
     </ul>
   </div>

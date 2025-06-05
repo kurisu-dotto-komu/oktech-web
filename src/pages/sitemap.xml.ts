@@ -1,4 +1,4 @@
-import { getEvents, POSSIBLE_ROLES } from "../data";
+import { generateSitemapURLs } from "../utils/sitemap";
 
 // Minimal declaration for `process.env` to satisfy TypeScript without Node typings
 declare const process: { env: Record<string, string | undefined> };
@@ -8,25 +8,7 @@ export async function GET() {
   const envSite = process.env.SITE ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
   const base = envSite ? envSite.replace(/\/?$/, "/") : "/";
 
-  const urls: string[] = [];
-
-  // Core static pages
-  urls.push(base);
-  urls.push(`${base}about`);
-  urls.push(`${base}events`);
-  urls.push(`${base}community`);
-  urls.push(`${base}sitemap`);
-
-  // Community role filter pages
-  POSSIBLE_ROLES.forEach((role) => {
-    urls.push(`${base}community/${role}`);
-  });
-
-  // Individual event pages
-  const events = await getEvents();
-  events.forEach(({ id }) => {
-    urls.push(`${base}event/${id}`);
-  });
+  const urls = await generateSitemapURLs(base);
 
   // Compose the XML document
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
