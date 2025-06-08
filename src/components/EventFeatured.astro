@@ -12,7 +12,7 @@ interface Props {
 
 const event = await resolveEvent(Astro);
 
-const formattedDate = formatDate(event.data.dateTime, "short-no-year");
+const formattedDate = formatDate(event.data.dateTime, "long");
 const formattedTime = formatTime(event.data.dateTime);
 ---
 

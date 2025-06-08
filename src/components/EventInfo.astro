@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { resolveEvent } from "../data";
-import { formatDate } from "../utils/formatDate";
+import { formatDate, formatTime } from "../utils/formatDate";
 import VenueMap from "./VenueMap.astro";
 
 const event = await resolveEvent(Astro);
@@ -22,39 +22,60 @@ const getMapUrl = () => {
 };
 
 const mapUrl = getMapUrl();
+
+// Format the date and time range similar to Meetup.com
+const eventDate = new Date(event.data.dateTime);
+const fullDate = formatDate(eventDate, "long");
+
+// Calculate end time using duration (in minutes)
+const startTime = formatTime(eventDate);
+let timeRange = startTime;
+
+if (event.data.duration) {
+  const endDate = new Date(eventDate.getTime() + event.data.duration * 60000);
+  const endTime = formatTime(endDate);
+  timeRange = `${startTime} to ${endTime} JST`;
+}
 ---
 
-<div class="flex flex-col">
-  <div class="space-y-4 md:p-4">
-    <div class="flex items-start gap-3">
-      <div>
+<div class="bg-white rounded-lg overflow-hidden">
+  <!-- Date and Time Section -->
+  <div class="p-6 space-y-4">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 mt-1">
         <Icon name="lucide:clock" class="w-6 h-6 text-primary" />
       </div>
-      <span class="text-lg">{formatDate(event.data.dateTime, "long")}</span>
+      <div class="flex flex-col">
+        <span class="text-lg font-semibold text-gray-900">{fullDate}</span>
+        <span class="text-gray-600 mt-1">{timeRange}</span>
+      </div>
     </div>
+
     {
       event.venue && (
-        <div class="flex items-start gap-3">
-          <div>
-            <Icon name="lucide:map-pin" class="w-6 h-6 text-primary " />
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <Icon name="lucide:map-pin" class="w-6 h-6 text-primary" />
           </div>
-          <div class="flex flex-col gap-2">
-            <span class="text-lg">{event.venue.title}</span>
-            {event.venue.address && <span class="opacity-80">{event.venue.address}</span>}
+          <div class="flex flex-col">
+            <span class="text-lg font-semibold text-gray-900">{event.venue.title}</span>
+            {event.venue.address && <span class="text-gray-600 mt-1">{event.venue.address}</span>}
           </div>
         </div>
       )
     }
   </div>
+
+  <!-- Map Section -->
   {
     event.venueSlug && (
-      <div class="w-full">
+      <div class="w-full aspect-video">
         {mapUrl ? (
           <a
             href={mapUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="block w-full hover:opacity-90 transition-opacity cursor-pointer"
+            class="block w-full h-full hover:opacity-90 transition-opacity cursor-pointer"
           >
             <VenueMap venueSlug={event.venueSlug} />
           </a>
