@@ -1,6 +1,6 @@
 ---
 title: Maharaja
-city: Osaka
+city: osaka
 country: jp
 address: 大阪府 大阪市北区 梅田 1-2-2-B1000 大阪駅前第2ビルB1
 postalCode: 530-0001

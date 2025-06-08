@@ -1,6 +1,6 @@
 ---
 title: Kamogawa delta
-city: Kyoto
+city: kyoto
 country: jp
 address: 今出川通 Kamigyo Ward
 postalCode: 602-0822

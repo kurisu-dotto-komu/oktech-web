@@ -1,6 +1,6 @@
 ---
 title: L & L
-city: Osaka
+city: osaka
 country: jp
 address: Housen Bldg B1F 2-16-13 Nishi-shinsaibashi Chuo-ku
 postalCode: 542-0086

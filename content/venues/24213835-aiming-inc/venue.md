@@ -1,6 +1,6 @@
 ---
 title: Aiming Inc
-city: Osaka
+city: osaka
 country: jp
 address: '18th Floor, Grand Front Tower B, Ofukacho 3-1, Kita-ku'
 postalCode: 530-0011

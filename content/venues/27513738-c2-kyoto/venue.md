@@ -1,6 +1,6 @@
 ---
 title: C2 Kyoto
-city: Kyoto
+city: kyoto
 country: jp
 address: '京都府, 333番 Kagiyachō, Shimogyo Ward, Kyoto'
 postalCode: 600-8178

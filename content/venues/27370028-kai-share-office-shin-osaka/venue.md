@@ -1,6 +1,6 @@
 ---
 title: Kai Share Office - Shin Osaka
-city: Osaka
+city: osaka
 country: jp
 address: 大阪市淀川区西中島４丁目８−２６ 鯛ビル 202
 postalCode: 532-0011

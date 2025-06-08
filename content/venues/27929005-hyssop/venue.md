@@ -1,6 +1,6 @@
 ---
 title: Hyssop
-city: Kyoto
+city: kyoto
 country: jp
 address: '〒600-8022 Kyoto, Shimogyo Ward, Inaricho, 318-6 4階'
 postalCode: meetup8

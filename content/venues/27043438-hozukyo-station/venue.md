@@ -1,6 +1,6 @@
 ---
 title: Hozukyō Station
-city: Kyoto
+city: kyoto
 country: jp
 address: 'Hozuyama 2 Hozucho, Kameoka'
 postalCode: 621-0005

@@ -1,6 +1,6 @@
 ---
 title: 'R3 Institute Ltd. (gusuku Ashibinaa OSAKA) '
-city: 大阪市
+city: osaka
 country: jp
 address: '北区大深町 3-1, グランフロント大阪 Tower C 16F'
 state: al

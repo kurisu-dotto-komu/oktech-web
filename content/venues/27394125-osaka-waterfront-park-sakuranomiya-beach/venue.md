@@ -1,6 +1,6 @@
 ---
 title: Osaka Waterfront Park “Sakuranomiya Beach”
-city: Osaka
+city: osaka
 country: jp
 address: '4 Chome-5 Nakanocho, Miyakojima Ward, Osaka'
 postalCode: 534-0027

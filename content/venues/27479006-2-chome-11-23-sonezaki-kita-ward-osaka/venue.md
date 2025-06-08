@@ -1,6 +1,6 @@
 ---
 title: マサムネ お初天神店
-city: Osaka
+city: osaka
 country: jp
 address: '2-chōme-11-23 Sonezaki, Kita Ward, Osaka'
 postalCode: 530-0001

@@ -1,6 +1,6 @@
 ---
 title: Space Kante（スペースカンテ）京都
-city: Kyoto
+city: kyoto
 country: jp
 address: 'Nakagyo Ward, Tearaimizuchō, 670番地 京都フクトクビル 2F'
 postalCode: 604-8152

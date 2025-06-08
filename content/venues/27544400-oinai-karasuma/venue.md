@@ -1,6 +1,6 @@
 ---
 title: oinai karasuma
-city: Kyoto
+city: kyoto
 country: jp
 address: 'Nakagyo Ward, Tearaimizuchō, ６４７ トキワビル 4-B'
 postalCode: 604-8152

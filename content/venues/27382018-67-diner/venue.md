@@ -1,6 +1,6 @@
 ---
 title: 67 Diner
-city: 京都府
+city: kyoto
 country: jp
 address: 平居町 下京区 京都市
 postalCode: 600-8118

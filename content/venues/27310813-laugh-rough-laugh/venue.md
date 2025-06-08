@@ -1,6 +1,6 @@
 ---
 title: Laugh Rough Laugh
-city: Osaka
+city: osaka
 country: jp
 address: '9-chōme-3-1 Uehonmachi, Tennoji Ward, Osaka'
 postalCode: 543-0001

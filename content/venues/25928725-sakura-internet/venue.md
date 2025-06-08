@@ -1,6 +1,6 @@
 ---
 title: Sakura Internet
-city: Osaka
+city: osaka
 country: jp
 address: 'Grand Front Osaka Tower A 35F, Kita-ku, Ofukacho 4-20'
 postalCode: 530-0011

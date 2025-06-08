@@ -1,6 +1,6 @@
 ---
 title: Vegetables Sushi Nanone
-city: Osaka
+city: osaka
 country: jp
 address: '7-chōme-2-6 Fukushima, Fukushima Ward, Osaka'
 postalCode: 553-0003

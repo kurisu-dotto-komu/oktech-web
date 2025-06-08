@@ -1,6 +1,6 @@
 ---
 title: 株式会社Helpfeel
-city: Kyoto
+city: kyoto
 country: jp
 address: 'Kamigyo Ward, Goshohachimanchō, １１０−１６ かわもとビル 5F'
 postalCode: 602-0023

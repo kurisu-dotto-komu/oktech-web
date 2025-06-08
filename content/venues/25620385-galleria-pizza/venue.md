@@ -1,6 +1,6 @@
 ---
 title: Galleria Pizza
-city: Osaka
+city: osaka
 country: jp
 address: 大阪市福島区福島6ー24ー24
 postalCode: 553-0003

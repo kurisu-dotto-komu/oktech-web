@@ -1,6 +1,6 @@
 ---
 title: Aggre cafe the terrace
-city: Osaka
+city: osaka
 country: jp
 address: 'Miyakojima Ward, Higashinodamachi, 2-chōme−7−１２'
 postalCode: 534-0024

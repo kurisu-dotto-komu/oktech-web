@@ -1,6 +1,6 @@
 ---
 title: Hue Coffee Roaster
-city: Osaka
+city: osaka
 country: jp
 address: '4-chōme-3-7 Tanimachi, Chuo Ward, Osaka'
 postalCode: 540-0012

@@ -1,6 +1,6 @@
 ---
 title: Caffe Pascucci
-city: Osaka
+city: osaka
 country: jp
 address: 3 Chome-6-3 Awajimachi Chūō-ku
 postalCode: 541-0047

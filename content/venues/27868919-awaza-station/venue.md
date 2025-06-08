@@ -1,6 +1,6 @@
 ---
 title: Awaza Station
-city: Osaka
+city: osaka
 country: jp
 address: '3-chōme-1 Nishihonmachi, Nishi Ward'
 postalCode: meetup3

@@ -1,6 +1,6 @@
 ---
 title: Sakurashukugawa Riverside
-city: Nishinomiya
+city: kobe
 country: jp
 address: 7 Kawahigashichō
 postalCode: meetup32

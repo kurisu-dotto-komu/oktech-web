@@ -1,6 +1,6 @@
 ---
 title: 株式会社IDCフロンティア 大阪オフィス
-city: Osaka
+city: osaka
 country: jp
 address: 'Chuo Ward, Azuchimachi, 1-chōme−8−１５, Nre Osaka Building, 3F'
 postalCode: 541-0052

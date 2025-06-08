@@ -1,6 +1,6 @@
 ---
 title: Hattorigawa Station
-city: Osaka
+city: osaka
 country: jp
 address: '4 Chome Hattorigawa, Yao'
 postalCode: 581-0865

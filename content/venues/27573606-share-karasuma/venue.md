@@ -1,6 +1,6 @@
 ---
 title: share KARASUMA
-city: Kyoto
+city: kyoto
 country: jp
 address: 'Shimogyo Ward, Ōmandokorochō, ６８０−１, No8 Hase Building, 2F 3F（受付'
 postalCode: 600-8413

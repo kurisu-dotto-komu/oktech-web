@@ -1,6 +1,6 @@
 ---
 title: Rokko Cable Shita Station
-city: Hyogo
+city: kobe
 country: jp
 address: 'Nishiyama Takaha, Nada Ward, Kobe'
 postalCode: 657-0001

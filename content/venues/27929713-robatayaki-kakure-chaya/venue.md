@@ -1,6 +1,6 @@
 ---
 title: Robatayaki Kakure Chaya
-city: Osaka
+city: osaka
 country: jp
 address: '1 Chome-14-14 Higashishinsaibashi, Chuo Ward, Osaka, 542-0083'
 postalCode: meetup3

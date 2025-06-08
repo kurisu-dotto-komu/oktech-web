@@ -1,6 +1,6 @@
 ---
 title: Knowledge Salon
-city: Osaka
+city: osaka
 country: jp
 address: '大阪市北区大深町3-1, 7F (北３エレベーター)'
 postalCode: 530-0011

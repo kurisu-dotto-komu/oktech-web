@@ -1,6 +1,6 @@
 ---
 title: C7 Coworking
-city: Osaka
+city: osaka
 country: jp
 address: 大阪市福島区福島 6-12-13
 postalCode: 553-0003

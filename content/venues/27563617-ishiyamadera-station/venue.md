@@ -1,6 +1,6 @@
 ---
 title: Ishiyamadera Station
-city: Shiga
+city: kyoto
 country: jp
 address: '5 Hotarudani, Otsu'
 postalCode: 520-0853

@@ -1,6 +1,6 @@
 ---
 title: てらはうす
-city: 京都府
+city: kyoto
 country: jp
 address: 京都市中京区西ノ京冷泉町41
 postalCode: 604-8481

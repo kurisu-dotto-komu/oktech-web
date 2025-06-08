@@ -1,6 +1,6 @@
 ---
 title: Juso Coworking
-city: Osaka
+city: osaka
 country: jp
 address: 大阪市淀川区十三東1-17-13 水交ビル1F
 postalCode: 532-0023

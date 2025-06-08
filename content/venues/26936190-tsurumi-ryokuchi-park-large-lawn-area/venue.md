@@ -1,6 +1,6 @@
 ---
 title: Tsurumi Ryokuchi park large lawn area
-city: Osaka
+city: osaka
 country: jp
 address: 'Ōsaka-shi, Tsurumi-ku, Ryokuchikōen, Kyūōeda−２−１６３'
 postalCode: 538-0036

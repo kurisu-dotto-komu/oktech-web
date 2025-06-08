@@ -1,6 +1,6 @@
 ---
 title: Synergy Marketing
-city: Osaka
+city: osaka
 country: jp
 address: 大阪市北区堂島1-6-20 堂島アバンザ21F
 postalCode: 530-0003

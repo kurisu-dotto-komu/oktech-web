@@ -1,6 +1,6 @@
 ---
 title: The DECK （ザ デッキ）
-city: Osaka
+city: osaka
 country: jp
 address: 'Chuo Ward, Minamihonmachi, 2-chōme−1−１ 本町サザンビル 1階'
 postalCode: 541-0054

@@ -1,6 +1,6 @@
 ---
 title: Kamogawa Creative Base
-city: Kyoto
+city: kyoto
 country: jp
 address: '153 Tennocho, Shimogyo Ward'
 postalCode: meetup8

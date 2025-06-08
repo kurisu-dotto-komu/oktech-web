@@ -1,6 +1,6 @@
 ---
 title: 阪急ファイブアネックスビル　GVH#5
-city: Osaka
+city: osaka
 country: jp
 address: 大阪市北区角田町1番12号
 postalCode: 530-0017

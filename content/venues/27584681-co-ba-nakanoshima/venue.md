@@ -1,6 +1,6 @@
 ---
 title: co-ba nakanoshima
-city: Osaka
+city: osaka
 country: JP
 address: 'Kita Ward, Nakanoshima, 3 Chome−1−8'
 postalCode: 530-0005
