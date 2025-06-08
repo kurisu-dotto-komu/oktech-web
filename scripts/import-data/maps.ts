@@ -18,7 +18,7 @@ export interface MapOptions {
 }
 
 export async function generateStaticMap(outputPath: string, options: MapOptions): Promise<boolean> {
-  const { lat, lng, width = 1024, height = 1024, zoom = 16, overwrite = false } = options;
+  const { lat, lng, width = 1024, height = 1024, zoom = 15, overwrite = false } = options;
 
   // Check if map already exists and overwrite is not enabled
   if (existsSync(outputPath) && !overwrite) {
