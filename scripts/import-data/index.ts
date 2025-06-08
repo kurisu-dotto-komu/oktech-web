@@ -14,6 +14,7 @@ import {
   PHOTOS_URL,
   INFER_EVENTS,
 } from "./constants";
+import { generateStaticMap } from "./maps";
 
 // Global statistics object that will be mutated by helper functions throughout the import run
 const stats = {
@@ -31,6 +32,9 @@ const stats = {
   venuesCreated: 0,
   venuesUpdated: 0,
   venuesUnchanged: 0,
+  mapsGenerated: 0,
+  mapsUnchanged: 0,
+  mapsFailed: 0,
 };
 
 // Track unmatched cities for reporting
@@ -191,7 +195,7 @@ async function processEvent(event: Event, group: string, photos: Photo[]): Promi
   return;
 }
 
-async function processVenue(venue: Venue): Promise<void> {
+async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promise<void> {
   // Try to slugify the name first, fall back to address if name produces empty slug
   const nameSlug = slugify(venue.name, { lower: true, strict: true });
   const slugSuffix = nameSlug || slugify(venue.address, { lower: true, strict: true }) || "venue";
@@ -300,6 +304,24 @@ async function processVenue(venue: Venue): Promise<void> {
     stats.venuesCreated++;
   }
 
+  // Generate static map if coordinates are available
+  if (venue.lat && venue.lng) {
+    const mapPath = path.join(venueDir, "map.png");
+    const mapGenerated = await generateStaticMap(mapPath, {
+      lat: venue.lat,
+      lng: venue.lng,
+      overwrite: overwriteMaps,
+    });
+
+    if (mapGenerated) {
+      stats.mapsGenerated++;
+    } else if (existsSync(mapPath)) {
+      stats.mapsUnchanged++;
+    } else {
+      stats.mapsFailed++;
+    }
+  }
+
   return;
 }
 
@@ -327,6 +349,14 @@ function inferEventByTimestamp(
 }
 
 async function main() {
+  // Parse command line arguments
+  const args = process.argv.slice(2);
+  const overwriteMaps = args.includes("--overwrite-maps");
+  
+  if (overwriteMaps) {
+    console.log("Map overwrite mode enabled - existing maps will be regenerated");
+  }
+
   const [eventsWithVenuesJSON, photosJSON] = await Promise.all([
     fetch(EVENTS_URL).then((r) => r.json()) as Promise<EventsWithVenuesJSON>,
     fetch(PHOTOS_URL).then((r) => r.json()) as Promise<PhotoJSON>,
@@ -375,7 +405,7 @@ async function main() {
   if (eventsWithVenuesJSON.venues) {
     for (const venue of eventsWithVenuesJSON.venues) {
       stats.totalVenues++;
-      await processVenue(venue);
+      await processVenue(venue, overwriteMaps);
     }
   }
 

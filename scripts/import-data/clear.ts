@@ -83,6 +83,16 @@ export async function clearImageMetadat() {
   }
 }
 
+export async function clearMaps() {
+  const mapFiles = await glob("**/map.png", { cwd: VENUES_BASE_DIR });
+  let mapsCleared = 0;
+  for await (const file of mapFiles) {
+    await rm(path.join(VENUES_BASE_DIR, file), { force: true });
+    mapsCleared++;
+  }
+  console.log(`Cleared ${mapsCleared} map files.`);
+}
+
 export async function clearImages() {
   await clearImageFiles();
   await clearImageMetadat();
@@ -141,6 +151,11 @@ async function main() {
       await clearImages();
       console.log("Images cleared.");
       break;
+    case "maps":
+      console.log("Clearing venue map files...");
+      await clearMaps();
+      console.log("Venue map files cleared.");
+      break;
     case "all":
       console.log("Clearing all data...");
       await clearAll();
@@ -153,7 +168,7 @@ async function main() {
       break;
     default:
       console.log(
-        "Usage: npm run clear -- [markdown|events|venues|image-files|image-metadata|images|empty-dirs|all]",
+        "Usage: npm run clear -- [markdown|events|venues|image-files|image-metadata|images|maps|empty-dirs|all]",
       );
       process.exit(1);
   }

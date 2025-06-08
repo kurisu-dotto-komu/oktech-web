@@ -21,6 +21,8 @@
     "astro-icon": "^1.1.5",
     "daisyui": "^5.0.28",
     "gray-matter": "^4.0.3",
+    "osm-static-maps": "^4.0.2",
+    "puppeteer": "^24.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "slugify": "^1.6.6",
@@ -34,6 +36,7 @@
     "@iconify-json/lucide": "^1.2.39",
     "@rollup/plugin-yaml": "^4.1.2",
     "@tailwindcss/typography": "^0.5.16",
+    "dotenv": "^16.5.0",
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1"
   }
