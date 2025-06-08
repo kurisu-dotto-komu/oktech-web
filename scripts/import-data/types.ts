@@ -89,3 +89,41 @@ export type PhotoJSON = {
     };
   };
 };
+
+/*
+  "venues": [
+    {
+      "address": "3 Chome-6-3 Awajimachi Chūō-ku",
+      "city": "Osaka",
+      "country": "jp",
+      "crossStreet": null,
+      "gmaps": "https://maps.app.goo.gl/t6MWWptqjio2EyHU8",
+      "id": "21427172",
+      "lat": 34.6866328,
+      "lng": 135.4986822,
+      "name": "Caffe Pascucci",
+      "postalCode": "541-0047",
+      "state": ""
+    },
+*/
+
+export type Venue = {
+  address: string;
+  city: string;
+  country: string;
+  crossStreet: string | null;
+  gmaps?: string;
+  id: string;
+  lat: number;
+  lng: number;
+  name: string;
+  postalCode: string;
+  state: string;
+};
+
+export type VenueJSON = {
+  venues: Venue[];
+};
+
+// Combined type for the events.json that includes both groups and venues
+export type EventsWithVenuesJSON = EventJSON & VenueJSON;

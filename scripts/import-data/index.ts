@@ -5,8 +5,15 @@ import slugify from "slugify";
 import matter from "gray-matter";
 import { stringify as yamlStringify } from "yaml";
 
-import type { Event, EventJSON, Photo, PhotoJSON } from "./types";
-import { PUBLIC_BASE, EVENTS_BASE_DIR, EVENTS_URL, PHOTOS_URL, INFER_EVENTS } from "./constants";
+import type { Event, EventJSON, Photo, PhotoJSON, Venue, EventsWithVenuesJSON } from "./types";
+import {
+  PUBLIC_BASE,
+  EVENTS_BASE_DIR,
+  VENUES_BASE_DIR,
+  EVENTS_URL,
+  PHOTOS_URL,
+  INFER_EVENTS,
+} from "./constants";
 
 // Global statistics object that will be mutated by helper functions throughout the import run
 const stats = {
@@ -20,6 +27,10 @@ const stats = {
   metadataUnchanged: 0,
   metadataNotApplicable: 0,
   totalEvents: 0,
+  totalVenues: 0,
+  venuesCreated: 0,
+  venuesUpdated: 0,
+  venuesUnchanged: 0,
 };
 
 async function downloadImage(remotePath: string, localPath: string): Promise<boolean> {
@@ -177,6 +188,83 @@ async function processEvent(event: Event, group: string, photos: Photo[]): Promi
   return;
 }
 
+async function processVenue(venue: Venue): Promise<void> {
+  // Try to slugify the name first, fall back to address if name produces empty slug
+  const nameSlug = slugify(venue.name, { lower: true, strict: true });
+  const slugSuffix = nameSlug || slugify(venue.address, { lower: true, strict: true }) || "venue";
+  const slug = slugify(`${venue.id}-${slugSuffix}`, { lower: true, strict: true });
+
+  const venueDir = path.join(VENUES_BASE_DIR, slug);
+  await fs.mkdir(venueDir, { recursive: true });
+  const mdPath = path.join(venueDir, "venue.md");
+
+  const newFrontmatter: Record<string, unknown> = {
+    title: venue.name,
+  };
+
+  // Add non-empty fields to frontmatter
+  if (venue.city) {
+    newFrontmatter.city = venue.city;
+  }
+
+  if (venue.country) {
+    newFrontmatter.country = venue.country;
+  }
+
+  if (venue.address) {
+    newFrontmatter.address = venue.address;
+  }
+
+  if (venue.crossStreet) {
+    newFrontmatter.crossStreet = venue.crossStreet;
+  }
+
+  if (venue.postalCode) {
+    newFrontmatter.postalCode = venue.postalCode;
+  }
+
+  if (venue.state) {
+    newFrontmatter.state = venue.state;
+  }
+
+  if (venue.gmaps) {
+    newFrontmatter.gmaps = venue.gmaps;
+  }
+
+  if (venue.lat && venue.lng) {
+    newFrontmatter.coordinates = {
+      lat: venue.lat,
+      lng: venue.lng,
+    };
+  }
+
+  newFrontmatter.meetupId = parseInt(venue.id);
+
+  if (existsSync(mdPath)) {
+    const existing = matter.read(mdPath);
+    const { description, ...existingWithoutDescription } = existing.data;
+    const currentDescription = description ?? "";
+    const merged = { ...existingWithoutDescription, ...newFrontmatter };
+
+    const content = matter.stringify(`\n${currentDescription}`, merged);
+    const existingContent = await fs.readFile(mdPath, "utf-8");
+    if (content !== existingContent) {
+      await fs.writeFile(mdPath, content);
+      console.log(`Updated venue markdown → ${mdPath}`);
+      stats.venuesUpdated++;
+    } else {
+      stats.venuesUnchanged++;
+    }
+  } else {
+    const content = matter.stringify(`\n`, newFrontmatter);
+    await fs.writeFile(mdPath, content);
+    console.log(`Created venue markdown → ${mdPath}`);
+    stats.venuesCreated++;
+  }
+
+  return;
+}
+
 // Attempt to infer the most likely event for a set of photos based on the upload timestamp.
 // Strategy: choose the event whose start time is the closest *before* the photo timestamp.
 // Returns the matching event and its parent group id, or null if no plausible match is found.
@@ -201,8 +289,8 @@ function inferEventByTimestamp(
 }
 
 async function main() {
-  const [eventsJSON, photosJSON] = await Promise.all([
-    fetch(EVENTS_URL).then((r) => r.json()) as Promise<EventJSON>,
+  const [eventsWithVenuesJSON, photosJSON] = await Promise.all([
+    fetch(EVENTS_URL).then((r) => r.json()) as Promise<EventsWithVenuesJSON>,
     fetch(PHOTOS_URL).then((r) => r.json()) as Promise<PhotoJSON>,
   ]);
 
@@ -216,7 +304,7 @@ async function main() {
       photosByEvent[grp.event] = list;
     } else if (INFER_EVENTS) {
       // Attempt to infer the event based on timestamp
-      const inferred = inferEventByTimestamp(grp.timestamp, eventsJSON);
+      const inferred = inferEventByTimestamp(grp.timestamp, eventsWithVenuesJSON);
       if (inferred) {
         console.log(
           `Inferred photos batch (timestamp: ${grp.timestamp}) → event ${inferred.event.id} (${inferred.event.title})`,
@@ -235,12 +323,21 @@ async function main() {
     }
   });
 
-  for (const [group, groupData] of Object.entries(eventsJSON.groups)) {
+  // Process events
+  for (const [group, groupData] of Object.entries(eventsWithVenuesJSON.groups)) {
     for (const event of groupData.events) {
       stats.totalEvents++;
       const photos = photosByEvent[event.id] ?? [];
 
       await processEvent(event, group, photos);
+    }
+  }
+
+  // Process venues
+  if (eventsWithVenuesJSON.venues) {
+    for (const venue of eventsWithVenuesJSON.venues) {
+      stats.totalVenues++;
+      await processVenue(venue);
     }
   }
 
