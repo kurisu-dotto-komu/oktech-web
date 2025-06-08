@@ -25,20 +25,36 @@ let events = await getEvents();
 // Apply filters
 if (filterType === "location" && filterValue) {
   events = events.filter((event) => event.venue?.city === filterValue);
+} else if (filterType === "topic" && filterValue) {
+  events = events.filter((event) => {
+    if (!event.data.topics) return false;
+    return event.data.topics.some((topic: string) => {
+      const slug = topic
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      return slug === filterValue;
+    });
+  });
 }
 
 const gallery = filters === "gallery";
 const selectedCity = filterType === "location" ? filterValue : undefined;
+const selectedTopic = filterType === "topic" ? filterValue : undefined;
 ---
 
 <PageLayout title="Events">
-  <Section wide class="bg-secondary/20">
-    <EventsUpcoming />
-  </Section>
+  {
+    !filterType && (
+      <Section wide class="bg-secondary/20">
+        <EventsUpcoming />
+      </Section>
+    )
+  }
   <Section wide class="pb-0">
     <div class="flex flex-col gap-8">
       <div class="flex items-center justify-between gap-8 flex-col md:flex-row">
-        <EventsFilter selectedCity={selectedCity} />
+        <EventsFilter selectedCity={selectedCity} selectedTopic={selectedTopic} />
         <div class="flex items-center gap-4">
           <Button
             class="btn btn-lg gap-4"

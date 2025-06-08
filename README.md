@@ -1,5 +1,7 @@
 ## TODO
 
+Refactor the Members pages to use the resolveEvent style format (using slug).
+
 Refactoring on plane, and push a fresh branch.
 
 ## AI Disclosure

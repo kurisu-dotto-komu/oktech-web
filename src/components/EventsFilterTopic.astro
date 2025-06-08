@@ -1,0 +1,39 @@
+---
+import { getEvents } from "../data";
+import EventsFilterDropdown from "./EventsFilterDropdown.astro";
+
+interface Props {
+  selectedTopic?: string;
+}
+
+const { selectedTopic } = Astro.props;
+
+// Get all events to extract unique topics
+const events = await getEvents();
+const topicsMap = new Map<string, string>(); // slug -> original name
+
+events.forEach((event) => {
+  if (event.data.topics) {
+    event.data.topics.forEach((topic: string) => {
+      const slug = topic
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      topicsMap.set(slug, topic);
+    });
+  }
+});
+
+const sortedTopics = Array.from(topicsMap.entries()).sort((a, b) => a[1].localeCompare(b[1]));
+---
+
+<EventsFilterDropdown
+  buttonText={selectedTopic ? topicsMap.get(selectedTopic) || selectedTopic : "Topic"}
+  buttonIcon="lucide:tag"
+  clearText={selectedTopic ? "All Topics" : undefined}
+  clearHref={selectedTopic ? "/events" : undefined}
+  items={sortedTopics.map(([slug, name]) => ({
+    href: `/events/topic/${slug}`,
+    text: name,
+  }))}
+/>

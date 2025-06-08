@@ -1,7 +1,6 @@
 ---
-import { Icon } from "astro-icon/components";
-import { getEvents } from "../data";
-import Link from "./Link.astro";
+import EventsFilterLocation from "./EventsFilterLocation.astro";
+import EventsFilterTopic from "./EventsFilterTopic.astro";
 
 interface Props {
   selectedCity?: string;
@@ -9,64 +8,9 @@ interface Props {
 }
 
 const { selectedCity, selectedTopic } = Astro.props;
-
-// Get all events to extract unique cities
-const events = await getEvents();
-const cities = new Set<string>();
-
-events.forEach((event) => {
-  if (event.venue?.city) {
-    cities.add(event.venue.city);
-  }
-});
-
-const sortedCities = Array.from(cities).sort();
-
-// Extract unique topics from events (for now, hardcoded)
-const topics = ["Web Development", "AI/ML", "DevOps", "Cloud Computing", "Cybersecurity"];
-
-// Function to capitalize city names for display
-function capitalizeCity(city: string): string {
-  return city.charAt(0).toUpperCase() + city.slice(1);
-}
 ---
 
-<div class="flex flex-wrap gap-4 justify-center">
-  <!-- Location Filter -->
-  <div class="dropdown">
-    <div tabindex="0" role="button" class="btn btn-lg">
-      <Icon name="lucide:map-pin" size={20} />
-      {selectedCity ? capitalizeCity(selectedCity) : "Location"}
-      <Icon name="lucide:chevron-down" size={20} />
-    </div>
-    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-      <li><Link href="/events">All Locations</Link></li>
-      {
-        sortedCities.map((city) => (
-          <li>
-            <Link href={`/events/location/${encodeURIComponent(city)}`}>{capitalizeCity(city)}</Link>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-
-  <!-- Tech Topics Filter -->
-  <div class="dropdown">
-    <div tabindex="0" role="button" class="btn btn-lg">
-      <Icon name="lucide:tag" size={20} />
-      {selectedTopic || "Tech Topics"}
-      <Icon name="lucide:chevron-down" size={20} />
-    </div>
-    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-      <li><Link href="/events">All Topics</Link></li>
-      {
-        topics.map((topic) => (
-          <li>
-            <Link href={`/events/topic/${encodeURIComponent(topic)}`}>{topic}</Link>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+<div class="flex flex-wrap gap-4 justify-center items-center">
+  <EventsFilterLocation selectedCity={selectedCity} />
+  <EventsFilterTopic selectedTopic={selectedTopic} />
 </div>

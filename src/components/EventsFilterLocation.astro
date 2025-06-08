@@ -1,0 +1,38 @@
+---
+import { getEvents } from "../data";
+import EventsFilterDropdown from "./EventsFilterDropdown.astro";
+
+interface Props {
+  selectedCity?: string;
+}
+
+const { selectedCity } = Astro.props;
+
+// Get all events to extract unique cities
+const events = await getEvents();
+const cities = new Set<string>();
+
+events.forEach((event) => {
+  if (event.venue?.city) {
+    cities.add(event.venue.city);
+  }
+});
+
+const sortedCities = Array.from(cities).sort();
+
+// Function to capitalize city names for display
+function capitalizeCity(city: string): string {
+  return city.charAt(0).toUpperCase() + city.slice(1);
+}
+---
+
+<EventsFilterDropdown
+  buttonText={selectedCity ? capitalizeCity(selectedCity) : "Location"}
+  buttonIcon="lucide:map-pin"
+  clearText={selectedCity ? "All Locations" : undefined}
+  clearHref={selectedCity ? "/events" : undefined}
+  items={sortedCities.map((city) => ({
+    href: `/events/location/${encodeURIComponent(city)}`,
+    text: capitalizeCity(city),
+  }))}
+/>

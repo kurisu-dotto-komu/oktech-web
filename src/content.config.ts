@@ -26,6 +26,7 @@ const events = defineCollection({
         duration: frontmatter.duration,
         devOnly: devOnly ?? false,
         venue,
+        topics: frontmatter.topics as string[] | undefined,
       };
     });
   },
@@ -38,6 +39,7 @@ const events = defineCollection({
       cover: image(),
       devOnly: z.boolean().optional().default(false),
       venue: reference("venues").optional(),
+      topics: z.array(z.string()).optional(),
     }),
 });
 
