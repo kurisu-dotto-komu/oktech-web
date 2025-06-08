@@ -18,7 +18,7 @@ export interface MapOptions {
 }
 
 export async function generateStaticMap(outputPath: string, options: MapOptions): Promise<boolean> {
-  const { lat, lng, width = 1024, height = 1024, zoom = 15, overwrite = false } = options;
+  const { lat, lng, width = 1024, height = 1024, zoom = 16, overwrite = false } = options;
 
   // Check if map already exists and overwrite is not enabled
   if (existsSync(outputPath) && !overwrite) {
@@ -57,8 +57,8 @@ export async function generateStaticMap(outputPath: string, options: MapOptions)
               <circle cx="12" cy="12" r="6" fill="#ffffff"/>
             </svg>`,
           ).toString("base64"),
-        iconSize: [28, 40],
-        iconAnchor: [14, 40],
+        iconSize: [28, 40].map((v) => v * 3),
+        iconAnchor: [14, 40].map((v) => v * 3),
       },
     };
 

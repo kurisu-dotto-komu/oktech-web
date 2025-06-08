@@ -4,7 +4,7 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 
 // Environment variables
-const STADIA_API_KEY = process.env.STADIA_API_KEY;
+const STADIA_API_KEY = process.env.STADIA_MAPS_API_KEY;
 
 // Base attribution that applies to all providers
 const BASE_OSM_ATTRIBUTION = "© OpenStreetMap contributors";
@@ -156,7 +156,7 @@ export function getMapProviderConfig(providerKey: ProviderKey): MapProviderConfi
   if (providerKey.toLowerCase().startsWith("stadia")) {
     if (!STADIA_API_KEY) {
       throw new Error(
-        `Provider "${providerKey}" requires STADIA_API_KEY environment variable to be set in .env.local`
+        `Provider "${providerKey}" requires STADIA_API_KEY environment variable to be set in .env.local`,
       );
     }
   }
