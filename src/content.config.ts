@@ -11,6 +11,7 @@ const events = defineCollection({
       const { frontmatter } = module as { frontmatter: Record<string, unknown> };
       const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);
       const [date, time] = (frontmatter.dateTime as string).split(" ");
+      const devOnly = frontmatter.devOnly as boolean | undefined;
       return {
         id: slug,
         cover,
@@ -18,6 +19,7 @@ const events = defineCollection({
         // Convert to UTC from JST (+09:00),
         dateTime: new Date(`${date}T${time}:00+09:00`),
         duration: frontmatter.duration,
+        devOnly: devOnly ?? false,
       };
     });
   },
@@ -28,6 +30,7 @@ const events = defineCollection({
       dateTime: z.date(),
       duration: z.number().optional(),
       cover: image(),
+      devOnly: z.boolean().optional().default(false),
     }),
 });
 

@@ -84,7 +84,12 @@ export type EventData = InferEntrySchema<"events">;
 
 export async function getEvents() {
   const allEvents = await getCollection("events");
-  return allEvents.reverse();
+
+  // Filter out devOnly events in production
+  const isDev = process.env.NODE_ENV === "development";
+  const filteredEvents = isDev ? allEvents : allEvents.filter((event) => !event.data.devOnly);
+
+  return filteredEvents.reverse();
 }
 
 export async function getEvent(slug: string | undefined) {
