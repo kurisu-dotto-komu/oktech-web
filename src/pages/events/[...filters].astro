@@ -1,13 +1,44 @@
 ---
 import EventsPage from "../../components/EventsPage.astro";
+import { getEvents } from "../../data";
 
 export async function getStaticPaths() {
+  // Get all events to extract unique cities
+  const events = await getEvents();
+  const cities = new Set<string>();
+
+  events.forEach((event) => {
+    if (event.venue?.city) {
+      cities.add(event.venue.city);
+    }
+  });
+
+  const cityPaths = Array.from(cities).map((city) => ({
+    params: { filters: `location/${encodeURIComponent(city)}` },
+    props: { filterType: "location", filterValue: city },
+  }));
+
   return [
     { params: { filters: undefined } },
     { params: { filters: "gallery" } },
-    // { params: { filters: "list" } },
+    ...cityPaths,
   ];
+}
+
+const { filters } = Astro.params;
+const { filterType, filterValue } = Astro.props;
+
+// Parse filters from URL
+let parsedFilterType = filterType;
+let parsedFilterValue = filterValue;
+
+if (filters && !parsedFilterType) {
+  const parts = filters.split("/");
+  if (parts[0] === "location" && parts[1]) {
+    parsedFilterType = "location";
+    parsedFilterValue = decodeURIComponent(parts[1]);
+  }
 }
 ---
 
-<EventsPage />
+<EventsPage filterType={parsedFilterType} filterValue={parsedFilterValue} />

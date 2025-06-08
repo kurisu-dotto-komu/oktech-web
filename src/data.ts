@@ -79,17 +79,36 @@ export async function getMembers(): Promise<Member[]> {
   });
 }
 
+export type Venue = InferEntrySchema<"venues">;
 export type EventEntry = Awaited<ReturnType<typeof getEvent>>;
 export type EventData = InferEntrySchema<"events">;
 
 export async function getEvents() {
-  const allEvents = await getCollection("events");
+  const [allEvents, allVenues] = await Promise.all([
+    getCollection("events"),
+    getCollection("venues"),
+  ]);
+
+  // Create a venue lookup map by meetupId
+  const venueMap = new Map<string, Venue>();
+  allVenues.forEach((venue) => {
+    venueMap.set(venue.data.meetupId.toString(), venue.data);
+  });
 
   // Filter out devOnly events in production
   const isDev = process.env.NODE_ENV === "development";
   const filteredEvents = isDev ? allEvents : allEvents.filter((event) => !event.data.devOnly);
 
-  return filteredEvents.reverse();
+  // Join venue data with events
+  const eventsWithVenues = filteredEvents.map((event) => {
+    const venueData = event.data.venue ? venueMap.get(event.data.venue.id) : undefined;
+    return {
+      ...event,
+      venue: venueData,
+    };
+  });
+
+  return eventsWithVenues.reverse();
 }
 
 export async function getEvent(slug: string | undefined) {
@@ -101,7 +120,18 @@ export async function getEvent(slug: string | undefined) {
     throw `No even found for slug ${slug}`;
   }
 
-  return event;
+  // Get venue data if the event has a venue reference
+  let venueData: Venue | undefined;
+  if (event.data.venue) {
+    const venues = await getCollection("venues");
+    const venue = venues.find((v) => v.data.meetupId.toString() === event.data.venue?.id);
+    venueData = venue?.data;
+  }
+
+  return {
+    ...event,
+    venue: venueData,
+  };
 }
 
 export async function resolveEvent({ params, props }: AstroGlobal) {

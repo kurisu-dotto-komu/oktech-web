@@ -37,6 +37,12 @@ const formattedTime = formatTime(event.data.dateTime);
         <Icon name="lucide:calendar" size={16} />
         <span>{formattedDate} • {formattedTime}</span>
       </div>
+      {event.venue && (
+        <div class="flex gap-2 items-center text-base-content/70">
+          <Icon name="lucide:map-pin" size={16} />
+          <span>{event.venue.title}</span>
+        </div>
+      )}
     </div>
   </div>
 </Link>

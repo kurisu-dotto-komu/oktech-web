@@ -12,6 +12,11 @@ const events = defineCollection({
       const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);
       const [date, time] = (frontmatter.dateTime as string).split(" ");
       const devOnly = frontmatter.devOnly as boolean | undefined;
+      
+      // Convert venue number to string if it exists
+      const venueId = frontmatter.venue;
+      const venue = venueId ? String(venueId) : undefined;
+      
       return {
         id: slug,
         cover,
@@ -20,6 +25,7 @@ const events = defineCollection({
         dateTime: new Date(`${date}T${time}:00+09:00`),
         duration: frontmatter.duration,
         devOnly: devOnly ?? false,
+        venue,
       };
     });
   },
@@ -31,6 +37,7 @@ const events = defineCollection({
       duration: z.number().optional(),
       cover: image(),
       devOnly: z.boolean().optional().default(false),
+      venue: reference("venues").optional(),
     }),
 });
 
@@ -122,4 +129,51 @@ const speakers = defineCollection({
     }),
 });
 
-export const collections = { events, eventGalleryImage, speakers };
+const venues = defineCollection({
+  loader: async () => {
+    const imports = await import.meta.glob("/content/venues/**/venue.md", {
+      eager: true,
+    });
+
+    return Object.entries(imports).map(([fileName, module]) => {
+      const basePath = fileName.replace("/venue.md", "");
+      const slug = basePath.split("/").pop() as string;
+
+      const { frontmatter } = module as {
+        frontmatter: Record<string, unknown>;
+      };
+
+      return {
+        id: slug,
+        title: frontmatter.title as string,
+        city: frontmatter.city as string | undefined,
+        country: frontmatter.country as string | undefined,
+        address: frontmatter.address as string | undefined,
+        state: frontmatter.state as string | undefined,
+        postalCode: frontmatter.postalCode as string | undefined,
+        gmaps: frontmatter.gmaps as string | undefined,
+        coordinates: frontmatter.coordinates as { lat: number; lng: number } | undefined,
+        meetupId: frontmatter.meetupId as number,
+      };
+    });
+  },
+  schema: z.object({
+    id: z.string(),
+    title: z.string(),
+    city: z.string().optional(),
+    country: z.string().optional(),
+    address: z.string().optional(),
+    state: z.string().optional(),
+    postalCode: z.string().optional(),
+    gmaps: z.string().optional(),
+    coordinates: z
+      .object({
+        lat: z.number(),
+        lng: z.number(),
+      })
+      .optional(),
+    meetupId: z.number(),
+  }),
+});
+
+export const collections = { events, eventGalleryImage, speakers, venues };

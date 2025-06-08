@@ -12,4 +12,24 @@ const event = await resolveEvent(Astro);
     <Icon name="lucide:clock" size={20} />
     <span>{formatDate(event.data.dateTime, "long")}</span>
   </div>
+  {event.venue && (
+    <div class="flex rounded gap-2 items-start">
+      <Icon name="lucide:map-pin" size={20} class="mt-0.5" />
+      <div class="flex flex-col gap-1">
+        <span class="font-medium">{event.venue.title}</span>
+        {event.venue.address && (
+          <span class="text-sm text-base-content/70">{event.venue.address}</span>
+        )}
+        {event.venue.city && (
+          <span class="text-sm text-base-content/70">{event.venue.city}, {event.venue.country?.toUpperCase()}</span>
+        )}
+        {event.venue.gmaps && (
+          <a href={event.venue.gmaps} target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:underline flex items-center gap-1">
+            <Icon name="lucide:external-link" size={14} />
+            View on Maps
+          </a>
+        )}
+      </div>
+    </div>
+  )}
 </div>

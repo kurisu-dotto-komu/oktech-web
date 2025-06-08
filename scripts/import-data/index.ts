@@ -33,6 +33,9 @@ const stats = {
   venuesUnchanged: 0,
 };
 
+// Track unmatched cities for reporting
+const unmatchedCities: Array<{ city: string; venueId: string; venueName: string }> = [];
+
 async function downloadImage(remotePath: string, localPath: string): Promise<boolean> {
   if (existsSync(localPath)) {
     stats.galleryImagesUnchanged++;
@@ -198,13 +201,48 @@ async function processVenue(venue: Venue): Promise<void> {
   await fs.mkdir(venueDir, { recursive: true });
   const mdPath = path.join(venueDir, "venue.md");
 
+  // City normalization map (keys should be lowercase)
+  const cityMap: Record<string, string> = {
+    osaka: "osaka",
+    大阪市: "osaka",
+    大阪府: "osaka",
+    大阪: "osaka",
+    kyoto: "kyoto",
+    京都市: "kyoto",
+    京都府: "kyoto",
+    京都: "kyoto",
+    kobe: "kobe",
+    神戸市: "kobe",
+    神戸: "kobe",
+    滋賀県: "kyoto",
+    shiga: "kyoto",
+    奈良県: "osaka",
+    nara: "osaka",
+    nishinomiya: "kobe",
+    hyogo: "kobe",
+  };
+
   const newFrontmatter: Record<string, unknown> = {
     title: venue.name,
   };
 
   // Add non-empty fields to frontmatter
   if (venue.city) {
-    newFrontmatter.city = venue.city;
+    // Normalize city name: lowercase first, then apply mapping
+    const lowercaseCity = venue.city.toLowerCase();
+    const normalizedCity = cityMap[lowercaseCity];
+
+    if (normalizedCity) {
+      newFrontmatter.city = normalizedCity;
+    } else {
+      // City not found in map - track it and use lowercase version
+      newFrontmatter.city = lowercaseCity;
+      unmatchedCities.push({
+        city: venue.city,
+        venueId: venue.id,
+        venueName: venue.name,
+      });
+    }
   }
 
   if (venue.country) {
@@ -343,6 +381,16 @@ async function main() {
 
   console.log("\nImport Summary:");
   console.log(stats);
+
+  if (unmatchedCities.length > 0) {
+    console.log("\nUnmatched Cities (not found in cityMap):");
+    unmatchedCities.forEach(({ city, venueId, venueName }) => {
+      console.log(`  - "${city}" (Venue ID: ${venueId}, Name: "${venueName}")`);
+    });
+    console.log(`\nTotal unmatched cities: ${unmatchedCities.length}`);
+  } else {
+    console.log("\nAll cities were successfully mapped!");
+  }
 }
 
 main().catch((err) => {
