@@ -12,7 +12,7 @@ topics:
   - AI/ML
 meetupId: 999999998
 group: 15632202
-venue: 24529555
+venue: 27868919
 ---
 
 **This is a test event that only appears in development mode.**

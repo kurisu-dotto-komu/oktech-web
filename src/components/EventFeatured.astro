@@ -4,6 +4,7 @@ import { resolveEvent } from "../data";
 import Link from "./Link.astro";
 import { Image } from "astro:assets";
 import { formatDate, formatTime } from "../utils/formatDate";
+import VenueMap from "./VenueMap.astro";
 
 interface Props {
   slug: string;
@@ -13,12 +14,10 @@ const event = await resolveEvent(Astro);
 
 const formattedDate = formatDate(event.data.dateTime, "short-no-year");
 const formattedTime = formatTime(event.data.dateTime);
-
-// const cover = await import(event.cover);
 ---
 
 <Link
-  class="card rounded-xl bg-base-100 h-full overflow-hidden hover-zoom flex flex-col lg:flex-row shadow-md w-full hover:shadow-lg"
+  class="card rounded-xl bg-base-100 h-full hover-zoom flex flex-col lg:flex-row shadow-md w-full hover:shadow-lg overflow-hidden"
   href={`/event/${event.id}`}
 >
   <!-- Left side - Image (1/3 width) -->
@@ -35,25 +34,60 @@ const formattedTime = formatTime(event.data.dateTime);
   </div>
 
   <!-- Right side - Details and Map (2/3 width) -->
-  <div class="lg:w-2/3">
-    <div>
+  <div class="lg:w-2/3 flex">
+    <div class="flex-1">
       <div class="flex flex-col h-full md:flex-row">
         <!-- Left side - Event Details -->
         <div class="flex flex-col p-6 md:w-2/3">
           <h3 class="card-title text-2xl mb-4">{event.data.title}</h3>
 
-          <div class="flex flex-col gap-3 text-base mb-6">
+          <div class="flex flex-col gap-3 text-base mb-4">
             <div class="flex gap-2 items-center">
               <Icon name="lucide:calendar" size={20} />
               <span>{formattedDate} • {formattedTime}</span>
             </div>
+            {
+              event.data.duration && (
+                <div class="flex gap-2 items-center">
+                  <Icon name="lucide:clock" size={20} />
+                  <span>{event.data.duration / 60} hours</span>
+                </div>
+              )
+            }
+            {
+              event.venue && (
+                <div class="flex gap-2 items-center">
+                  <Icon name="lucide:map-pin" size={20} />
+                  <span>
+                    {event.venue.title}, {event.venue.city}
+                  </span>
+                </div>
+              )
+            }
           </div>
 
-          <!-- Additional details can be added here -->
+          {/* Topics/Tags */}
+          {
+            event.data.topics && event.data.topics.length > 0 && (
+              <div class="relative overflow-hidden">
+                <div class="flex gap-2 flex-nowrap">
+                  {event.data.topics.map((topic) => (
+                    <span class="badge badge-sm badge-neutral whitespace-nowrap flex-shrink-0">
+                      {topic}
+                    </span>
+                  ))}
+                </div>
+                {/* Fade out gradient on the right */}
+                <div class="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-base-100 to-transparent pointer-events-none" />
+              </div>
+            )
+          }
         </div>
 
-        <!-- Right side - Spacer -->
-        <div class="w-full md:w-1/2 lg:w-1/3"></div>
+        <!-- Right side - Map -->
+        <div class="w-full md:w-1/2 lg:w-1/3">
+          {event.venueSlug && <VenueMap venueSlug={event.venueSlug} />}
+        </div>
       </div>
     </div>
   </div>

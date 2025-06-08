@@ -1,0 +1,34 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  venueSlug: string;
+}
+
+const { venueSlug } = Astro.props;
+
+let mapImage;
+try {
+  // Try to dynamically import the map.png for this venue
+  mapImage = await import(`../../content/venues/${venueSlug}/map.png`);
+} catch (error) {
+  // If map.png doesn't exist, mapImage will remain undefined
+  mapImage = null;
+}
+---
+
+{
+  mapImage && (
+    <div class="w-full h-full">
+      <figure class="w-full h-full">
+        <Image
+          src={mapImage.default}
+          alt="Venue location map"
+          class="w-full h-full object-cover"
+          width={300}
+          height={200}
+        />
+      </figure>
+    </div>
+  )
+}

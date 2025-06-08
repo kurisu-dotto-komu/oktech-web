@@ -1,3 +1,6 @@
+// Development mode flag - change this to false for production
+export const DEV_MODE = true;
+
 const shortName = "OKWireframe";
 const longName = "Osaka Kansai Wireframe Meetup Group";
 const name = `${shortName} - ${longName}`;

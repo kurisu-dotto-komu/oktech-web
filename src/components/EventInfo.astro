@@ -2,34 +2,66 @@
 import { Icon } from "astro-icon/components";
 import { resolveEvent } from "../data";
 import { formatDate } from "../utils/formatDate";
+import VenueMap from "./VenueMap.astro";
 
 const event = await resolveEvent(Astro);
 
+// Generate map URL - use gmaps if available, otherwise create from address
+const getMapUrl = () => {
+  if (event.venue?.gmaps) {
+    return event.venue.gmaps;
+  }
+  if (event.venue?.coordinates?.lat && event.venue?.coordinates?.lng) {
+    return `https://www.google.com/maps/search/?api=1&query=${event.venue.coordinates.lat},${event.venue.coordinates.lng}`;
+  }
+
+  if (event.venue?.address) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.venue.address)}`;
+  }
+  return null;
+};
+
+const mapUrl = getMapUrl();
 ---
 
-<div class="flex flex-col gap-4 md:p-4">
-  <div class="flex rounded gap-2 items-center">
-    <Icon name="lucide:clock" size={20} />
-    <span>{formatDate(event.data.dateTime, "long")}</span>
+<div class="flex flex-col">
+  <div class="space-y-4 md:p-4">
+    <div class="flex items-start gap-3">
+      <div>
+        <Icon name="lucide:clock" class="w-6 h-6 text-primary" />
+      </div>
+      <span class="text-lg">{formatDate(event.data.dateTime, "long")}</span>
+    </div>
+    {
+      event.venue && (
+        <div class="flex items-start gap-3">
+          <div>
+            <Icon name="lucide:map-pin" class="w-6 h-6 text-primary " />
+          </div>
+          <div class="flex flex-col gap-2">
+            <span class="text-lg">{event.venue.title}</span>
+            {event.venue.address && <span class="opacity-80">{event.venue.address}</span>}
+          </div>
+        </div>
+      )
+    }
   </div>
-  {event.venue && (
-    <div class="flex rounded gap-2 items-start">
-      <Icon name="lucide:map-pin" size={20} class="mt-0.5" />
-      <div class="flex flex-col gap-1">
-        <span class="font-medium">{event.venue.title}</span>
-        {event.venue.address && (
-          <span class="text-sm text-base-content/70">{event.venue.address}</span>
-        )}
-        {event.venue.city && (
-          <span class="text-sm text-base-content/70">{event.venue.city}, {event.venue.country?.toUpperCase()}</span>
-        )}
-        {event.venue.gmaps && (
-          <a href={event.venue.gmaps} target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:underline flex items-center gap-1">
-            <Icon name="lucide:external-link" size={14} />
-            View on Maps
+  {
+    event.venueSlug && (
+      <div class="w-full">
+        {mapUrl ? (
+          <a
+            href={mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block w-full hover:opacity-90 transition-opacity cursor-pointer"
+          >
+            <VenueMap venueSlug={event.venueSlug} />
           </a>
+        ) : (
+          <VenueMap venueSlug={event.venueSlug} />
         )}
       </div>
-    </div>
-  )}
+    )
+  }
 </div>

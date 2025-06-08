@@ -1,5 +1,5 @@
 import type { AstroGlobal } from "astro";
-import { THEMES } from "./config";
+import { THEMES, DEV_MODE } from "./config";
 import { getCollection, getEntry, type InferEntrySchema } from "astro:content";
 
 export const ROLE_CONFIGS = {
@@ -89,22 +89,22 @@ export async function getEvents() {
     getCollection("venues"),
   ]);
 
-  // Create a venue lookup map by meetupId
-  const venueMap = new Map<string, Venue>();
+  // Create a venue lookup map by meetupId, including both data and slug
+  const venueMap = new Map<string, { data: Venue; slug: string }>();
   allVenues.forEach((venue) => {
-    venueMap.set(venue.data.meetupId.toString(), venue.data);
+    venueMap.set(venue.data.meetupId.toString(), { data: venue.data, slug: venue.id });
   });
 
   // Filter out devOnly events in production
-  const isDev = process.env.NODE_ENV === "development";
-  const filteredEvents = isDev ? allEvents : allEvents.filter((event) => !event.data.devOnly);
+  const filteredEvents = DEV_MODE ? allEvents : allEvents.filter((event) => !event.data.devOnly);
 
   // Join venue data with events
   const eventsWithVenues = filteredEvents.map((event) => {
-    const venueData = event.data.venue ? venueMap.get(event.data.venue.id) : undefined;
+    const venueEntry = event.data.venue ? venueMap.get(event.data.venue.id) : undefined;
     return {
       ...event,
-      venue: venueData,
+      venue: venueEntry?.data,
+      venueSlug: venueEntry?.slug,
     };
   });
 
@@ -122,15 +122,18 @@ export async function getEvent(slug: string | undefined) {
 
   // Get venue data if the event has a venue reference
   let venueData: Venue | undefined;
+  let venueSlug: string | undefined;
   if (event.data.venue) {
     const venues = await getCollection("venues");
     const venue = venues.find((v) => v.data.meetupId.toString() === event.data.venue?.id);
     venueData = venue?.data;
+    venueSlug = venue?.id;
   }
 
   return {
     ...event,
     venue: venueData,
+    venueSlug,
   };
 }
 
