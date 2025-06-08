@@ -107,3 +107,40 @@ export async function resolveEvent({ params, props }: AstroGlobal) {
   }
   return await getEvent(slug);
 }
+
+export type VenueEntry = Awaited<ReturnType<typeof getVenue>>;
+
+export async function getVenues() {
+  const allVenues = await getCollection("venues");
+  return allVenues;
+}
+
+export async function getVenue(slug: string | undefined) {
+  if (!slug) {
+    throw "Slug not defined";
+  }
+  const venue = await getEntry("venues", slug);
+  if (!venue) {
+    throw `No venue found for slug ${slug}`;
+  }
+  return venue;
+}
+
+export async function resolveVenue({ params, props }: AstroGlobal) {
+  const slug = props.slug ?? params.slug;
+  if (!slug) {
+    throw `Slug not defined ${JSON.stringify({ params, props })}`;
+  }
+  return await getVenue(slug);
+}
+
+export async function getEventVenue(venueId: number | undefined) {
+  if (!venueId) {
+    return null;
+  }
+  try {
+    return await getVenue(venueId.toString());
+  } catch {
+    return null;
+  }
+}

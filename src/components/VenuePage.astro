@@ -1,0 +1,63 @@
+---
+import { resolveVenue, getEvents } from "../data";
+import PageLayout from "../layouts/PageLayout.astro";
+import Section from "./Section.astro";
+import EventSummary from "./EventSummary.astro";
+import { Icon } from "astro-icon/components";
+
+const venue = await resolveVenue(Astro);
+const allEvents = await getEvents();
+
+// Get all events at this venue
+const venueEvents = [];
+for (const event of allEvents) {
+  const eventData = await import(`../../content/events/${event.id}/event.md`);
+  if (eventData.frontmatter.venue === parseInt(venue.id)) {
+    venueEvents.push(event);
+  }
+}
+
+const { Content } = await import(`../../content/venues/${venue.id}/venue.md`);
+---
+
+<PageLayout title={`${venue.data.title} - Venues`}>
+  <Section>
+    <div class="flex flex-col gap-8">
+      <div>
+        <h1 class="text-4xl font-bold mb-4">{venue.data.title}</h1>
+        <div class="flex gap-6 text-base-content/70 mb-6">
+          <div class="flex gap-2 items-center">
+            <Icon name="lucide:map-pin" size={20} />
+            <span class="capitalize">{venue.data.city}</span>
+          </div>
+          {venue.data.coordinates && (
+            <a 
+              href={`https://www.google.com/maps?q=${venue.data.coordinates.lat},${venue.data.coordinates.lng}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex gap-2 items-center hover:text-primary transition-colors"
+            >
+              <Icon name="lucide:map" size={20} />
+              <span>View on Map</span>
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="prose prose-lg max-w-none">
+        <Content />
+      </div>
+
+      {venueEvents.length > 0 && (
+        <div class="mt-12">
+          <h2 class="text-2xl font-bold mb-6">Events at this venue</h2>
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {venueEvents.map((event) => (
+              <EventSummary slug={event.id} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </Section>
+</PageLayout>

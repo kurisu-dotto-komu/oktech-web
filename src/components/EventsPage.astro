@@ -1,7 +1,7 @@
 ---
 import EventsFilter from "./EventsFilter.astro";
 import SearchBox from "./SearchBox.astro";
-import { getEvents } from "../data";
+import { getEvents, getEventVenue } from "../data";
 import EventSummary from "./EventSummary.astro";
 import Grid from "./Grid.astro";
 import Button from "./Button.astro";
@@ -10,10 +10,29 @@ import Section from "./Section.astro";
 import EventsUpcoming from "./EventsUpcoming.astro";
 import EventFeatured from "./EventFeatured.astro";
 import EventGallery from "./EventGallery.astro";
+
 const { filters } = Astro.params;
-// TODO: we probably just want our own route here...
-// TODO: handle more filters
-const events = await getEvents();
+const url = new URL(Astro.request.url);
+const cityFilter = url.searchParams.get('city');
+
+// Get all events
+const allEvents = await getEvents();
+
+// Filter events by city if a filter is applied
+let events = allEvents;
+if (cityFilter && (cityFilter === 'osaka' || cityFilter === 'kyoto')) {
+  const filteredEvents = [];
+  for (const event of allEvents) {
+    const eventData = await import(`../../content/events/${event.id}/event.md`);
+    const venueId = eventData.frontmatter.venue;
+    const venue = await getEventVenue(venueId);
+    if (venue && venue.data.city === cityFilter) {
+      filteredEvents.push(event);
+    }
+  }
+  events = filteredEvents;
+}
+
 const gallery = filters === "gallery";
 ---
 
@@ -24,7 +43,7 @@ const gallery = filters === "gallery";
   <Section wide class="pb-0">
     <div class="flex flex-col gap-8">
       <div class="flex items-center justify-between gap-8 flex-col md:flex-row">
-        <EventsFilter />
+        <EventsFilter currentCity={cityFilter} />
         <div class="flex items-center gap-4">
           <Button
             class="btn btn-lg gap-4"

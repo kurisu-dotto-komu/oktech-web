@@ -1,4 +1,4 @@
-import { getEvents, POSSIBLE_ROLES, getMembers } from "../data";
+import { getEvents, POSSIBLE_ROLES, getMembers, getVenues } from "../data";
 
 /**
  * Core routes that are always present in the application.
@@ -37,6 +37,12 @@ export async function generateSitemapURLs(base = ""): Promise<string[]> {
   const members = await getMembers();
   members.forEach(({ id }) => {
     urls.push(toUrl(prefix, `/member/${id}`));
+  });
+
+  // Venue pages
+  const venues = await getVenues();
+  venues.forEach(({ id }) => {
+    urls.push(toUrl(prefix, `/venue/${id}`));
   });
 
   return urls;

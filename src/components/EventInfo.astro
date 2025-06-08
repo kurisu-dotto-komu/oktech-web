@@ -1,10 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
-import { resolveEvent } from "../data";
+import { resolveEvent, getEventVenue } from "../data";
 import { formatDate } from "../utils/formatDate";
 
 const event = await resolveEvent(Astro);
-
+const eventData = await import(`../../content/events/${event.id}/event.md`);
+const venueId = eventData.frontmatter.venue;
+const venue = await getEventVenue(venueId);
 ---
 
 <div class="flex flex-col gap-4 md:p-4">
@@ -12,4 +14,21 @@ const event = await resolveEvent(Astro);
     <Icon name="lucide:clock" size={20} />
     <span>{formatDate(event.data.dateTime, "long")}</span>
   </div>
+  {venue && (
+    <div class="flex rounded gap-2 items-start">
+      <Icon name="lucide:map-pin" size={20} class="mt-0.5" />
+      <div class="flex flex-col gap-1">
+        <a href={`/venue/${venue.id}`} class="font-semibold hover:underline">
+          {venue.data.title}
+        </a>
+        <span class="text-sm text-base-content/70 capitalize">{venue.data.city}</span>
+      </div>
+    </div>
+  )}
+  {event.data.duration && (
+    <div class="flex rounded gap-2 items-center">
+      <Icon name="lucide:timer" size={20} />
+      <span>{event.data.duration} minutes</span>
+    </div>
+  )}
 </div>

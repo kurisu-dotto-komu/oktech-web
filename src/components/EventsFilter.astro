@@ -1,5 +1,26 @@
 ---
 import { Icon } from "astro-icon/components";
+
+export interface Props {
+  currentCity?: string | null;
+}
+
+const { currentCity } = Astro.props;
+
+// Helper to build URL with query params
+function buildFilterUrl(city?: string) {
+  const url = new URL(Astro.request.url);
+  if (city) {
+    url.searchParams.set('city', city);
+  } else {
+    url.searchParams.delete('city');
+  }
+  // Reset to base path to avoid gallery filter
+  url.pathname = '/events';
+  return url.toString();
+}
+
+const cityLabel = currentCity === 'osaka' ? 'Osaka' : currentCity === 'kyoto' ? 'Kyoto' : 'All Locations';
 ---
 
 <div class="flex flex-wrap gap-4 justify-center">
@@ -7,13 +28,13 @@ import { Icon } from "astro-icon/components";
   <div class="dropdown">
     <div tabindex="0" role="button" class="btn btn-lg">
       <Icon name="lucide:map-pin" size={20} />
-      Location
+      {cityLabel}
       <Icon name="lucide:chevron-down" size={20} />
     </div>
     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-      <li><a>All Locations</a></li>
-      <li><a>Osaka</a></li>
-      <li><a>Kyoto</a></li>
+      <li><a href={buildFilterUrl()} class:list={[!currentCity && 'active']}>All Locations</a></li>
+      <li><a href={buildFilterUrl('osaka')} class:list={[currentCity === 'osaka' && 'active']}>Osaka</a></li>
+      <li><a href={buildFilterUrl('kyoto')} class:list={[currentCity === 'kyoto' && 'active']}>Kyoto</a></li>
     </ul>
   </div>
 

@@ -119,4 +119,58 @@ const speakers = defineCollection({
     }),
 });
 
-export const collections = { events, eventGalleryImage, speakers };
+const venues = defineCollection({
+  loader: async () => {
+    // Load every venue markdown file located at `/content/venues/**/venue.md`
+    // The folder name will be used as the unique slug / id for the venue.
+    const imports = await import.meta.glob("/content/venues/**/venue.md", {
+      eager: true,
+    });
+
+    return Object.entries(imports).map(([fileName, module]) => {
+      const basePath = fileName.replace("/venue.md", "");
+      const slug = basePath.split("/").pop() as string;
+
+      const { frontmatter, default: body } = module as {
+        frontmatter: Record<string, unknown>;
+        default: { render: () => { html: string } };
+      };
+
+      const image = frontmatter.image
+        ? path.join(basePath, frontmatter.image as string)
+        : undefined;
+
+      // Extract description from markdown body
+      let description: string | undefined;
+      try {
+        const html = body.render().html as string;
+        description = html.trim();
+      } catch {
+        description = undefined;
+      }
+
+      return {
+        id: slug,
+        title: frontmatter.title as string,
+        city: frontmatter.city as string,
+        coordinates: frontmatter.coordinates as { lat: number; lng: number },
+        image,
+        description,
+      };
+    });
+  },
+  schema: ({ image }) =>
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      city: z.enum(["osaka", "kyoto"]),
+      coordinates: z.object({
+        lat: z.number(),
+        lng: z.number(),
+      }),
+      image: image().optional(),
+      description: z.string().optional(),
+    }),
+});
+
+export const collections = { events, eventGalleryImage, speakers, venues };
