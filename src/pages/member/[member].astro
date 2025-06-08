@@ -27,9 +27,14 @@ const events = await getEvents();
 const memberEvents = events.filter((event) =>
   member.events.find((e) => event.id.startsWith(`${e}`)),
 );
+
+// Extract description from member bio
+const description = member.bio 
+  ? member.bio.slice(0, 160).trim() + (member.bio.length > 160 ? '...' : '')
+  : `${member.name} is a ${member.roles.includes('speaker') ? 'speaker' : member.roles.includes('organizer') ? 'organizer' : 'volunteer'} at OKWireframe - Osaka's web development and design meetup group.`;
 ---
 
-<PageLayout title={`${member.name} - Community`}>
+<PageLayout title={`${member.name} - Community`} description={description}>
   <Section>
     <div class="flex justify-between items-center mb-8">
       <div class="flex gap-4">
