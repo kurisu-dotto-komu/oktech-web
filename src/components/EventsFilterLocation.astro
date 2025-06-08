@@ -8,17 +8,25 @@ interface Props {
 
 const { selectedCity } = Astro.props;
 
-// Get all events to extract unique cities
+// Get all events to extract unique cities and count events per city
 const events = await getEvents();
-const cities = new Set<string>();
+const cityCounts = new Map<string, number>();
 
 events.forEach((event) => {
   if (event.venue?.city) {
-    cities.add(event.venue.city);
+    const city = event.venue.city;
+    cityCounts.set(city, (cityCounts.get(city) || 0) + 1);
   }
 });
 
-const sortedCities = Array.from(cities).sort();
+const sortedCities = Array.from(cityCounts.entries())
+  .sort((a, b) => {
+    // First sort by count descending
+    if (b[1] !== a[1]) return b[1] - a[1];
+    // If counts are equal, sort alphabetically
+    return a[0].localeCompare(b[0]);
+  })
+  .map(([city]) => city);
 
 // Function to capitalize city names for display
 function capitalizeCity(city: string): string {
@@ -34,5 +42,6 @@ function capitalizeCity(city: string): string {
   items={sortedCities.map((city) => ({
     href: `/events/location/${encodeURIComponent(city)}`,
     text: capitalizeCity(city),
+    count: cityCounts.get(city),
   }))}
 />

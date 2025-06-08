@@ -8,9 +8,10 @@ interface Props {
 
 const { selectedTopic } = Astro.props;
 
-// Get all events to extract unique topics
+// Get all events to extract unique topics and count events per topic
 const events = await getEvents();
 const topicsMap = new Map<string, string>(); // slug -> original name
+const topicCounts = new Map<string, number>(); // slug -> count
 
 events.forEach((event) => {
   if (event.data.topics) {
@@ -20,11 +21,20 @@ events.forEach((event) => {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "");
       topicsMap.set(slug, topic);
+      topicCounts.set(slug, (topicCounts.get(slug) || 0) + 1);
     });
   }
 });
 
-const sortedTopics = Array.from(topicsMap.entries()).sort((a, b) => a[1].localeCompare(b[1]));
+const sortedTopics = Array.from(topicsMap.entries())
+  .sort((a, b) => {
+    const countA = topicCounts.get(a[0]) || 0;
+    const countB = topicCounts.get(b[0]) || 0;
+    // First sort by count descending
+    if (countB !== countA) return countB - countA;
+    // If counts are equal, sort alphabetically by topic name
+    return a[1].localeCompare(b[1]);
+  });
 ---
 
 <EventsFilterDropdown
@@ -35,5 +45,6 @@ const sortedTopics = Array.from(topicsMap.entries()).sort((a, b) => a[1].localeC
   items={sortedTopics.map(([slug, name]) => ({
     href: `/events/topic/${slug}`,
     text: name,
+    count: topicCounts.get(slug),
   }))}
 />

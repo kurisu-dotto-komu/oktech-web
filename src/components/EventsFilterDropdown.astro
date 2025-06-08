@@ -10,6 +10,7 @@ interface Props {
   items: Array<{
     href: string;
     text: string;
+    count?: number;
   }>;
 }
 
@@ -32,7 +33,7 @@ const { buttonText, buttonIcon, clearText, clearHref, items } = Astro.props;
         clearHref && (
           <Link
             href={clearHref}
-            class="btn btn-sm btn-error justify-start text-left text-lg px-4 py-2 h-auto min-h-0 font-normal whitespace-nowrap bg-error hover:bg-error/80 border-0"
+            class="btn btn-sm btn-error justify-start text-left text-lg px-4 py-2 h-auto min-h-0 font-normal whitespace-nowrap bg-error hover:bg-error/80 border-0 "
           >
             <Icon name="lucide:x" size={20} />
             {clearText}
@@ -45,9 +46,10 @@ const { buttonText, buttonIcon, clearText, clearHref, items } = Astro.props;
           .map((item) => (
             <Link
               href={item.href}
-              class="btn btn-sm justify-start text-left text-lg px-4 py-2 h-auto min-h-0 font-normal whitespace-nowrap bg-base-100 hover:bg-base-300 border-0"
+              class="btn btn-sm justify-start text-left text-lg px-4 py-2 h-auto min-h-0 font-normal whitespace-nowrap bg-base-100 hover:bg-base-300 border-0 flex items-baseline gap-2 "
             >
-              {item.text}
+              <span>{item.text}</span>
+              {item.count !== undefined && <span class="text-sm opacity-60">{item.count}</span>}
             </Link>
           ))
       }
