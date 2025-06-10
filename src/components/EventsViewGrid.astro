@@ -13,7 +13,7 @@ const { events } = Astro.props;
   {
     events.map((event) => (
       <div>
-        <EventSummary slug={event.id} />
+        <EventSummary eventSlug={event.id} />
       </div>
     ))
   }

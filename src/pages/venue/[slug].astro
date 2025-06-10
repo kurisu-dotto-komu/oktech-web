@@ -1,9 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import PageLayout from "../../layouts/PageLayout.astro";
-import Container from "../../components/Container.astro";
-import Section from "../../components/Section.astro";
-import { getEntry } from "astro:content";
+import VenuePage from "../../components/VenuePage.astro";
 
 export async function getStaticPaths() {
   const venues = await getCollection("venues");
@@ -17,20 +14,6 @@ export async function getStaticPaths() {
 
   return venuePaths;
 }
-
-const { slug } = Astro.params;
-// TODO replace with resolveVenue , like with events..
-const venue = await getEntry("venues", slug);
 ---
 
-{
-  venue && (
-    <PageLayout title={venue.data.title}>
-      <Container>
-        <Section title={venue.data.title}>
-          <div>TODO</div>
-        </Section>
-      </Container>
-    </PageLayout>
-  )
-}
+<VenuePage />

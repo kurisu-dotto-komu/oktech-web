@@ -7,23 +7,6 @@ import Link from "./Link.astro";
 
 const event = await resolveEvent(Astro);
 
-// Generate map URL - use gmaps if available, otherwise create from address
-const getMapUrl = () => {
-  if (event.venue?.gmaps) {
-    return event.venue.gmaps;
-  }
-  if (event.venue?.coordinates?.lat && event.venue?.coordinates?.lng) {
-    return `https://www.google.com/maps/search/?api=1&query=${event.venue.coordinates.lat},${event.venue.coordinates.lng}`;
-  }
-
-  if (event.venue?.address) {
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.venue.address)}`;
-  }
-  return null;
-};
-
-const mapUrl = getMapUrl();
-
 // Format the date and time range similar to Meetup.com
 const eventDate = new Date(event.data.dateTime);
 const fullDate = formatDate(eventDate, "long");
@@ -82,18 +65,7 @@ if (event.data.duration) {
   {
     event.venueSlug && (
       <div class="w-full aspect-video">
-        {mapUrl ? (
-          <a
-            href={mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block w-full h-full hover:opacity-90 transition-opacity cursor-pointer"
-          >
-            <VenueMap venueSlug={event.venueSlug} showMarker />
-          </a>
-        ) : (
-          <VenueMap venueSlug={event.venueSlug} showMarker />
-        )}
+        <VenueMap venueSlug={event.venueSlug} showMarker />
       </div>
     )
   }

@@ -7,7 +7,7 @@ import { formatDate, formatTime } from "../utils/formatDate";
 import VenueMap from "./VenueMap.astro";
 
 interface Props {
-  slug: string;
+  eventSlug: string;
 }
 
 const event = await resolveEvent(Astro);
@@ -85,8 +85,14 @@ const formattedTime = formatTime(event.data.dateTime);
         </div>
 
         <!-- Right side - Map -->
-        <div class="w-full md:w-1/2 lg:w-1/3">
-          {event.venueSlug && <VenueMap venueSlug={event.venueSlug} />}
+        <div class="w-full md:w-1/2 lg:w-1/3 h-full">
+          {
+            event.venueSlug && (
+              <div class="h-full w-full">
+                <VenueMap venueSlug={event.venueSlug} />
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

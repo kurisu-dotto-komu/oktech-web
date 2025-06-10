@@ -43,7 +43,7 @@ const events = await getEvents();
       events
         .slice(5, 9)
         .map((event, i) => (
-          <EventSummary class={i > 2 ? "lg:hidden xl:block" : undefined} slug={event.id} />
+          <EventSummary class={i > 2 ? "lg:hidden xl:block" : undefined} eventSlug={event.id} />
         ))
     }
   </Section>

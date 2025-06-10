@@ -1,18 +1,41 @@
 ---
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import { resolveVenue } from "../data";
 
 interface Props {
-  venueSlug: string;
+  venueSlug?: string;
   showMarker?: boolean;
 }
 
-const { venueSlug, showMarker = false } = Astro.props;
+const { showMarker } = Astro.props;
+
+const venue = await resolveVenue(Astro);
+
+// Generate map URL - use gmaps if available, otherwise create from address
+const getMapUrl = () => {
+  if (!venue) return null;
+  if (!showMarker) return null;
+
+  if (venue.data.gmaps) {
+    return venue.data.gmaps;
+  }
+  if (venue.data.coordinates?.lat && venue.data.coordinates?.lng) {
+    return `https://www.google.com/maps/search/?api=1&query=${venue.data.coordinates.lat},${venue.data.coordinates.lng}`;
+  }
+
+  if (venue.data.address) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.data.address)}`;
+  }
+  return null;
+};
+
+const mapUrl = getMapUrl();
 
 let mapImage;
 try {
   // Try to dynamically import the map.png for this venue
-  mapImage = await import(`../../content/venues/${venueSlug}/map.jpg`);
+  mapImage = await import(`../../content/venues/${venue.id}/map.jpg`);
 } catch (error) {
   // If map.png doesn't exist, mapImage will remain undefined
   mapImage = null;
@@ -20,22 +43,38 @@ try {
 ---
 
 {
-  mapImage && (
-    <figure class="w-full h-full relative">
-      <Image
-        src={mapImage.default}
-        alt="Venue location map"
-        class="w-full h-full object-cover"
-        width={300}
-        height={200}
-      />
-      {showMarker && (
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div class="text-primary-dark bg-base-100/70 rounded-full p-2">
-            <Icon name="lucide:map-pin" class="w-6 h-6" />
+  mapImage &&
+    (mapUrl ? (
+      <a
+        href={mapUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block w-full h-full hover:opacity-90 transition-opacity cursor-pointer"
+      >
+        <figure class="w-full h-full relative">
+          <Image
+            src={mapImage.default}
+            alt="Venue location map"
+            class="w-full h-full object-cover"
+            width={300}
+            height={200}
+          />
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-primary-dark bg-base-100/70 rounded-full p-2">
+              <Icon name="lucide:map-pin" class="w-6 h-6" />
+            </div>
           </div>
-        </div>
-      )}
-    </figure>
-  )
+        </figure>
+      </a>
+    ) : (
+      <figure class="w-full h-full relative">
+        <Image
+          src={mapImage.default}
+          alt="Venue location map"
+          class="w-full h-full object-cover"
+          width={300}
+          height={200}
+        />
+      </figure>
+    ))
 }

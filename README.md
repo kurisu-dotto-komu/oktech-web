@@ -1,8 +1,8 @@
 ## TODO
 
-Refactor the Members pages to use the resolveEvent style format (using slug).
+Reduce confusion with slug/id definition
 
-Refactoring on plane, and push a fresh branch.
+Members: with hasPage: true.
 
 ## AI Disclosure
 

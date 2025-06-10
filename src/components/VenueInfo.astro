@@ -1,0 +1,62 @@
+---
+import { Icon } from "astro-icon/components";
+import { resolveVenue } from "../data";
+import VenueMap from "./VenueMap.astro";
+import Link from "./Link.astro";
+
+const venue = await resolveVenue(Astro);
+---
+
+<div class="bg-base-100 rounded-lg overflow-hidden">
+  <!-- Venue Information Section -->
+  <div class="p-6 space-y-4">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 mt-1">
+        <Icon name="lucide:map-pin" class="w-6 h-6 text-primary" />
+      </div>
+      <div class="flex flex-col">
+        <span class="text-lg font-semibold text-base-content">{venue.data.title}</span>
+        {venue.data.address && <span class="text-base-content/70 mt-1">{venue.data.address}</span>}
+      </div>
+    </div>
+
+    {
+      venue.data.city && (
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <Icon name="lucide:building" class="w-6 h-6 text-primary" />
+          </div>
+          <div class="flex flex-col">
+            <span class="text-lg font-semibold text-base-content capitalize">
+              {venue.data.city}, Japan
+            </span>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      venue.data.url && (
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <Icon name="lucide:globe" class="w-6 h-6 text-primary" />
+          </div>
+          <div class="flex flex-col">
+            <Link
+              href={venue.data.url}
+              external
+              class="text-lg font-semibold text-base-content hover:text-primary transition-colors"
+            >
+              {venue.data.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+            </Link>
+          </div>
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Map Section -->
+  <div class="w-full aspect-video">
+    <VenueMap showMarker />
+  </div>
+</div>

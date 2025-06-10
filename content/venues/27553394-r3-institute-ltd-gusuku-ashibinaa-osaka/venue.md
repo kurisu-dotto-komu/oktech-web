@@ -1,7 +1,7 @@
 ---
-title: 'R3 Institute Ltd. (gusuku Ashibinaa OSAKA) '
+title: "R3 Institute Ltd"
 city: osaka
-address: '北区大深町 3-1, グランフロント大阪 Tower C 16F'
+address: "北区大深町 3-1, グランフロント大阪 Tower C 16F"
 state: al
 coordinates:
   lat: 34.705925

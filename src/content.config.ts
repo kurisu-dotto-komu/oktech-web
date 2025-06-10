@@ -151,6 +151,7 @@ const venues = defineCollection({
         address: frontmatter.address as string | undefined,
         state: frontmatter.state as string | undefined,
         postalCode: frontmatter.postalCode as string | undefined,
+        url: frontmatter.url as string | undefined,
         gmaps: frontmatter.gmaps as string | undefined,
         coordinates: frontmatter.coordinates as { lat: number; lng: number } | undefined,
         meetupId: frontmatter.meetupId as number,
@@ -167,6 +168,7 @@ const venues = defineCollection({
     address: z.string().optional(),
     state: z.string().optional(),
     postalCode: z.string().optional(),
+    url: z.string().optional(),
     gmaps: z.string().optional(),
     coordinates: z
       .object({

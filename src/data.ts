@@ -88,7 +88,7 @@ export type VenueEntry = Awaited<ReturnType<typeof getVenue>>;
 export async function getVenues() {
   const venues = await getCollection("venues");
   // Only return venues that have a page
-  return venues.filter(venue => venue.data.hasPage);
+  return venues.filter((venue) => venue.data.hasPage);
 }
 
 export async function getEvents() {
@@ -97,10 +97,10 @@ export async function getEvents() {
     getCollection("venues"),
   ]);
 
-  // Create a venue lookup map by meetupId, including both data and slug
-  const venueMap = new Map<string, { data: Venue; slug: string }>();
+  // Create a venue lookup map by meetupId, including both data and venueSlug
+  const venueMap = new Map<string, { data: Venue; venueSlug: string }>();
   allVenues.forEach((venue) => {
-    venueMap.set(venue.data.meetupId.toString(), { data: venue.data, slug: venue.id });
+    venueMap.set(venue.data.meetupId.toString(), { data: venue.data, venueSlug: venue.id });
   });
 
   // Filter out devOnly events in production
@@ -112,20 +112,20 @@ export async function getEvents() {
     return {
       ...event,
       venue: venueEntry?.data,
-      venueSlug: venueEntry?.slug,
+      venueSlug: venueEntry?.venueSlug,
     };
   });
 
   return eventsWithVenues.reverse();
 }
 
-async function getEvent(slug: string | undefined) {
-  if (!slug) {
-    throw "Slug not defined";
+async function getEvent(eventSlug: string | undefined) {
+  if (!eventSlug) {
+    throw "Event slug not defined";
   }
-  const event = await getEntry("events", slug);
+  const event = await getEntry("events", eventSlug);
   if (!event) {
-    throw `No event found for slug ${slug}`;
+    throw `No event found for slug ${eventSlug}`;
   }
 
   // Get venue data if the event has a venue reference
@@ -145,13 +145,13 @@ async function getEvent(slug: string | undefined) {
   };
 }
 
-async function getVenue(slug: string | undefined) {
-  if (!slug) {
-    throw "Slug not defined";
+async function getVenue(venueSlug: string | undefined) {
+  if (!venueSlug) {
+    throw "Venue slug not defined";
   }
-  const venue = await getEntry("venues", slug);
+  const venue = await getEntry("venues", venueSlug);
   if (!venue) {
-    throw `No venue found for slug ${slug}`;
+    throw `No venue found for slug ${venueSlug}`;
   }
   return venue;
 }
@@ -169,21 +169,21 @@ async function getMember(id: string | undefined) {
 }
 
 export async function resolveEvent({ params, props }: AstroGlobal) {
-  // pull the ID if it's passed, otherwise, use the path's `slug` param
-  const slug = props.slug ?? params.slug;
-  if (!slug) {
-    throw `Slug not defined ${JSON.stringify({ params, props })}`;
+  // pull the eventSlug if it's passed, otherwise, use the path's `slug` param
+  const eventSlug = props.eventSlug ?? params.slug;
+  if (!eventSlug) {
+    throw `Event slug not defined ${JSON.stringify({ params, props })}`;
   }
-  return await getEvent(slug);
+  return await getEvent(eventSlug);
 }
 
 export async function resolveVenue({ params, props }: AstroGlobal) {
-  // pull the ID if it's passed, otherwise, use the path's `slug` param
-  const slug = props.slug ?? params.slug;
-  if (!slug) {
-    throw `Slug not defined ${JSON.stringify({ params, props })}`;
+  // pull the venueSlug if it's passed, otherwise, use the path's `slug` param
+  const venueSlug = props.venueSlug ?? params.slug;
+  if (!venueSlug) {
+    throw `Venue slug not defined ${JSON.stringify({ params, props })}`;
   }
-  return await getVenue(slug);
+  return await getVenue(venueSlug);
 }
 
 export async function resolveMember({ params, props }: AstroGlobal) {

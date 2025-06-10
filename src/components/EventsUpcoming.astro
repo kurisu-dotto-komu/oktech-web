@@ -15,5 +15,5 @@ const countdownDate = new Date(nextEvent.data.dateTime);
     <div class="text-lg">Next event starts in</div>
     <Countdown client:load targetDate={countdownDate} />
   </div>
-  {futureEvents.map(({ data: { id } }) => <EventFeatured slug={id} />)}
+  {futureEvents.map(({ data: { id } }) => <EventFeatured eventSlug={id} />)}
 </div>
