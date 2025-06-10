@@ -4,13 +4,13 @@ import SearchBox from "./SearchBox.astro";
 import { getEvents } from "../data";
 import EventSummary from "./EventSummary.astro";
 import Grid from "./Grid.astro";
-import Button from "./Button.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
 import EventsUpcoming from "./EventsUpcoming.astro";
 import EventFeatured from "./EventFeatured.astro";
-import EventGallery from "./EventGallery.astro";
+import EventGalleryImages from "./EventGalleryImages.astro";
 import EventCompact from "./EventCompact.astro";
+import ButtonGroup from "./ButtonGroup.astro";
 
 interface Props {
   filterType?: string;
@@ -51,38 +51,34 @@ if (compact) viewMode = "compact";
 ---
 
 <PageLayout title="Events">
-  {
-    !filterType && viewMode !== "compact" && (
-      <Section wide class="bg-secondary/20">
-        <EventsUpcoming />
-      </Section>
-    )
-  }
-  <Section wide class="pb-0">
+  <Section wide>
     <div class="flex flex-col gap-8">
       <div class="flex items-center justify-between gap-8 flex-col md:flex-row">
         <EventsFilter selectedCity={selectedCity} selectedTopic={selectedTopic} />
         <div class="flex items-center gap-4">
-          <div class="btn-group">
-            <Button
-              class={`btn ${viewMode === "default" ? "btn-active" : ""}`}
-              text="List"
-              href="/events"
-              icon="lucide:list"
-            />
-            <Button
-              class={`btn ${viewMode === "compact" ? "btn-active" : ""}`}
-              text="Compact"
-              href="/events/compact"
-              icon="lucide:rows"
-            />
-            <Button
-              class={`btn ${viewMode === "gallery" ? "btn-active" : ""}`}
-              text="Gallery"
-              href="/events/gallery"
-              icon="lucide:image"
-            />
-          </div>
+          <ButtonGroup
+            buttons={[
+              {
+                href: "/events",
+                icon: "lucide:grid-3x3",
+                value: "default",
+                title: "Grid view",
+              },
+              {
+                href: "/events/compact",
+                icon: "lucide:list",
+                value: "compact",
+                title: "Compact view",
+              },
+              {
+                href: "/events/gallery",
+                icon: "lucide:image",
+                value: "gallery",
+                title: "Gallery view",
+              },
+            ]}
+            active={viewMode}
+          />
           <SearchBox />
         </div>
       </div>
@@ -97,7 +93,7 @@ if (compact) viewMode = "compact";
             <div class="flex flex-col gap-12">
               <EventFeatured slug={event.id} />
               <Grid>
-                <EventGallery slug={event.id} />
+                <EventGalleryImages slug={event.id} />
               </Grid>
             </div>
           </Section>

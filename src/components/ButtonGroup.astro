@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+import Link from "./Link.astro";
+
+interface Button {
+  href: string;
+  icon: string;
+  value: string;
+  title?: string;
+}
+
+interface Props {
+  buttons: Button[];
+  active: string;
+  class?: string;
+}
+
+const { buttons, active, class: className } = Astro.props;
+---
+
+<div class:list={["join", className]}>
+  {
+    buttons.map((button) => (
+      <Link
+        href={button.href}
+        class={`btn join-item ${active === button.value ? "btn-active" : ""}`}
+        title={button.title || button.value}
+      >
+        <Icon name={button.icon} size={20} />
+      </Link>
+    ))
+  }
+</div>
