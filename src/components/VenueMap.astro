@@ -1,16 +1,18 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   venueSlug: string;
+  showMarker?: boolean;
 }
 
-const { venueSlug } = Astro.props;
+const { venueSlug, showMarker = false } = Astro.props;
 
 let mapImage;
 try {
   // Try to dynamically import the map.png for this venue
-  mapImage = await import(`../../content/venues/${venueSlug}/map.png`);
+  mapImage = await import(`../../content/venues/${venueSlug}/map.jpg`);
 } catch (error) {
   // If map.png doesn't exist, mapImage will remain undefined
   mapImage = null;
@@ -19,16 +21,21 @@ try {
 
 {
   mapImage && (
-    <div class="w-full h-full">
-      <figure class="w-full h-full">
-        <Image
-          src={mapImage.default}
-          alt="Venue location map"
-          class="w-full h-full object-cover"
-          width={300}
-          height={200}
-        />
-      </figure>
-    </div>
+    <figure class="w-full h-full relative">
+      <Image
+        src={mapImage.default}
+        alt="Venue location map"
+        class="w-full h-full object-cover"
+        width={300}
+        height={200}
+      />
+      {showMarker && (
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="text-primary-dark bg-base-100/70 rounded-full p-2">
+            <Icon name="lucide:map-pin" class="w-6 h-6" />
+          </div>
+        </div>
+      )}
+    </figure>
   )
 }

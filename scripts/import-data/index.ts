@@ -205,25 +205,31 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
   await fs.mkdir(venueDir, { recursive: true });
   const mdPath = path.join(venueDir, "venue.md");
 
-  // City normalization map (keys should be lowercase)
-  const cityMap: Record<string, string> = {
-    osaka: "osaka",
-    大阪市: "osaka",
-    大阪府: "osaka",
-    大阪: "osaka",
-    kyoto: "kyoto",
-    京都市: "kyoto",
-    京都府: "kyoto",
-    京都: "kyoto",
-    kobe: "kobe",
-    神戸市: "kobe",
-    神戸: "kobe",
-    滋賀県: "kyoto",
-    shiga: "kyoto",
-    奈良県: "osaka",
-    nara: "osaka",
-    nishinomiya: "kobe",
-    hyogo: "kobe",
+  // Fuzzy match function for cities with Japanese support
+  const fuzzyMatchCity = (city: string): string | null => {
+    const lowercaseCity = city.toLowerCase();
+
+    // Check fuzzy matches in order: osaka, kyoto, kobe, hyogo
+    // Also handles Japanese characters
+    const patternCollection = [
+      { patterns: ["osaka", "大阪", "おおさか"], result: "osaka" },
+      { patterns: ["kyoto", "京都", "きょうと"], result: "kyoto" },
+      { patterns: ["kobe", "神戸", "こうべ"], result: "kobe" },
+      { patterns: ["hyogo", "兵庫", "ひょうご"], result: "kobe" }, // Hyogo maps to Kobe
+      { patterns: ["shiga", "滋賀", "しが"], result: "kyoto" }, // Shiga maps to Kyoto
+      { patterns: ["nara", "奈良", "なら"], result: "osaka" }, // Nara maps to Osaka
+      { patterns: ["nishinomiya", "西宮"], result: "kobe" }, // Nishinomiya maps to Kobe
+    ];
+
+    for (const { patterns, result } of patternCollection) {
+      for (const pattern of patterns) {
+        if (city.includes(pattern) || lowercaseCity.includes(pattern.toLowerCase())) {
+          return result;
+        }
+      }
+    }
+
+    return null;
   };
 
   const newFrontmatter: Record<string, unknown> = {
@@ -232,14 +238,17 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
 
   // Add non-empty fields to frontmatter
   if (venue.city) {
-    // Normalize city name: lowercase first, then apply mapping
-    const lowercaseCity = venue.city.toLowerCase();
-    const normalizedCity = cityMap[lowercaseCity];
-
-    if (normalizedCity) {
-      newFrontmatter.city = normalizedCity;
+    // Use fuzzy matching for all cities
+    const fuzzyMatch = fuzzyMatchCity(venue.city);
+    if (fuzzyMatch) {
+      newFrontmatter.city = fuzzyMatch;
+      // Only log if it's not an exact match
+      if (venue.city.toLowerCase() !== fuzzyMatch) {
+        console.log(`Fuzzy matched "${venue.city}" → "${fuzzyMatch}" for venue "${venue.name}"`);
+      }
     } else {
-      // City not found in map - track it and use lowercase version
+      // City not found in fuzzy match - track it and use lowercase version
+      const lowercaseCity = venue.city.toLowerCase();
       newFrontmatter.city = lowercaseCity;
       unmatchedCities.push({
         city: venue.city,
@@ -306,7 +315,7 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
 
   // Generate static map if coordinates are available
   if (venue.lat && venue.lng) {
-    const mapPath = path.join(venueDir, "map.png");
+    const mapPath = path.join(venueDir, "map.jpg");
     const mapGenerated = await generateStaticMap(mapPath, {
       lat: venue.lat,
       lng: venue.lng,
@@ -352,7 +361,7 @@ async function main() {
   // Parse command line arguments
   const args = process.argv.slice(2);
   const overwriteMaps = args.includes("--overwrite-maps");
-  
+
   if (overwriteMaps) {
     console.log("Map overwrite mode enabled - existing maps will be regenerated");
   }

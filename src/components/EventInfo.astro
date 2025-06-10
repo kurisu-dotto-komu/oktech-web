@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 import { resolveEvent } from "../data";
 import { formatDate, formatTime } from "../utils/formatDate";
 import VenueMap from "./VenueMap.astro";
+import Link from "./Link.astro";
 
 const event = await resolveEvent(Astro);
 
@@ -38,7 +39,7 @@ if (event.data.duration) {
 }
 ---
 
-<div class="bg-white rounded-lg overflow-hidden">
+<div class="bg-base-100 rounded-lg overflow-hidden">
   <!-- Date and Time Section -->
   <div class="p-6 space-y-4">
     <div class="flex items-start gap-4">
@@ -46,8 +47,8 @@ if (event.data.duration) {
         <Icon name="lucide:clock" class="w-6 h-6 text-primary" />
       </div>
       <div class="flex flex-col">
-        <span class="text-lg font-semibold text-gray-900">{fullDate}</span>
-        <span class="text-gray-600 mt-1">{timeRange}</span>
+        <span class="text-lg font-semibold text-base-content">{fullDate}</span>
+        <span class="text-base-content/70 mt-1">{timeRange}</span>
       </div>
     </div>
 
@@ -58,8 +59,19 @@ if (event.data.duration) {
             <Icon name="lucide:map-pin" class="w-6 h-6 text-primary" />
           </div>
           <div class="flex flex-col">
-            <span class="text-lg font-semibold text-gray-900">{event.venue.title}</span>
-            {event.venue.address && <span class="text-gray-600 mt-1">{event.venue.address}</span>}
+            {event.venue.hasPage ? (
+              <Link
+                href={`/venue/${event.venueSlug}`}
+                class="text-lg underline font-semibold text-base-content hover:text-primary transition-colors"
+              >
+                {event.venue.title}
+              </Link>
+            ) : (
+              <span class="text-lg font-semibold text-base-content">{event.venue.title}</span>
+            )}
+            {event.venue.address && (
+              <span class="text-base-content/70 mt-1">{event.venue.address}</span>
+            )}
           </div>
         </div>
       )
@@ -77,10 +89,10 @@ if (event.data.duration) {
             rel="noopener noreferrer"
             class="block w-full h-full hover:opacity-90 transition-opacity cursor-pointer"
           >
-            <VenueMap venueSlug={event.venueSlug} />
+            <VenueMap venueSlug={event.venueSlug} showMarker />
           </a>
         ) : (
-          <VenueMap venueSlug={event.venueSlug} />
+          <VenueMap venueSlug={event.venueSlug} showMarker />
         )}
       </div>
     )

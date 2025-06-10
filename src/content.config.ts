@@ -12,11 +12,11 @@ const events = defineCollection({
       const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);
       const [date, time] = (frontmatter.dateTime as string).split(" ");
       const devOnly = frontmatter.devOnly as boolean | undefined;
-      
+
       // Convert venue number to string if it exists
       const venueId = frontmatter.venue;
       const venue = venueId ? String(venueId) : undefined;
-      
+
       return {
         id: slug,
         cover,
@@ -156,6 +156,8 @@ const venues = defineCollection({
         gmaps: frontmatter.gmaps as string | undefined,
         coordinates: frontmatter.coordinates as { lat: number; lng: number } | undefined,
         meetupId: frontmatter.meetupId as number,
+        hasPage: frontmatter.hasPage as boolean | undefined,
+        description: frontmatter.description as string | undefined,
       };
     });
   },
@@ -175,6 +177,8 @@ const venues = defineCollection({
       })
       .optional(),
     meetupId: z.number(),
+    hasPage: z.boolean().optional(),
+    description: z.string().optional(),
   }),
 });
 

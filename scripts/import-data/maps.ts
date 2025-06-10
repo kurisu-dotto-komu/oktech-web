@@ -31,35 +31,16 @@ export async function generateStaticMap(outputPath: string, options: MapOptions)
 
     // Create map options for osm-static-maps
     const mapOptions = {
-      geojson: {
-        type: "Feature" as const,
-        geometry: {
-          type: "Point" as const,
-          coordinates: [lng, lat],
-        },
-        properties: {},
-      },
+      // No geojson to avoid any default markers
       center: `${lng},${lat}`,
       zoom,
       width,
       height,
       tileserverUrl: provider.url,
       attribution: provider.attribution,
-      type: "png" as const,
-      quality: 100,
-      markerIconOptions: {
-        iconUrl:
-          "data:image/svg+xml;base64," +
-          Buffer.from(
-            `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="40" viewBox="-2 -2 28 40">
-              <path d="M12 0C5.373 0 0 5.373 0 12c0 9 12 24 12 24s12-15 12-24C24 5.373 18.627 0 12 0z" 
-                    fill="#ff6b6b" stroke="#ffffff" stroke-width="2"/>
-              <circle cx="12" cy="12" r="6" fill="#ffffff"/>
-            </svg>`,
-          ).toString("base64"),
-        iconSize: [28, 40].map((v) => v * 3),
-        iconAnchor: [14, 40].map((v) => v * 3),
-      },
+      type: "jpeg" as const,
+      quality: 90,
+      // Marker removed - will be added in DOM with Lucide icon
     };
 
     // Generate the map

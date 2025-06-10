@@ -1,12 +1,14 @@
 ---
-title: 'R3 Institute Ltd. (gusuku Ashibinaa OSAKA) '
+title: "R3 Institute Ltd."
 city: osaka
 country: jp
-address: '北区大深町 3-1, グランフロント大阪 Tower C 16F'
+address: "北区大深町 3-1, グランフロント大阪 Tower C 16F"
 state: al
 coordinates:
   lat: 34.705925
   lng: 135.49442
 meetupId: 27553394
+hasPage: true
 ---
 
+R3 Institute Ltd. is located in the Grand Front Osaka Tower C on the 16th floor. This modern coworking space offers a professional environment for tech meetups and community events in the heart of Osaka.

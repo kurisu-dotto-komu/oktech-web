@@ -117,7 +117,7 @@ export async function getEvent(slug: string | undefined) {
   }
   const event = await getEntry("events", slug);
   if (!event) {
-    throw `No even found for slug ${slug}`;
+    throw `No event found for slug ${slug}`;
   }
 
   // Get venue data if the event has a venue reference
