@@ -5,7 +5,6 @@ const events = defineCollection({
   loader: async () => {
     const imports = await import.meta.glob("/content/events/**/event.md", { eager: true });
     return Object.entries(imports).map(([fileName, module]) => {
-      // console.log({ module });
       const basePath = fileName.replace("/event.md", "");
       const slug = basePath.split("/").pop() as string;
       const { frontmatter } = module as { frontmatter: Record<string, unknown> };
@@ -59,7 +58,6 @@ const eventGalleryImage = defineCollection({
         | undefined;
       const imageMetadata = metaDataModule?.default as Record<string, unknown>;
       const event = id.split("/").slice(0, -2).pop();
-      // console.log({ event });
       return { ...imageMetadata, id, event, image: id };
     });
   },

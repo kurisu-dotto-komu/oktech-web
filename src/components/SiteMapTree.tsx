@@ -2,170 +2,169 @@ import React from "react";
 import Link from "./LinkReact";
 
 // Data helpers
-import { POSSIBLE_ROLES, ROLE_CONFIGS, getEvents, getMembers } from "../data";
-
-// Build the flat list of pages at module load so we only execute the async
-// data fetching once during the build. Top-level await is supported inside
-// framework components rendered by Astro.
+import { POSSIBLE_ROLES, ROLE_CONFIGS, getEvents, getMembers, getVenues } from "../data";
+import { generateEventRoutePaths } from "../utils/sitemap";
 
 interface PageEntry {
   href: string;
   title: string;
 }
 
-/**
- * Build the flat list of pages that should appear in the sitemap.
- */
-const buildPages = async (): Promise<PageEntry[]> => {
-  const staticPages: PageEntry[] = [
-    { href: "/", title: "Home" },
-    { href: "/about", title: "About" },
-    { href: "/events", title: "Events" },
-    { href: "/community", title: "Community" },
-    { href: "/sitemap", title: "Sitemap (human)" },
-    { href: "/sitemap.xml", title: "Sitemap (XML)" },
-  ];
+interface SectionEntry {
+  title: string;
+  href?: string; // Optional - some sections are just headings
+  children: PageEntry[];
+}
 
-  const rolePages: PageEntry[] = POSSIBLE_ROLES.map((role) => ({
+/**
+ * Build organized sections for the sitemap
+ */
+const buildSections = async (): Promise<SectionEntry[]> => {
+  const sections: SectionEntry[] = [];
+
+  // Home section (single link)
+  sections.push({
+    title: "Home",
+    href: "/",
+    children: [],
+  });
+
+  // Events section
+  sections.push({
+    title: "Events",
+    href: "/events",
+    children: [],
+  });
+
+  // Event Topics section
+  const { topics } = await generateEventRoutePaths();
+  sections.push({
+    title: "Event Topics",
+    children: topics.map(topic => ({
+      href: `/events/topic/${topic}`,
+      title: topic.charAt(0).toUpperCase() + topic.slice(1).replace(/-/g, ' '),
+    })).sort((a, b) => a.title.localeCompare(b.title)),
+  });
+
+  // Event Locations section
+  const { cities } = await generateEventRoutePaths();
+  sections.push({
+    title: "Event Locations",
+    children: cities.map(city => ({
+      href: `/events/location/${encodeURIComponent(city)}`,
+      title: city.charAt(0).toUpperCase() + city.slice(1),
+    })).sort((a, b) => a.title.localeCompare(b.title)),
+  });
+
+  // Community section
+  const rolePages = POSSIBLE_ROLES.map((role) => ({
     href: `/community/${role}`,
     title: ROLE_CONFIGS[role].plural,
   }));
 
-  const events = await getEvents();
-  const eventPages: PageEntry[] = events.map(({ id, data }) => ({
-    href: `/event/${id}`,
-    title: data.title as string,
-  }));
+  sections.push({
+    title: "Community",
+    href: "/community",
+    children: rolePages,
+  });
 
+  // Members section
   const members = await getMembers();
-  const memberPages: PageEntry[] = members.map((m) => ({
-    href: `/member/${m.id}`,
-    title: m.name,
-  }));
+  const memberPages: PageEntry[] = members
+    .map((m) => ({
+      href: `/member/${m.id}`,
+      title: m.name,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
 
-  return [...staticPages, ...rolePages, ...eventPages, ...memberPages];
+  sections.push({
+    title: "Members",
+    children: memberPages,
+  });
+
+  // Venues section
+  const venues = await getVenues();
+  const venuePages: PageEntry[] = venues
+    .map((v) => ({
+      href: `/venue/${v.id}`,
+      title: v.data.title,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
+  sections.push({
+    title: "Venues",
+    children: venuePages,
+  });
+
+  // About and Sitemap
+  sections.push({
+    title: "About",
+    href: "/about",
+    children: [],
+  });
+
+  sections.push({
+    title: "Sitemap",
+    href: "/sitemap",
+    children: [
+      { href: "/sitemap.xml", title: "XML Sitemap" },
+    ],
+  });
+
+  return sections;
 };
 
-// The pages promise will resolve once and remain cached for subsequent renders.
-const pagesPromise = buildPages();
-
-// Using top-level await (supported in Astro), resolve our pages list once at
-// build time. This guarantees that the component has synchronous access to
-// the data when it is rendered and avoids additional hooks or Suspense
-// complexity.
-const pages: PageEntry[] = await pagesPromise;
-
-// Pre-compute the tree so that every render is as cheap as possible. Since
-// the sitemap does not change during a single build, we can safely share this
-// across all renders.
-const prebuiltTree = (() => {
-  return buildTree(pages);
-})();
-
-interface TreeNode extends PageEntry {
-  children: TreeNode[];
-}
+// The sections promise will resolve once and remain cached for subsequent renders.
+const sectionsPromise = buildSections();
+const sections: SectionEntry[] = await sectionsPromise;
 
 interface Props {
   className?: string;
 }
 
 /**
- * Convert a flat array of pages into a nested tree based on URL segments.
+ * Render a section with optional link and children
  */
-function buildTree(pages: PageEntry[]): TreeNode[] {
-  const nodeMap = new Map<string, TreeNode>();
-
-  const getNode = (segments: string[]): TreeNode => {
-    const path = segments.length === 0 ? "/" : `/${segments.join("/")}`;
-    if (!nodeMap.has(path)) {
-      // Placeholder; title is replaced later if needed
-      nodeMap.set(path, {
-        href: path,
-        title: segments.length === 0 ? "Home" : segments[segments.length - 1],
-        children: [],
-      });
-    }
-    return nodeMap.get(path)!;
-  };
-
-  const roots: TreeNode[] = [];
-
-  const ALIAS_ROOTS: Record<string, string> = {
-    event: "events",
-    member: "community",
-  };
-
-  pages.forEach((page) => {
-    const rawSegments =
-      page.href === "/" ? [] : page.href.replace(/^\//, "").replace(/\/$/, "").split("/");
-
-    // Apply alias mapping to the first segment if necessary, so that
-    // `/event/*` pages appear under `/events` and `/member/*` pages appear
-    // under `/community`.
-    const segments = [...rawSegments];
-    if (segments.length > 0 && ALIAS_ROOTS[segments[0]]) {
-      segments[0] = ALIAS_ROOTS[segments[0]];
-    }
-
-    let parent: TreeNode | null = null;
-    segments.forEach((_, idx) => {
-      const node = getNode(segments.slice(0, idx + 1));
-      if (parent && !parent.children.includes(node)) {
-        parent.children.push(node);
-      }
-      parent = node;
-    });
-
-    // If root page ("/")
-    if (segments.length === 0) {
-      roots.push({ ...page, children: [] });
-    } else {
-      const top = getNode([segments[0]]);
-      if (!roots.includes(top)) {
-        roots.push(top);
-      }
-    }
-
-    // Ensure final node has correct title/href
-    const finalNode = parent ?? getNode([]);
-    finalNode.title = page.title;
-    finalNode.href = page.href;
-  });
-
-  return roots;
-}
-
-// Individual node renderer (can be reused elsewhere)
-function Node({ node }: { node: TreeNode }) {
+function Section({ section }: { section: SectionEntry }) {
   return (
-    <li key={node.href}>
-      <Link href={node.href} className="link link-hover">
-        {node.title}
-      </Link>
-      <span className="text-sm text-gray-500"> {node.href}</span>
-      {node.children.length > 0 && (
-        <ul className="ml-4">
-          {node.children.map((child) => (
-            <Node key={child.href} node={child} />
+    <div className="mb-8">
+      <h3 className="text-lg font-semibold mb-2">
+        {section.href ? (
+          <>
+            <Link href={section.href} className="link link-hover">
+              {section.title}
+            </Link>
+            <span className="text-sm text-base-content/50 ml-2">{section.href}</span>
+          </>
+        ) : (
+          <span className="text-base-content/70">{section.title}</span>
+        )}
+      </h3>
+      {section.children.length > 0 && (
+        <ul className="ml-4 space-y-1">
+          {section.children.map((child) => (
+            <li key={child.href}>
+              <Link href={child.href} className="link link-hover text-sm">
+                {child.title}
+              </Link>
+              <span className="text-xs text-base-content/50 ml-2">{child.href}</span>
+            </li>
           ))}
         </ul>
       )}
-    </li>
+    </div>
   );
 }
 
 /**
- * Top-level component that receives a flat list of pages and renders the nested tree.
+ * Top-level component that renders organized sections
  */
 export default function SiteMapTree({ className = "" }: Props) {
-  const tree = React.useMemo(() => prebuiltTree, []);
-
   return (
-    <ul className={className}>
-      {tree.map((node) => (
-        <Node key={node.href} node={node} />
+    <div className={className}>
+      {sections.map((section) => (
+        <Section key={section.title} section={section} />
       ))}
-    </ul>
+    </div>
   );
 }

@@ -1,61 +1,19 @@
 ---
 import EventsPage from "../../components/EventsPage.astro";
-import { getEvents } from "../../data";
+import { generateEventRoutePaths } from "../../utils/sitemap";
 
 export async function getStaticPaths() {
-  const events = await getEvents();
-
-  // Get all unique topics
-  const topicsSet = new Set<string>();
-  events.forEach((event) => {
-    if (event.data.topics) {
-      event.data.topics.forEach((topic: string) => {
-        const slug = topic
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-|-$/g, "");
-        topicsSet.add(slug);
-      });
-    }
+  const { paths } = await generateEventRoutePaths();
+  
+  // Convert paths to the format needed for Astro's getStaticPaths
+  return paths.map(path => {
+    // Remove leading /events/ to get the eventsPath parameter
+    const eventsPath = path === "/events" 
+      ? undefined 
+      : path.replace(/^\/events\//, "");
+    
+    return { params: { eventsPath } };
   });
-
-  // Get all unique cities
-  const citiesSet = new Set<string>();
-  events.forEach((event) => {
-    if (event.venue?.city) {
-      citiesSet.add(event.venue.city);
-    }
-  });
-
-  const paths: { params: { eventsPath: string | undefined } }[] = [];
-  const views = ["", "compact", "gallery"]; // "" represents default view
-
-  // Base paths for each view
-  views.forEach((view) => {
-    if (view === "") {
-      paths.push({ params: { eventsPath: undefined } });
-    } else {
-      paths.push({ params: { eventsPath: view } });
-    }
-  });
-
-  // Topic filter paths
-  views.forEach((view) => {
-    topicsSet.forEach((topic) => {
-      const pathSegments = view ? [view, "topic", topic] : ["topic", topic];
-      paths.push({ params: { eventsPath: pathSegments.join("/") } });
-    });
-  });
-
-  // Location filter paths
-  views.forEach((view) => {
-    citiesSet.forEach((city) => {
-      const pathSegments = view ? [view, "location", city] : ["location", city];
-      paths.push({ params: { eventsPath: pathSegments.join("/") } });
-    });
-  });
-
-  return paths;
 }
 
 // Parse the path to determine view and filter

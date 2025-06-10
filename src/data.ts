@@ -83,6 +83,12 @@ export type Venue = InferEntrySchema<"venues">;
 export type EventEntry = Awaited<ReturnType<typeof getEvent>>;
 export type EventData = InferEntrySchema<"events">;
 
+export async function getVenues() {
+  const venues = await getCollection("venues");
+  // Only return venues that have a page
+  return venues.filter(venue => venue.data.hasPage);
+}
+
 export async function getEvents() {
   const [allEvents, allVenues] = await Promise.all([
     getCollection("events"),

@@ -3,9 +3,6 @@ import { getCollection } from "astro:content";
 import PageLayout from "../../layouts/PageLayout.astro";
 import Container from "../../components/Container.astro";
 import Section from "../../components/Section.astro";
-import EventSummary from "../../components/EventSummary.astro";
-import VenueMap from "../../components/VenueMap.astro";
-import { getEvents } from "../../data";
 import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
@@ -18,27 +15,12 @@ export async function getStaticPaths() {
       params: { slug: venue.id },
     }));
 
-  console.log(venuePaths);
   return venuePaths;
 }
 
 const { slug } = Astro.params;
-// const venue = false;
+// TODO replace with resolveVenue , like with events..
 const venue = await getEntry("venues", slug);
-
-// throw 404 if not found
-
-if (!venue) {
-  throw Astro.redirect("/404");
-}
-
-// get this venue
-// Get all events for this venue
-// const allEvents = await getEvents();
-// const venueEvents = allEvents.filter((event) => event.data.venue?.id === venue.meetupId.toString());
-
-// // Sort events by date (newest first)
-// venueEvents.sort((a, b) => b.data.dateTime.getTime() - a.data.dateTime.getTime());
 ---
 
 {
