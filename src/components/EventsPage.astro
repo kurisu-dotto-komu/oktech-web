@@ -6,11 +6,11 @@ import EventSummary from "./EventSummary.astro";
 import Grid from "./Grid.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
-import EventsUpcoming from "./EventsUpcoming.astro";
 import EventFeatured from "./EventFeatured.astro";
 import EventGalleryImages from "./EventGalleryImages.astro";
 import EventCompact from "./EventCompact.astro";
 import ButtonGroup from "./ButtonGroup.astro";
+import EventsViewGallery from "./EventsViewGallery.astro";
 
 interface Props {
   filterType?: string;
@@ -87,18 +87,7 @@ if (compact) viewMode = "compact";
 
   {
     viewMode === "gallery" ? (
-      <>
-        {events.map((event, i) => (
-          <Section wide class:list={i % 2 === 0 ? "" : "bg-base-100/50"}>
-            <div class="flex flex-col gap-12">
-              <EventFeatured slug={event.id} />
-              <Grid>
-                <EventGalleryImages slug={event.id} />
-              </Grid>
-            </div>
-          </Section>
-        ))}
-      </>
+      <EventsViewGallery events={events} />
     ) : viewMode === "compact" ? (
       <Section wide>
         <div class="flex flex-col max-w-5xl mx-auto">
