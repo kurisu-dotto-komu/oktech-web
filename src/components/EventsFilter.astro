@@ -5,12 +5,13 @@ import EventsFilterTopic from "./EventsFilterTopic.astro";
 interface Props {
   selectedCity?: string;
   selectedTopic?: string;
+  viewMode?: "default" | "compact" | "gallery";
 }
 
-const { selectedCity, selectedTopic } = Astro.props;
+const { selectedCity, selectedTopic, viewMode = "default" } = Astro.props;
 ---
 
 <div class="flex flex-wrap gap-4 justify-center items-center">
-  <EventsFilterLocation selectedCity={selectedCity} />
-  <EventsFilterTopic selectedTopic={selectedTopic} />
+  <EventsFilterLocation selectedCity={selectedCity} viewMode={viewMode} />
+  <EventsFilterTopic selectedTopic={selectedTopic} viewMode={viewMode} />
 </div>

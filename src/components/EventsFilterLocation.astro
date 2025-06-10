@@ -4,9 +4,10 @@ import EventsFilterDropdown from "./EventsFilterDropdown.astro";
 
 interface Props {
   selectedCity?: string;
+  viewMode?: "default" | "compact" | "gallery";
 }
 
-const { selectedCity } = Astro.props;
+const { selectedCity, viewMode = "default" } = Astro.props;
 
 // Get all events to extract unique cities and count events per city
 const events = await getEvents();
@@ -32,15 +33,25 @@ const sortedCities = Array.from(cityCounts.entries())
 function capitalizeCity(city: string): string {
   return city.charAt(0).toUpperCase() + city.slice(1);
 }
+
+// Helper function to generate URLs with current view mode
+function getLocationUrl(city: string): string {
+  const viewPath = viewMode === "default" ? "/events" : `/events/${viewMode}`;
+  return `${viewPath}/location/${encodeURIComponent(city)}`;
+}
+
+function getClearUrl(): string {
+  return viewMode === "default" ? "/events" : `/events/${viewMode}`;
+}
 ---
 
 <EventsFilterDropdown
   buttonText={selectedCity ? capitalizeCity(selectedCity) : "Location"}
   buttonIcon="lucide:map-pin"
   clearText={selectedCity ? "All Locations" : undefined}
-  clearHref={selectedCity ? "/events" : undefined}
+  clearHref={selectedCity ? getClearUrl() : undefined}
   items={sortedCities.map((city) => ({
-    href: `/events/location/${encodeURIComponent(city)}`,
+    href: getLocationUrl(city),
     text: capitalizeCity(city),
     count: cityCounts.get(city),
   }))}

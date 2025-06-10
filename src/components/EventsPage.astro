@@ -12,10 +12,10 @@ import EventsViewCompact from "./EventsViewCompact.astro";
 interface Props {
   filterType?: string;
   filterValue?: string;
+  viewMode?: "default" | "compact" | "gallery";
 }
 
-const { filterType, filterValue } = Astro.props;
-const { filters } = Astro.params;
+const { filterType, filterValue, viewMode = "default" } = Astro.props;
 
 // Get all events
 let events = await getEvents();
@@ -36,39 +36,41 @@ if (filterType === "location" && filterValue) {
   });
 }
 
-const gallery = filters === "gallery";
-const compact = filters === "compact";
 const selectedCity = filterType === "location" ? filterValue : undefined;
 const selectedTopic = filterType === "topic" ? filterValue : undefined;
 
-// Determine current view mode
-let viewMode = "default";
-if (gallery) viewMode = "gallery";
-if (compact) viewMode = "compact";
+// Helper function to generate view URLs that maintain current filter
+const getViewUrl = (view: string) => {
+  const basePath = view === "default" ? "/events" : `/events/${view}`;
+  if (filterType && filterValue) {
+    return `${basePath}/${filterType}/${filterValue}`;
+  }
+  return basePath;
+};
 ---
 
 <PageLayout title="Events">
   <Section wide>
     <div class="flex flex-col gap-8">
       <div class="flex items-center justify-between gap-8 flex-col md:flex-row">
-        <EventsFilter selectedCity={selectedCity} selectedTopic={selectedTopic} />
+        <EventsFilter selectedCity={selectedCity} selectedTopic={selectedTopic} viewMode={viewMode} />
         <div class="flex items-center gap-4">
           <ButtonGroup
             buttons={[
               {
-                href: "/events",
+                href: getViewUrl("default"),
                 icon: "lucide:grid-3x3",
                 value: "default",
                 title: "Grid view",
               },
               {
-                href: "/events/compact",
+                href: getViewUrl("compact"),
                 icon: "lucide:list",
                 value: "compact",
                 title: "Compact view",
               },
               {
-                href: "/events/gallery",
+                href: getViewUrl("gallery"),
                 icon: "lucide:image",
                 value: "gallery",
                 title: "Gallery view",

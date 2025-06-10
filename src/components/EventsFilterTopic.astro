@@ -4,9 +4,10 @@ import EventsFilterDropdown from "./EventsFilterDropdown.astro";
 
 interface Props {
   selectedTopic?: string;
+  viewMode?: "default" | "compact" | "gallery";
 }
 
-const { selectedTopic } = Astro.props;
+const { selectedTopic, viewMode = "default" } = Astro.props;
 
 // Get all events to extract unique topics and count events per topic
 const events = await getEvents();
@@ -35,15 +36,25 @@ const sortedTopics = Array.from(topicsMap.entries())
     // If counts are equal, sort alphabetically by topic name
     return a[1].localeCompare(b[1]);
   });
+
+// Helper function to generate URLs with current view mode
+function getTopicUrl(slug: string): string {
+  const viewPath = viewMode === "default" ? "/events" : `/events/${viewMode}`;
+  return `${viewPath}/topic/${slug}`;
+}
+
+function getClearUrl(): string {
+  return viewMode === "default" ? "/events" : `/events/${viewMode}`;
+}
 ---
 
 <EventsFilterDropdown
   buttonText={selectedTopic ? topicsMap.get(selectedTopic) || selectedTopic : "Topic"}
   buttonIcon="lucide:tag"
   clearText={selectedTopic ? "All Topics" : undefined}
-  clearHref={selectedTopic ? "/events" : undefined}
+  clearHref={selectedTopic ? getClearUrl() : undefined}
   items={sortedTopics.map(([slug, name]) => ({
-    href: `/events/topic/${slug}`,
+    href: getTopicUrl(slug),
     text: name,
     count: topicCounts.get(slug),
   }))}
