@@ -2,15 +2,12 @@
 import EventsFilter from "./EventsFilter.astro";
 import SearchBox from "./SearchBox.astro";
 import { getEvents } from "../data";
-import EventSummary from "./EventSummary.astro";
-import Grid from "./Grid.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
-import EventFeatured from "./EventFeatured.astro";
-import EventGalleryImages from "./EventGalleryImages.astro";
-import EventCompact from "./EventCompact.astro";
 import ButtonGroup from "./ButtonGroup.astro";
 import EventsViewGallery from "./EventsViewGallery.astro";
+import EventsViewGrid from "./EventsViewGrid.astro";
+import EventsViewCompact from "./EventsViewCompact.astro";
 
 interface Props {
   filterType?: string;
@@ -89,21 +86,9 @@ if (compact) viewMode = "compact";
     viewMode === "gallery" ? (
       <EventsViewGallery events={events} />
     ) : viewMode === "compact" ? (
-      <Section wide>
-        <div class="flex flex-col max-w-5xl mx-auto">
-          {events.map((event) => (
-            <EventCompact slug={event.id} class="border-b border-base-300 last:border-0" />
-          ))}
-        </div>
-      </Section>
+      <EventsViewCompact events={events} />
     ) : (
-      <Section grid wide>
-        {events.map((event) => (
-          <div>
-            <EventSummary slug={event.id} />
-          </div>
-        ))}
-      </Section>
+      <EventsViewGrid events={events} />
     )
   }
 </PageLayout>

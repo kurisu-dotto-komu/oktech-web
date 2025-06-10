@@ -1,0 +1,18 @@
+---
+import EventCompact from "./EventCompact.astro";
+import Section from "./Section.astro";
+
+interface Props {
+  events: any[]; // Type from getEvents()
+}
+
+const { events } = Astro.props;
+---
+
+<Section wide class="flex flex-col">
+  {
+    events.map((event) => (
+      <EventCompact slug={event.id} class="border-b border-base-300 last:border-0" />
+    ))
+  }
+</Section>
