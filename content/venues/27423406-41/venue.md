@@ -1,9 +1,7 @@
 ---
 title: てらはうす
 city: kyoto
-country: jp
 address: 京都市中京区西ノ京冷泉町41
-postalCode: 604-8481
 gmaps: 'https://maps.app.goo.gl/aMSpGqw4rG9aa9A58'
 coordinates:
   lat: 35.01456

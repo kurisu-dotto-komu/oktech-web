@@ -1,9 +1,7 @@
 ---
 title: Rokko Cable Shita Station
 city: kobe
-country: jp
 address: 'Nishiyama Takaha, Nada Ward, Kobe'
-postalCode: 657-0001
 gmaps: 'https://maps.app.goo.gl/koWHoizQB6n97mVq7'
 coordinates:
   lat: 34.737232

@@ -1,7 +1,6 @@
 ---
 title: KOKOPLAZA
 city: osaka
-country: jp
 address: 大阪市東淀川区東中島1-13-13
 coordinates:
   lat: 34.732063

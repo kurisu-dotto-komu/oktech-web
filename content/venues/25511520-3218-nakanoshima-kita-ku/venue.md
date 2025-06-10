@@ -1,9 +1,7 @@
 ---
 title: 住友中之島ビル
 city: osaka
-country: jp
 address: 3−2−18 Nakanoshima Kita-Ku
-postalCode: 530-0005
 gmaps: 'https://maps.app.goo.gl/XPWj7kkTjnwb1mWz6'
 coordinates:
   lat: 34.693317

@@ -1,9 +1,7 @@
 ---
 title: コワーキング∞ラボ京創舎
 city: kyoto
-country: jp
 address: '519 Tsuzurayachō, Shimogyo Ward, Kyoto'
-postalCode: 600-8085
 gmaps: 'https://maps.app.goo.gl/koFkMbNWZb23JDnR7'
 coordinates:
   lat: 34.999386
