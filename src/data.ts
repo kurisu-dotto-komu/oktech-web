@@ -82,7 +82,9 @@ export async function getMembers(): Promise<Member[]> {
 export type Venue = InferEntrySchema<"venues">;
 export type EventEntry = Awaited<ReturnType<typeof getEvent>>;
 export type EventData = InferEntrySchema<"events">;
+export type VenueEntry = Awaited<ReturnType<typeof getVenue>>;
 
+// Export getVenues as it's needed for static path generation
 export async function getVenues() {
   const venues = await getCollection("venues");
   // Only return venues that have a page
@@ -117,7 +119,7 @@ export async function getEvents() {
   return eventsWithVenues.reverse();
 }
 
-export async function getEvent(slug: string | undefined) {
+async function getEvent(slug: string | undefined) {
   if (!slug) {
     throw "Slug not defined";
   }
@@ -143,6 +145,29 @@ export async function getEvent(slug: string | undefined) {
   };
 }
 
+async function getVenue(slug: string | undefined) {
+  if (!slug) {
+    throw "Slug not defined";
+  }
+  const venue = await getEntry("venues", slug);
+  if (!venue) {
+    throw `No venue found for slug ${slug}`;
+  }
+  return venue;
+}
+
+async function getMember(id: string | undefined) {
+  if (!id) {
+    throw "Member ID not defined";
+  }
+  const members = await getMembers();
+  const member = members.find((m) => m.id === id);
+  if (!member) {
+    throw `No member found for id ${id}`;
+  }
+  return member;
+}
+
 export async function resolveEvent({ params, props }: AstroGlobal) {
   // pull the ID if it's passed, otherwise, use the path's `slug` param
   const slug = props.slug ?? params.slug;
@@ -150,4 +175,22 @@ export async function resolveEvent({ params, props }: AstroGlobal) {
     throw `Slug not defined ${JSON.stringify({ params, props })}`;
   }
   return await getEvent(slug);
+}
+
+export async function resolveVenue({ params, props }: AstroGlobal) {
+  // pull the ID if it's passed, otherwise, use the path's `slug` param
+  const slug = props.slug ?? params.slug;
+  if (!slug) {
+    throw `Slug not defined ${JSON.stringify({ params, props })}`;
+  }
+  return await getVenue(slug);
+}
+
+export async function resolveMember({ params, props }: AstroGlobal) {
+  // pull the ID if it's passed, otherwise, use the path's `member` param
+  const memberId = props.member ?? params.member;
+  if (!memberId) {
+    throw `Member ID not defined ${JSON.stringify({ params, props })}`;
+  }
+  return await getMember(memberId);
 }

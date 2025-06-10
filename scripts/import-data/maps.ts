@@ -4,6 +4,7 @@ import path from "node:path";
 // @ts-ignore
 import osmStaticMaps from "osm-static-maps";
 import { getMapProviderConfig, type ProviderKey } from "./map-providers";
+import { logger } from "./logger";
 
 // Set the chosen provider here
 const CHOSEN_PROVIDER: ProviderKey = "stadiaWaterColor";
@@ -52,10 +53,10 @@ export async function generateStaticMap(outputPath: string, options: MapOptions)
     // Write the image
     await fs.writeFile(outputPath, imageBuffer);
 
-    console.log(`Generated map → ${outputPath}`);
+    logger.success(`Generated map → ${outputPath}`);
     return true;
   } catch (error) {
-    console.error(`Failed to generate map for ${outputPath}:`, error);
+    logger.error(`Failed to generate map for ${outputPath}:`, error);
     return false;
   }
 }

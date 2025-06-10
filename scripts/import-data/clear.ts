@@ -1,5 +1,6 @@
 import path from "node:path";
 import { EVENTS_BASE_DIR, VENUES_BASE_DIR } from "./constants";
+import { logger } from "./logger";
 
 import { glob, rm, readdir, rmdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -22,7 +23,7 @@ async function removeEmptyDirectories(dir: string): Promise<void> {
     const remainingEntries = await readdir(dir);
     if (remainingEntries.length === 0) {
       await rmdir(dir);
-      console.log(`Removed empty directory → ${dir}`);
+      logger.info(`Removed empty directory → ${dir}`);
     }
   } catch (error) {
     // Silently ignore errors (directory might not exist or permission issues)
@@ -84,13 +85,13 @@ export async function clearImageMetadat() {
 }
 
 export async function clearMaps() {
-  const mapFiles = await glob("**/map.png", { cwd: VENUES_BASE_DIR });
+  const mapFiles = await glob("**/map.jpg", { cwd: VENUES_BASE_DIR });
   let mapsCleared = 0;
   for await (const file of mapFiles) {
     await rm(path.join(VENUES_BASE_DIR, file), { force: true });
     mapsCleared++;
   }
-  console.log(`Cleared ${mapsCleared} map files.`);
+  logger.success(`Cleared ${mapsCleared} map files.`);
 }
 
 export async function clearImages() {
@@ -118,60 +119,63 @@ export async function clearEmptyDirectories() {
 async function main() {
   const command = process.argv[2];
 
-  console.log({ command });
+  logger.debug("Command:", { command });
 
   switch (command) {
     case "markdown":
-      console.log("Clearing all markdown files...");
+      logger.info("Clearing all markdown files...");
       await clearMarkdown();
-      console.log("All markdown files cleared.");
+      logger.success("All markdown files cleared.");
       break;
     case "events":
-      console.log("Clearing event markdown files...");
+      logger.info("Clearing event markdown files...");
       await clearEventMarkdown();
-      console.log("Event markdown files cleared.");
+      logger.success("Event markdown files cleared.");
       break;
     case "venues":
-      console.log("Clearing venue markdown files...");
+      logger.info("Clearing venue markdown files...");
       await clearVenueMarkdown();
-      console.log("Venue markdown files cleared.");
+      logger.success("Venue markdown files cleared.");
       break;
     case "image-files":
-      console.log("Clearing image files...");
+      logger.info("Clearing image files...");
       await clearImageFiles();
-      console.log("Image files cleared.");
+      logger.success("Image files cleared.");
       break;
     case "image-metadata":
-      console.log("Clearing image metadata files...");
+      logger.info("Clearing image metadata files...");
       await clearImageMetadat();
-      console.log("Image metadata files cleared.");
+      logger.success("Image metadata files cleared.");
       break;
     case "images":
-      console.log("Clearing images (files and metadata)...");
+      logger.info("Clearing images (files and metadata)...");
       await clearImages();
-      console.log("Images cleared.");
+      logger.success("Images cleared.");
       break;
     case "maps":
-      console.log("Clearing venue map files...");
+      logger.info("Clearing venue map files...");
       await clearMaps();
-      console.log("Venue map files cleared.");
+      logger.success("Venue map files cleared.");
       break;
     case "all":
-      console.log("Clearing all data...");
+      logger.info("Clearing all data...");
       await clearAll();
-      console.log("All data cleared.");
+      logger.success("All data cleared.");
       break;
     case "empty-dirs":
-      console.log("Clearing empty directories...");
+      logger.info("Clearing empty directories...");
       await clearEmptyDirectories();
-      console.log("Empty directories cleared.");
+      logger.success("Empty directories cleared.");
       break;
     default:
-      console.log(
+      logger.error(
         "Usage: npm run clear -- [markdown|events|venues|image-files|image-metadata|images|maps|empty-dirs|all]",
       );
       process.exit(1);
   }
 }
 
-main().catch(console.error);
+main().catch((err) => {
+  logger.error("Clear operation failed:", err);
+  process.exit(1);
+});

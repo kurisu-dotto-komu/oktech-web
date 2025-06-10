@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "import": "npx tsx ./scripts/import-data",
     "import:overwrite-maps": "npx tsx ./scripts/import-data --overwrite-maps",
-    "clear": "npx tsx ./scripts/import-data/clear"
+    "clear": "npx tsx ./scripts/import-data/clear",
+    "remove-fields": "npx tsx ./scripts/remove-fields.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.5",

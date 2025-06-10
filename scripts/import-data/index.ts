@@ -6,6 +6,7 @@ import matter from "gray-matter";
 import { stringify as yamlStringify } from "yaml";
 
 import type { Event, EventJSON, Photo, PhotoJSON, Venue, EventsWithVenuesJSON } from "./types";
+import { logger } from "./logger";
 import {
   PUBLIC_BASE,
   EVENTS_BASE_DIR,
@@ -15,6 +16,16 @@ import {
   INFER_EVENTS,
 } from "./constants";
 import { generateStaticMap } from "./maps";
+
+/**
+ * IMPORTANT: Content Preservation Behavior
+ * 
+ * Events: Descriptions are imported from the data source and will overwrite existing content
+ * Venues: Markdown body content is preserved - only frontmatter is updated
+ * Members: Not handled by this import script - managed manually
+ * 
+ * This allows venue descriptions to be manually edited without being overwritten
+ */
 
 // Global statistics object that will be mutated by helper functions throughout the import run
 const stats = {
@@ -51,7 +62,7 @@ async function downloadImage(remotePath: string, localPath: string): Promise<boo
   const arrayBuf = await res.arrayBuffer();
   await fs.mkdir(path.dirname(localPath), { recursive: true });
   await fs.writeFile(localPath, new Uint8Array(arrayBuf));
-  console.log(`Downloaded image → ${localPath}`);
+  logger.success(`Downloaded image → ${localPath}`);
   stats.galleryImagesDownloaded++;
   return true; // newly downloaded
 }
@@ -108,7 +119,7 @@ async function processGallery(eventDir: string, photos: Photo[]) {
       if (!expectedFiles.has(fileName)) {
         await fs.unlink(path.join(galleryDir, fileName));
         stats.galleryImagesDeleted++;
-        console.log(`Removed stale gallery file → ${path.join(galleryDir, fileName)}`);
+        logger.warn(`Removed stale gallery file → ${path.join(galleryDir, fileName)}`);
       }
     }
 
@@ -118,7 +129,7 @@ async function processGallery(eventDir: string, photos: Photo[]) {
       try {
         await fs.rmdir(galleryDir);
       } catch (err) {
-        console.error(`Failed to remove empty gallery ${galleryDir}:`, err);
+        logger.error(`Failed to remove empty gallery ${galleryDir}:`, err);
       }
     }
   }
@@ -180,13 +191,13 @@ async function processEvent(event: Event, group: string, photos: Photo[]): Promi
     const existingContent = await fs.readFile(mdPath, "utf-8");
     if (content !== existingContent) {
       await fs.writeFile(mdPath, content);
-      console.log(`Updated markdown → ${mdPath}`);
+      logger.info(`Updated markdown → ${mdPath}`);
       stats.markdownUpdated++;
     }
   } else {
     const content = matter.stringify(`\n${event.description}`, newFrontmatter);
     await fs.writeFile(mdPath, content);
-    console.log(`Created markdown → ${mdPath}`);
+    logger.success(`Created markdown → ${mdPath}`);
     stats.markdownCreated++;
   }
 
@@ -196,6 +207,10 @@ async function processEvent(event: Event, group: string, photos: Photo[]): Promi
 }
 
 async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promise<void> {
+  // IMPORTANT: This function preserves existing markdown body content in venue files
+  // Only the frontmatter is updated during import - any manually written descriptions
+  // in the markdown body will be preserved
+  
   // Try to slugify the name first, fall back to address if name produces empty slug
   const nameSlug = slugify(venue.name, { lower: true, strict: true });
   const slugSuffix = nameSlug || slugify(venue.address, { lower: true, strict: true }) || "venue";
@@ -244,7 +259,7 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
       newFrontmatter.city = fuzzyMatch;
       // Only log if it's not an exact match
       if (venue.city.toLowerCase() !== fuzzyMatch) {
-        console.log(`Fuzzy matched "${venue.city}" → "${fuzzyMatch}" for venue "${venue.name}"`);
+        logger.debug(`Fuzzy matched "${venue.city}" → "${fuzzyMatch}" for venue "${venue.name}"`);
       }
     } else {
       // City not found in fuzzy match - track it and use lowercase version
@@ -258,21 +273,23 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
     }
   }
 
-  if (venue.country) {
-    newFrontmatter.country = venue.country;
-  }
+  // Exclude country and postalCode from saved data
+  // if (venue.country) {
+  //   newFrontmatter.country = venue.country;
+  // }
 
   if (venue.address) {
     newFrontmatter.address = venue.address;
   }
 
-  if (venue.crossStreet) {
-    newFrontmatter.crossStreet = venue.crossStreet;
-  }
+  // Exclude crossStreet from saved data
+  // if (venue.crossStreet) {
+  //   newFrontmatter.crossStreet = venue.crossStreet;
+  // }
 
-  if (venue.postalCode) {
-    newFrontmatter.postalCode = venue.postalCode;
-  }
+  // if (venue.postalCode) {
+  //   newFrontmatter.postalCode = venue.postalCode;
+  // }
 
   if (venue.state) {
     newFrontmatter.state = venue.state;
@@ -292,24 +309,29 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
   newFrontmatter.meetupId = parseInt(venue.id);
 
   if (existsSync(mdPath)) {
+    // Read existing file to preserve the markdown body content
     const existing = matter.read(mdPath);
-    const { description, ...existingWithoutDescription } = existing.data;
-    const currentDescription = description ?? "";
-    const merged = { ...existingWithoutDescription, ...newFrontmatter };
+    const existingContent = existing.content.trim();
+    
+    // Merge frontmatter, keeping existing values that aren't in newFrontmatter
+    const merged = { ...existing.data, ...newFrontmatter };
 
-    const content = matter.stringify(`\n${currentDescription}`, merged);
-    const existingContent = await fs.readFile(mdPath, "utf-8");
-    if (content !== existingContent) {
+    // Preserve the existing markdown body content
+    const content = matter.stringify(existingContent ? `\n${existingContent}` : '\n', merged);
+    const currentFileContent = await fs.readFile(mdPath, "utf-8");
+    
+    if (content !== currentFileContent) {
       await fs.writeFile(mdPath, content);
-      console.log(`Updated venue markdown → ${mdPath}`);
+      logger.info(`Updated venue markdown → ${mdPath}`);
       stats.venuesUpdated++;
     } else {
       stats.venuesUnchanged++;
     }
   } else {
+    // New venue - create with empty body
     const content = matter.stringify(`\n`, newFrontmatter);
     await fs.writeFile(mdPath, content);
-    console.log(`Created venue markdown → ${mdPath}`);
+    logger.success(`Created venue markdown → ${mdPath}`);
     stats.venuesCreated++;
   }
 
@@ -363,7 +385,7 @@ async function main() {
   const overwriteMaps = args.includes("--overwrite-maps");
 
   if (overwriteMaps) {
-    console.log("Map overwrite mode enabled - existing maps will be regenerated");
+    logger.info("Map overwrite mode enabled - existing maps will be regenerated");
   }
 
   const [eventsWithVenuesJSON, photosJSON] = await Promise.all([
@@ -383,7 +405,7 @@ async function main() {
       // Attempt to infer the event based on timestamp
       const inferred = inferEventByTimestamp(grp.timestamp, eventsWithVenuesJSON);
       if (inferred) {
-        console.log(
+        logger.info(
           `Inferred photos batch (timestamp: ${grp.timestamp}) → event ${inferred.event.id} (${inferred.event.title})`,
         );
         // Merge photos into the correct event entry
@@ -391,10 +413,10 @@ async function main() {
         list.push(...grp.photos);
         photosByEvent[inferred.event.id] = list;
       } else {
-        console.warn(`Could not infer event for photos batch with timestamp ${grp.timestamp}`);
+        logger.warn(`Could not infer event for photos batch with timestamp ${grp.timestamp}`);
       }
     } else {
-      console.log(
+      logger.debug(
         `Skipping photos batch (timestamp: ${grp.timestamp}) because INFER_EVENTS is disabled and no event id present.`,
       );
     }
@@ -418,21 +440,21 @@ async function main() {
     }
   }
 
-  console.log("\nImport Summary:");
-  console.log(stats);
+  logger.section("Import Summary");
+  logger.info("Statistics:", stats);
 
   if (unmatchedCities.length > 0) {
-    console.log("\nUnmatched Cities (not found in cityMap):");
+    logger.section("Unmatched Cities (not found in cityMap)");
     unmatchedCities.forEach(({ city, venueId, venueName }) => {
-      console.log(`  - "${city}" (Venue ID: ${venueId}, Name: "${venueName}")`);
+      logger.warn(`  - "${city}" (Venue ID: ${venueId}, Name: "${venueName}")`);
     });
-    console.log(`\nTotal unmatched cities: ${unmatchedCities.length}`);
+    logger.warn(`Total unmatched cities: ${unmatchedCities.length}`);
   } else {
-    console.log("\nAll cities were successfully mapped!");
+    logger.success("All cities were successfully mapped!");
   }
 }
 
 main().catch((err) => {
-  console.error(err);
+  logger.error("Import failed:", err);
   process.exit(1);
 });
