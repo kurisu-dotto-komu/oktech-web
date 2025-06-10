@@ -10,6 +10,7 @@ import Section from "./Section.astro";
 import EventsUpcoming from "./EventsUpcoming.astro";
 import EventFeatured from "./EventFeatured.astro";
 import EventGallery from "./EventGallery.astro";
+import EventCompact from "./EventCompact.astro";
 
 interface Props {
   filterType?: string;
@@ -39,13 +40,19 @@ if (filterType === "location" && filterValue) {
 }
 
 const gallery = filters === "gallery";
+const compact = filters === "compact";
 const selectedCity = filterType === "location" ? filterValue : undefined;
 const selectedTopic = filterType === "topic" ? filterValue : undefined;
+
+// Determine current view mode
+let viewMode = "default";
+if (gallery) viewMode = "gallery";
+if (compact) viewMode = "compact";
 ---
 
 <PageLayout title="Events">
   {
-    !filterType && (
+    !filterType && viewMode !== "compact" && (
       <Section wide class="bg-secondary/20">
         <EventsUpcoming />
       </Section>
@@ -56,12 +63,26 @@ const selectedTopic = filterType === "topic" ? filterValue : undefined;
       <div class="flex items-center justify-between gap-8 flex-col md:flex-row">
         <EventsFilter selectedCity={selectedCity} selectedTopic={selectedTopic} />
         <div class="flex items-center gap-4">
-          <Button
-            class="btn btn-lg gap-4"
-            text={gallery ? "List" : "Gallery"}
-            href={gallery ? "/events" : "/events/gallery"}
-            icon={gallery ? "lucide:grid" : "lucide:image"}
-          />
+          <div class="btn-group">
+            <Button
+              class={`btn ${viewMode === "default" ? "btn-active" : ""}`}
+              text="List"
+              href="/events"
+              icon="lucide:list"
+            />
+            <Button
+              class={`btn ${viewMode === "compact" ? "btn-active" : ""}`}
+              text="Compact"
+              href="/events/compact"
+              icon="lucide:rows"
+            />
+            <Button
+              class={`btn ${viewMode === "gallery" ? "btn-active" : ""}`}
+              text="Gallery"
+              href="/events/gallery"
+              icon="lucide:image"
+            />
+          </div>
           <SearchBox />
         </div>
       </div>
@@ -69,7 +90,7 @@ const selectedTopic = filterType === "topic" ? filterValue : undefined;
   </Section>
 
   {
-    gallery ? (
+    viewMode === "gallery" ? (
       <>
         {events.map((event, i) => (
           <Section wide class:list={i % 2 === 0 ? "" : "bg-base-100/50"}>
@@ -82,6 +103,14 @@ const selectedTopic = filterType === "topic" ? filterValue : undefined;
           </Section>
         ))}
       </>
+    ) : viewMode === "compact" ? (
+      <Section wide>
+        <div class="flex flex-col max-w-5xl mx-auto">
+          {events.map((event) => (
+            <EventCompact slug={event.id} class="border-b border-base-300 last:border-0" />
+          ))}
+        </div>
+      </Section>
     ) : (
       <Section grid wide>
         {events.map((event) => (

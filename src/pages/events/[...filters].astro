@@ -34,6 +34,7 @@ export async function getStaticPaths() {
   return [
     { params: { filters: undefined } },
     { params: { filters: "gallery" } },
+    { params: { filters: "compact" } },
     ...cityPaths,
     ...topicPaths,
   ];
