@@ -65,18 +65,18 @@ const backButtonClasses =
       </>
     ) : (
       <>
-        <StickyBottomNavButton {...prevItem}  />
+        <StickyBottomNavButton {...prevItem} />
         {backButton && (
           <Link
-          href={backButton.href}
-          class={`${backButtonClasses} flex-shrink-0`}
-          title={backButton.text}
+            href={backButton.href}
+            class={`${backButtonClasses} flex-shrink-0`}
+            title={backButton.text}
           >
             <Icon name={backButton.icon} size={20} />
             <span class="ml-2 hidden sm:inline">{backButton.text}</span>
           </Link>
-          <StickyBottomNavButton {...nextItem} next />
         )}
+        <StickyBottomNavButton {...nextItem} next />
       </>
     )
   }

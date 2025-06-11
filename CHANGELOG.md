@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+<!--
+IMPORTANT FOR AI ASSISTANTS:
+This changelog should focus on USER-FACING features and improvements.
+Do NOT include technical details like:
+- Refactoring
+- Code organization changes
+- Internal naming changes
+- Technical implementation details
+
+DO include:
+- New features users can see/use
+- UI/UX improvements
+- Visual changes
+- New functionality
+- Performance improvements users will notice
+-->
+
+### June 11, 2025
+
+Enhanced navigation experience with new sticky navigation and modern glass UI theme.
+
+- Added sticky bottom navigation that follows you as you scroll through event, person, and venue pages
+- Introduced new "oktech" glass UI theme with modern translucent effects (early WIP)
+- Improved navigation between related content with persistent navigation controls
+
 ### June 10, 2025
 
 Improved venue discovery and event browsing experience with new pages and viewing options.

@@ -1,0 +1,32 @@
+---
+import StickyBottomNavButtons from "./StickyBottomNavButtons.astro";
+import { getVenues, resolveVenue } from "../data";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const venue = await resolveVenue(Astro);
+
+// Get all venues for prev/next navigation
+const venues = await getVenues();
+const currentIndex = venues.findIndex((v) => v.id === venue.id);
+const prevVenue = currentIndex > 0 ? venues[currentIndex - 1] : venues[venues.length - 1];
+const nextVenue = currentIndex < venues.length - 1 ? venues[currentIndex + 1] : venues[0];
+
+const prevItem = {
+  href: `/venue/${prevVenue.id}`,
+  title: prevVenue.data.title,
+};
+
+const nextItem = {
+  href: `/venue/${nextVenue.id}`,
+  title: nextVenue.data.title,
+};
+
+// No back button since there's no venues list page
+---
+
+<StickyBottomNavButtons prevItem={prevItem} nextItem={nextItem} class={className} />
