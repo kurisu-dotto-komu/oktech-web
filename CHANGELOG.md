@@ -26,6 +26,7 @@ Enhanced navigation experience with new sticky navigation and modern glass UI th
 - Added sticky bottom navigation that follows you as you scroll through event, person, and venue pages
 - Introduced new "oktech" glass UI theme with modern translucent effects (early WIP)
 - Improved navigation between related content with persistent navigation controls
+- Simplified venue navigation by removing unnecessary home button and enabling continuous browsing
 
 ### June 10, 2025
 
