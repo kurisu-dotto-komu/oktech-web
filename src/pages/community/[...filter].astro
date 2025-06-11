@@ -1,8 +1,8 @@
 ---
 import PageLayout from "../../layouts/PageLayout.astro";
 import Section from "../../components/Section.astro";
-import MemberSummary from "../../components/MemberSummary.astro";
-import { getMembers, POSSIBLE_ROLES, ROLE_CONFIGS, type Role } from "../../data";
+import PersonSummary from "../../components/PersonSummary.astro";
+import { getPeople, POSSIBLE_ROLES, ROLE_CONFIGS, type Role } from "../../data";
 import { Icon } from "astro-icon/components";
 import Link from "../../components/Link.astro";
 
@@ -14,13 +14,13 @@ export function getStaticPaths() {
 
 const { filter } = Astro.params;
 
-const members = await getMembers();
+const people = await getPeople();
 
 const role = ROLE_CONFIGS[filter as Role];
 
-const filteredMembers = members.filter((member) => {
+const filteredPeople = people.filter((person) => {
   if (filter === undefined) return true;
-  return member.roles.includes(filter);
+  return person.roles.includes(filter);
 });
 ---
 
@@ -83,15 +83,15 @@ const filteredMembers = members.filter((member) => {
         </div>
       </div>
       <div class="text-sm md:text-base">
-        {role?.description || `${filteredMembers.length} members`}
+        {role?.description || `${filteredPeople.length} people`}
       </div>
     </div>
   </Section>
   <Section wide grid class="pt-0">
     {
-      filteredMembers.map((member) => (
+      filteredPeople.map((person) => (
         <div>
-          <MemberSummary member={member} />
+          <PersonSummary person={person} />
         </div>
       ))
     }

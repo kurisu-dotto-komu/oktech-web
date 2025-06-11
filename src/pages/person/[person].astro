@@ -1,13 +1,13 @@
 ---
-import MemberPage from "../../components/MemberPage.astro";
-import { getMembers } from "../../data";
+import PersonPage from "../../components/PersonPage.astro";
+import { getPeople } from "../../data";
 
 export async function getStaticPaths() {
-  const members = await getMembers();
-  return members.map((member) => ({
-    params: { member: member.id },
+  const people = await getPeople();
+  return people.map((person) => ({
+    params: { person: person.id },
   }));
 }
 ---
 
-<MemberPage />
+<PersonPage />

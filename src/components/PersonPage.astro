@@ -1,35 +1,35 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
-import MemberDetails from "./MemberDetails.astro";
+import PersonDetails from "./PersonDetails.astro";
 import PrevNextButton from "./PrevNextButton.astro";
 import EventFeatured from "./EventFeatured.astro";
 
-import { getEvents, getMembers, resolveMember } from "../data";
+import { getEvents, getPeople, resolvePerson } from "../data";
 
-const member = await resolveMember(Astro);
+const person = await resolvePerson(Astro);
 
-// Get all members for prev/next navigation
-const members = await getMembers();
-const currentIndex = members.findIndex((m) => m.id === member.id);
-const prevMember = currentIndex > 0 ? members[currentIndex - 1] : null;
-const nextMember = currentIndex < members.length - 1 ? members[currentIndex + 1] : null;
+// Get all people for prev/next navigation
+const people = await getPeople();
+const currentIndex = people.findIndex((p) => p.id === person.id);
+const prevPerson = currentIndex > 0 ? people[currentIndex - 1] : null;
+const nextPerson = currentIndex < people.length - 1 ? people[currentIndex + 1] : null;
 
 const events = await getEvents();
-const memberEvents = events.filter((event) =>
-  member.events.find((e) => event.id.startsWith(`${e}`)),
+const personEvents = events.filter((event) =>
+  person.events.find((e) => event.id.startsWith(`${e}`)),
 );
 ---
 
-<PageLayout title={`${member.name} - Community`}>
+<PageLayout title={`${person.name} - Community`}>
   <Section>
     <div class="flex justify-between items-center mb-8">
       <div class="flex gap-4">
         {
-          prevMember && (
+          prevPerson && (
             <PrevNextButton
-              url={`/member/${prevMember.id}`}
-              title={prevMember.name}
+              url={`/person/${prevPerson.id}`}
+              title={prevPerson.name}
               direction="prev"
             />
           )
@@ -37,23 +37,23 @@ const memberEvents = events.filter((event) =>
       </div>
       <div class="flex gap-4">
         {
-          nextMember && (
+          nextPerson && (
             <PrevNextButton
-              url={`/member/${nextMember.id}`}
-              title={nextMember.name}
+              url={`/person/${nextPerson.id}`}
+              title={nextPerson.name}
               direction="next"
             />
           )
         }
       </div>
     </div>
-    <MemberDetails member={member} />
+    <PersonDetails person={person} />
   </Section>
   {
-    memberEvents.length > 0 && (
+    personEvents.length > 0 && (
       <Section title="Events">
         <div class="flex flex-col gap-8 pt-8">
-          {memberEvents.map((event) => (
+          {personEvents.map((event) => (
             <EventFeatured eventSlug={event.id} />
           ))}
         </div>

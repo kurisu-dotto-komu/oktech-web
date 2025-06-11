@@ -1,52 +1,52 @@
 ---
-import { type Member } from "../data";
-import MemberSocialLink from "./MemberSocialLink.astro";
-import MemberImage from "./MemberImage.astro";
+import { type Person } from "../data";
+import PersonSocialLink from "./PersonSocialLink.astro";
+import PersonImage from "./PersonImage.astro";
 
 interface Props {
-  member: Member;
+  person: Person;
 }
 
-const { member } = Astro.props;
+const { person } = Astro.props;
 
-const { Content } = await import(`../../content/speakers/${member.id}/speaker.md`);
+const { Content } = await import(`../../content/speakers/${person.id}/speaker.md`);
 ---
 
 <div class="w-full flex flex-col md:flex-row gap-8">
   <figure class="md:w-1/3">
-    <MemberImage member={member} class="w-full h-[400px] shadow-lg rounded-lg" />
+    <PersonImage person={person} class="w-full h-[400px] shadow-lg rounded-lg" />
   </figure>
 
   <div class="w-full flex flex-col gap-6">
-    <div data-theme={member.theme} class="card bg-primary-content text-primary w-full relative">
+    <div data-theme={person.theme} class="card bg-primary-content text-primary w-full relative">
       <div class="card-body p-8">
         <div class="flex flex-col gap-8">
           <div class="flex justify-between items-start">
             <div class="flex flex-col gap-2">
-              <h3 class="card-title text-4xl font-bold">{member.name}</h3>
-              <p class="text-xl">{member.jobTitle}</p>
+              <h3 class="card-title text-4xl font-bold">{person.name}</h3>
+              <p class="text-xl">{person.jobTitle}</p>
             </div>
           </div>
 
           <div class="flex flex-wrap gap-4">
-            <MemberSocialLink type="email" url={member.email} />
-            <MemberSocialLink type="website" url={member.links?.website} />
-            <MemberSocialLink type="github" url={member.links?.github} />
-            <MemberSocialLink type="twitter" url={member.links?.twitter} />
-            <MemberSocialLink type="linkedin" url={member.links?.linkedin} />
+            <PersonSocialLink type="email" url={person.email} />
+            <PersonSocialLink type="website" url={person.links?.website} />
+            <PersonSocialLink type="github" url={person.links?.github} />
+            <PersonSocialLink type="twitter" url={person.links?.twitter} />
+            <PersonSocialLink type="linkedin" url={person.links?.linkedin} />
           </div>
 
           {
-            (member.roles.length > 0 || member.skills.length > 0) && (
+            (person.roles.length > 0 || person.skills.length > 0) && (
               <div class="flex flex-col gap-2">
-                {/* {member.roles.length > 0 && (
+                {/* {person.roles.length > 0 && (
                   <div class="flex flex-wrap gap-2">
-                    <RoleBadges roles={member.roles} />
+                    <RoleBadges roles={person.roles} />
                   </div>
                 )} */}
-                {member.skills.length > 0 && (
+                {person.skills.length > 0 && (
                   <div class="flex flex-wrap gap-2">
-                    {member.skills.map((skill) => (
+                    {person.skills.map((skill) => (
                       <span class="badge badge-primary badge-lg">{skill}</span>
                     ))}
                   </div>
@@ -58,7 +58,7 @@ const { Content } = await import(`../../content/speakers/${member.id}/speaker.md
           <div class="flex flex-col gap-4 max-w-none">
             <Content />
           </div>
-          <p>Theme: {member.theme}</p>
+          <p>Theme: {person.theme}</p>
         </div>
       </div>
     </div>

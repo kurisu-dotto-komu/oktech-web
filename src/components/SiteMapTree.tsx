@@ -2,7 +2,7 @@ import React from "react";
 import Link from "./LinkReact";
 
 // Data helpers
-import { POSSIBLE_ROLES, ROLE_CONFIGS, getEvents, getMembers, getVenues } from "../data";
+import { POSSIBLE_ROLES, ROLE_CONFIGS, getEvents, getPeople, getVenues } from "../data";
 import { generateEventRoutePaths } from "../utils/sitemap";
 
 interface PageEntry {
@@ -68,18 +68,18 @@ const buildSections = async (): Promise<SectionEntry[]> => {
     children: rolePages,
   });
 
-  // Members section
-  const members = await getMembers();
-  const memberPages: PageEntry[] = members
-    .map((m) => ({
-      href: `/member/${m.id}`,
-      title: m.name,
+  // People section
+  const people = await getPeople();
+  const peoplePages: PageEntry[] = people
+    .map((p) => ({
+      href: `/person/${p.id}`,
+      title: p.name,
     }))
     .sort((a, b) => a.title.localeCompare(b.title));
 
   sections.push({
-    title: "Members",
-    children: memberPages,
+    title: "People",
+    children: peoplePages,
   });
 
   // Venues section

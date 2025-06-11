@@ -7,7 +7,7 @@ import EventSummary from "../components/EventSummary.astro";
 import LandingStats from "../components/LandingStats.astro";
 import EventsUpcoming from "../components/EventsUpcoming.astro";
 import ImagePlaceholder from "../components/ImagePlaceholder.astro";
-import MemberAvatars from "../components/MemberAvatars.astro";
+import PersonAvatars from "../components/PersonAvatars.astro";
 const events = await getEvents();
 ---
 
@@ -53,7 +53,7 @@ const events = await getEvents();
     title="Community"
     description="Join our vibrant community of tech enthusiasts, professionals, and innovators. Connect with like-minded individuals, share knowledge, and grow together in the ever-evolving tech landscape."
   >
-    <MemberAvatars />
+    <PersonAvatars />
   </Section>
 
   <Hero
