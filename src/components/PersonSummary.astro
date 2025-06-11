@@ -1,0 +1,42 @@
+---
+import { type Person } from "../data";
+import Link from "./Link.astro";
+import PersonImage from "./PersonImage.astro";
+
+interface Props {
+  person: Person;
+}
+
+const { person } = Astro.props;
+---
+
+<Link
+  data-theme={person.theme}
+  href={`/person/${person.id}`}
+  class="hover-zoom relative card bg-primary-content text-primary"
+>
+  <!-- {
+    person.roles.length > 0 && (
+      <div class="absolute -top-1 -right-1 bg-white rounded-md shadow-sm flex flex-wrap join">
+        <RoleBadges roles={person.roles} compact />
+      </div>
+    )
+  } -->
+  <div class="card-body p-2">
+    <!-- TODO usae https://daisyui.com/components/avatar/ -->
+    <div class="flex gap-6 items-center">
+      <figure class="w-28 h-40 flex-shrink-0">
+        <PersonImage person={person} />
+      </figure>
+      <div class="flex flex-col gap-2">
+        <div>
+          <h3 class="card-title text-xl">{person.name}</h3>
+          <p class="text-sm">{person.jobTitle}</p>
+        </div>
+        <div class="gap-1 flex flex-wrap">
+          {person.skills.map((skill) => <span class="badge badge-primary badge-sm">{skill}</span>)}
+        </div>
+      </div>
+    </div>
+  </div>
+</Link>

@@ -39,11 +39,11 @@ Each event is stored in a directory named `{meetupId}-{slug}/` containing:
 - Cover image (`.webp` format)
 - `gallery/` - Optional event photos with `.yaml` metadata files
 
-### Speakers (`/content/speakers/`)
+### People (`/content/people/`)
 
-Each speaker is stored in a directory named `{firstname-lastname}/` containing:
+Each person is stored in a directory named `{firstname-lastname}/` containing:
 
-- `speaker.md` - Speaker information with frontmatter:
+- `person.md` - Person information with frontmatter:
   ```yaml
   name: string                     # Full name
   skills: [string, ...]            # Optional skills/expertise
@@ -77,7 +77,7 @@ Each venue is stored in a directory named `{meetupId}-{slug}/` containing:
 ### Relationships
 
 - **Events → Venues**: Events reference venues by their `meetupId`
-- **Speakers → Events**: Speakers list the event `meetupId`s they participated in
+- **People → Events**: People list the event `meetupId`s they participated in
 - **Events → Gallery**: Gallery images are automatically associated with their parent event
 
 ### Notes

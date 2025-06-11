@@ -1,0 +1,23 @@
+---
+import { getPeople } from "../data";
+import Button from "./Button.astro";
+import PersonImage from "./PersonImage.astro";
+
+const people = await getPeople();
+---
+
+<div class="space-y-12">
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] gap-4">
+    {
+      people.map((person) => (
+        <div class="avatar">
+          <PersonImage person={person} class="w-16 h-16 rounded-full p-2" />
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="flex justify-center">
+    <Button class="btn-xl" href="/community" text="View All People" />
+  </div>
+</div>

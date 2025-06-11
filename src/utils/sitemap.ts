@@ -1,4 +1,4 @@
-import { getEvents, POSSIBLE_ROLES, getMembers, getVenues } from "../data";
+import { getEvents, POSSIBLE_ROLES, getPeople, getVenues } from "../data";
 
 /**
  * Generate all event route paths for different views and filters
@@ -96,10 +96,10 @@ export async function generateSitemapURLs(base = ""): Promise<string[]> {
     urls.push(toUrl(prefix, `/event/${id}`));
   });
 
-  // Member pages
-  const members = await getMembers();
-  members.forEach(({ id }) => {
-    urls.push(toUrl(prefix, `/member/${id}`));
+  // Person pages
+  const people = await getPeople();
+  people.forEach(({ id }) => {
+    urls.push(toUrl(prefix, `/person/${id}`));
   });
 
   // Venue pages

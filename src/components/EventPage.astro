@@ -5,7 +5,7 @@ import Section from "./Section.astro";
 import EventDetails from "./EventDetails.astro";
 import EventGallery from "./EventGallery.astro";
 import EventNavigation from "./EventNavigation.astro";
-import EventSpeakers from "./EventSpeakers.astro";
+import EventPeople from "./EventPeople.astro";
 
 const event = await resolveEvent(Astro);
 ---
@@ -15,7 +15,7 @@ const event = await resolveEvent(Astro);
     <EventNavigation />
     <EventDetails />
   </Section>
-  <EventSpeakers />
+  <EventPeople />
   <EventGallery />
   <Section>
     <EventNavigation />

@@ -8,7 +8,7 @@ const { slug: eventId } = Astro.params;
 const events = await getEvents();
 const currentIndex = events.findIndex((e) => e.id === eventId);
 const event = events[currentIndex];
-// TODO get speakers
+// TODO get people
 ---
 
 <ProjectorLayout title={`📺 ${event.title}`}>
