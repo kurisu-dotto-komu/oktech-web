@@ -29,7 +29,7 @@ export const ROLE_CONFIGS = {
 export type Role = keyof typeof ROLE_CONFIGS;
 export const POSSIBLE_ROLES = Object.keys(ROLE_CONFIGS) as Role[];
 
-export type Member = {
+export type Person = {
   id: string;
   name: string;
   jobTitle: string;
@@ -51,11 +51,11 @@ export type Member = {
   };
 };
 
-export async function getMembers(): Promise<Member[]> {
-  const speakers = await getCollection("speakers");
+export async function getPeople(): Promise<Person[]> {
+  const people = await getCollection("people");
 
-  return speakers.map(({ data }) => {
-    // Use a hash of the speaker's ID to deterministically select a theme
+  return people.map(({ data }) => {
+    // Use a hash of the person's ID to deterministically select a theme
     const hash = data.id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const themeIndex = hash % THEMES.length;
     const theme = THEMES[themeIndex];
@@ -75,7 +75,7 @@ export async function getMembers(): Promise<Member[]> {
       theme: theme,
       events: data.events ?? [],
       links: {},
-    } satisfies Member;
+    } satisfies Person;
   });
 }
 
@@ -156,16 +156,16 @@ async function getVenue(venueSlug: string | undefined) {
   return venue;
 }
 
-async function getMember(id: string | undefined) {
+async function getPerson(id: string | undefined) {
   if (!id) {
-    throw "Member ID not defined";
+    throw "Person ID not defined";
   }
-  const members = await getMembers();
-  const member = members.find((m) => m.id === id);
-  if (!member) {
-    throw `No member found for id ${id}`;
+  const people = await getPeople();
+  const person = people.find((p) => p.id === id);
+  if (!person) {
+    throw `No person found for id ${id}`;
   }
-  return member;
+  return person;
 }
 
 export async function resolveEvent({ params, props }: AstroGlobal) {
@@ -186,11 +186,11 @@ export async function resolveVenue({ params, props }: AstroGlobal) {
   return await getVenue(venueSlug);
 }
 
-export async function resolveMember({ params, props }: AstroGlobal) {
-  // pull the ID if it's passed, otherwise, use the path's `member` param
-  const memberId = props.member ?? params.member;
-  if (!memberId) {
-    throw `Member ID not defined ${JSON.stringify({ params, props })}`;
+export async function resolvePerson({ params, props }: AstroGlobal) {
+  // pull the ID if it's passed, otherwise, use the path's `person` param
+  const personId = props.person ?? params.person;
+  if (!personId) {
+    throw `Person ID not defined ${JSON.stringify({ params, props })}`;
   }
-  return await getMember(memberId);
+  return await getPerson(personId);
 }

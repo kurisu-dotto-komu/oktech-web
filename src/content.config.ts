@@ -70,16 +70,16 @@ const eventGalleryImage = defineCollection({
     }),
 });
 
-const speakers = defineCollection({
+const people = defineCollection({
   loader: async () => {
-    // Load every speaker markdown file located at `/content/speakers/**/speaker.md`
-    // The folder name will be used as the unique slug / id for the speaker.
-    const imports = await import.meta.glob("/content/speakers/**/speaker.md", {
+    // Load every person markdown file located at `/content/people/**/person.md`
+    // The folder name will be used as the unique slug / id for the person.
+    const imports = await import.meta.glob("/content/people/**/person.md", {
       eager: true,
     });
 
     return Object.entries(imports).map(([fileName, module]) => {
-      const basePath = fileName.replace("/speaker.md", "");
+      const basePath = fileName.replace("/person.md", "");
       const slug = basePath.split("/").pop() as string;
 
       const { frontmatter, default: body } = module as {
@@ -182,4 +182,4 @@ const venues = defineCollection({
   }),
 });
 
-export const collections = { events, eventGalleryImage, speakers, venues };
+export const collections = { events, eventGalleryImage, people, venues };
