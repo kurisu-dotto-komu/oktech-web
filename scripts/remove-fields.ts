@@ -8,21 +8,21 @@ import { logger } from "./import-data/logger";
 const CONTENT_DIRS = {
   venues: "./content/venues",
   events: "./content/events",
-  members: "./content/speakers", // Note: members are stored as speakers
+  people: "./content/people", // Note: people are stored in the people directory
 };
 
 // Default fields to remove for each content type
 const DEFAULT_FIELDS = {
   venues: ["country", "postalCode", "crossStreet"],
   events: [], // Add default fields for events if needed
-  members: [], // Add default fields for members if needed
+  people: [], // Add default fields for people if needed
 };
 
 // File patterns for each content type
 const FILE_PATTERNS = {
   venues: "**/venue.md",
   events: "**/event.md",
-  members: "**/speaker.md",
+  people: "**/person.md",
 };
 
 type ContentType = keyof typeof CONTENT_DIRS;
@@ -93,7 +93,7 @@ Usage: npm run remove-fields -- <content-type> [options]
 Content Types:
   venues    Remove fields from venue files
   events    Remove fields from event files
-  members   Remove fields from member/speaker files
+  people    Remove fields from people files
 
 Options:
   --fields <field1,field2,...>  Comma-separated list of fields to remove
@@ -103,12 +103,12 @@ Examples:
   npm run remove-fields -- venues                          # Remove default venue fields
   npm run remove-fields -- venues --fields city,state      # Remove specific venue fields
   npm run remove-fields -- events --fields meetupId        # Remove meetupId from events
-  npm run remove-fields -- members --fields skills         # Remove skills from members
+  npm run remove-fields -- people --fields skills          # Remove skills from people
 
 Default fields:
   - venues: ${DEFAULT_FIELDS.venues.join(", ") || "none"}
   - events: ${DEFAULT_FIELDS.events.join(", ") || "none"}
-  - members: ${DEFAULT_FIELDS.members.join(", ") || "none"}
+  - people: ${DEFAULT_FIELDS.people.join(", ") || "none"}
 `);
 }
 
@@ -126,7 +126,7 @@ async function main() {
   // Validate content type
   if (!CONTENT_DIRS[contentType]) {
     logger.error(`Invalid content type: ${contentType}`);
-    logger.info("Valid types are: venues, events, members");
+    logger.info("Valid types are: venues, events, people");
     process.exit(1);
   }
 

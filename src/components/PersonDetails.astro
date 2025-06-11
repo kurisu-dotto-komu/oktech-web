@@ -9,7 +9,7 @@ interface Props {
 
 const { person } = Astro.props;
 
-const { Content } = await import(`../../content/speakers/${person.id}/speaker.md`);
+const { Content } = await import(`../../content/people/${person.id}/person.md`);
 ---
 
 <div class="w-full flex flex-col md:flex-row gap-8">
