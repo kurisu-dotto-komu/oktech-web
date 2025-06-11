@@ -1,3 +1,21 @@
+## Project Structure
+
+```
+├── content/               # Markdown content for events, speakers, and venues
+│   ├── events/           # Individual event pages with metadata and images
+│   ├── speakers/         # Speaker profiles
+│   └── venues/           # Venue information and maps
+├── src/
+│   ├── components/       # Astro and React components
+│   ├── layouts/          # Page layouts
+│   ├── pages/           # Astro pages and routes
+│   ├── styles/          # Global styles
+│   └── utils/           # Utility functions
+├── scripts/              # Data import and maintenance scripts
+├── astro.config.mjs     # Astro configuration
+└── package.json         # Project dependencies
+```
+
 ## TODO
 
 Reduce confusion with slug/id definition
