@@ -92,6 +92,7 @@ export const SOCIALS = [
 ] as const;
 
 export const THEMES = [
+  "oktech",
   "abyss",
   "acid",
   "aqua",
