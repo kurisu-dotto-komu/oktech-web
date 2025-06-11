@@ -1,0 +1,83 @@
+---
+import StickyBottomNavButton from "./StickyBottomNavButton.astro";
+import Link from "./Link.astro";
+import { Icon } from "astro-icon/components";
+
+interface NavigationItem {
+  href: string;
+  title: string;
+  subtitle?: string;
+  image?: ImageMetadata;
+}
+
+interface Props {
+  prevItem?: NavigationItem;
+  nextItem?: NavigationItem;
+  backButton?: {
+    href: string;
+    icon: string;
+    text: string;
+  };
+  class?: string;
+}
+
+const { prevItem, nextItem, backButton, class: className } = Astro.props;
+
+// Common button classes
+const backButtonClasses =
+  "join-item btn btn-neutral  h-14 px-3 md:px-4 flex items-center justify-center";
+---
+
+<div class={`join w-full ${className || ""}`}>
+  {
+    !prevItem && !nextItem && backButton ? (
+      <Link href={backButton.href} class={`${backButtonClasses} flex-1`} title={backButton.text}>
+        <Icon name={backButton.icon} size={20} />
+        <span class="ml-2 hidden sm:inline">{backButton.text}</span>
+      </Link>
+    ) : !prevItem && nextItem ? (
+      <>
+        {backButton && (
+          <Link
+            href={backButton.href}
+            class={`${backButtonClasses} flex-shrink-0`}
+            title={backButton.text}
+          >
+            <Icon name={backButton.icon} size={20} />
+            <span class="ml-2 hidden sm:inline">{backButton.text}</span>
+          </Link>
+        )}
+        <StickyBottomNavButton {...nextItem} />
+      </>
+    ) : prevItem && !nextItem ? (
+      <>
+        <StickyBottomNavButton {...prevItem} />
+        {backButton && (
+          <Link
+            href={backButton.href}
+            class={`${backButtonClasses} flex-shrink-0`}
+            title={backButton.text}
+          >
+            <Icon name={backButton.icon} size={20} />
+            <span class="ml-2 hidden sm:inline">{backButton.text}</span>
+          </Link>
+        )}
+      </>
+    ) : (
+      <>
+        <StickyBottomNavButton {...prevItem}  />
+        {backButton && (
+          <Link
+          href={backButton.href}
+          class={`${backButtonClasses} flex-shrink-0`}
+          title={backButton.text}
+          >
+            <Icon name={backButton.icon} size={20} />
+            <span class="ml-2 hidden sm:inline">{backButton.text}</span>
+          </Link>
+          <StickyBottomNavButton {...nextItem} next />
+        )}
+      </>
+    )
+  }
+</div>

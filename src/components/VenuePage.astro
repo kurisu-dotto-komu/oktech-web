@@ -1,11 +1,35 @@
 ---
-import { resolveVenue, getEvents } from "../data";
+import { resolveVenue, getEvents, getVenues } from "../data";
 import VenueInfo from "./VenueInfo.astro";
+import StickyBottomNavButtons from "./StickyBottomNavButtons.astro";
 import EventFeatured from "./EventFeatured.astro";
 import Section from "./Section.astro";
+import StickyNavigation from "./StickyNavigation.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 
 const venue = await resolveVenue(Astro);
+
+// Get all venues for prev/next navigation
+const venues = await getVenues();
+const currentIndex = venues.findIndex((v) => v.id === venue.id);
+const prevVenue = currentIndex > 0 ? venues[currentIndex - 1] : null;
+const nextVenue = currentIndex < venues.length - 1 ? venues[currentIndex + 1] : null;
+
+const prevItem = prevVenue ? {
+  href: `/venue/${prevVenue.id}`,
+  title: prevVenue.data.title
+} : undefined;
+
+const nextItem = nextVenue ? {
+  href: `/venue/${nextVenue.id}`,
+  title: nextVenue.data.title
+} : undefined;
+
+const backButton = {
+  href: "/",
+  icon: "lucide:home",
+  text: "Home"
+};
 
 // Get all events for this venue
 const allEvents = await getEvents();
@@ -25,7 +49,15 @@ try {
 ---
 
 <PageLayout title={`${venue.data.title} - Venues`}>
-  <Section>
+  <div class="pb-20">
+    <Section>
+      <StickyBottomNavButtons
+        prevItem={prevItem}
+        nextItem={nextItem}
+        backButton={backButton}
+        class="venue-navigation mb-8"
+      />
+    
     <!-- Mobile header -->
     <div class="md:hidden flex flex-col gap-6">
       <h1 class="text-4xl font-bold pt-6">{venue.data.title}</h1>
@@ -73,4 +105,13 @@ try {
       </Section>
     )
   }
+  </div>
+
+  <StickyNavigation navigationClass="venue-navigation">
+    <StickyBottomNavButtons
+      prevItem={prevItem}
+      nextItem={nextItem}
+      backButton={backButton}
+    />
+  </StickyNavigation>
 </PageLayout>

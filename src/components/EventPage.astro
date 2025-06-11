@@ -4,24 +4,23 @@ import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
 import EventDetails from "./EventDetails.astro";
 import EventGallery from "./EventGallery.astro";
-import EventNavigation from "./EventNavigation.astro";
+import EventNav from "./EventNav.astro";
 import EventPeople from "./EventPeople.astro";
-import EventStickyNavigation from "./EventStickyNavigation.astro";
+import StickyNavigation from "./StickyNavigation.astro";
 
 const event = await resolveEvent(Astro);
 ---
 
 <PageLayout title={`${event.data.title} - Events`}>
-  <div class="pb-20">
-    <Section>
-      <EventNavigation />
-      <EventDetails />
-    </Section>
-    <EventPeople />
-    <EventGallery />
-    <Section>
-      <EventNavigation />
-    </Section>
-  </div>
-  <EventStickyNavigation />
+  <Section>
+    <EventDetails />
+  </Section>
+  <EventPeople />
+  <EventGallery />
+  <Section>
+    <EventNav class="event-navigation" />
+  </Section>
+  <StickyNavigation navigationClass="event-navigation">
+    <EventNav />
+  </StickyNavigation>
 </PageLayout>

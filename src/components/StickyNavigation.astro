@@ -1,0 +1,60 @@
+---
+import Container from "./Container.astro";
+
+interface Props {
+  navigationClass: string;
+}
+
+const { navigationClass } = Astro.props;
+
+// Generate a unique ID for this instance
+const stickyNavId = `sticky-nav-${Math.random().toString(36).substring(7)}`;
+---
+
+<!-- Sticky Navigation -->
+<div
+  id={stickyNavId}
+  class="fixed bottom-0 left-0 right-0 z-40 glass shadow-lg transition-opacity duration-300"
+>
+  <Container class="py-3">
+    <slot />
+  </Container>
+</div>
+
+<script define:vars={{ stickyNavId, navigationClass }}>
+  (() => {
+    // Get the sticky nav element
+    const stickyNav = document.getElementById(stickyNavId);
+    if (!stickyNav) return;
+
+    // Get the bottom navigation element
+    const bottomNav = document.querySelector(`.${navigationClass}`);
+    
+    if (!bottomNav) return;
+
+    // Create an intersection observer to watch when the bottom nav comes into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Fade out when bottom nav is visible
+            stickyNav.style.opacity = '0';
+            stickyNav.style.pointerEvents = 'none';
+          } else {
+            // Fade in when bottom nav is not visible
+            stickyNav.style.opacity = '1';
+            stickyNav.style.pointerEvents = 'auto';
+          }
+        });
+      },
+      {
+        // Trigger when the element is 50px from the bottom of the viewport
+        rootMargin: '0px 0px 50px 0px',
+        threshold: 0
+      }
+    );
+
+    // Start observing the bottom navigation
+    observer.observe(bottomNav);
+  })();
+</script>

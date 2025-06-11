@@ -2,18 +2,13 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Section from "./Section.astro";
 import PersonDetails from "./PersonDetails.astro";
-import PrevNextButton from "./PrevNextButton.astro";
+import PersonNav from "./PersonNav.astro";
 import EventFeatured from "./EventFeatured.astro";
+import StickyNavigation from "./StickyNavigation.astro";
 
-import { getEvents, getPeople, resolvePerson } from "../data";
+import { getEvents, resolvePerson } from "../data";
 
 const person = await resolvePerson(Astro);
-
-// Get all people for prev/next navigation
-const people = await getPeople();
-const currentIndex = people.findIndex((p) => p.id === person.id);
-const prevPerson = currentIndex > 0 ? people[currentIndex - 1] : null;
-const nextPerson = currentIndex < people.length - 1 ? people[currentIndex + 1] : null;
 
 const events = await getEvents();
 const personEvents = events.filter((event) =>
@@ -23,30 +18,6 @@ const personEvents = events.filter((event) =>
 
 <PageLayout title={`${person.name} - Community`}>
   <Section>
-    <div class="flex justify-between items-center mb-8">
-      <div class="flex gap-4">
-        {
-          prevPerson && (
-            <PrevNextButton
-              url={`/person/${prevPerson.id}`}
-              title={prevPerson.name}
-              direction="prev"
-            />
-          )
-        }
-      </div>
-      <div class="flex gap-4">
-        {
-          nextPerson && (
-            <PrevNextButton
-              url={`/person/${nextPerson.id}`}
-              title={nextPerson.name}
-              direction="next"
-            />
-          )
-        }
-      </div>
-    </div>
     <PersonDetails person={person} />
   </Section>
   {
@@ -60,4 +31,11 @@ const personEvents = events.filter((event) =>
       </Section>
     )
   }
+  <Section>
+    <PersonNav class="person-navigation" />
+  </Section>
+
+  <StickyNavigation navigationClass="person-navigation">
+    <PersonNav />
+  </StickyNavigation>
 </PageLayout>
