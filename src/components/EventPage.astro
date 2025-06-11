@@ -6,18 +6,22 @@ import EventDetails from "./EventDetails.astro";
 import EventGallery from "./EventGallery.astro";
 import EventNavigation from "./EventNavigation.astro";
 import EventPeople from "./EventPeople.astro";
+import EventStickyNavigation from "./EventStickyNavigation.astro";
 
 const event = await resolveEvent(Astro);
 ---
 
 <PageLayout title={`${event.data.title} - Events`}>
-  <Section>
-    <EventNavigation />
-    <EventDetails />
-  </Section>
-  <EventPeople />
-  <EventGallery />
-  <Section>
-    <EventNavigation />
-  </Section>
+  <div class="pb-20">
+    <Section>
+      <EventNavigation />
+      <EventDetails />
+    </Section>
+    <EventPeople />
+    <EventGallery />
+    <Section>
+      <EventNavigation />
+    </Section>
+  </div>
+  <EventStickyNavigation />
 </PageLayout>

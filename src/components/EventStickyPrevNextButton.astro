@@ -1,0 +1,39 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import Link from "./Link.astro";
+import { type EventData } from "../data";
+import { formatDate } from "../utils/formatDate";
+
+interface Props {
+  data?: EventData;
+  next?: boolean;
+}
+
+const { data, next = false } = Astro.props;
+const isNext = next;
+---
+
+{
+  data ? (
+    <Link
+      href={`/event/${data.id}`}
+      class={`btn btn-soft h-14 py-0 px-2 flex-1 ${isNext ? "flex-row-reverse" : ""}`}
+    >
+      <Icon name={`lucide:chevron-${isNext ? "right" : "left"}`} size={20} class="mx-2" />
+
+      {data.cover && (
+        <figure class="aspect-video h-full flex-shrink-0 overflow-hidden rounded bg-base-300">
+          <Image src={data.cover} alt={data.title} width={80} height={80} class="w-full h-full object-cover" />
+        </figure>
+      )}
+
+      <div class={`flex flex-col flex-1 px-3 ${isNext ? "text-right" : "text-left"}`}>
+        <span class="text-sm font-semibold truncate">{data.title}</span>
+        <span class="text-xs opacity-70">{formatDate(data.dateTime, "short")}</span>
+      </div>
+    </Link>
+  ) : (
+    <div class="flex-1" />
+  )
+}

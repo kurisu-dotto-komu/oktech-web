@@ -1,0 +1,64 @@
+---
+import Container from "./Container.astro";
+import EventStickyPrevNextButton from "./EventStickyPrevNextButton.astro";
+import { getEvents, resolveEvent } from "../data";
+
+const event = await resolveEvent(Astro);
+
+const events = await getEvents();
+const currentIndex = events.findIndex(({ data }) => data.id === event.id);
+const prevEvent = currentIndex > 0 ? events[currentIndex - 1] : null;
+const nextEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : null;
+---
+
+<div
+  id="sticky-nav"
+  class="fixed bottom-0 left-0 right-0 z-40 backdrop-blur-md bg-base-100/70 border-t border-base-300/20 shadow-lg transition-opacity duration-300"
+>
+  <Container class="py-3">
+    <div class="flex items-center gap-3">
+      <EventStickyPrevNextButton data={prevEvent?.data} />
+      <EventStickyPrevNextButton data={nextEvent?.data} next />
+    </div>
+  </Container>
+</div>
+
+<script>
+  (() => {
+    // Get the sticky nav element
+    const stickyNav = document.getElementById('sticky-nav');
+    if (!stickyNav) return;
+
+    // Get all navigation elements
+    const allNavs = document.querySelectorAll('.event-navigation');
+    // Get the second navigation element (the one at the bottom)
+    const bottomNav = allNavs.length > 1 ? allNavs[1] : null;
+    
+    if (!bottomNav) return;
+
+    // Create an intersection observer to watch when the bottom nav comes into view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Fade out when bottom nav is visible
+            stickyNav.style.opacity = '0';
+            stickyNav.style.pointerEvents = 'none';
+          } else {
+            // Fade in when bottom nav is not visible
+            stickyNav.style.opacity = '1';
+            stickyNav.style.pointerEvents = 'auto';
+          }
+        });
+      },
+      {
+        // Trigger when the element is 50px from the bottom of the viewport
+        rootMargin: '0px 0px 50px 0px',
+        threshold: 0
+      }
+    );
+
+    // Start observing the bottom navigation
+    observer.observe(bottomNav);
+  })();
+</script>
