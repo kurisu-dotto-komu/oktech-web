@@ -1,0 +1,46 @@
+---
+import StickyBottomNavButtons from "./StickyBottomNavButtons.astro";
+import { getPeople, resolvePerson } from "../data";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const person = await resolvePerson(Astro);
+
+// Get all people for prev/next navigation
+const people = await getPeople();
+const currentIndex = people.findIndex((p) => p.id === person.id);
+// Loop to last person if at first, loop to first person if at last
+const prevPerson = currentIndex > 0 ? people[currentIndex - 1] : people[people.length - 1];
+const nextPerson = currentIndex < people.length - 1 ? people[currentIndex + 1] : people[0];
+
+const prevItem = prevPerson
+  ? {
+      href: `/person/${prevPerson.id}`,
+      title: prevPerson.name,
+    }
+  : undefined;
+
+const nextItem = nextPerson
+  ? {
+      href: `/person/${nextPerson.id}`,
+      title: nextPerson.name,
+    }
+  : undefined;
+
+const backButton = {
+  href: "/community",
+  icon: "lucide:users",
+  text: "All People",
+};
+---
+
+<StickyBottomNavButtons
+  prevItem={prevItem}
+  nextItem={nextItem}
+  backButton={backButton}
+  class={className}
+/>
