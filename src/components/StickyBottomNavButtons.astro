@@ -22,62 +22,35 @@ interface Props {
 }
 
 const { prevItem, nextItem, backButton, class: className } = Astro.props;
-
-// Common button classes
-const backButtonClasses =
-  "join-item btn btn-neutral  h-14 px-3 md:px-4 flex items-center justify-center";
 ---
 
-<div class={`join w-full ${className || ""}`}>
+<div class={`flex gap-4 w-full py-2 ${className || ""}`}>
   {
-    !prevItem && !nextItem && backButton ? (
-      <Link href={backButton.href} class={`${backButtonClasses} flex-1`} title={backButton.text}>
-        <Icon name={backButton.icon} size={20} />
-        <span class="ml-2 hidden sm:inline">{backButton.text}</span>
-      </Link>
-    ) : !prevItem && nextItem ? (
-      <>
-        {backButton && (
-          <Link
-            href={backButton.href}
-            class={`${backButtonClasses} flex-shrink-0`}
-            title={backButton.text}
-          >
-            <Icon name={backButton.icon} size={20} />
-            <span class="ml-2 hidden sm:inline">{backButton.text}</span>
-          </Link>
-        )}
-        <StickyBottomNavButton {...nextItem} />
-      </>
-    ) : prevItem && !nextItem ? (
-      <>
+    prevItem && (
+      <div class="flex-1 ">
         <StickyBottomNavButton {...prevItem} />
-        {backButton && (
-          <Link
-            href={backButton.href}
-            class={`${backButtonClasses} flex-shrink-0`}
-            title={backButton.text}
-          >
-            <Icon name={backButton.icon} size={20} />
-            <span class="ml-2 hidden sm:inline">{backButton.text}</span>
-          </Link>
-        )}
-      </>
-    ) : (
-      <>
-        <StickyBottomNavButton {...prevItem} />
-        {backButton && (
-          <Link
-            href={backButton.href}
-            class={`${backButtonClasses} flex-shrink-0`}
-            title={backButton.text}
-          >
-            <Icon name={backButton.icon} size={20} />
-            <span class="ml-2 hidden sm:inline">{backButton.text}</span>
-          </Link>
-        )}
+      </div>
+    )
+  }
+  {
+    backButton && (
+      <div class="bg-blue-200 flex-0">
+        <Link
+          href={backButton.href}
+          class="btn btn-neutral flex items-center justify-center h-full whitespace-nowrap"
+          title={backButton.text}
+        >
+          <Icon name={backButton.icon} size={20} />
+          <span class="ml-2 hidden sm:inline">{backButton.text}</span>
+        </Link>
+      </div>
+    )
+  }
+  {
+    nextItem && (
+      <div class="text-end flex-1">
         <StickyBottomNavButton {...nextItem} next />
-      </>
+      </div>
     )
   }
 </div>

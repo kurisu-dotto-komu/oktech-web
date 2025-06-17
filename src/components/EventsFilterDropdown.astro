@@ -17,23 +17,19 @@ interface Props {
 const { buttonText, buttonIcon, clearText, clearHref, items } = Astro.props;
 ---
 
-<div class="dropdown">
-  <div
-    tabindex="0"
-    role="button"
-    class={`btn btn-lg ${clearText ? "bg-base-100 text-primary-content" : ""}`}
-  >
+<div class="dropdown dropdown-bottom">
+  <div tabindex="0" role="button" class={`btn btn-lg ${clearText ? "btn-primary" : ""}`}>
     <Icon name={buttonIcon} size={20} />
     {buttonText}
     <Icon name="lucide:chevron-down" size={20} />
   </div>
-  <div tabindex="0" class="dropdown-content z-[1] p-2 w-max max-w-[70vw] overflow-y-auto">
+  <div tabindex="0" class="dropdown-content z-[1] mt-2 md:min-w-[70vw]">
     <div class="flex flex-wrap gap-1">
       {
         clearHref && (
           <Link
             href={clearHref}
-            class="btn btn-sm btn-error justify-start text-left text-lg px-4 py-2 h-auto min-h-0 font-normal whitespace-nowrap bg-error hover:bg-error/80 border-0 "
+            class="btn btn-sm btn-accent justify-start text-left text-sm px-4 py-2 whitespace-nowrap flex gap-2"
           >
             <Icon name="lucide:x" size={20} />
             {clearText}
@@ -46,7 +42,7 @@ const { buttonText, buttonIcon, clearText, clearHref, items } = Astro.props;
           .map((item) => (
             <Link
               href={item.href}
-              class="btn btn-sm justify-start text-left text-lg px-4 py-2 h-auto min-h-0 font-normal whitespace-nowrap bg-base-100 hover:bg-base-300 border-0 flex items-baseline gap-2 "
+              class="btn btn-sm justify-start text-left text-sm px-4 py-2 whitespace-nowrap flex items-baseline gap-2"
             >
               <span>{item.text}</span>
               {item.count !== undefined && <span class="text-sm opacity-60">{item.count}</span>}

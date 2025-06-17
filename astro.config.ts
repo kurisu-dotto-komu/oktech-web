@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import icon from "astro-icon";
 import yaml from "@rollup/plugin-yaml";
+import { DEV_MODE } from "./src/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,7 +29,7 @@ export default defineConfig({
     clientPrerender: true,
   },
   prefetch: {
-    prefetchAll: true,
+    prefetchAll: true, // TODO disable in dev mode
     defaultStrategy: "viewport",
   },
 });

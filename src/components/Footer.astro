@@ -12,11 +12,11 @@ import { Icon } from "astro-icon/components";
   <Container class="flex flex-col py-10 gap-8 sm:gap-4">
     <!-- TOP ROW -->
     <div class="flex justify-between items-center flex-col sm:flex-row gap-8">
-      <nav class="flex gap-4 flex-wrap">
+      <nav class="flex gap-1 flex-wrap justify-center -mx-4">
         {
           MENU.map((item) => (
-            <Link href={item.href} class="link link-hover flex items-center gap-1">
-              {item.icon && <Icon name={item.icon} size={16} />}
+            <Link href={item.href} class="btn btn-ghost gap-2 text-sm items-center justify-start">
+              {item.icon && <Icon name={item.icon} />}
               {item.label}
             </Link>
           ))

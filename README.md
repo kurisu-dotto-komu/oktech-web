@@ -2,6 +2,8 @@
 
 https://docs.astro.build/en/guides/view-transitions/
 
+Move the event featured icon to the map
+
 Reduce confusion with slug/id definition
 
 Members: with hasPage: true.
