@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 import { resolveVenue } from "../data";
 import VenueMap from "./VenueMap.astro";
-import Link from "./Link.astro";
+import EventCity from "./EventCity.astro";
 
 const venue = await resolveVenue(Astro);
 ---
@@ -55,8 +55,14 @@ const venue = await resolveVenue(Astro);
     }
   </div>
 
-  <!-- Map Section -->
-  <div class="w-full aspect-video">
-    <VenueMap showMarker />
+  <div class="w-full aspect-video lg:aspect-square relative">
+    <VenueMap marker={venue.data.title} link={true} />
+    {
+      venue.data.city && (
+        <div class="absolute bottom-2 right-2">
+          <EventCity city={venue.data.city} />
+        </div>
+      )
+    }
   </div>
 </div>

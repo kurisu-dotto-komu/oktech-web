@@ -58,3 +58,16 @@
   @apply bg-base-100/50 border border-base-100/50;
   backdrop-filter: brightness(1.4) saturate(1.3) blur(30px);
 }
+
+/* City-based badge colors */
+.badge.city-osaka {
+  @apply badge-warning;
+}
+
+.badge.city-kyoto {
+  @apply badge-secondary;
+}
+
+.badge.city-kobe {
+  @apply badge-success;
+}

@@ -4,6 +4,7 @@ import { resolveEvent } from "../data";
 import Link from "./Link.astro";
 import { Image } from "astro:assets";
 import { formatDate, formatTime } from "../utils/formatDate";
+import EventCity from "./EventCity.astro";
 
 interface Props {
   eventSlug?: string;
@@ -45,6 +46,7 @@ const formattedTime = formatTime(event.data.dateTime);
       <div class="flex items-center gap-2">
         <Icon name="lucide:map-pin" size={16} />
         <span class="max-w-[200px] truncate">{event.venue.title}</span>
+        {event.venue.city && <EventCity city={event.venue.city} />}
       </div>
     )}
   </div>

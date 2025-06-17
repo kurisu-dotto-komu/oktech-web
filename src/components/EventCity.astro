@@ -1,0 +1,19 @@
+---
+export interface Props {
+  city: string;
+  class?: string;
+}
+
+const { city, class: className = "" } = Astro.props;
+
+const cityNames = {
+  "osaka": "Osaka",
+  "kyoto": "Kyoto",
+  "kobe": "Kobe"
+};
+
+const displayName = cityNames[city.toLowerCase() as keyof typeof cityNames] || city;
+const cityClass = `city-${city.toLowerCase()}`;
+---
+
+<span class={`badge ${cityClass} ${className}`}>{displayName}</span>

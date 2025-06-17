@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  mapImage: any;
+  marker?: boolean | string;
+}
+
+const { mapImage, marker } = Astro.props;
+---
+
+<figure class="w-full h-full relative">
+  <Image
+    src={mapImage.default}
+    alt="Venue location map"
+    class="w-full h-full object-cover"
+    width={1024}
+    height={1024}
+  />
+  {
+    marker && (
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="relative">
+          {typeof marker === "string" && (
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2">
+              <div class="bg-base-100/90 px-3 py-1 rounded-lg shadow-md whitespace-nowrap">
+                <span class="text-base font-medium text-base-content">{marker}</span>
+              </div>
+            </div>
+          )}
+          <div class="text-primary-dark bg-base-100/70 rounded-full p-2">
+            <Icon name="lucide:map-pin" class="w-6 h-6" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+</figure>

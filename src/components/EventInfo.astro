@@ -4,6 +4,7 @@ import { resolveEvent } from "../data";
 import { formatDate, formatTime } from "../utils/formatDate";
 import VenueMap from "./VenueMap.astro";
 import Link from "./Link.astro";
+import EventCity from "./EventCity.astro";
 
 const event = await resolveEvent(Astro);
 
@@ -64,8 +65,13 @@ if (event.data.duration) {
   <!-- Map Section -->
   {
     event.venueSlug && (
-      <div class="w-full aspect-video">
-        <VenueMap venueSlug={event.venueSlug} showMarker />
+      <div class="w-full aspect-video relative">
+        <VenueMap venueSlug={event.venueSlug} marker={event.venue?.title} link={true} />
+        {event.venue?.city && (
+          <div class="absolute bottom-2 right-2">
+            <EventCity city={event.venue.city} />
+          </div>
+        )}
       </div>
     )
   }

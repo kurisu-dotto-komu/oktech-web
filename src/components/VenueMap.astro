@@ -1,21 +1,22 @@
 ---
-import { Image } from "astro:assets";
-import { Icon } from "astro-icon/components";
+import VenueMapImage from "./VenueMapImage.astro";
 import { resolveVenue } from "../data";
 
 interface Props {
   venueSlug?: string;
-  showMarker?: boolean;
+  marker?: boolean | string;
+  link?: boolean;
 }
 
-const { showMarker } = Astro.props;
+const { marker, link = false } = Astro.props;
 
 const venue = await resolveVenue(Astro);
 
 // Generate map URL - use gmaps if available, otherwise create from address
 const getMapUrl = () => {
   if (!venue) return null;
-  if (!showMarker) return null;
+  // Show link if either showMarker is true or marker prop is provided
+  if (marker === undefined) return null;
 
   if (venue.data.gmaps) {
     return venue.data.gmaps;
@@ -44,37 +45,16 @@ try {
 
 {
   mapImage &&
-    (mapUrl ? (
+    (mapUrl && link ? (
       <a
         href={mapUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="block w-full h-full hover:opacity-90 transition-opacity cursor-pointer"
       >
-        <figure class="w-full h-full relative">
-          <Image
-            src={mapImage.default}
-            alt="Venue location map"
-            class="w-full h-full object-cover"
-            width={300}
-            height={200}
-          />
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="text-primary-dark bg-base-100/70 rounded-full p-2">
-              <Icon name="lucide:map-pin" class="w-6 h-6" />
-            </div>
-          </div>
-        </figure>
+        <VenueMapImage mapImage={mapImage} marker={marker} />
       </a>
     ) : (
-      <figure class="w-full h-full relative">
-        <Image
-          src={mapImage.default}
-          alt="Venue location map"
-          class="w-full h-full object-cover"
-          width={300}
-          height={200}
-        />
-      </figure>
+      <VenueMapImage mapImage={mapImage} marker={marker} />
     ))
 }
