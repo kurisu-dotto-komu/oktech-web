@@ -5,7 +5,8 @@ declare const process: { env: Record<string, string | undefined> };
 
 export async function GET() {
   // Derive the canonical site URL. Prefer an explicit SITE environment variable, then Vercel URL when deployed.
-  const envSite = process.env.SITE ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
+  const envSite =
+    process.env.SITE ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
   const base = envSite ? envSite.replace(/\/?$/, "/") : "/";
 
   const urls = await generateSitemapURLs(base);

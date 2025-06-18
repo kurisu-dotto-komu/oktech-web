@@ -4,14 +4,12 @@ import { generateEventRoutePaths } from "../../utils/sitemap";
 
 export async function getStaticPaths() {
   const { paths } = await generateEventRoutePaths();
-  
+
   // Convert paths to the format needed for Astro's getStaticPaths
-  return paths.map(path => {
+  return paths.map((path) => {
     // Remove leading /events/ to get the eventsPath parameter
-    const eventsPath = path === "/events" 
-      ? undefined 
-      : path.replace(/^\/events\//, "");
-    
+    const eventsPath = path === "/events" ? undefined : path.replace(/^\/events\//, "");
+
     return { params: { eventsPath } };
   });
 }

@@ -9,9 +9,25 @@ import EventPeople from "./EventPeople.astro";
 import StickyNavigation from "./StickyNavigation.astro";
 
 const event = await resolveEvent(Astro);
+
+// Get topics as a description
+const description = event.data.topics?.length
+  ? `Topics: ${event.data.topics.join(", ")}`
+  : "Join us for this exciting tech meetup event!";
+
+// Prepare event-specific OG image params
+const ogImageParams = {
+  type: "event" as const,
+  slug: event.id,
+};
 ---
 
-<PageLayout title={`${event.data.title} - Events`}>
+<PageLayout
+  title={`${event.data.title} - Events`}
+  description={description}
+  type="article"
+  ogImageParams={ogImageParams}
+>
   <Section>
     <EventDetails />
   </Section>

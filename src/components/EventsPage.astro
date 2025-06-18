@@ -47,13 +47,33 @@ const getViewUrl = (view: string) => {
   }
   return basePath;
 };
+
+// Create SEO description based on filters
+let seoDescription =
+  "Browse upcoming and past tech events, workshops, and meetups in Osaka and the Kansai region.";
+if (selectedCity) {
+  seoDescription = `Tech events and meetups in ${selectedCity}. Join our community for workshops, talks, and networking opportunities.`;
+} else if (selectedTopic) {
+  seoDescription = `${selectedTopic} events and workshops in Osaka & Kansai. Learn, share, and connect with fellow tech enthusiasts.`;
+}
+seoDescription += ` ${events.length} events available.`;
 ---
 
-<PageLayout title="Events">
+<PageLayout
+  title="Events"
+  description={seoDescription}
+  ogImageParams={{
+    type: "default",
+  }}
+>
   <Section wide>
     <div class="flex flex-col gap-8">
       <div class="flex items-center justify-between gap-8 flex-col md:flex-row">
-        <EventsFilter selectedCity={selectedCity} selectedTopic={selectedTopic} viewMode={viewMode} />
+        <EventsFilter
+          selectedCity={selectedCity}
+          selectedTopic={selectedTopic}
+          viewMode={viewMode}
+        />
         <div class="flex items-center gap-4">
           <ButtonGroup
             buttons={[

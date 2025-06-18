@@ -11,7 +11,12 @@ import PersonAvatars from "../components/PersonAvatars.astro";
 const events = await getEvents();
 ---
 
-<PageLayout>
+<PageLayout
+  description="Join the Osaka Kansai Tech Meetup Group (OKTech) - A vibrant community for web developers, designers, and tech enthusiasts. Discover upcoming events, workshops, and networking opportunities in the Kansai region."
+  ogImageParams={{
+    type: "default",
+  }}
+>
   <Hero
     title="Welcome to OKTech"
     description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
@@ -19,12 +24,7 @@ const events = await getEvents();
   <Section wide class="bg-secondary/20">
     <EventsUpcoming />
   </Section>
-  <Section
-    split
-    title="About OKTech"
-    lorem={1}
-    button={{ text: "Learn More", href: "/about" }}
-  >
+  <Section split title="About OKTech" lorem={1} button={{ text: "Learn More", href: "/about" }}>
     <ImagePlaceholder />
   </Section>
 

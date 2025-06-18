@@ -24,9 +24,23 @@ try {
   // No markdown content for this venue
   Content = null;
 }
+
+// Create description
+const description =
+  venue.data.description ||
+  `${venue.data.title} - Event venue in ${venue.data.city || "Osaka"}. ${venueEvents.length} events hosted.`;
+
+const ogImageParams = {
+  type: "venue" as const,
+  slug: venue.id,
+};
 ---
 
-<PageLayout title={`${venue.data.title} - Venues`}>
+<PageLayout
+  title={`${venue.data.title} - Venues`}
+  description={description}
+  ogImageParams={ogImageParams}
+>
   <Section>
     <div class="flex flex-col lg:flex-row gap-12">
       <div class="flex flex-col gap-10 flex-1">
