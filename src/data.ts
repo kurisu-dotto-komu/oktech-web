@@ -119,7 +119,7 @@ export async function getEvents() {
   return eventsWithVenues.reverse();
 }
 
-async function getEvent(eventSlug: string | undefined) {
+export async function getEvent(eventSlug: string | undefined) {
   if (!eventSlug) {
     throw "Event slug not defined";
   }
@@ -145,7 +145,7 @@ async function getEvent(eventSlug: string | undefined) {
   };
 }
 
-async function getVenue(venueSlug: string | undefined) {
+export async function getVenue(venueSlug: string | undefined) {
   if (!venueSlug) {
     throw "Venue slug not defined";
   }
@@ -156,7 +156,7 @@ async function getVenue(venueSlug: string | undefined) {
   return venue;
 }
 
-async function getPerson(id: string | undefined) {
+export async function getPerson(id: string | undefined) {
   if (!id) {
     throw "Person ID not defined";
   }

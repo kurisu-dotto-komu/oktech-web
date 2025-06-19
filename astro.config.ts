@@ -8,10 +8,13 @@ import { DEV_MODE } from "./src/config";
 
 // https://astro.build/config
 export default defineConfig({
+  // The full URL where the site will be hosted
+  // This is used for generating absolute URLs (e.g., for OG images, canonical URLs)
   site: process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "https://owddm.com/chris-wireframe/",
-  // TODO update this for prod. for now, if we're on vercel, we dont need a base path
+  // Base path for the site - available as import.meta.env.BASE_URL
+  // On Vercel we use root path, otherwise we use /chris-wireframe
   base: process.env.VERCEL_URL ? "" : "chris-wireframe",
   trailingSlash: "never",
   devToolbar: {

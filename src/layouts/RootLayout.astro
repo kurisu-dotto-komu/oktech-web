@@ -2,24 +2,35 @@
 import "../styles/global.css";
 import { SITE } from "../config";
 import { resolveHref } from "../utils/resolveHref";
+import SEO from "../components/SEO.astro";
 
 export interface Props {
   title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: "website" | "article" | "profile";
+  article?: {
+    author?: string;
+    publishedTime?: string;
+    modifiedTime?: string;
+    tags?: string[];
+  };
+  noindex?: boolean;
+  nofollow?: boolean;
+  ogImageParams?: {
+    type?: "default" | "event" | "person" | "venue";
+    slug?: string;
+  };
 }
 
-const { title } = Astro.props;
-const pageTitle = title ? SITE.title.template.replace("%s", title) : SITE.title.default;
+const { title, ...seoProps } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=no"
-    />
-    <title>{pageTitle}</title>
+    <SEO title={title} {...seoProps} />
     <link
       rel="alternate"
       type="application/rss+xml"

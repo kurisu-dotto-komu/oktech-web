@@ -6,7 +6,13 @@ import Hero from "../components/Hero.astro";
 import SocialsBig from "../components/SocialsBig.astro";
 ---
 
-<PageLayout title="About">
+<PageLayout
+  title="About"
+  description="Learn about OKTech - Osaka Kansai Tech Meetup Group. Our mission is to build a thriving tech community through events, workshops, and networking opportunities. Discover our history and how to get involved."
+  ogImageParams={{
+    type: "default",
+  }}
+>
   <Hero
     title="About OKTech"
     description="Lorem ipsum dolor sit amet"

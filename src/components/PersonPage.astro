@@ -14,9 +14,28 @@ const events = await getEvents();
 const personEvents = events.filter((event) =>
   person.events.find((e) => event.id.startsWith(`${e}`)),
 );
+
+// Create description from bio or roles
+const roleDescriptions = person.roles
+  .map((role) => role.charAt(0).toUpperCase() + role.slice(1))
+  .join(", ");
+const description = person.bio
+  ? person.bio.slice(0, 160) + (person.bio.length > 160 ? "..." : "")
+  : `${person.name} - ${roleDescriptions} at ${person.company || "the tech community"}`;
+
+// OG image params for person
+const ogImageParams = {
+  type: "person" as const,
+  slug: person.id,
+};
 ---
 
-<PageLayout title={`${person.name} - Community`}>
+<PageLayout
+  title={`${person.name} - Community`}
+  description={description}
+  type="profile"
+  ogImageParams={ogImageParams}
+>
   <Section>
     <PersonDetails person={person} />
   </Section>
