@@ -84,40 +84,6 @@ if (!DEV_MODE) return;
           </div>
         </div>
       </div>
-
-      <!-- Page Info Section -->
-      <div>
-        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          Page Info
-        </h3>
-        <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
-          <div class="stat">
-            <div class="stat-title">Current URL</div>
-            <div class="stat-value text-sm" id="dev-current-url">Loading...</div>
-          </div>
-          <div class="stat">
-            <div class="stat-title">Canonical URL</div>
-            <div class="stat-value text-sm" id="dev-canonical-url">Loading...</div>
-          </div>
-          <div class="stat">
-            <div class="stat-title">Page Type</div>
-            <div class="stat-value text-sm" id="dev-page-type">Loading...</div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -158,21 +124,6 @@ if (!DEV_MODE) return;
     if (ogUrlElement) {
       ogUrlElement.textContent = ogImageUrl || "No OG image specified";
     }
-
-    // Get other meta info for page info section
-    const canonical =
-      document.querySelector('link[rel="canonical"]')?.getAttribute("href") || "Not specified";
-    const pageType =
-      document.querySelector('meta[property="og:type"]')?.getAttribute("content") || "website";
-
-    // Update page info
-    const currentUrl = document.getElementById("dev-current-url");
-    const canonicalUrl = document.getElementById("dev-canonical-url");
-    const pageTypeElement = document.getElementById("dev-page-type");
-
-    if (currentUrl) currentUrl.textContent = window.location.href;
-    if (canonicalUrl) canonicalUrl.textContent = canonical;
-    if (pageTypeElement) pageTypeElement.textContent = pageType;
   }
 
   // Run on page load
