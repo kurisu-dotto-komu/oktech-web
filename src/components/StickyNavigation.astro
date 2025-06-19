@@ -32,18 +32,35 @@ const stickyNavId = `sticky-nav-${Math.random().toString(36).substring(7)}`;
 
     if (!bottomNav) return;
 
+    let hasScrolledPast = false;
+
     // Create an intersection observer to watch when the bottom nav comes into view
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          // Get the position of the navigation relative to the viewport
+          const navRect = entry.boundingClientRect;
+          
+          // Check if we've scrolled past the navigation (it's above the viewport)
+          if (navRect.bottom < 0) {
+            hasScrolledPast = true;
+          } else if (navRect.top >= 0) {
+            // Navigation is in view or below viewport
+            hasScrolledPast = false;
+          }
+
           if (entry.isIntersecting) {
             // Fade out when bottom nav is visible
             stickyNav.style.opacity = "0";
             stickyNav.style.pointerEvents = "none";
-          } else {
-            // Fade in when bottom nav is not visible
+          } else if (!hasScrolledPast) {
+            // Only fade in when bottom nav is not visible AND we haven't scrolled past it
             stickyNav.style.opacity = "1";
             stickyNav.style.pointerEvents = "auto";
+          } else {
+            // Keep hidden if we've scrolled past the navigation
+            stickyNav.style.opacity = "0";
+            stickyNav.style.pointerEvents = "none";
           }
         });
       },
