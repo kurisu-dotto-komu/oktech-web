@@ -2,28 +2,51 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const Hologram: React.FC = () => {
   const text = "Osaka Kansai Web Development Meetup Group • ";
-  const radius = 120;
+  const radius = 85; // Reduced from 120 to bring text closer
   const angleStep = 360 / text.length;
   
   const containerRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [hue, setHue] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    let gyroAvailable = false;
+    
+    // Try to use gyroscope if available
+    if ('Gyroscope' in window) {
+      try {
+        const sensor = new (window as any).Gyroscope({ frequency: 60 });
+        sensor.addEventListener('reading', () => {
+          setRotation({ x: sensor.x * 10, y: sensor.y * 10 });
+          const angle = Math.atan2(sensor.y, sensor.x) * 180 / Math.PI;
+          setHue((angle + 360) % 360);
+        });
+        sensor.start();
+        gyroAvailable = true;
+      } catch (error) {
+        console.log('Gyroscope not available, using mouse instead');
+      }
+    }
+    
+    // Mouse movement handler
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
+      if (gyroAvailable) return;
       
-      const rect = containerRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+      // Use window dimensions for full-screen tracking
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
       
-      // Calculate rotation based on mouse position relative to center
-      const deltaX = (e.clientX - centerX) / (rect.width / 2);
-      const deltaY = (e.clientY - centerY) / (rect.height / 2);
+      // Calculate position relative to screen center
+      const deltaX = (e.clientX - centerX) / centerX;
+      const deltaY = (e.clientY - centerY) / centerY;
       
-      // Simulate gyroscope-like rotation values (-45 to 45 degrees)
-      const rotX = deltaY * 45;
-      const rotY = deltaX * 45;
+      // Update mouse position for light direction
+      setMousePos({ x: deltaX, y: deltaY });
+      
+      // Simulate gyroscope-like rotation values (-30 to 30 degrees)
+      const rotX = deltaY * 30;
+      const rotY = deltaX * 30;
       
       setRotation({ x: rotX, y: rotY });
       
@@ -48,27 +71,15 @@ const Hologram: React.FC = () => {
   };
 
   return (
-    <div ref={containerRef} className="relative w-80 h-80 mx-auto perspective-1000">
+    <div ref={containerRef} className="relative w-64 h-64 mx-auto perspective-1000">
       {/* 3D transformed container */}
       <div 
-        className="relative w-full h-full transform-gpu transition-transform duration-75"
+        className="relative w-full h-full transform-gpu transition-transform duration-100 ease-out"
         style={{
           transform: `rotateX(${-rotation.x}deg) rotateY(${rotation.y}deg)`,
           transformStyle: 'preserve-3d',
         }}
       >
-        {/* Dynamic holographic gradient background */}
-        <div className="absolute inset-0 rounded-full overflow-hidden">
-          <div 
-            className="absolute inset-0 animate-slow-spin"
-            style={{
-              background: `conic-gradient(from ${hue}deg, ${generateGradientStops()})`,
-              filter: 'blur(40px)',
-              opacity: 0.6,
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-radial from-transparent to-base-100/50" />
-        </div>
 
         {/* Central circular logo with holographic effect */}
         <div className="absolute inset-0 flex items-center justify-center">
@@ -93,12 +104,11 @@ const Hologram: React.FC = () => {
               
               {/* Logo container with backdrop */}
               <div className="absolute inset-2 rounded-full bg-base-100/5 backdrop-blur-md border border-white/20 flex items-center justify-center overflow-hidden">
-                {/* Animated light sweep */}
+                {/* Animated light sweep based on mouse position */}
                 <div 
-                  className="absolute inset-0 opacity-40"
+                  className="absolute inset-0 opacity-50"
                   style={{
-                    background: `linear-gradient(${-hue}deg, transparent 30%, rgba(255,255,255,0.8) 50%, transparent 70%)`,
-                    transform: `translateX(${Math.sin(hue * Math.PI / 180) * 50}%) translateY(${Math.cos(hue * Math.PI / 180) * 50}%)`,
+                    background: `radial-gradient(circle at ${50 + mousePos.x * 30}% ${50 + mousePos.y * 30}%, rgba(255,255,255,0.8) 0%, transparent 50%)`,
                   }}
                 />
                 
@@ -145,12 +155,13 @@ const Hologram: React.FC = () => {
             return (
               <span
                 key={i}
-                className="absolute left-1/2 top-1/2 text-sm font-medium"
+                className="absolute left-1/2 top-1/2 text-xs font-semibold"
                 style={{
-                  transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${angle + 90}deg) translateZ(20px)`,
+                  transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${angle + 90}deg) translateZ(10px)`,
                   transformOrigin: 'center',
                   color: `hsl(${(hue + angle) % 360}, 70%, 60%)`,
-                  textShadow: '0 0 10px rgba(255,255,255,0.3)',
+                  textShadow: '0 0 8px rgba(255,255,255,0.4)',
+                  letterSpacing: '-0.05em',
                 }}
               >
                 {char}
