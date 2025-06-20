@@ -19,6 +19,24 @@ DO include:
 - Performance improvements users will notice
 -->
 
+### June 19, 2025
+
+Implemented rich social media preview cards and improved navigation behavior.
+
+- Added custom Open Graph images for all pages with beautiful gradient designs
+- Event previews now show cover images and venue maps in social media shares
+- Person pages display profile information in social media preview cards
+- Fixed sticky navigation to only appear when scrolling up, not when scrolling past content
+- Improved development environment with better debugging tools
+
+### June 18, 2025
+
+Enhanced SEO and social media presence with meta tags and Open Graph support.
+
+- Implemented comprehensive Open Graph and Twitter Card meta tags across all pages
+- Added dynamic social media preview images for events, venues, and person pages
+- Improved page titles and descriptions for better search engine visibility
+
 ### June 11, 2025
 
 Enhanced navigation experience with new sticky navigation and modern glass UI theme.
