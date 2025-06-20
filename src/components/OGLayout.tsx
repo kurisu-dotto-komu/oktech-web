@@ -20,7 +20,7 @@ export default function OGLayout({
         display: "flex",
         background: gradient,
         position: "relative",
-        fontFamily: "Inter, sans-serif",
+        fontFamily: "Inter, Noto Sans JP, sans-serif",
       }}
     >
       <div
@@ -35,18 +35,18 @@ export default function OGLayout({
         }}
       >
         {/* Main content */}
-        <div style={{ display: "flex", flexDirection: "column" }}>{children}</div>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>{children}</div>
 
         {/* Bottom section with optional left content and branding */}
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: bottomLeft ? "space-between" : "flex-end",
             alignItems: "flex-end",
             marginTop: "32px",
           }}
         >
-          {bottomLeft || <div style={{ display: "none" }}></div>}
+          {bottomLeft ? bottomLeft : null}
 
           {/* Site branding */}
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -83,10 +83,12 @@ export default function OGLayout({
 // Common icon components for reuse
 export const CalendarIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-    <line x1="16" y1="2" x2="16" y2="6"></line>
-    <line x1="8" y1="2" x2="8" y2="6"></line>
-    <line x1="3" y1="10" x2="21" y2="10"></line>
+    <g>
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </g>
   </svg>
 );
 
@@ -99,8 +101,10 @@ export const LocationIcon = ({ size = 20, fill = false }: { size?: number; fill?
     stroke={fill ? "none" : "white"}
     strokeWidth={fill ? 0 : 2}
   >
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-    <circle cx="12" cy="10" r="3"></circle>
+    <g>
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </g>
   </svg>
 );
 

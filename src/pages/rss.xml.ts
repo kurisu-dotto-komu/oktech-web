@@ -3,7 +3,7 @@ import type { APIContext } from "astro";
 import { SITE } from "../config";
 import { getEvents } from "../data";
 import { formatDate } from "../utils/formatDate";
-import { resolveHref } from "../utils/resolveHref";
+import { resolveBaseUrl, resolveFullUrl } from "../utils/urlResolver";
 
 export async function GET(context: APIContext) {
   const events = await getEvents();
@@ -13,8 +13,8 @@ export async function GET(context: APIContext) {
     (a, b) => new Date(b.data.dateTime).getTime() - new Date(a.data.dateTime).getTime(),
   );
 
-  // Use the current URL's origin in development
-  const site = context.site ? context.site.toString() : context.url.origin;
+  // Use the resolved base URL for the site
+  const site = resolveBaseUrl();
 
   return rss({
     title: `${SITE.name} - Events`,
@@ -24,7 +24,7 @@ export async function GET(context: APIContext) {
       title: event.data.title,
       description: `Event on ${formatDate(event.data.dateTime, "long")}`,
       pubDate: new Date(event.data.dateTime),
-      link: resolveHref(`/event/${event.id}/`),
+      link: resolveFullUrl(`/event/${event.id}/`),
     })),
     customData: `<language>en-us</language>`,
   });

@@ -1,19 +1,5 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import Link from "../components/Link.astro";
-import SiteMapTree from "../components/SiteMapTree";
-import Section from "../components/Section.astro";
+import Sitemap from "../components/Sitemap.astro";
 ---
 
-<PageLayout title="Sitemap">
-  <Section title="Sitemap">
-    <div class="prose max-w-none">
-      <p>
-        This page lists every accessible route on the website for easy navigation. You can also
-        download the
-        <Link href="/sitemap.xml">machine-readable XML sitemap</Link>.
-      </p>
-      <SiteMapTree />
-    </div>
-  </Section>
-</PageLayout>
+<Sitemap view="list" />

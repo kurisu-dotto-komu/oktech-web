@@ -17,12 +17,19 @@ export async function createOGImageHandler({
   height = 630,
 }: OGHandlerOptions): Promise<Response> {
   try {
-    // Fetch fonts
-    const [regularFont, boldFont] = await Promise.all([
+    // Fetch fonts - including Japanese font support
+    const [regularFont, boldFont, japaneseFont, japaneseBoldFont] = await Promise.all([
       fetch("https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.ttf").then(
         (res) => res.arrayBuffer(),
       ),
       fetch("https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.ttf").then(
+        (res) => res.arrayBuffer(),
+      ),
+      // Noto Sans JP for Japanese characters
+      fetch("https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-400-normal.ttf").then(
+        (res) => res.arrayBuffer(),
+      ),
+      fetch("https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-700-normal.ttf").then(
         (res) => res.arrayBuffer(),
       ),
     ]);
@@ -43,6 +50,18 @@ export async function createOGImageHandler({
         {
           name: "Inter",
           data: boldFont,
+          weight: 700,
+          style: "normal",
+        },
+        {
+          name: "Noto Sans JP",
+          data: japaneseFont,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "Noto Sans JP",
+          data: japaneseBoldFont,
           weight: 700,
           style: "normal",
         },
@@ -67,7 +86,9 @@ export async function createOGImageHandler({
     });
   } catch (error) {
     console.error("Error generating OG image:", error);
-    return new Response("Error generating image", { status: 500 });
+    // Return the error message in development mode for debugging
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return new Response(`Error generating image: ${errorMessage}`, { status: 500 });
   }
 }
 
