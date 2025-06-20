@@ -7,17 +7,17 @@ import yaml from "@rollup/plugin-yaml";
 import { DEV_MODE } from "./src/config";
 
 // Determine the site URL and base path
-const isVercel = !!process.env.VERCEL_URL;
+const isVercel = !!process.env.VERCEL_PROJECT_PRODUCTION_URL;
 const isDev = process.env.NODE_ENV === "development";
 
 const getSiteConfig = () => {
   if (isVercel) {
     return {
-      site: `https://${process.env.VERCEL_URL}`,
+      site: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
       base: "",
     };
   }
-  
+
   // In development, we still need to set site for proper URL generation
   if (isDev || (!isVercel && !process.env.SITE)) {
     return {
@@ -25,7 +25,7 @@ const getSiteConfig = () => {
       base: "/chris-wireframe",
     };
   }
-  
+
   // Production non-Vercel
   return {
     site: "https://owddm.com",
