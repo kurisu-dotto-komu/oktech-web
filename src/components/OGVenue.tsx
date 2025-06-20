@@ -38,7 +38,7 @@ export default function OGVenue({ venue }: OGVenueProps) {
           minHeight: "430px",
         }}
       >
-        <div style={{ marginBottom: "24px" }}>
+        <div style={{ display: "flex", marginBottom: "24px", justifyContent: "center" }}>
           <LocationIcon size={80} fill={true} />
         </div>
         <h1

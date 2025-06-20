@@ -6,16 +6,39 @@ import icon from "astro-icon";
 import yaml from "@rollup/plugin-yaml";
 import { DEV_MODE } from "./src/config";
 
+// Determine the site URL and base path
+const isVercel = !!process.env.VERCEL_URL;
+const isDev = process.env.NODE_ENV === "development";
+
+const getSiteConfig = () => {
+  if (isVercel) {
+    return {
+      site: `https://${process.env.VERCEL_URL}`,
+      base: "",
+    };
+  }
+  
+  // In development, we still need to set site for proper URL generation
+  if (isDev || (!isVercel && !process.env.SITE)) {
+    return {
+      site: "http://localhost:4322", // Using your dev server port
+      base: "/chris-wireframe",
+    };
+  }
+  
+  // Production non-Vercel
+  return {
+    site: "https://owddm.com",
+    base: "/chris-wireframe",
+  };
+};
+
+const { site, base } = getSiteConfig();
+
 // https://astro.build/config
 export default defineConfig({
-  // The full URL where the site will be hosted
-  // This is used for generating absolute URLs (e.g., for OG images, canonical URLs)
-  site: process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "https://owddm.com/chris-wireframe/",
-  // Base path for the site - available as import.meta.env.BASE_URL
-  // On Vercel we use root path, otherwise we use /chris-wireframe
-  base: process.env.VERCEL_URL ? "" : "chris-wireframe",
+  site,
+  base,
   trailingSlash: "never",
   devToolbar: {
     enabled: false,

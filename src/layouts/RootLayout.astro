@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { SITE } from "../config";
-import { resolveHref } from "../utils/resolveHref";
+import { resolveInternalHref } from "../utils/urlResolver";
 import SEO from "../components/SEO.astro";
 
 export interface Props {
@@ -35,7 +35,7 @@ const { title, ...seoProps } = Astro.props;
       rel="alternate"
       type="application/rss+xml"
       title={`${SITE.name} - Events RSS Feed`}
-      href={resolveHref(`/rss.xml`)}
+      href={resolveInternalHref(`/rss.xml`)}
     />
     <script is:inline>
       // ☝️ This script prevents the FART effect.
