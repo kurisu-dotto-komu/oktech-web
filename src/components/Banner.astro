@@ -1,0 +1,17 @@
+---
+import Container from "./Container.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<div class="alert alert-error rounded-none">
+  <Container>
+    <div class="flex items-center gap-4">
+      <Icon name="lucide:alert-triangle" class="w-10 h-10" />
+      <div>
+        <strong>Work in Progress!</strong> This site is under active development and the design is currently
+        garbage slop. Do not fear, as the human hand will be applied to it soon. Please excuse the rough
+        edges as we build something awesome together.
+      </div>
+    </div>
+  </Container>
+</div>

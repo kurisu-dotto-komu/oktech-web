@@ -11,12 +11,12 @@ const items = MENU.filter((item) => item.header !== false);
 
 <div class="fixed top-0 z-50 shadow-sm soft-glass navbar">
   <Container class="hidden md:flex justify-between">
-    <div class="navbar-start">
+    <div class="navbar-start -ml-4">
       <Link href="/" class="btn btn-ghost p-1">
         <Brand />
       </Link>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end -mr-4">
       <div class="flex">
         {
           items.map((item) => (
