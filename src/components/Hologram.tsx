@@ -244,7 +244,7 @@ const Hologram: React.FC = () => {
         }
 
         .animate-text-rotate {
-          animation: text-rotate 30s linear infinite;
+          animation: text-rotate 15s linear infinite;
         }
 
         .bg-gradient-radial {
