@@ -6,6 +6,7 @@ import { MENU, SITE } from "../config";
 import Link from "./Link.astro";
 import { formatDate } from "../utils/formatDate";
 import { Icon } from "astro-icon/components";
+import Brand from "./Brand.tsx";
 ---
 
 <footer class="bg-base-300 text-base-content">
@@ -29,13 +30,8 @@ import { Icon } from "astro-icon/components";
     </div>
     <!-- BOTTOM ROW -->
     <div class="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">
-      <div class="gap-2 flex flex-col items-center sm:flex-row sm:items-baseline">
-        <span class="text-xl font-bold">
-          {SITE.shortName}
-        </span>
-        <span class="text-xs">
-          {SITE.longName}
-        </span>
+      <div>
+        <Brand fullText />
       </div>
       <div class="text-xs">
         <a

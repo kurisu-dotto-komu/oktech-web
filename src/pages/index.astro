@@ -8,6 +8,7 @@ import LandingStats from "../components/LandingStats.astro";
 import EventsUpcoming from "../components/EventsUpcoming.astro";
 import ImagePlaceholder from "../components/ImagePlaceholder.astro";
 import PersonAvatars from "../components/PersonAvatars.astro";
+import Hologram from "../components/Hologram.tsx";
 const events = await getEvents();
 ---
 
@@ -20,7 +21,9 @@ const events = await getEvents();
   <Hero
     title="Welcome to OKTech"
     description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
-  />
+  >
+    <Hologram client:load />
+  </Hero>
   <Section wide class="bg-secondary/20">
     <EventsUpcoming />
   </Section>

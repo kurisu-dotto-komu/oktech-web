@@ -6,6 +6,7 @@ import { SITE } from "../config";
 import ProjectorLayout from "../layouts/ProjectorLayout.astro";
 import Fullscreen from "./Fullscreen";
 import VenueMap from "./VenueMap.astro";
+import Brand from "./Brand.tsx";
 
 const event = await resolveEvent(Astro);
 
@@ -58,11 +59,8 @@ const formattedTime = formatTime(event.data.dateTime);
       <!-- Right Column -->
       <div class="w-[400px] flex-shrink-0 flex flex-col justify-between">
         <!-- Top: Branding -->
-        <div class="flex flex-col text-right">
-          <h2 class="text-3xl font-bold m-0 whitespace-nowrap">{SITE.shortName}</h2>
-          <p class="text-lg opacity-80 m-0 whitespace-nowrap overflow-hidden text-ellipsis">
-            {SITE.longName}
-          </p>
+        <div class="flex justify-end">
+          <Brand />
         </div>
 
         <!-- Bottom: Map -->
