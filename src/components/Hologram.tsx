@@ -9,6 +9,7 @@ const Hologram: React.FC = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [hue, setHue] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [eventCount, setEventCount] = useState(0);
 
   useEffect(() => {
     let gyroAvailable = false;
@@ -32,6 +33,9 @@ const Hologram: React.FC = () => {
     // Mouse movement handler
     const handleMouseMove = (e: MouseEvent) => {
       if (gyroAvailable) return;
+      
+      // Increment event counter for debugging
+      setEventCount(prev => prev + 1);
       
       // Use window dimensions for full-screen tracking
       const centerX = window.innerWidth / 2;
@@ -127,6 +131,16 @@ const Hologram: React.FC = () => {
                 >
                   OK
                 </span>
+                
+                {/* Debug info */}
+                <div className="absolute bottom-0 left-0 text-xs text-white/80 bg-black/50 p-1 rounded">
+                  <div>X: {mousePos.x.toFixed(2)}</div>
+                  <div>Y: {mousePos.y.toFixed(2)}</div>
+                  <div>Hue: {hue.toFixed(0)}°</div>
+                  <div>RotX: {rotation.x.toFixed(1)}°</div>
+                  <div>RotY: {rotation.y.toFixed(1)}°</div>
+                  <div>Events: {eventCount}</div>
+                </div>
               </div>
             </div>
             
