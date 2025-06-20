@@ -12,9 +12,6 @@ const Hologram: React.FC = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [hue, setHue] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [eventCount, setEventCount] = useState(0);
-
-  console.log("Hologram");
 
   useEffect(() => {
     setMounted(true);
@@ -25,43 +22,31 @@ const Hologram: React.FC = () => {
     
     let gyroAvailable = false;
 
-    // Try to use gyroscope if available (skip for now to test mouse)
-    // Commenting out gyroscope to ensure mouse events work
-    /*
-    if ("Gyroscope" in window) {
-      try {
-        const sensor = new (window as any).Gyroscope({ frequency: 60 });
-        sensor.addEventListener("reading", () => {
-          setRotation({ x: sensor.x * 10, y: sensor.y * 10 });
-          const angle = (Math.atan2(sensor.y, sensor.x) * 180) / Math.PI;
-          setHue((angle + 360) % 360);
-        });
-        sensor.start();
-        gyroAvailable = true;
-        console.log("Gyroscope initialized");
-      } catch (error) {
-        console.log("Gyroscope error:", error);
-      }
+    // Try to use gyroscope if available
+    if ("Gyroscope" in window && 'permissions' in navigator) {
+      navigator.permissions.query({ name: 'gyroscope' as PermissionName }).then(result => {
+        if (result.state === 'granted') {
+          try {
+            const sensor = new (window as any).Gyroscope({ frequency: 60 });
+            sensor.addEventListener("reading", () => {
+              setRotation({ x: sensor.x * 10, y: sensor.y * 10 });
+              const angle = (Math.atan2(sensor.y, sensor.x) * 180) / Math.PI;
+              setHue((angle + 360) % 360);
+            });
+            sensor.start();
+            gyroAvailable = true;
+          } catch (error) {
+            // Gyroscope not available, fall back to mouse
+          }
+        }
+      }).catch(() => {
+        // Permissions API not available, fall back to mouse
+      });
     }
-    */
-
-    console.log("Setting up mouse handler, gyroAvailable:", gyroAvailable);
 
     // Mouse movement handler
     const handleMouseMove = (e: MouseEvent) => {
-      if (gyroAvailable) {
-        console.log("Skipping mouse because gyro is available");
-        return;
-      }
-
-      // Increment event counter for debugging
-      setEventCount((prev) => {
-        const newCount = prev + 1;
-        if (newCount % 10 === 0) { // Log every 10th event to avoid spam
-          console.log("Mouse event #", newCount, "at", e.clientX, e.clientY);
-        }
-        return newCount;
-      });
+      if (gyroAvailable) return;
 
       // Use window dimensions for full-screen tracking
       const centerX = window.innerWidth / 2;
@@ -87,18 +72,9 @@ const Hologram: React.FC = () => {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    console.log("Mouse event listener attached");
-    
-    // Test immediate mouse position
-    const testEvent = new MouseEvent('mousemove', {
-      clientX: window.innerWidth / 2 + 100,
-      clientY: window.innerHeight / 2
-    });
-    handleMouseMove(testEvent);
     
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      console.log("Mouse event listener removed");
     };
   }, [mounted]);
 
@@ -176,7 +152,7 @@ const Hologram: React.FC = () => {
                 <span
                   className="text-5xl font-bold relative z-10 drop-shadow-lg"
                   style={{
-                    background: `linear-gradient(${hue}deg, 
+                    backgroundImage: `linear-gradient(${hue}deg, 
                       hsl(${hue}, 90%, 80%) 0%, 
                       hsl(${(hue + 180) % 360}, 90%, 80%) 100%)`,
                     WebkitBackgroundClip: "text",
@@ -187,16 +163,6 @@ const Hologram: React.FC = () => {
                 >
                   OK
                 </span>
-
-                {/* Debug info */}
-                <div className="absolute bottom-0 left-0 text-xs text-white/80 bg-black/50 p-1 rounded">
-                  <div>X: {mousePos.x.toFixed(2)}</div>
-                  <div>Y: {mousePos.y.toFixed(2)}</div>
-                  <div>Hue: {hue.toFixed(0)}°</div>
-                  <div>RotX: {rotation.x.toFixed(1)}°</div>
-                  <div>RotY: {rotation.y.toFixed(1)}°</div>
-                  <div>Events: {eventCount}</div>
-                </div>
               </div>
             </div>
 
