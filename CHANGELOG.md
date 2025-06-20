@@ -19,6 +19,15 @@ DO include:
 - Performance improvements users will notice
 -->
 
+### June 20, 2025
+
+- Added Open Graph preview images directly on the sitemap page
+- Implemented alert banner for site-wide announcements
+- Created work-in-progress hologram effect
+- Fixed Open Graph URL resolution issues
+
+**Note: These updates are work in progress. The UI is currently ugly and will be significantly improved in upcoming releases.**
+
 ### June 19, 2025
 
 Implemented rich social media preview cards and improved navigation behavior.
