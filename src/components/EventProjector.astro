@@ -1,20 +1,98 @@
 ---
-import { getEvents } from "../data";
+import { Icon } from "astro-icon/components";
+import { resolveEvent } from "../data";
+import { formatDate, formatTime } from "../utils/formatDate";
+import { SITE } from "../config";
 import ProjectorLayout from "../layouts/ProjectorLayout.astro";
 import Fullscreen from "./Fullscreen";
+import VenueMap from "./VenueMap.astro";
 
-const { slug: eventId } = Astro.params;
+const event = await resolveEvent(Astro);
 
-const events = await getEvents();
-const currentIndex = events.findIndex((e) => e.id === eventId);
-const event = events[currentIndex];
-// TODO get people
+const formattedDate = formatDate(event.data.dateTime, "long");
+const formattedTime = formatTime(event.data.dateTime);
 ---
 
-<ProjectorLayout title={`📺 ${event.title}`}>
-  <div class="relative flex flex-col gap-4 bg-red-200 aspect-video w-full">
+<ProjectorLayout title={`${event.data.title} - ${SITE.shortName}`}>
+  <div
+    class="w-screen h-screen flex items-center justify-center relative bg-neutral"
+    data-theme="night"
+  >
     <Fullscreen client:load />
-    <div class="text-2xl font-bold">{event.title}</div>
-    <div class="text-sm text-gray-500">{event.dateTime}</div>
+    <div
+      class="w-full h-full max-w-[1920px] max-h-[1080px] aspect-video bg-gradient-to-br from-primary to-secondary p-16 text-base-100 projector-slide flex"
+    >
+      <!-- Left Column -->
+      <div class="flex-1 flex flex-col justify-between pr-8">
+        <!-- Top: Title and Description -->
+        <div class="flex flex-col gap-8">
+          <h1 class="text-3xl lg:text-6xl xl:text-7xl font-bold leading-tight line-clamp-3">
+            {event.data.title}
+          </h1>
+
+          {
+            event.data.topics && event.data.topics.length > 0 && (
+              <p class="text-2xl opacity-80 line-clamp-2">{event.data.topics.join(" • ")}</p>
+            )
+          }
+        </div>
+
+        <!-- Bottom: Date/Time -->
+        <div class="flex items-center gap-6">
+          <div
+            class="bg-base-100/20 rounded-box p-4 flex items-center justify-center flex-shrink-0"
+          >
+            <Icon name="lucide:calendar" size={24} class="text-base-100" />
+          </div>
+          <span class="text-2xl font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+            {formattedDate} • {formattedTime}
+            {
+              event.data.duration && (
+                <span class="opacity-70 text-xl"> ({event.data.duration / 60} hours)</span>
+              )
+            }
+          </span>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="w-[400px] flex-shrink-0 flex flex-col justify-between">
+        <!-- Top: Branding -->
+        <div class="flex flex-col text-right">
+          <h2 class="text-3xl font-bold m-0 whitespace-nowrap">{SITE.shortName}</h2>
+          <p class="text-lg opacity-80 m-0 whitespace-nowrap overflow-hidden text-ellipsis">
+            {SITE.longName}
+          </p>
+        </div>
+
+        <!-- Bottom: Map -->
+        {
+          event.venueSlug && (
+            <div class="w-[300px] self-end">
+              <div class="w-full h-[300px] rounded-box overflow-hidden shadow-2xl">
+                <VenueMap venueSlug={event.venueSlug} marker={event.venue?.title} />
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </div>
   </div>
+
+  <style>
+    /* Maintain aspect ratio */
+    @media (min-aspect-ratio: 16/9) {
+      .projector-slide {
+        height: 100vh;
+        width: calc(100vh * 16 / 9);
+      }
+    }
+
+    @media (max-aspect-ratio: 16/9) {
+      .projector-slide {
+        width: 100vw;
+        height: calc(100vw * 9 / 16);
+      }
+    }
+  </style>
 </ProjectorLayout>
