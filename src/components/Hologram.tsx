@@ -25,7 +25,9 @@ const Hologram: React.FC = () => {
     
     let gyroAvailable = false;
 
-    // Try to use gyroscope if available
+    // Try to use gyroscope if available (skip for now to test mouse)
+    // Commenting out gyroscope to ensure mouse events work
+    /*
     if ("Gyroscope" in window) {
       try {
         const sensor = new (window as any).Gyroscope({ frequency: 60 });
@@ -36,17 +38,30 @@ const Hologram: React.FC = () => {
         });
         sensor.start();
         gyroAvailable = true;
+        console.log("Gyroscope initialized");
       } catch (error) {
-        console.log("Gyroscope not available, using mouse instead");
+        console.log("Gyroscope error:", error);
       }
     }
+    */
+
+    console.log("Setting up mouse handler, gyroAvailable:", gyroAvailable);
 
     // Mouse movement handler
     const handleMouseMove = (e: MouseEvent) => {
-      if (gyroAvailable) return;
+      if (gyroAvailable) {
+        console.log("Skipping mouse because gyro is available");
+        return;
+      }
 
       // Increment event counter for debugging
-      setEventCount((prev) => prev + 1);
+      setEventCount((prev) => {
+        const newCount = prev + 1;
+        if (newCount % 10 === 0) { // Log every 10th event to avoid spam
+          console.log("Mouse event #", newCount, "at", e.clientX, e.clientY);
+        }
+        return newCount;
+      });
 
       // Use window dimensions for full-screen tracking
       const centerX = window.innerWidth / 2;
@@ -72,7 +87,19 @@ const Hologram: React.FC = () => {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    console.log("Mouse event listener attached");
+    
+    // Test immediate mouse position
+    const testEvent = new MouseEvent('mousemove', {
+      clientX: window.innerWidth / 2 + 100,
+      clientY: window.innerHeight / 2
+    });
+    handleMouseMove(testEvent);
+    
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      console.log("Mouse event listener removed");
+    };
   }, [mounted]);
 
   // Convert HSL to color stops for conic gradient
