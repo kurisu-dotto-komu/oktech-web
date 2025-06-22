@@ -8,6 +8,7 @@ coordinates:
   lng: 135.4917877
 meetupId: 22577042
 hasPage: true
+cover: ./knowledge-salon-logo.png
 url: 'https://kc-i.jp/facilities/business/knowledge-salon/'
 ---
 

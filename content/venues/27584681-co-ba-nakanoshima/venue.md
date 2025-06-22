@@ -8,6 +8,7 @@ coordinates:
   lng: 135.49329
 meetupId: 27584681
 hasPage: true
+cover: ./co-ba-logo.svg
 url: 'https://co-ba.net/nakanoshima/'
 ---
 

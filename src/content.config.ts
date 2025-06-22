@@ -143,6 +143,8 @@ const venues = defineCollection({
         frontmatter: Record<string, unknown>;
       };
 
+      const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);
+
       return {
         id: slug,
         title: frontmatter.title as string,
@@ -157,29 +159,32 @@ const venues = defineCollection({
         meetupId: frontmatter.meetupId as number,
         hasPage: frontmatter.hasPage as boolean | undefined,
         description: frontmatter.description as string | undefined,
+        cover,
       };
     });
   },
-  schema: z.object({
-    id: z.string(),
-    title: z.string(),
-    city: z.string().optional(),
-    country: z.string().optional(),
-    address: z.string().optional(),
-    state: z.string().optional(),
-    postalCode: z.string().optional(),
-    url: z.string().optional(),
-    gmaps: z.string().optional(),
-    coordinates: z
-      .object({
-        lat: z.number(),
-        lng: z.number(),
-      })
-      .optional(),
-    meetupId: z.number(),
-    hasPage: z.boolean().optional(),
-    description: z.string().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      city: z.string().optional(),
+      country: z.string().optional(),
+      address: z.string().optional(),
+      state: z.string().optional(),
+      postalCode: z.string().optional(),
+      url: z.string().optional(),
+      gmaps: z.string().optional(),
+      coordinates: z
+        .object({
+          lat: z.number(),
+          lng: z.number(),
+        })
+        .optional(),
+      meetupId: z.number(),
+      hasPage: z.boolean().optional(),
+      description: z.string().optional(),
+      cover: image().optional(),
+    }),
 });
 
 export const collections = { events, eventGalleryImage, people, venues };
