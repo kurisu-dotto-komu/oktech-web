@@ -1,4 +1,5 @@
 import { getEvents, POSSIBLE_ROLES, getPeople, getVenues } from "../data";
+import { resolveFullUrl } from "./urlResolver";
 
 /**
  * Generate all event route paths for different views and filters
@@ -63,55 +64,46 @@ export async function generateEventRoutePaths() {
 export const STATIC_ROUTES = ["/", "/about", "/events", "/community", "/sitemap"] as const;
 
 /**
- * Generate a list of absolute or relative URLs used in sitemaps.
+ * Generate a list of absolute URLs used in sitemaps.
+ * Uses resolveFullUrl to ensure consistent URL generation.
  *
- * @param base Optional prefix (e.g. "https://example.com/"). Leave empty (default) to
- *             return relative paths starting with "/".
  * @returns Array of URL strings.
  */
-export async function generateSitemapURLs(base = ""): Promise<string[]> {
-  // Normalise base – ensure empty or ends with single slash.
-  const prefix = base === "" ? "" : base.replace(/\/?$/, "/");
-
+export async function generateSitemapURLs(): Promise<string[]> {
   const urls: string[] = [];
 
   // Static pages (excluding /events since it's handled below)
   const staticRoutesWithoutEvents = STATIC_ROUTES.filter(route => route !== "/events");
-  urls.push(...staticRoutesWithoutEvents.map((route) => toUrl(prefix, route)));
+  urls.push(...staticRoutesWithoutEvents.map((route) => resolveFullUrl(route)));
 
   // Community role filter pages
   POSSIBLE_ROLES.forEach((role) => {
-    urls.push(toUrl(prefix, `/community/${role}`));
+    urls.push(resolveFullUrl(`/community/${role}`));
   });
 
   // All event route variations (views and filters)
   const { paths: eventPaths } = await generateEventRoutePaths();
   eventPaths.forEach(path => {
-    urls.push(toUrl(prefix, path));
+    urls.push(resolveFullUrl(path));
   });
 
   // Individual event pages
   const events = await getEvents();
   events.forEach(({ id }) => {
-    urls.push(toUrl(prefix, `/event/${id}`));
+    urls.push(resolveFullUrl(`/event/${id}`));
   });
 
   // Person pages
   const people = await getPeople();
   people.forEach(({ id }) => {
-    urls.push(toUrl(prefix, `/person/${id}`));
+    urls.push(resolveFullUrl(`/person/${id}`));
   });
 
   // Venue pages
   const venues = await getVenues();
   venues.forEach(({ id }) => {
-    urls.push(toUrl(prefix, `/venue/${id}`));
+    urls.push(resolveFullUrl(`/venue/${id}`));
   });
 
   return urls;
-}
-
-function toUrl(prefix: string, path: string) {
-  if (prefix === "") return path;
-  return `${prefix}${path.replace(/^\//, "")}`;
 }
