@@ -8,6 +8,7 @@ coordinates:
   lng: 135.49004
 meetupId: 25620385
 hasPage: true
+cover: ./galleria-logo.jpg
 url: 'https://galleriapizza.jp/'
 ---
 
