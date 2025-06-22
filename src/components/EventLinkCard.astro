@@ -1,0 +1,63 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  link: {
+    type: string;
+    title: string;
+    description?: string;
+    url: string;
+  };
+}
+
+const { link } = Astro.props;
+
+// Map link types to icons
+const iconMap: Record<string, string> = {
+  github: "cib:github",
+  twitter: "cib:twitter",
+  linkedin: "cib:linkedin",
+  youtube: "cib:youtube",
+  website: "lucide:globe",
+  documentation: "lucide:book-open",
+  slides: "lucide:presentation",
+  video: "lucide:video",
+  blog: "lucide:pen-tool",
+  resource: "lucide:file-text",
+  download: "lucide:download",
+  demo: "lucide:play-circle",
+  repository: "lucide:git-branch",
+  tutorial: "lucide:graduation-cap",
+  article: "lucide:newspaper",
+  podcast: "lucide:mic",
+  discord: "cib:discord",
+  slack: "cib:slack",
+  default: "lucide:link",
+};
+
+// Get the appropriate icon for the link type
+const getIcon = (type: string) => {
+  return iconMap[type.toLowerCase()] || iconMap.default;
+};
+---
+
+<a
+  href={link.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow"
+>
+  <div class="card-body">
+    <div class="flex items-start gap-4">
+      <div class="text-primary">
+        <Icon name={getIcon(link.type)} size={32} />
+      </div>
+      <div class="flex-1">
+        <h3 class="card-title text-lg">{link.title}</h3>
+        {link.description && (
+          <p class="text-base-content/70 mt-2">{link.description}</p>
+        )}
+      </div>
+    </div>
+  </div>
+</a>
