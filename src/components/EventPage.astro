@@ -6,6 +6,7 @@ import EventDetails from "./EventDetails.astro";
 import EventGallery from "./EventGallery.astro";
 import EventNav from "./EventNav.astro";
 import EventPeople from "./EventPeople.astro";
+import EventLinks from "./EventLinks.astro";
 import StickyNavigation from "./StickyNavigation.astro";
 
 const event = await resolveEvent(Astro);
@@ -32,6 +33,7 @@ const ogImageParams = {
     <EventDetails />
   </Section>
   <EventPeople />
+  <EventLinks />
   <EventGallery />
   <Section>
     <EventNav class="event-navigation" />
