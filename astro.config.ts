@@ -51,11 +51,18 @@ export default defineConfig({
     discord: "https://discord.com/invite/k8xj8d75f6",
   },
   experimental: {
-    responsiveImages: true,
     clientPrerender: true,
+    contentIntellisense: true,
   },
   prefetch: {
-    prefetchAll: true, // TODO disable in dev mode
+    prefetchAll: !isDev, // enabled in prod
     defaultStrategy: "viewport",
+  },
+  image: {
+    // layout: "constrained",
+    // objectFit: "contain",
+    // objectPosition: "center",
+    // breakpoints: [640, 750, 828, 1080, 1280],
+    responsiveStyles: true,
   },
 });
