@@ -1,6 +1,5 @@
 ---
 import { resolveInternalHref } from "../utils/urlResolver";
-// Link.astro: A drop-in replacement for <a> that prepends Astro.base to internal links
 const { href = "", ...props } = Astro.props;
 const finalHref = resolveInternalHref(href);
 ---

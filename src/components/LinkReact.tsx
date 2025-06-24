@@ -5,10 +5,6 @@ export interface LinkReactProps extends React.AnchorHTMLAttributes<HTMLAnchorEle
   href: string;
 }
 
-/**
- * React equivalent of `Link.astro`. Prepends `import.meta.env.BASE_URL` to
- * internal links and filters out duplicate slashes.
- */
 const LinkReact = React.forwardRef<HTMLAnchorElement, LinkReactProps>(
   ({ href, children, ...rest }, ref) => {
     const finalHref = resolveInternalHref(href);
