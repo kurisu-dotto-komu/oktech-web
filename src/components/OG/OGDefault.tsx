@@ -1,4 +1,4 @@
-import { SITE } from "../../config";
+import { SITE } from "@/config";
 import OGLayout from "./OGLayout";
 
 export default function OGDefault() {

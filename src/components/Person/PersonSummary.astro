@@ -1,13 +1,14 @@
 ---
 import { type Person } from "@/data";
-import Link from "@/components/Link.astro";
+import Link from "@/components/Common/Link.astro";
 import PersonImage from "./PersonImage.astro";
 
 interface Props {
   person: Person;
+  showRoles?: boolean;
 }
 
-const { person } = Astro.props;
+const { person, showRoles = false } = Astro.props;
 ---
 
 <Link

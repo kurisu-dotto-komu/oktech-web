@@ -1,4 +1,4 @@
-import { SITE } from "../../config";
+import { SITE } from "@/config";
 import OGLayout, { LocationIcon } from "./OGLayout";
 
 interface VenueData {

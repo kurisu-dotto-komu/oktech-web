@@ -1,0 +1,26 @@
+---
+import { Icon } from "astro-icon/components";
+import { type Role, ROLE_CONFIGS } from "@/data";
+
+interface Props {
+  role: Role;
+  compact?: boolean;
+}
+
+const { role, compact = false } = Astro.props;
+
+const config = ROLE_CONFIGS[role];
+
+if (!config) {
+  throw new Error(`Role ${role} not found`);
+}
+---
+
+<div
+  class={`badge ${config.color} ${compact ? "join-item w-7 h-7 px-1 tooltip opacity-70 hover:opacity-100 transition-all duration-100" : "badge-lg gap-2"}`}
+  data-tip={compact ? role : null}
+  data-theme="light"
+>
+  <Icon name={config.icon} size={compact ? 16 : 20} />
+  {!compact && config.label}
+</div>

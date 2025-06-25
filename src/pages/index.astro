@@ -1,15 +1,15 @@
 ---
-import Section from "../components/Section.astro";
-import Hero from "../components/Hero.astro";
+import Section from "../components/Common/Section.astro";
+import Hero from "../components/Landing/Hero.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import { getEvents } from "../data";
-import EventSummary from "../components/EventSummary.astro";
-import LandingStats from "../components/LandingStats.astro";
-import EventsUpcoming from "../components/EventsUpcoming.astro";
-import ImagePlaceholder from "../components/ImagePlaceholder.astro";
+import EventSummary from "../components/Event/EventSummary.astro";
+import LandingStats from "../components/Landing/LandingStats.astro";
+import EventsUpcoming from "../components/Events/EventsUpcoming.astro";
+import ImagePlaceholder from "../components/Common/ImagePlaceholder.astro";
 import PersonAvatars from "../components/Person/PersonAvatars.astro";
-import Hologram from "../components/Hologram.tsx";
-import Banner from "../components/Banner.astro";
+import Hologram from "../components/Common/Hologram.tsx";
+import Banner from "../components/Common/Banner.astro";
 const events = await getEvents();
 ---
 

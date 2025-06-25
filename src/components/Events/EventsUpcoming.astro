@@ -1,0 +1,19 @@
+---
+import Countdown from "@/components/Common/Countdown.tsx";
+import EventFeatured from "@/components/Event/EventFeatured.astro";
+import { getEvents } from "@/data";
+const events = await getEvents();
+const futureEvents = events.filter((event) => event.data.dateTime > new Date()).reverse();
+const [nextEvent, ...otherFutureEvents] = futureEvents;
+const countdownDate = new Date(nextEvent.data.dateTime);
+---
+
+<div class="flex flex-col gap-12">
+  <div
+    class="flex flex-wrap justify-center items-center gap-6 bg-base-100 rounded-xl mx-auto py-6 px-8 shadow-lg"
+  >
+    <div class="text-lg">Next event starts in</div>
+    <Countdown client:load targetDate={countdownDate} />
+  </div>
+  {futureEvents.map(({ data: { id } }) => <EventFeatured eventSlug={id} />)}
+</div>

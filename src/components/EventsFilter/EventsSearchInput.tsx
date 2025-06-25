@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, type ChangeEvent } from "react";
 import { useEventsFilter } from "./EventsFilterProvider";
 
-export const EventsSearchInput: React.FC = () => {
+export default function EventsSearchInput() {
   const { currentFilters, updateFilter, clearFilter } = useEventsFilter();
   const [localValue, setLocalValue] = useState(currentFilters.search);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
@@ -11,7 +11,7 @@ export const EventsSearchInput: React.FC = () => {
   }, [currentFilters.search]);
 
   const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setLocalValue(value);
 
@@ -89,4 +89,4 @@ export const EventsSearchInput: React.FC = () => {
       </label>
     </div>
   );
-};
+}

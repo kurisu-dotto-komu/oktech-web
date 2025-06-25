@@ -13,7 +13,7 @@ interface EventsFilterBridgeProps {
   useClientUrlParams?: boolean; // Flag to use client-side URL params
 }
 
-export const EventsFilterBridge: React.FC<EventsFilterBridgeProps> = (props) => {
+export default function EventsFilterBridge(props: EventsFilterBridgeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleFiltersChange = (filters: any, filteredItems: any[]) => {
@@ -84,6 +84,4 @@ export const EventsFilterBridge: React.FC<EventsFilterBridgeProps> = (props) => 
       <EventsFilter {...props} onFiltersChange={handleFiltersChange} />
     </div>
   );
-};
-
-export default EventsFilterBridge;
+}

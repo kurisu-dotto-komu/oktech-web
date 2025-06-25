@@ -1,0 +1,78 @@
+---
+import { Icon } from "astro-icon/components";
+import { resolveEvent } from "@/data";
+import { formatDate, formatTime } from "@/utils/formatDate";
+import VenueMap from "@/components/Venue/VenueMap.astro";
+import Link from "@/components/Common/Link.astro";
+import EventCity from "./EventCity.astro";
+
+const event = await resolveEvent(Astro);
+
+// Format the date and time range similar to Meetup.com
+const eventDate = new Date(event.data.dateTime);
+const fullDate = formatDate(eventDate, "long");
+
+// Calculate end time using duration (in minutes)
+const startTime = formatTime(eventDate);
+let timeRange = startTime;
+
+if (event.data.duration) {
+  const endDate = new Date(eventDate.getTime() + event.data.duration * 60000);
+  const endTime = formatTime(endDate);
+  timeRange = `${startTime} to ${endTime} JST`;
+}
+---
+
+<div class="bg-base-100 rounded-lg overflow-hidden">
+  <!-- Date and Time Section -->
+  <div class="p-6 space-y-4">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 mt-1">
+        <Icon name="lucide:clock" class="w-6 h-6 text-primary" />
+      </div>
+      <div class="flex flex-col">
+        <span class="text-lg font-semibold text-base-content">{fullDate}</span>
+        <span class="text-base-content/70 mt-1">{timeRange}</span>
+      </div>
+    </div>
+
+    {
+      event.venue && (
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <Icon name="lucide:map-pin" class="w-6 h-6 text-primary" />
+          </div>
+          <div class="flex flex-col">
+            {event.venue.hasPage ? (
+              <Link
+                href={`/venue/${event.venueSlug}`}
+                class="text-lg underline font-semibold text-base-content hover:text-primary transition-colors"
+              >
+                {event.venue.title}
+              </Link>
+            ) : (
+              <span class="text-lg font-semibold text-base-content">{event.venue.title}</span>
+            )}
+            {event.venue.address && (
+              <span class="text-base-content/70 mt-1">{event.venue.address}</span>
+            )}
+          </div>
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Map Section -->
+  {
+    event.venueSlug && (
+      <div class="w-full aspect-video relative">
+        <VenueMap venueSlug={event.venueSlug} marker={event.venue?.title} link={true} />
+        {event.venue?.city && (
+          <div class="absolute bottom-2 right-2">
+            <EventCity city={event.venue.city} />
+          </div>
+        )}
+      </div>
+    )
+  }
+</div>

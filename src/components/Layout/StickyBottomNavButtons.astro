@@ -1,0 +1,56 @@
+---
+import StickyBottomNavButton from "./StickyBottomNavButton.astro";
+import Link from "@/components/Common/Link.astro";
+import { Icon } from "astro-icon/components";
+
+interface NavigationItem {
+  href: string;
+  title: string;
+  subtitle?: string;
+  image?: ImageMetadata;
+}
+
+interface Props {
+  prevItem?: NavigationItem;
+  nextItem?: NavigationItem;
+  backButton?: {
+    href: string;
+    icon: string;
+    text: string;
+  };
+  class?: string;
+}
+
+const { prevItem, nextItem, backButton, class: className } = Astro.props;
+---
+
+<div class={`flex gap-4 w-full py-2 ${className || ""}`}>
+  {
+    prevItem && (
+      <div class="flex-1 ">
+        <StickyBottomNavButton {...prevItem} />
+      </div>
+    )
+  }
+  {
+    backButton && (
+      <div class="bg-blue-200 flex-0">
+        <Link
+          href={backButton.href}
+          class="btn btn-neutral flex items-center justify-center h-full whitespace-nowrap"
+          title={backButton.text}
+        >
+          <Icon name={backButton.icon} size={20} />
+          <span class="ml-2 hidden sm:inline">{backButton.text}</span>
+        </Link>
+      </div>
+    )
+  }
+  {
+    nextItem && (
+      <div class="text-end flex-1">
+        <StickyBottomNavButton {...nextItem} next />
+      </div>
+    )
+  }
+</div>

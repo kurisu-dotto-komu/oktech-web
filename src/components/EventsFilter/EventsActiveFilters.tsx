@@ -1,6 +1,6 @@
 import { useEventsFilter } from "./EventsFilterProvider";
 
-export const EventsActiveFilters: React.FC = () => {
+export default function EventsActiveFilters() {
   const { currentFilters, removeFilterValue, clearAllFilters } = useEventsFilter();
 
   const hasActiveFilters =
@@ -48,7 +48,7 @@ export const EventsActiveFilters: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 interface FilterBadgeProps {
   type: string;
@@ -56,7 +56,7 @@ interface FilterBadgeProps {
   onRemove: () => void;
 }
 
-const FilterBadge: React.FC<FilterBadgeProps> = ({ type, value, onRemove }) => {
+function FilterBadge({ type, value, onRemove }: FilterBadgeProps) {
   return (
     <div className="badge badge-primary gap-1">
       <span>
@@ -72,4 +72,4 @@ const FilterBadge: React.FC<FilterBadgeProps> = ({ type, value, onRemove }) => {
       </button>
     </div>
   );
-};
+}

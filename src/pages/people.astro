@@ -3,9 +3,9 @@ import PageLayout from "../layouts/PageLayout.astro";
 import { getPeople } from "../data";
 import PersonSummary from "../components/Person/PersonSummary.astro";
 import PersonCompact from "../components/Person/PersonCompact.astro";
-import Grid from "../components/Grid.astro";
-import Section from "../components/Section.astro";
-import Link from "../components/Link.astro";
+import Grid from "../components/Common/Grid.astro";
+import Section from "../components/Common/Section.astro";
+import Link from "../components/Common/Link.astro";
 
 // Get all people and sort by name
 const allPeople = await getPeople();

@@ -1,0 +1,37 @@
+---
+import Section from "@/components/Common/Section.astro";
+import { resolveEvent } from "@/data";
+import EventLinkCard from "./EventLinkCard.astro";
+import fs from "fs/promises";
+import path from "path";
+import yaml from "yaml";
+
+interface Link {
+  type: string;
+  title: string;
+  description?: string;
+  url: string;
+}
+
+const event = await resolveEvent(Astro);
+
+// Check if links.yaml exists for this event
+let links: Link[] = [];
+try {
+  const linksPath = path.join(process.cwd(), "content", "events", event.id, "links.yaml");
+  const linksContent = await fs.readFile(linksPath, "utf-8");
+  links = yaml.parse(linksContent) as Link[];
+} catch (error) {
+  // No links.yaml file found for this event
+}
+---
+
+{
+  links.length > 0 && (
+    <Section grid title="Links">
+      {links.map((link) => (
+        <EventLinkCard link={link} />
+      ))}
+    </Section>
+  )
+}

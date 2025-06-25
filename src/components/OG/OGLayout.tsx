@@ -1,9 +1,10 @@
-import { SITE } from "../../config";
+import type { ReactNode } from "react";
+import { SITE } from "@/config";
 
 interface OGLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   gradient?: string;
-  bottomLeft?: React.ReactNode;
+  bottomLeft?: ReactNode;
 }
 
 export default function OGLayout({
@@ -107,7 +108,7 @@ export const LocationIcon = ({ size = 20, fill = false }: { size?: number; fill?
   </svg>
 );
 
-export const IconWrapper = ({ children }: { children: React.ReactNode }) => (
+export const IconWrapper = ({ children }: { children: ReactNode }) => (
   <div
     style={{
       width: "40px",
