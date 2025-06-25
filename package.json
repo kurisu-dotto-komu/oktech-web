@@ -7,6 +7,7 @@
     "build": "astro build",
     "preview": "astro preview --host",
     "astro": "astro",
+    "typecheck": "astro check",
     "format": "prettier --write .",
     "import": "npx tsx ./scripts/import-data",
     "import:overwrite-maps": "npx tsx ./scripts/import-data --overwrite-maps",
@@ -16,6 +17,7 @@
     "og-cache:stats": "npx tsx scripts/manage-og-cache.ts stats"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.3.0",
     "@astrojs/rss": "^4.0.12",
     "@resvg/resvg-js": "^2.6.2",
@@ -37,6 +39,7 @@
     "slugify": "^1.6.6",
     "tailwindcss": "^4.1.10",
     "theme-change": "^2.5.0",
+    "typescript": "^5.8.3",
     "yaml": "^2.8.0"
   },
   "devDependencies": {
