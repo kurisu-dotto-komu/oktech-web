@@ -4,3 +4,7 @@
 - never make git commands like commits unless i explicitly instruct you to
 - for internal links, use the Link and LinkReact components as they do prefixing
 - never use --headed mode for playwright tests, always use the default headless option
+- you can use use `npm run typecheck` to confirm there aren't any import issues if you have recently edited components, feel free to do this frequently as it's cheap
+- you can use `npm run test` to make sure everything's working during development, but only do this sparingly as it's quite expensive
+- you can use `npm run test:build` to double check things are working after making a big change, use very rarely
+- the build step might take a long time, so don't timeout early

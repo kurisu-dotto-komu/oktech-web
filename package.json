@@ -15,7 +15,9 @@
     "og-cache:clear": "npx tsx scripts/manage-og-cache.ts clear",
     "og-cache:stats": "npx tsx scripts/manage-og-cache.ts stats",
     "test:install": "./.devcontainer/installPlaywright.sh",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:build": "npm run build && TEST_BUILD=true playwright test",
+    "test:build:fast": "TEST_BUILD=true playwright test"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
