@@ -1,12 +1,12 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import Section from "./Section.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Section from "../Section.astro";
 import PersonDetails from "./PersonDetails.astro";
 import PersonNav from "./PersonNav.astro";
-import EventFeatured from "./EventFeatured.astro";
-import StickyNavigation from "./StickyNavigation.astro";
+import EventFeatured from "../EventFeatured.astro";
+import StickyNavigation from "../StickyNavigation.astro";
 
-import { getEvents, resolvePerson } from "../data";
+import { getEvents, resolvePerson } from "../../data";
 
 const person = await resolvePerson(Astro);
 

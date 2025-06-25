@@ -1,6 +1,6 @@
 ---
 title: Summer night with cool design and tech.
-dateTime: '2016-07-30 18:00'
+dateTime: "2016-07-30 18:00"
 cover: ./506739.webp
 meetupId: 232528649
 group: 15632202
@@ -17,10 +17,10 @@ To wrap it up, we shall be having a beer at the local Izakaiya for more get-toge
 
 Program
 
-* Resilient Design by Jake
+- Resilient Design by Jake
 
-* Continuous Integration (CI) by Ben
+- Continuous Integration (CI) by Ben
 
-* OpenStreetMap by Daniel
+- OpenStreetMap by Daniel
 
-* Asking the elders Q&A with Victor
+- Asking the elders Q&A with Victor

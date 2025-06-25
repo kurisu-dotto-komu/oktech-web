@@ -19,11 +19,11 @@ import { generateStaticMap } from "./maps";
 
 /**
  * IMPORTANT: Content Preservation Behavior
- * 
+ *
  * Events: Descriptions are imported from the data source and will overwrite existing content
  * Venues: Markdown body content is preserved - only frontmatter is updated
  * Members: Not handled by this import script - managed manually
- * 
+ *
  * This allows venue descriptions to be manually edited without being overwritten
  */
 
@@ -210,7 +210,7 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
   // IMPORTANT: This function preserves existing markdown body content in venue files
   // Only the frontmatter is updated during import - any manually written descriptions
   // in the markdown body will be preserved
-  
+
   // Try to slugify the name first, fall back to address if name produces empty slug
   const nameSlug = slugify(venue.name, { lower: true, strict: true });
   const slugSuffix = nameSlug || slugify(venue.address, { lower: true, strict: true }) || "venue";
@@ -312,14 +312,14 @@ async function processVenue(venue: Venue, overwriteMaps: boolean = false): Promi
     // Read existing file to preserve the markdown body content
     const existing = matter.read(mdPath);
     const existingContent = existing.content.trim();
-    
+
     // Merge frontmatter, keeping existing values that aren't in newFrontmatter
     const merged = { ...existing.data, ...newFrontmatter };
 
     // Preserve the existing markdown body content
-    const content = matter.stringify(existingContent ? `\n${existingContent}` : '\n', merged);
+    const content = matter.stringify(existingContent ? `\n${existingContent}` : "\n", merged);
     const currentFileContent = await fs.readFile(mdPath, "utf-8");
-    
+
     if (content !== currentFileContent) {
       await fs.writeFile(mdPath, content);
       logger.info(`Updated venue markdown → ${mdPath}`);

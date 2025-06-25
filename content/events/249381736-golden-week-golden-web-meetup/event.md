@@ -1,6 +1,6 @@
 ---
-title: 'Golden Week Golden Web Meetup '
-dateTime: '2018-04-28 18:00'
+title: "Golden Week Golden Web Meetup "
+dateTime: "2018-04-28 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 249381736

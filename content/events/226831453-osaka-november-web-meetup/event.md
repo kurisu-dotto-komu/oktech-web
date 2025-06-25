@@ -1,6 +1,6 @@
 ---
 title: Osaka November Web Meetup
-dateTime: '2015-11-28 16:00'
+dateTime: "2015-11-28 16:00"
 cover: ./506739.webp
 meetupId: 226831453
 group: 15632202

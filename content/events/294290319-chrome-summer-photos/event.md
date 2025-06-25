@@ -1,6 +1,6 @@
 ---
 title: Chrome Summer Photos
-dateTime: '2023-07-22 17:00'
+dateTime: "2023-07-22 17:00"
 duration: 150
 cover: ./196039.webp
 topics:
@@ -18,9 +18,9 @@ Hello awesome people! 🤩
 
 Summer is upon us and we plan to hide away over the roofs of Osaka for a nice summer meeting.
 
-For our first presentation, *Gregory* will be looking into the anti-chrome, specifically: Rust. In his presentation on the "**State of Rust for Web Development",** we will get a glimpse on how it is to use Rust (the programming language) both for the Frontend, the Backend and other stuff in between.
+For our first presentation, _Gregory_ will be looking into the anti-chrome, specifically: Rust. In his presentation on the "**State of Rust for Web Development",** we will get a glimpse on how it is to use Rust (the programming language) both for the Frontend, the Backend and other stuff in between.
 
-After that, *Andrey* will be introducing us to [Imgproxy](https://github.com/imgproxy/imgproxy) and share with us how to **handle user-uploaded images with ease and confidence**. There are a lot of things to do with user images such as create previews *(or thumbnails)* of different sizes, add watermarks, crop to aspect ratio and so on and so forth. Andrey will look at what the challenges are and how imgproxy solves them.
+After that, _Andrey_ will be introducing us to [Imgproxy](https://github.com/imgproxy/imgproxy) and share with us how to **handle user-uploaded images with ease and confidence**. There are a lot of things to do with user images such as create previews _(or thumbnails)_ of different sizes, add watermarks, crop to aspect ratio and so on and so forth. Andrey will look at what the challenges are and how imgproxy solves them.
 
 We are looking forward to see you. 😍
 

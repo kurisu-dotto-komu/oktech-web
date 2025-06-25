@@ -1,6 +1,6 @@
 ---
-title: 'Presentations, Discussions and Connections'
-dateTime: '2014-09-20 18:00'
+title: "Presentations, Discussions and Connections"
+dateTime: "2014-09-20 18:00"
 cover: ./506739.webp
 meetupId: 207109452
 group: 15632202

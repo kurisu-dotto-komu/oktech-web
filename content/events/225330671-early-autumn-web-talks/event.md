@@ -1,6 +1,6 @@
 ---
 title: Early autumn web talks
-dateTime: '2015-09-26 18:00'
+dateTime: "2015-09-26 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 225330671

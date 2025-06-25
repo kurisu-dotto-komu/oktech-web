@@ -1,6 +1,6 @@
 ---
 title: May Meetup
-dateTime: '2016-05-28 18:00'
+dateTime: "2016-05-28 18:00"
 cover: ./506739.webp
 meetupId: 230897726
 group: 15632202

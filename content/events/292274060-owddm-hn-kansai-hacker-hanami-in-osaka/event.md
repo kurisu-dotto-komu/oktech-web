@@ -1,6 +1,6 @@
 ---
 title: OWDDM × HN Kansai - Hacker Hanami in Osaka
-dateTime: '2023-04-01 12:00'
+dateTime: "2023-04-01 12:00"
 duration: 420
 cover: ./334029.webp
 topics:
@@ -23,6 +23,6 @@ Our friends at [HNKansai](https://www.meetup.com/hacker-news-kansai/events/29227
 
 We plan to start around noon and will be there until evening. Of course you are free to join/leave as it suits you ☺️
 
-*Note:* We are a group of grown-ups but some of us have kids and we want to welcome them and their families at the meetup too!
+_Note:_ We are a group of grown-ups but some of us have kids and we want to welcome them and their families at the meetup too!
 
 If you have any questions are want to connect on other ways, please [join us in the discord](https://owddm.com/discord).

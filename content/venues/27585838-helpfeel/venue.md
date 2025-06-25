@@ -1,7 +1,7 @@
 ---
 title: 株式会社Helpfeel
 city: kyoto
-address: 'Kamigyo Ward, Goshohachimanchō, １１０−１６ かわもとビル 5F'
+address: "Kamigyo Ward, Goshohachimanchō, １１０−１６ かわもとビル 5F"
 coordinates:
   lat: 35.030567
   lng: 135.75914

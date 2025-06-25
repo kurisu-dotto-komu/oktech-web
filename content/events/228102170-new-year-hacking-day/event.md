@@ -1,6 +1,6 @@
 ---
 title: New Year Hacking Day!
-dateTime: '2016-01-23 12:30'
+dateTime: "2016-01-23 12:30"
 duration: 360
 cover: ./506739.webp
 meetupId: 228102170

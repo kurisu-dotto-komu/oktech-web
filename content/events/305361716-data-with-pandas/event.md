@@ -1,6 +1,6 @@
 ---
 title: Data with Pandas
-dateTime: '2025-01-11 17:00'
+dateTime: "2025-01-11 17:00"
 duration: 120
 cover: ./481747.webp
 topics:

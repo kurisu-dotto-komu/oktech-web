@@ -1,6 +1,6 @@
 ---
 title: Web-Stories in the Park
-dateTime: '2022-07-09 15:00'
+dateTime: "2022-07-09 15:00"
 duration: 120
 cover: ./734800.webp
 topics:
@@ -24,14 +24,14 @@ To make it collaborative, we hope that everyone who joins can prepare a short st
 
 The format is as follows:
 
-* There has to be a connection to web development, but it can be about any part of it: SEO, money, workfow, customers, code, ux issues, bosses... 😲
-* You have 5\~10 minutes.
-* It has to have happened, but it is okay if it didn't happen to you.
-* There has to be a punch line. (A thing that you ...learned/received/changed/etc. ... because of it.)
+- There has to be a connection to web development, but it can be about any part of it: SEO, money, workfow, customers, code, ux issues, bosses... 😲
+- You have 5\~10 minutes.
+- It has to have happened, but it is okay if it didn't happen to you.
+- There has to be a punch line. (A thing that you ...learned/received/changed/etc. ... because of it.)
 
 A sneak peak for one story:
 
-> A long time ago, I was working on this website that needed to go online exactly at the time when a TV segment aired and not before. I was a front-end developer at the time and we didn't have a back-ender to help us out. The server hosting was arranged beforehand and it didn't support any server side scripting but was just a simple Apache server. What to do? I figured it would be best to... *(to be continued)*
+> A long time ago, I was working on this website that needed to go online exactly at the time when a TV segment aired and not before. I was a front-end developer at the time and we didn't have a back-ender to help us out. The server hosting was arranged beforehand and it didn't support any server side scripting but was just a simple Apache server. What to do? I figured it would be best to... _(to be continued)_
 
 Intrigued? 😉 Awesome!
 

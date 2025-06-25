@@ -1,6 +1,6 @@
 ---
 title: Hello World - Meet & Greet at Space Kante
-dateTime: '2022-07-16 15:00'
+dateTime: "2022-07-16 15:00"
 duration: 120
 cover: ./516520.webp
 topics:

@@ -1,6 +1,6 @@
 ---
 title: Hiding from the heat (Login UX & Live Coding)
-dateTime: '2022-07-23 17:00'
+dateTime: "2022-07-23 17:00"
 duration: 120
 cover: ./704122.webp
 topics:

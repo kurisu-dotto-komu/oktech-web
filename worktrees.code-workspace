@@ -1,163 +1,163 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../tmp/worktrees"
-		}
-	],
-	"settings": {},
-	"tasks": {
-		"version": "2.0.0",
-		"tasks": [
-			{
-				"label": "Main 1",
-				"type": "shell",
-				"icon": {
-					"id": "home",
-					"color": "terminal.ansiBlue"
-				},
-				"isBackground": true,
-				"options": {
-					"cwd": "${workspaceFolder}"
-				},
-				"runOptions": {
-					"runOn": "folderOpen"
-				},
-				"command": "/usr/bin/bash",
-				"presentation": {
-					"echo": false,
-					"focus": true,
-					"panel": "dedicated",
-					"group": "main"
-				}
-			},
-			{
-				"label": "Main 2",
-				"type": "shell",
-				"icon": {
-					"id": "home",
-					"color": "terminal.ansiBlue"
-				},
-				"isBackground": true,
-				"options": {
-					"cwd": "${workspaceFolder}"
-				},
-				"runOptions": {
-					"runOn": "folderOpen"
-				},
-				"command": "/usr/bin/bash",
-				"presentation": {
-					"echo": false,
-					"focus": false,
-					"panel": "dedicated",
-					"group": "main"
-				}
-			},
-			{
-				"label": "Claude Agent 1",
-				"type": "shell",
-				"icon": {
-					"id": "robot",
-					"color": "terminal.ansiMagenta"
-				},
-				"isBackground": true,
-				"options": {
-					"cwd": "/tmp/worktrees/agent1"
-				},
-				"runOptions": {
-					"runOn": "folderOpen"
-				},
-				"command": "/usr/bin/bash",
-				"presentation": {
-					"echo": false,
-					"focus": false,
-					"panel": "dedicated",
-					"group": "agents"
-				}
-			},
-			{
-				"label": "Claude Agent 2",
-				"type": "shell",
-				"icon": {
-					"id": "robot",
-					"color": "terminal.ansiMagenta"
-				},
-				"isBackground": true,
-				"options": {
-					"cwd": "/tmp/worktrees/agent2"
-				},
-				"runOptions": {
-					"runOn": "folderOpen"
-				},
-				"command": "/usr/bin/bash",
-				"presentation": {
-					"echo": false,
-					"focus": false,
-					"panel": "dedicated",
-					"group": "agents"
-				}
-			},
-			{
-				"label": "Server Agent 1",
-				"type": "shell",
-				"icon": {
-					"id": "server",
-					"color": "terminal.ansiGreen"
-				},
-				"isBackground": true,
-				"options": {
-					"cwd": "/tmp/worktrees/agent1"
-				},
-				"runOptions": {
-					"runOn": "folderOpen"
-				},
-				"command": "/usr/bin/bash",
-				"presentation": {
-					"echo": false,
-					"focus": false,
-					"panel": "dedicated",
-					"group": "servers"
-				}
-			},
-			{
-				"label": "Server Agent 2",
-				"type": "shell",
-				"icon": {
-					"id": "server",
-					"color": "terminal.ansiGreen"
-				},
-				"isBackground": true,
-				"options": {
-					"cwd": "/tmp/worktrees/agent2"
-				},
-				"runOptions": {
-					"runOn": "folderOpen"
-				},
-				"command": "/usr/bin/bash",
-				"presentation": {
-					"echo": false,
-					"focus": false,
-					"panel": "dedicated",
-					"group": "servers"
-				}
-			},
-			{
-				"label": "Open All Terminals",
-				"dependsOn": [
-					"Main 1",
-					"Main 2",
-					"Claude Agent 1",
-					"Claude Agent 2",
-					"Server Agent 1",
-					"Server Agent 2"
-				],
-				"runOptions": {
-					"runOn": "folderOpen"
-				},
-				"problemMatcher": []
-			}
-		]
-	}
+  "folders": [
+    {
+      "path": ".",
+    },
+    {
+      "path": "../../tmp/worktrees",
+    },
+  ],
+  "settings": {},
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Main 1",
+        "type": "shell",
+        "icon": {
+          "id": "home",
+          "color": "terminal.ansiBlue",
+        },
+        "isBackground": true,
+        "options": {
+          "cwd": "${workspaceFolder}",
+        },
+        "runOptions": {
+          "runOn": "folderOpen",
+        },
+        "command": "/usr/bin/bash",
+        "presentation": {
+          "echo": false,
+          "focus": true,
+          "panel": "dedicated",
+          "group": "main",
+        },
+      },
+      {
+        "label": "Main 2",
+        "type": "shell",
+        "icon": {
+          "id": "home",
+          "color": "terminal.ansiBlue",
+        },
+        "isBackground": true,
+        "options": {
+          "cwd": "${workspaceFolder}",
+        },
+        "runOptions": {
+          "runOn": "folderOpen",
+        },
+        "command": "/usr/bin/bash",
+        "presentation": {
+          "echo": false,
+          "focus": false,
+          "panel": "dedicated",
+          "group": "main",
+        },
+      },
+      {
+        "label": "Claude Agent 1",
+        "type": "shell",
+        "icon": {
+          "id": "robot",
+          "color": "terminal.ansiMagenta",
+        },
+        "isBackground": true,
+        "options": {
+          "cwd": "/tmp/worktrees/agent1",
+        },
+        "runOptions": {
+          "runOn": "folderOpen",
+        },
+        "command": "/usr/bin/bash",
+        "presentation": {
+          "echo": false,
+          "focus": false,
+          "panel": "dedicated",
+          "group": "agents",
+        },
+      },
+      {
+        "label": "Claude Agent 2",
+        "type": "shell",
+        "icon": {
+          "id": "robot",
+          "color": "terminal.ansiMagenta",
+        },
+        "isBackground": true,
+        "options": {
+          "cwd": "/tmp/worktrees/agent2",
+        },
+        "runOptions": {
+          "runOn": "folderOpen",
+        },
+        "command": "/usr/bin/bash",
+        "presentation": {
+          "echo": false,
+          "focus": false,
+          "panel": "dedicated",
+          "group": "agents",
+        },
+      },
+      {
+        "label": "Server Agent 1",
+        "type": "shell",
+        "icon": {
+          "id": "server",
+          "color": "terminal.ansiGreen",
+        },
+        "isBackground": true,
+        "options": {
+          "cwd": "/tmp/worktrees/agent1",
+        },
+        "runOptions": {
+          "runOn": "folderOpen",
+        },
+        "command": "/usr/bin/bash",
+        "presentation": {
+          "echo": false,
+          "focus": false,
+          "panel": "dedicated",
+          "group": "servers",
+        },
+      },
+      {
+        "label": "Server Agent 2",
+        "type": "shell",
+        "icon": {
+          "id": "server",
+          "color": "terminal.ansiGreen",
+        },
+        "isBackground": true,
+        "options": {
+          "cwd": "/tmp/worktrees/agent2",
+        },
+        "runOptions": {
+          "runOn": "folderOpen",
+        },
+        "command": "/usr/bin/bash",
+        "presentation": {
+          "echo": false,
+          "focus": false,
+          "panel": "dedicated",
+          "group": "servers",
+        },
+      },
+      {
+        "label": "Open All Terminals",
+        "dependsOn": [
+          "Main 1",
+          "Main 2",
+          "Claude Agent 1",
+          "Claude Agent 2",
+          "Server Agent 1",
+          "Server Agent 2",
+        ],
+        "runOptions": {
+          "runOn": "folderOpen",
+        },
+        "problemMatcher": [],
+      },
+    ],
+  },
 }

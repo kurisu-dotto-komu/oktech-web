@@ -1,6 +1,6 @@
 ---
 title: May Osaka Web Dev & Design Meetup
-dateTime: '2019-05-25 18:00'
+dateTime: "2019-05-25 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 260439556

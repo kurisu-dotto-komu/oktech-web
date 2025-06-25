@@ -11,13 +11,19 @@ const { mapImage, marker } = Astro.props;
 ---
 
 <figure class="w-full h-full relative">
-  <Image
-    src={mapImage.default}
-    alt="Venue location map"
-    class="w-full h-full object-cover"
-    width={1024}
-    height={1024}
-  />
+  {mapImage ? (
+    <Image
+      src={mapImage.default}
+      alt="Venue location map"
+      class="w-full h-full object-cover"
+      width={1024}
+      height={1024}
+    />
+  ) : (
+    <div class="w-full h-full min-h-[200px] bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+      <Icon name="lucide:map-pin" class="w-16 h-16 text-base-content/20" />
+    </div>
+  )}
   {
     marker && (
       <div class="absolute inset-0 flex items-center justify-center">

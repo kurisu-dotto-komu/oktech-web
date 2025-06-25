@@ -1,6 +1,6 @@
 ---
 title: Monthly Meetup in November!
-dateTime: '2014-11-29 16:00'
+dateTime: "2014-11-29 16:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 216341542

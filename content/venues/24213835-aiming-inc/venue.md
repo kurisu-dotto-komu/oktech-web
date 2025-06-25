@@ -1,14 +1,14 @@
 ---
 title: Aiming Inc
 city: osaka
-address: '18th Floor, Grand Front Tower B, Ofukacho 3-1, Kita-ku'
-gmaps: 'https://maps.app.goo.gl/qqYJ2aQjYTCDvxnRA'
+address: "18th Floor, Grand Front Tower B, Ofukacho 3-1, Kita-ku"
+gmaps: "https://maps.app.goo.gl/qqYJ2aQjYTCDvxnRA"
 coordinates:
   lat: 34.703922
   lng: 135.49338
 meetupId: 24213835
 hasPage: true
-url: 'https://aiming-inc.com'
+url: "https://aiming-inc.com"
 cover: ./aiming-logo.png
 ---
 

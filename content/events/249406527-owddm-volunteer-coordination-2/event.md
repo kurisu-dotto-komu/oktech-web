@@ -1,6 +1,6 @@
 ---
-title: 'OWDDM Volunteer Coordination #2'
-dateTime: '2018-04-16 19:00'
+title: "OWDDM Volunteer Coordination #2"
+dateTime: "2018-04-16 19:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 249406527

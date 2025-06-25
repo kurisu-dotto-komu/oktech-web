@@ -1,6 +1,6 @@
 ---
-import StickyBottomNavButtons from "./StickyBottomNavButtons.astro";
-import { getPeople, resolvePerson } from "../data";
+import StickyBottomNavButtons from "../StickyBottomNavButtons.astro";
+import { getPeople, resolvePerson } from "../../data";
 
 interface Props {
   class?: string;
@@ -32,7 +32,7 @@ const nextItem = nextPerson
   : undefined;
 
 const backButton = {
-  href: "/community",
+  href: "/people",
   icon: "lucide:users",
   text: "All People",
 };

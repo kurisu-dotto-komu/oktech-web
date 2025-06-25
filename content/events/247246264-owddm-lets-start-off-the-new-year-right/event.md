@@ -1,6 +1,6 @@
 ---
-title: 'OWDDM: Let''s start off the new year right'
-dateTime: '2018-02-24 18:00'
+title: "OWDDM: Let's start off the new year right"
+dateTime: "2018-02-24 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 247246264
@@ -16,7 +16,8 @@ This month we are having two sessions brought to you by Adrien Lemaire and Marce
 Adrien will help us improve our hard skills with an "Introduction to Kubernetes", an open-source system for automating deployment, scaling and management of containerized applications - so many buzzwords.
 
 Marcel is going to introduce us to the "Jobs-To-Be-Done" Framework, making us shift our thinking by taking a different perspective on user needs, with a focus on causality and outcomes.
-****
+
+---
 
 Don’t forget to sign up and join us on Saturday, February 24th 2018 at 6PM. We are meeting at Aiming Inc’s Osaka Office. After the meetup we will go to a nearby place where we can have some drinks and socialize some more.
 

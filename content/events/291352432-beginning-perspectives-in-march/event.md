@@ -1,6 +1,6 @@
 ---
 title: Beginning Perspectives in March!
-dateTime: '2023-03-18 17:00'
+dateTime: "2023-03-18 17:00"
 duration: 120
 cover: ./142821.webp
 topics:
@@ -18,9 +18,9 @@ Hello Friends, 👋
 
 We are in the last stretch before springs arrives proper! After a refresher on old topics in February, we will focus on the opposite perspective this month.
 
-Two young*er* members of the meetup will go into the basics. **Jake** will be talking about how *"**Programming from a Beginner's Perspective**"* looks like. A perspective much needed for people that try to teach programming or want to make it easier for young ones to enter.
+Two young*er* members of the meetup will go into the basics. **Jake** will be talking about how _"**Programming from a Beginner's Perspective**"_ looks like. A perspective much needed for people that try to teach programming or want to make it easier for young ones to enter.
 
-After that, **Miguel** will be giving us an introduction to the *"**Cloud Foundations**"*, discussing the types of cloud service models, as well as sharing some tips on where to get started.
+After that, **Miguel** will be giving us an introduction to the _"**Cloud Foundations**"_, discussing the types of cloud service models, as well as sharing some tips on where to get started.
 
 We are looking forward to meet you again this month!
 

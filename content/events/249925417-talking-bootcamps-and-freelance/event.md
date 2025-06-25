@@ -1,6 +1,6 @@
 ---
 title: Talking Bootcamps & Freelance
-dateTime: '2018-06-30 18:00'
+dateTime: "2018-06-30 18:00"
 duration: 120
 cover: ./839223.webp
 meetupId: 249925417

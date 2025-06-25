@@ -1,6 +1,6 @@
 ---
 title: Comfortable JavaScript Talks in April
-dateTime: '2017-04-22 18:00'
+dateTime: "2017-04-22 18:00"
 cover: ./506739.webp
 meetupId: 239073556
 group: 15632202

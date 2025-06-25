@@ -31,23 +31,25 @@ const formattedTime = formatTime(event.data.dateTime);
       height={64}
     />
   </figure>
-  
+
   <div class="flex-1 min-w-0">
     <h3 class="font-semibold text-base truncate">{event.data.title}</h3>
   </div>
-  
+
   <div class="flex items-center gap-6 text-sm text-base-content/70 flex-shrink-0">
     <div class="flex items-center gap-2">
       <Icon name="lucide:calendar" size={16} />
       <span class="whitespace-nowrap">{formattedDate} • {formattedTime}</span>
     </div>
-    
-    {event.venue && (
-      <div class="flex items-center gap-2">
-        <Icon name="lucide:map-pin" size={16} />
-        <span class="max-w-[200px] truncate">{event.venue.title}</span>
-        {event.venue.city && <EventCity city={event.venue.city} />}
-      </div>
-    )}
+
+    {
+      event.venue && (
+        <div class="flex items-center gap-2">
+          <Icon name="lucide:map-pin" size={16} />
+          <span class="max-w-[200px] truncate">{event.venue.title}</span>
+          {event.venue.city && <EventCity city={event.venue.city} />}
+        </div>
+      )
+    }
   </div>
 </Link>

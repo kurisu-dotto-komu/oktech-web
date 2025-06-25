@@ -1,6 +1,6 @@
 ---
 title: Monthly Meetup in October!
-dateTime: '2014-10-18 16:00'
+dateTime: "2014-10-18 16:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 209173132

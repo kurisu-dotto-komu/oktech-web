@@ -1,6 +1,6 @@
 ---
 title: Kiyotakigawa Escape
-dateTime: '2024-09-29 09:30'
+dateTime: "2024-09-29 09:30"
 duration: 420
 cover: ./033392.webp
 topics:
@@ -27,4 +27,4 @@ In this extra-curricular event [Sacha](https://sachagreif.com/) is guiding us th
 
 Please bring lunch and enough to drink. There may also be mosquitos and hot sun at the day. Also, if you want to head for a swim (there are multiple beautiful swimming spots along the river): swimwear and a towel might be a good idea.
 
-*Note:* Children welcome since the path is almost entirely flat and easy to walk, but it's a longer hike. It would be good if they are used to it.
+_Note:_ Children welcome since the path is almost entirely flat and easy to walk, but it's a longer hike. It would be good if they are used to it.

@@ -1,0 +1,37 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { getPeople } from "../data";
+import PersonSummary from "../components/Person/PersonSummary.astro";
+import PersonCompact from "../components/Person/PersonCompact.astro";
+import Grid from "../components/Grid.astro";
+import Section from "../components/Section.astro";
+import Link from "../components/Link.astro";
+
+// Get all people and sort by name
+const allPeople = await getPeople();
+const sortedPeople = allPeople.sort((a, b) => a.name.localeCompare(b.name));
+
+// Default view is grid
+const view = "grid";
+---
+
+<PageLayout title="People">
+  <Section class="text-center mb-8">
+    <h1 class="text-4xl font-bold mb-4">People</h1>
+    <p class="text-lg text-base-content/70">Meet the amazing people who make our events possible</p>
+  </Section>
+
+  <div class="container mx-auto px-4">
+    <Section wide>
+      <Grid>
+        {
+          sortedPeople.map((person) => (
+            <div class="max-w-sm mx-auto w-full">
+              <PersonSummary person={person} showRoles />
+            </div>
+          ))
+        }
+      </Grid>
+    </Section>
+  </div>
+</PageLayout>

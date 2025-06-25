@@ -1,6 +1,6 @@
 ---
 title: End-of-summer start afresh
-dateTime: '2017-09-16 18:00'
+dateTime: "2017-09-16 18:00"
 cover: ./506739.webp
 meetupId: 240569750
 group: 15632202

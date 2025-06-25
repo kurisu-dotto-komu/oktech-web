@@ -1,6 +1,6 @@
 ---
 title: Outdoor Welcome Back Meetup
-dateTime: '2020-06-27 15:00'
+dateTime: "2020-06-27 15:00"
 duration: 120
 cover: ./901481.webp
 meetupId: 271369535

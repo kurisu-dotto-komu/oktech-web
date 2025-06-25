@@ -1,6 +1,6 @@
 ---
 title: Rust for the Web
-dateTime: '2024-01-13 17:00'
+dateTime: "2024-01-13 17:00"
 duration: 120
 cover: ./354252.webp
 topics:

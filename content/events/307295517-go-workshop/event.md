@@ -1,6 +1,6 @@
 ---
 title: Go Workshop
-dateTime: '2025-06-21 13:00'
+dateTime: "2025-06-21 13:00"
 duration: 300
 cover: ./383092.webp
 topics:
@@ -18,7 +18,7 @@ Escape the Sun and touch Go!
 
 After his introduction to Docker we decided that we need a bit more time for his topics and this June we are dedicating an afternoon to Go.
 
-Kinbiko will introduce us to all major parts of the Go programming language. From building to testing. How to best work on a Go project. It is going to be less about the language *\- you should be somewhat familiar with general programming\.* Bring your computer and let's try to see together what we can get done.
+Kinbiko will introduce us to all major parts of the Go programming language. From building to testing. How to best work on a Go project. It is going to be less about the language _\- you should be somewhat familiar with general programming\._ Bring your computer and let's try to see together what we can get done.
 
 The workshop will be split into two parts. You may wish to attend just one or both, depending on your familiarity with Go.
 

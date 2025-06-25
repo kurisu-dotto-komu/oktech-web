@@ -27,15 +27,14 @@ events.forEach((event) => {
   }
 });
 
-const sortedTopics = Array.from(topicsMap.entries())
-  .sort((a, b) => {
-    const countA = topicCounts.get(a[0]) || 0;
-    const countB = topicCounts.get(b[0]) || 0;
-    // First sort by count descending
-    if (countB !== countA) return countB - countA;
-    // If counts are equal, sort alphabetically by topic name
-    return a[1].localeCompare(b[1]);
-  });
+const sortedTopics = Array.from(topicsMap.entries()).sort((a, b) => {
+  const countA = topicCounts.get(a[0]) || 0;
+  const countB = topicCounts.get(b[0]) || 0;
+  // First sort by count descending
+  if (countB !== countA) return countB - countA;
+  // If counts are equal, sort alphabetically by topic name
+  return a[1].localeCompare(b[1]);
+});
 
 // Helper function to generate URLs with current view mode
 function getTopicUrl(slug: string): string {

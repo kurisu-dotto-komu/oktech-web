@@ -1,7 +1,7 @@
 ---
 import PersonImage from "./PersonImage.astro";
 import { Icon } from "astro-icon/components";
-import { ROLE_CONFIGS } from "../data";
+import { ROLE_CONFIGS } from "../../data";
 
 export interface Props {
   person: any;
@@ -11,32 +11,35 @@ export interface Props {
 const { person, showRoles = false } = Astro.props;
 ---
 
-<a href={`/person/${person.id}`} class="flex items-center gap-4 p-4 hover:bg-base-200 transition-colors rounded-lg">
+<a
+  href={`/person/${person.id}`}
+  class="flex items-center gap-4 p-4 hover:bg-base-200 transition-colors rounded-lg"
+>
   <div class="avatar">
     <div class="w-16 h-16 rounded-full">
       <PersonImage person={person} />
     </div>
   </div>
-  
+
   <div class="flex-1 min-w-0">
     <h3 class="font-semibold text-lg truncate">{person.name}</h3>
     <p class="text-sm text-base-content/70 truncate">
       {person.jobTitle || "Guest Speaker"}
       {person.company && ` at ${person.company}`}
     </p>
-    {showRoles && person.roles?.length > 0 && (
-      <div class="flex gap-2 mt-1">
-        {person.roles.map((role: string) => {
-          const config = ROLE_CONFIGS[role as keyof typeof ROLE_CONFIGS];
-          return config ? (
-            <span class={`badge badge-sm ${config.color}`}>
-              {config.label}
-            </span>
-          ) : null;
-        })}
-      </div>
-    )}
+    {
+      showRoles && person.roles?.length > 0 && (
+        <div class="flex gap-2 mt-1">
+          {person.roles.map((role: string) => {
+            const config = ROLE_CONFIGS[role as keyof typeof ROLE_CONFIGS];
+            return config ? (
+              <span class={`badge badge-sm ${config.color}`}>{config.label}</span>
+            ) : null;
+          })}
+        </div>
+      )
+    }
   </div>
-  
+
   <Icon name="lucide:chevron-right" class="w-5 h-5 text-base-content/50" />
 </a>

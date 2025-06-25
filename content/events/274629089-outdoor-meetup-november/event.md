@@ -1,6 +1,6 @@
 ---
 title: Outdoor Meetup November
-dateTime: '2020-11-21 15:00'
+dateTime: "2020-11-21 15:00"
 duration: 120
 cover: ./901481.webp
 meetupId: 274629089
@@ -26,4 +26,4 @@ The forecast is pretty uncertain, so we'll update this page if it looks like we'
 
 If you are late, please check back on this web page for the exact location. We shall update when we settle on a spot.
 
-* We shall ask the participant for a donation (￥100~500) to cover our cost.
+- We shall ask the participant for a donation (￥100~500) to cover our cost.

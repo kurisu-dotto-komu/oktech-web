@@ -1,6 +1,6 @@
 ---
-title: 'OWDDM April 2019 Meetup '
-dateTime: '2019-04-27 18:00'
+title: "OWDDM April 2019 Meetup "
+dateTime: "2019-04-27 18:00"
 duration: 120
 cover: ./712718.webp
 meetupId: 260877986

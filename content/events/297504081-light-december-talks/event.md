@@ -1,6 +1,6 @@
 ---
 title: Light December Talks
-dateTime: '2023-12-10 18:00'
+dateTime: "2023-12-10 18:00"
 duration: 180
 cover: ./812304.webp
 topics:
@@ -16,7 +16,7 @@ venue: 27705586
 
 Hello Everyone,
 
-**Important:** Time change from 17:00 → **18:00** *(door open 17:45)*
+**Important:** Time change from 17:00 → **18:00** _(door open 17:45)_
 
 This December, we are attempting to connect the local tech communities.
 We hope you join us for our last event of the year to exchange topics that you are interested in. We will bring light food and soft drinks, you bring things you would like to have a conversation about or an open mind to talk to us.

@@ -21,7 +21,7 @@ const getSiteConfig = () => {
   // In development, we still need to set site for proper URL generation
   if (isDev || (!isVercel && !process.env.SITE)) {
     return {
-      site: "http://localhost:4322", // Using your dev server port
+      site: "http://localhost:4321", // Using your dev server port
       base: "/chris-wireframe",
     };
   }
@@ -45,6 +45,19 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss(), yaml()],
+    ssr: {
+      external: [
+        "@resvg/resvg-js",
+        "@resvg/resvg-js-linux-x64-musl",
+        "@resvg/resvg-js-linux-x64-gnu",
+        "@resvg/resvg-js-darwin-x64",
+        "@resvg/resvg-js-darwin-arm64",
+        "@resvg/resvg-js-win32-x64-msvc",
+      ],
+    },
+    optimizeDeps: {
+      exclude: ["@resvg/resvg-js"],
+    },
   },
   integrations: [react(), icon()],
   redirects: {

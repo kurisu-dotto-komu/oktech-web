@@ -1,6 +1,6 @@
 ---
-title: 'Design generally, Nostr particularly'
-dateTime: '2023-04-15 17:00'
+title: "Design generally, Nostr particularly"
+dateTime: "2023-04-15 17:00"
 duration: 120
 cover: ./794415.webp
 topics:
@@ -22,7 +22,7 @@ This month first-time OWDDM presenter Sammy will be talking about the relationsh
 
 The second presentation is going to be as relevant as it is going to be conceptual. Martin noticed that many people have trouble identifying **what a designer does** and is going shine a light on it from the perspective of a developer. This topic may seem obvious but in face of Code and image generation through AI - in a time where No-Code is a hot topic and Apps can be built by single persons we may need to re-think what a "**designer**" does as a profession.
 
-* RSVP to join us ➡
+- RSVP to join us ➡
 
 The presentation idea comes from our Discord group.
 \-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-

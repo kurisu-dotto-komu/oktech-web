@@ -1,6 +1,6 @@
 ---
 title: HTMX & CSS
-dateTime: '2023-08-26 17:00'
+dateTime: "2023-08-26 17:00"
 duration: 120
 cover: ./211650.webp
 meetupId: 295357543

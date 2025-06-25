@@ -1,6 +1,6 @@
 ---
 title: Arashiyama Hanami 2024
-dateTime: '2024-03-24 13:00'
+dateTime: "2024-03-24 13:00"
 duration: 240
 cover: ./888292.webp
 topics:
@@ -30,10 +30,10 @@ Let’s relax under the Sakura trees and make new connections.
 
 But before we do that, **we have a few ground rules:**
 
-* Please bring your mat to sit on
-* Please bring your preferred snacks and drinks
-* Please clean up after yourself
-* Be kind
+- Please bring your mat to sit on
+- Please bring your preferred snacks and drinks
+- Please clean up after yourself
+- Be kind
 
 If you want to stay connected with us, please join our discord here.
 You can also keep an eye out by following us on LinkedIn here.

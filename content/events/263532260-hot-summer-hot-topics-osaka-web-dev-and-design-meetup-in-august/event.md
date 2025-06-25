@@ -1,6 +1,6 @@
 ---
 title: Hot summer hot topics - Osaka Web Dev & Design Meetup in August
-dateTime: '2019-08-24 17:30'
+dateTime: "2019-08-24 17:30"
 duration: 120
 cover: ./506739.webp
 meetupId: 263532260

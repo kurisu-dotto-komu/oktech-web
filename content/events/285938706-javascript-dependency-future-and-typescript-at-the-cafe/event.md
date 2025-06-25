@@ -1,6 +1,6 @@
 ---
 title: JavaScript dependency future and TypeScript at the Café
-dateTime: '2022-05-28 17:30'
+dateTime: "2022-05-28 17:30"
 duration: 90
 cover: ./531734.webp
 topics:
@@ -22,7 +22,7 @@ Generously, Jun helped us securing the [Laugh Rough Laugh Cafe](https://goo.gl/m
 
 On the 28th of May, we will have two presentations.
 
-In his very accessible presentation, Jun will be looking in *"First steps with TypeScript"* on how to get started using TypeScript for websites. 🚀
+In his very accessible presentation, Jun will be looking in _"First steps with TypeScript"_ on how to get started using TypeScript for websites. 🚀
 
 Martin will then be talking about how the NPM registry has become pretty much standard for JavaScript dependencies. However recently, with ES modules, many are considering https may be succeeding it. Martin will look into the pros/cons and an alternate future. 🤓
 

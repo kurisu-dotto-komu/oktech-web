@@ -1,6 +1,6 @@
 ---
-title: 'Make OWDDM yours - Volunteer Coordination Meetup #1'
-dateTime: '2017-03-06 20:30'
+title: "Make OWDDM yours - Volunteer Coordination Meetup #1"
+dateTime: "2017-03-06 20:30"
 duration: 60
 cover: ./506739.webp
 meetupId: 237998866

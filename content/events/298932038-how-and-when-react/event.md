@@ -1,6 +1,6 @@
 ---
 title: How and when React
-dateTime: '2024-02-17 17:00'
+dateTime: "2024-02-17 17:00"
 duration: 180
 cover: ./848552.webp
 topics:

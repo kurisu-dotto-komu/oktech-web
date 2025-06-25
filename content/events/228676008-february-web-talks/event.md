@@ -1,6 +1,6 @@
 ---
 title: February Web Talks
-dateTime: '2016-02-27 18:00'
+dateTime: "2016-02-27 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 228676008

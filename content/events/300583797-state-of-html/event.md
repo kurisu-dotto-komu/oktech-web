@@ -1,6 +1,6 @@
 ---
 title: State of HTML
-dateTime: '2024-05-11 17:00'
+dateTime: "2024-05-11 17:00"
 duration: 120
 cover: ./598643.webp
 topics:

@@ -1,6 +1,6 @@
 ---
 title: Cool code to beat the heat in July
-dateTime: '2017-07-22 18:00'
+dateTime: "2017-07-22 18:00"
 cover: ./506739.webp
 meetupId: 240538427
 group: 15632202

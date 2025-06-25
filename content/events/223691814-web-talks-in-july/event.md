@@ -1,6 +1,6 @@
 ---
 title: Web talks in July!
-dateTime: '2015-07-25 18:00'
+dateTime: "2015-07-25 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 223691814

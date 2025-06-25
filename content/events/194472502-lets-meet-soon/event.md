@@ -1,6 +1,6 @@
 ---
-title: 'Let''s Meet Soon ... '
-dateTime: '2014-07-26 17:45'
+title: "Let's Meet Soon ... "
+dateTime: "2014-07-26 17:45"
 duration: 120
 cover: ./506739.webp
 meetupId: 194472502

@@ -1,6 +1,6 @@
 ---
 title: Astro.build Workshop by Tamas Piros
-dateTime: '2023-05-19 19:00'
+dateTime: "2023-05-19 19:00"
 duration: 150
 cover: ./830928.webp
 topics:

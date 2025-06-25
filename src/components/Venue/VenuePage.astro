@@ -1,11 +1,11 @@
 ---
-import { resolveVenue, getEvents } from "../data";
+import { resolveVenue, getEvents } from "../../data";
 import VenueInfo from "./VenueInfo.astro";
 import VenueNav from "./VenueNav.astro";
-import EventFeatured from "./EventFeatured.astro";
-import Section from "./Section.astro";
-import StickyNavigation from "./StickyNavigation.astro";
-import PageLayout from "../layouts/PageLayout.astro";
+import EventFeatured from "../EventFeatured.astro";
+import Section from "../Section.astro";
+import StickyNavigation from "../StickyNavigation.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
 import { Image } from "astro:assets";
 
 const venue = await resolveVenue(Astro);

@@ -1,6 +1,6 @@
 ---
 import VenueMapImage from "./VenueMapImage.astro";
-import { resolveVenue } from "../data";
+import { resolveVenue } from "../../data";
 
 interface Props {
   venueSlug?: string;
@@ -36,7 +36,7 @@ const mapUrl = getMapUrl();
 let mapImage;
 try {
   // Try to dynamically import the map.png for this venue
-  mapImage = await import(`../../content/venues/${venue.id}/map.jpg`);
+  mapImage = await import(`../../../content/venues/${venue.id}/map.jpg`);
 } catch (error) {
   // If map.png doesn't exist, mapImage will remain undefined
   mapImage = null;
@@ -44,17 +44,16 @@ try {
 ---
 
 {
-  mapImage &&
-    (mapUrl && link ? (
-      <a
-        href={mapUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="block w-full h-full hover:opacity-90 transition-opacity cursor-pointer"
-      >
-        <VenueMapImage mapImage={mapImage} marker={marker} />
-      </a>
-    ) : (
+  mapUrl && link ? (
+    <a
+      href={mapUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block w-full h-full hover:opacity-90 transition-opacity cursor-pointer"
+    >
       <VenueMapImage mapImage={mapImage} marker={marker} />
-    ))
+    </a>
+  ) : (
+    <VenueMapImage mapImage={mapImage} marker={marker} />
+  )
 }

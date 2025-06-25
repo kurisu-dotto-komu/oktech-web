@@ -6,10 +6,10 @@ import { resolveFullUrl } from "./urlResolver";
  */
 export async function generateEventRoutePaths() {
   const events = await getEvents();
-  
+
   // Get all unique topics
   const topicsSet = new Set<string>();
-  events.forEach(event => {
+  events.forEach((event) => {
     if (event.data.topics) {
       event.data.topics.forEach((topic: string) => {
         const slug = topic
@@ -23,7 +23,7 @@ export async function generateEventRoutePaths() {
 
   // Get all unique cities
   const citiesSet = new Set<string>();
-  events.forEach(event => {
+  events.forEach((event) => {
     if (event.venue?.city) {
       citiesSet.add(event.venue.city);
     }
@@ -33,22 +33,22 @@ export async function generateEventRoutePaths() {
   const views = ["", "compact", "gallery"]; // "" represents default view
 
   // Base paths for each view
-  views.forEach(view => {
+  views.forEach((view) => {
     const basePath = view === "" ? "/events" : `/events/${view}`;
     paths.push(basePath);
   });
 
   // Topic filter paths
-  views.forEach(view => {
-    topicsSet.forEach(topic => {
+  views.forEach((view) => {
+    topicsSet.forEach((topic) => {
       const basePath = view === "" ? "/events" : `/events/${view}`;
       paths.push(`${basePath}/topic/${topic}`);
     });
   });
 
   // Location filter paths
-  views.forEach(view => {
-    citiesSet.forEach(city => {
+  views.forEach((view) => {
+    citiesSet.forEach((city) => {
       const basePath = view === "" ? "/events" : `/events/${view}`;
       paths.push(`${basePath}/location/${encodeURIComponent(city)}`);
     });
@@ -73,7 +73,7 @@ export async function generateSitemapURLs(): Promise<string[]> {
   const urls: string[] = [];
 
   // Static pages (excluding /events since it's handled below)
-  const staticRoutesWithoutEvents = STATIC_ROUTES.filter(route => route !== "/events");
+  const staticRoutesWithoutEvents = STATIC_ROUTES.filter((route) => route !== "/events");
   urls.push(...staticRoutesWithoutEvents.map((route) => resolveFullUrl(route)));
 
   // Community role filter pages
@@ -83,7 +83,7 @@ export async function generateSitemapURLs(): Promise<string[]> {
 
   // All event route variations (views and filters)
   const { paths: eventPaths } = await generateEventRoutePaths();
-  eventPaths.forEach(path => {
+  eventPaths.forEach((path) => {
     urls.push(resolveFullUrl(path));
   });
 

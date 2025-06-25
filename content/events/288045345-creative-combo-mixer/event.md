@@ -1,6 +1,6 @@
 ---
 title: Creative Combo Mixer
-dateTime: '2022-09-07 19:00'
+dateTime: "2022-09-07 19:00"
 duration: 120
 cover: ./572066.webp
 topics:
@@ -22,4 +22,4 @@ Join us in visiting the [Hue Coffee](https://www.instagram.com/hue_coffee_roaste
 
 We won't have an attendance fee, but we need to ask you to have a drink - which should be quite pleasurable 🍹
 
-*Please Note:* there will be **no alcoholic drinks** at the venue but we will have mocktails and other tasty options.
+_Please Note:_ there will be **no alcoholic drinks** at the venue but we will have mocktails and other tasty options.

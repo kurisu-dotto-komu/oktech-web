@@ -1,6 +1,6 @@
 ---
 title: Try Nostr with Shisha
-dateTime: '2024-01-31 18:00'
+dateTime: "2024-01-31 18:00"
 duration: 120
 cover: ./680898.webp
 topics:

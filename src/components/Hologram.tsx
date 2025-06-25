@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Hologram: React.FC = () => {
   const text = "Osaka Kansai Web Development Meetup Group • ";
@@ -19,29 +19,32 @@ const Hologram: React.FC = () => {
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     let gyroAvailable = false;
 
     // Try to use gyroscope if available
-    if ("Gyroscope" in window && 'permissions' in navigator) {
-      navigator.permissions.query({ name: 'gyroscope' as PermissionName }).then(result => {
-        if (result.state === 'granted') {
-          try {
-            const sensor = new (window as any).Gyroscope({ frequency: 60 });
-            sensor.addEventListener("reading", () => {
-              setRotation({ x: sensor.x * 10, y: sensor.y * 10 });
-              const angle = (Math.atan2(sensor.y, sensor.x) * 180) / Math.PI;
-              setHue((angle + 360) % 360);
-            });
-            sensor.start();
-            gyroAvailable = true;
-          } catch (error) {
-            // Gyroscope not available, fall back to mouse
+    if ("Gyroscope" in window && "permissions" in navigator) {
+      navigator.permissions
+        .query({ name: "gyroscope" as PermissionName })
+        .then((result) => {
+          if (result.state === "granted") {
+            try {
+              const sensor = new (window as any).Gyroscope({ frequency: 60 });
+              sensor.addEventListener("reading", () => {
+                setRotation({ x: sensor.x * 10, y: sensor.y * 10 });
+                const angle = (Math.atan2(sensor.y, sensor.x) * 180) / Math.PI;
+                setHue((angle + 360) % 360);
+              });
+              sensor.start();
+              gyroAvailable = true;
+            } catch (error) {
+              // Gyroscope not available, fall back to mouse
+            }
           }
-        }
-      }).catch(() => {
-        // Permissions API not available, fall back to mouse
-      });
+        })
+        .catch(() => {
+          // Permissions API not available, fall back to mouse
+        });
     }
 
     // Mouse movement handler
@@ -72,7 +75,7 @@ const Hologram: React.FC = () => {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
@@ -207,7 +210,9 @@ const Hologram: React.FC = () => {
         </div>
       </div>
 
-      <style dangerouslySetInnerHTML={{__html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         .perspective-1000 {
           perspective: 1000px;
         }
@@ -250,7 +255,9 @@ const Hologram: React.FC = () => {
         .bg-gradient-radial {
           background: radial-gradient(circle, var(--tw-gradient-stops));
         }
-      `}} />
+      `,
+        }}
+      />
     </div>
   );
 };

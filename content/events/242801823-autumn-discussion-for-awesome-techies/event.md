@@ -1,6 +1,6 @@
 ---
 title: Autumn Discussion for Awesome Techies
-dateTime: '2017-10-21 18:00'
+dateTime: "2017-10-21 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 242801823
@@ -30,6 +30,6 @@ The weather is getting cooler but the discussions are heating up!
 
 7:50 - 8:00 : Wrap up and leave
 
-** TIME is just a rough estimate, starting time for each discussion might be early or late depending on the each talk but will try to follow it.
+\*\* TIME is just a rough estimate, starting time for each discussion might be early or late depending on the each talk but will try to follow it.
 
 So we hope that you will enjoy the upcoming discussion.

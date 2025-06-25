@@ -1,6 +1,6 @@
 ---
 title: Visual Tests and Networking
-dateTime: '2023-09-23 17:00'
+dateTime: "2023-09-23 17:00"
 duration: 120
 cover: ./709185.webp
 topics:
@@ -17,9 +17,9 @@ September shenanigans up ahead 🚄
 
 and we should have a good reason to get out of the house! In the [Gusuku Ashibinaa](https://www.meetup.com/osaka-web-designers-and-developers-meetup/events/292146517/) our September will have two presentations waiting for us.
 
-We have *Christian Ulbrich* from the [dresdenjs](https://dresdenjs.github.io/dresdenjs.io/) and tc39 as guest this month with a presentation on the "**Practical Problems with Visual Testing**". Talking about the perils that come when testing web-component based UI libraries.
+We have _Christian Ulbrich_ from the [dresdenjs](https://dresdenjs.github.io/dresdenjs.io/) and tc39 as guest this month with a presentation on the "**Practical Problems with Visual Testing**". Talking about the perils that come when testing web-component based UI libraries.
 
-On a more basic topic, local *Mr. Kangorooman* is going to look into "**Traceroute and Networking**". Foundational to the internet and how we interact, this is going give some insight on why some things work and how to debug networking issues.
+On a more basic topic, local _Mr. Kangorooman_ is going to look into "**Traceroute and Networking**". Foundational to the internet and how we interact, this is going give some insight on why some things work and how to debug networking issues.
 
 We are looking forward to joining us. 😃
 

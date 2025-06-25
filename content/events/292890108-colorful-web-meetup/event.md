@@ -1,6 +1,6 @@
 ---
 title: Colorful Web Meetup
-dateTime: '2023-06-17 17:00'
+dateTime: "2023-06-17 17:00"
 duration: 120
 cover: ./983535.webp
 topics:

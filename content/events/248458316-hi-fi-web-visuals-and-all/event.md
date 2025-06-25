@@ -1,6 +1,6 @@
 ---
 title: Hi-fi Web - Visuals and all
-dateTime: '2018-03-31 18:00'
+dateTime: "2018-03-31 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 248458316

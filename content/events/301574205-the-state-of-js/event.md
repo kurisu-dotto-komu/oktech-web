@@ -1,6 +1,6 @@
 ---
 title: The State of JS
-dateTime: '2024-07-20 17:00'
+dateTime: "2024-07-20 17:00"
 duration: 120
 cover: ./274679.webp
 topics:

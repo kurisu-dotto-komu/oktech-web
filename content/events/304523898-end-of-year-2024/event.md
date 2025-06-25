@@ -1,6 +1,6 @@
 ---
 title: End of Year 2024
-dateTime: '2024-12-14 18:30'
+dateTime: "2024-12-14 18:30"
 duration: 120
 cover: ./923448.webp
 topics:
@@ -15,7 +15,7 @@ venue: 27929713
 
 The end of 2024 is upon us and we shall feast 🍽️
 
-🔔 *Update (Nov. 28th):* Initially we thought going having a fixed menu would be a good idea but we are now going with a different plan and a slightly changed time.
+🔔 _Update (Nov. 28th):_ Initially we thought going having a fixed menu would be a good idea but we are now going with a different plan and a slightly changed time.
 
 We start our evening at the [Robatayaki](https://www.rikimaru-group.com/group/kakurechaya/) place that offers a broad menu, also possible to have vegan/vegetarian food and then see where the evening takes us. 🍾
 

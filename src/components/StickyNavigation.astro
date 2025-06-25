@@ -40,7 +40,7 @@ const stickyNavId = `sticky-nav-${Math.random().toString(36).substring(7)}`;
         entries.forEach((entry) => {
           // Get the position of the navigation relative to the viewport
           const navRect = entry.boundingClientRect;
-          
+
           // Check if we've scrolled past the navigation (it's above the viewport)
           if (navRect.bottom < 0) {
             hasScrolledPast = true;

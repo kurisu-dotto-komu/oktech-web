@@ -1,8 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
-import { resolveVenue } from "../data";
+import { resolveVenue } from "@/data";
+import EventCity from "@/components/EventCity.astro";
 import VenueMap from "./VenueMap.astro";
-import EventCity from "./EventCity.astro";
 
 const venue = await resolveVenue(Astro);
 ---

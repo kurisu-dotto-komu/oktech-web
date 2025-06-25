@@ -1,6 +1,6 @@
 ---
 title: Web Summer Kick-off Osaka
-dateTime: '2015-05-30 18:00'
+dateTime: "2015-05-30 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 222203849

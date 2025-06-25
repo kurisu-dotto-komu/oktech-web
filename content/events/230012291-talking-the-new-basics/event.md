@@ -1,6 +1,6 @@
 ---
 title: Talking the new Basics
-dateTime: '2016-04-23 18:00'
+dateTime: "2016-04-23 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 230012291

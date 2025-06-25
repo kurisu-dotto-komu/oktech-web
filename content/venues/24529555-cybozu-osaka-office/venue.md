@@ -7,7 +7,7 @@ coordinates:
   lng: 135.49876
 meetupId: 24529555
 hasPage: true
-url: 'https://cybozu.co.jp/'
+url: "https://cybozu.co.jp/"
 cover: ./cybozu-logo.svg
 ---
 

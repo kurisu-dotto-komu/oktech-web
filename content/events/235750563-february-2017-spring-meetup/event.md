@@ -1,6 +1,6 @@
 ---
 title: February 2017 Spring Meetup
-dateTime: '2017-02-18 18:00'
+dateTime: "2017-02-18 18:00"
 cover: ./506739.webp
 meetupId: 235750563
 group: 15632202

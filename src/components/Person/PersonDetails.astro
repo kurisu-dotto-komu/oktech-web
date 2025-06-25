@@ -1,5 +1,5 @@
 ---
-import { type Person } from "../data";
+import { type Person } from "@/data";
 import PersonSocialLink from "./PersonSocialLink.astro";
 import PersonImage from "./PersonImage.astro";
 
@@ -9,7 +9,7 @@ interface Props {
 
 const { person } = Astro.props;
 
-const { Content } = await import(`../../content/people/${person.id}/person.md`);
+const { Content } = await import(`../../../content/people/${person.id}/person.md`);
 ---
 
 <div class="w-full flex flex-col md:flex-row gap-8">

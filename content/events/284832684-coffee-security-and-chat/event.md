@@ -1,6 +1,6 @@
 ---
-title: 'Coffee, Security and Chat'
-dateTime: '2022-04-02 10:30'
+title: "Coffee, Security and Chat"
+dateTime: "2022-04-02 10:30"
 duration: 90
 cover: ./904983.webp
 topics:
@@ -20,10 +20,10 @@ At this time, the **slots for Presentations are still open**.
 
 So if you would like to:
 
-* present a lightning talk or
-* moderate a talk or
-* sell an idea/service, or
-* seek collaboration over a project you are working on,
+- present a lightning talk or
+- moderate a talk or
+- sell an idea/service, or
+- seek collaboration over a project you are working on,
 
 do let any of the Organizers know.
 

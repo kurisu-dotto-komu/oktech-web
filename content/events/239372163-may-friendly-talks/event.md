@@ -1,6 +1,6 @@
 ---
 title: May friendly talks
-dateTime: '2017-05-27 18:00'
+dateTime: "2017-05-27 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 239372163

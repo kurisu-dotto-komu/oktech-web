@@ -1,6 +1,6 @@
 ---
 title: Web Summer Talks Osaka
-dateTime: '2015-06-27 18:30'
+dateTime: "2015-06-27 18:30"
 duration: 120
 cover: ./506739.webp
 meetupId: 222961448

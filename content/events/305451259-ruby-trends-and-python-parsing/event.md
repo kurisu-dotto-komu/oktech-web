@@ -1,6 +1,6 @@
 ---
 title: Ruby Trends and Python Parsing
-dateTime: '2025-03-22 17:00'
+dateTime: "2025-03-22 17:00"
 duration: 120
 cover: ./886088.webp
 topics:

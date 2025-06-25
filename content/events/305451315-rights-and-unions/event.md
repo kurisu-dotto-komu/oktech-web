@@ -1,6 +1,6 @@
 ---
 title: Rights and Unions
-dateTime: '2025-04-19 17:00'
+dateTime: "2025-04-19 17:00"
 duration: 120
 cover: ./886141.webp
 topics:

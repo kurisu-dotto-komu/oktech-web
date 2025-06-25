@@ -1,6 +1,6 @@
 ---
-title: 'How to Get into Tech: Part 2'
-dateTime: '2024-02-17 17:00'
+title: "How to Get into Tech: Part 2"
+dateTime: "2024-02-17 17:00"
 duration: 120
 cover: ./814765.webp
 topics:
@@ -20,9 +20,9 @@ Are you thinking about getting into tech? Are you worried about your previous ca
 
 This month, **Yuka Ishida** introduces us to her career journey from electrical engineer to front-end designer. She will cover the following topics:
 
-* After finding your first job in the tech industry, how do you continue improving your skills?
-* In team development, communication skills (teamwork) are just as crucial as technical skills.
-* Even when changing industries from other fields to the IT industry, professional experience from other industries will always be valuable.
+- After finding your first job in the tech industry, how do you continue improving your skills?
+- In team development, communication skills (teamwork) are just as crucial as technical skills.
+- Even when changing industries from other fields to the IT industry, professional experience from other industries will always be valuable.
 
 The presentation will go for about 20\~30 minutes, followed by discussion and then socializing amongst each other. Come learn from your peers, bring a business card or two, and share your story! You never know who will give you your big break!
 

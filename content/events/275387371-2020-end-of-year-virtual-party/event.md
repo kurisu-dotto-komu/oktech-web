@@ -1,6 +1,6 @@
 ---
 title: 2020 - End of Year "Virtual" Party
-dateTime: '2020-12-31 22:00'
+dateTime: "2020-12-31 22:00"
 duration: 120
 cover: ./121224.webp
 meetupId: 275387371
@@ -18,4 +18,4 @@ Please prepare yourself some good food, champagne, beer, sake or any alcoholic d
 
 Although this is an Osaka event, you can join us wherever you are especially for some of our members who have gone on to do other exciting things around the world. Please note that the time is in JST.
 
-This virtual meetup uses Spaital Chat application. You don't need to install any software, just use a browser and let it access your web cam and microphone. (*note: it seems to work ok with my iPhone but not on my old iPad. )
+This virtual meetup uses Spaital Chat application. You don't need to install any software, just use a browser and let it access your web cam and microphone. (\*note: it seems to work ok with my iPhone but not on my old iPad. )

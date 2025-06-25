@@ -1,6 +1,6 @@
 ---
 title: Hanami Meetup 2023
-dateTime: '2023-03-25 14:00'
+dateTime: "2023-03-25 14:00"
 duration: 300
 cover: ./192450.webp
 topics:
@@ -27,4 +27,4 @@ We plan to start around 2pm (14:00) and will be there until evening. Of course y
 
 Join us for an easy Saturday afternoon celebrating the nice-weather season!
 
-*Note:* We are a group of grown-ups but some of us have kids and we want to welcome them and their families at the meetup too!
+_Note:_ We are a group of grown-ups but some of us have kids and we want to welcome them and their families at the meetup too!

@@ -7,9 +7,9 @@ export interface Props {
 const { city, class: className = "" } = Astro.props;
 
 const cityNames = {
-  "osaka": "Osaka",
-  "kyoto": "Kyoto",
-  "kobe": "Kobe"
+  osaka: "Osaka",
+  kyoto: "Kyoto",
+  kobe: "Kobe",
 };
 
 const displayName = cityNames[city.toLowerCase() as keyof typeof cityNames] || city;

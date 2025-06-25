@@ -1,6 +1,6 @@
 ---
 title: Talk at the Café
-dateTime: '2022-06-25 17:30'
+dateTime: "2022-06-25 17:30"
 duration: 90
 cover: ./036038.webp
 topics:
@@ -23,7 +23,7 @@ Even though it is on short notice, two of our members have offered to prepare a 
 
 Otogawa-san will challenge his first presentation in front of an english-speaking audience with his talk "From **JavaScript → TypeScript** (with React)" giving a step-by-step guide for migrating a React project from JavaScript to TypeScript. 🤓
 
-Additionally - bit more focused on browsers - James will be talking about a11y (*Accessibility*).
+Additionally - bit more focused on browsers - James will be talking about a11y (_Accessibility_).
 
 More may be to come, stay tuned!
 

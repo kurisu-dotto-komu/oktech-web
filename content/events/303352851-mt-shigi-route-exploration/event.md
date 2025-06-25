@@ -1,6 +1,6 @@
 ---
 title: Mt. Shigi Route Exploration
-dateTime: '2024-10-20 08:45'
+dateTime: "2024-10-20 08:45"
 duration: 495
 cover: ./434508.webp
 meetupId: 303352851
@@ -10,7 +10,7 @@ venue: 27278002
 
 Hello Friends, 👋
 
-next year in June *(still a while out)*, there is the [Music Ai Hackathon](https://music-ai-hackathon.com/) and at the time Martin would like to hike to the there with a few attendees. To prepare for this, Martin would like to explore the hiking routes up to the [Gyokuzo Temple](https://gyokuzo.com/en/). From the west, six possible routes make sense up the mountain.
+next year in June _(still a while out)_, there is the [Music Ai Hackathon](https://music-ai-hackathon.com/) and at the time Martin would like to hike to the there with a few attendees. To prepare for this, Martin would like to explore the hiking routes up to the [Gyokuzo Temple](https://gyokuzo.com/en/). From the west, six possible routes make sense up the mountain.
 
 \- A: Starting from [Hattorigawa](https://maps.app.goo.gl/71sHYgrL3MTVQCKX6) station, the most cultural route passes by the [Yao Museum of History and Folklore](https://maps.app.goo.gl/mYRWnhor33PAxZSBA) and a few other cultural relics and on the route passes [Mizunomijizoin](https://maps.app.goo.gl/BypmGSzGSpjvfuC37) which seems to have a gorgeous view. This route is also quite long and reaches the Temple from the north.
 \- B: The easiest and obvious route would be from [Shigisan-guchi](https://maps.app.goo.gl/xFzt5H2BrYjYHRfXA) station or - using the Cable-car - [Takasuyama](https://maps.app.goo.gl/toUJ9NoXZAPmLskH9) Station. Direct would be super-short and skip the mountain ascension.
@@ -26,8 +26,8 @@ Anyways, this time the plan is to use route A+B. Having a look at the museum bef
 10:00 Meeting outside the Museum for those who want to skip it.
 11:45 Bento Lunch at [Mizunomijizoin](https://maps.app.goo.gl/BUDcxBfv92MRsXvf7) \- \(Bring it with you\!\)
 14:00 Heading to [Benzaiten Falls](https://maps.app.goo.gl/3quqykyUM6YhvQxr5)
-14:20 Arrival at the [Chogosonshi-ji](https://maps.app.goo.gl/NEghQK9EyTotDEA17) entrance *(hop-on point for people who want to take a different route)*
+14:20 Arrival at the [Chogosonshi-ji](https://maps.app.goo.gl/NEghQK9EyTotDEA17) entrance _(hop-on point for people who want to take a different route)_
 15:30 Finish visiting of the Temple area.
 17:05 Last cable car down
 
-This is the plan for now, lets talk more on [→ Discord](https://owddm.com/discord) in the *#meet-irl* channel.
+This is the plan for now, lets talk more on [→ Discord](https://owddm.com/discord) in the _#meet-irl_ channel.

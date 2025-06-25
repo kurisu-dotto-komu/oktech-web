@@ -1,6 +1,6 @@
 ---
-title: 'Workshop: Create a blog/portfolio in Astro and Hygraph'
-dateTime: '2024-03-23 17:00'
+title: "Workshop: Create a blog/portfolio in Astro and Hygraph"
+dateTime: "2024-03-23 17:00"
 duration: 150
 cover: ./478580.webp
 topics:

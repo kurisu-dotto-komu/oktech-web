@@ -1,6 +1,6 @@
 ---
 title: Early summer night in June Meetup
-dateTime: '2017-06-24 18:00'
+dateTime: "2017-06-24 18:00"
 cover: ./506739.webp
 meetupId: 239372174
 group: 15632202

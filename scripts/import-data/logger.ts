@@ -8,17 +8,17 @@ enum LogLevel {
   WARN = "WARN",
   ERROR = "ERROR",
   SUCCESS = "SUCCESS",
-  DEBUG = "DEBUG"
+  DEBUG = "DEBUG",
 }
 
 const COLORS = {
-  [LogLevel.INFO]: "\x1b[36m",    // Cyan
-  [LogLevel.WARN]: "\x1b[33m",    // Yellow
-  [LogLevel.ERROR]: "\x1b[31m",   // Red
+  [LogLevel.INFO]: "\x1b[36m", // Cyan
+  [LogLevel.WARN]: "\x1b[33m", // Yellow
+  [LogLevel.ERROR]: "\x1b[31m", // Red
   [LogLevel.SUCCESS]: "\x1b[32m", // Green
-  [LogLevel.DEBUG]: "\x1b[90m",   // Gray
+  [LogLevel.DEBUG]: "\x1b[90m", // Gray
   RESET: "\x1b[0m",
-  BOLD: "\x1b[1m"
+  BOLD: "\x1b[1m",
 };
 
 class Logger {
@@ -30,14 +30,14 @@ class Logger {
     const timestamp = this.getTimestamp();
     const color = COLORS[level];
     const prefix = `${COLORS.BOLD}[${timestamp}] ${color}${level}${COLORS.RESET}`;
-    
+
     // Use process.stdout.write for consistent output
     process.stdout.write(`${prefix} ${message}\n`);
-    
+
     // Log additional arguments if provided
     if (args.length > 0) {
-      args.forEach(arg => {
-        if (typeof arg === 'object') {
+      args.forEach((arg) => {
+        if (typeof arg === "object") {
           process.stdout.write(`  ${JSON.stringify(arg, null, 2)}\n`);
         } else {
           process.stdout.write(`  ${arg}\n`);
@@ -71,9 +71,9 @@ class Logger {
     const percentage = Math.round((current / total) * 100);
     const progressBar = this.createProgressBar(percentage);
     process.stdout.write(`\r${progressBar} ${percentage}% - ${message}`);
-    
+
     if (current === total) {
-      process.stdout.write('\n');
+      process.stdout.write("\n");
     }
   }
 
@@ -81,17 +81,17 @@ class Logger {
     const width = 20;
     const filled = Math.round((percentage / 100) * width);
     const empty = width - filled;
-    return `[${COLORS[LogLevel.SUCCESS]}${'█'.repeat(filled)}${COLORS.RESET}${' '.repeat(empty)}]`;
+    return `[${COLORS[LogLevel.SUCCESS]}${"█".repeat(filled)}${COLORS.RESET}${" ".repeat(empty)}]`;
   }
 
   // Clear line for updating progress
   clearLine(): void {
-    process.stdout.write('\r\x1b[K');
+    process.stdout.write("\r\x1b[K");
   }
 
   // Separator for visual organization
   separator(): void {
-    process.stdout.write(`${COLORS[LogLevel.INFO]}${'─'.repeat(60)}${COLORS.RESET}\n`);
+    process.stdout.write(`${COLORS[LogLevel.INFO]}${"─".repeat(60)}${COLORS.RESET}\n`);
   }
 
   // Section header for grouping related logs

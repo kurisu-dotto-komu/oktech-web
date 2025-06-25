@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"; // required here
+
 import { resolveInternalHref } from "../utils/urlResolver";
 
 export interface LinkReactProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {

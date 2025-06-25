@@ -1,10 +1,9 @@
-import React from "react";
 import Link from "./LinkReact";
 
 // Data helpers
 import { POSSIBLE_ROLES, ROLE_CONFIGS, getEvents, getPeople, getVenues } from "../data";
 import { generateEventRoutePaths } from "../utils/sitemap";
-import { getOGImageWithFallback } from "../utils/getOGImageWithFallback";
+import { getOGImageWithFallback } from "../utils/og";
 
 interface PageEntry {
   href: string;
@@ -49,20 +48,24 @@ const buildSections = async (): Promise<SectionEntry[]> => {
   const { topics } = await generateEventRoutePaths();
   sections.push({
     title: "Event Topics",
-    children: topics.map(topic => ({
-      href: `/events/topic/${topic}`,
-      title: topic.charAt(0).toUpperCase() + topic.slice(1).replace(/-/g, ' '),
-    })).sort((a, b) => a.title.localeCompare(b.title)),
+    children: topics
+      .map((topic) => ({
+        href: `/events/topic/${topic}`,
+        title: topic.charAt(0).toUpperCase() + topic.slice(1).replace(/-/g, " "),
+      }))
+      .sort((a, b) => a.title.localeCompare(b.title)),
   });
 
   // Event Locations section
   const { cities } = await generateEventRoutePaths();
   sections.push({
     title: "Event Locations",
-    children: cities.map(city => ({
-      href: `/events/location/${encodeURIComponent(city)}`,
-      title: city.charAt(0).toUpperCase() + city.slice(1),
-    })).sort((a, b) => a.title.localeCompare(b.title)),
+    children: cities
+      .map((city) => ({
+        href: `/events/location/${encodeURIComponent(city)}`,
+        title: city.charAt(0).toUpperCase() + city.slice(1),
+      }))
+      .sort((a, b) => a.title.localeCompare(b.title)),
   });
 
   // Community section
@@ -115,9 +118,7 @@ const buildSections = async (): Promise<SectionEntry[]> => {
   sections.push({
     title: "Sitemap",
     href: "/sitemap",
-    children: [
-      { href: "/sitemap.xml", title: "XML Sitemap" },
-    ],
+    children: [{ href: "/sitemap.xml", title: "XML Sitemap" }],
   });
 
   return sections;
@@ -135,7 +136,13 @@ interface Props {
 /**
  * Render a section with optional link and children
  */
-function Section({ section, showOGImages = false }: { section: SectionEntry; showOGImages?: boolean }) {
+function Section({
+  section,
+  showOGImages = false,
+}: {
+  section: SectionEntry;
+  showOGImages?: boolean;
+}) {
   return (
     <div className="mb-8">
       <h3 className="text-lg font-semibold mb-2">
@@ -152,8 +159,8 @@ function Section({ section, showOGImages = false }: { section: SectionEntry; sho
       </h3>
       {showOGImages && section.href && (
         <div className="mb-4">
-          <img 
-            src={getOGImageWithFallback(section.href)} 
+          <img
+            src={getOGImageWithFallback(section.href)}
             alt={`OG image for ${section.title}`}
             className="w-full h-auto object-cover rounded-lg shadow-md"
             loading="lazy"
@@ -161,13 +168,19 @@ function Section({ section, showOGImages = false }: { section: SectionEntry; sho
         </div>
       )}
       {section.children.length > 0 && (
-        <div className={showOGImages ? "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4" : "list-none space-y-1 md:ml-4"}>
+        <div
+          className={
+            showOGImages
+              ? "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4"
+              : "list-none space-y-1 md:ml-4"
+          }
+        >
           {section.children.map((child) => (
             <div key={child.href} className={showOGImages ? "flex flex-col" : ""}>
               {showOGImages && (
                 <div className="mb-2">
-                  <img 
-                    src={getOGImageWithFallback(child.href)} 
+                  <img
+                    src={getOGImageWithFallback(child.href)}
                     alt={`OG image for ${child.title}`}
                     className="w-full h-auto object-cover rounded-lg shadow-md aspect-[1200/630]"
                     loading="lazy"

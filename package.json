@@ -11,7 +11,9 @@
     "import": "npx tsx ./scripts/import-data",
     "import:overwrite-maps": "npx tsx ./scripts/import-data --overwrite-maps",
     "clear": "npx tsx ./scripts/import-data/clear",
-    "remove-fields": "npx tsx ./scripts/remove-fields.ts"
+    "remove-fields": "npx tsx ./scripts/remove-fields.ts",
+    "og-cache:clear": "npx tsx scripts/manage-og-cache.ts clear",
+    "og-cache:stats": "npx tsx scripts/manage-og-cache.ts stats"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",

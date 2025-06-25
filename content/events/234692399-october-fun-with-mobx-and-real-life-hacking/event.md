@@ -1,6 +1,6 @@
 ---
 title: October fun with MobX and Real life hacking
-dateTime: '2016-10-22 18:00'
+dateTime: "2016-10-22 18:00"
 cover: ./506739.webp
 meetupId: 234692399
 group: 15632202

@@ -1,6 +1,6 @@
 ---
 title: LLMs / GenAI in Practice
-dateTime: '2024-09-21 17:00'
+dateTime: "2024-09-21 17:00"
 duration: 120
 cover: ./034595.webp
 meetupId: 302886855

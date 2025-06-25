@@ -1,6 +1,6 @@
 ---
 title: Working Conditions in Japan Discussion
-dateTime: '2023-11-18 17:00'
+dateTime: "2023-11-18 17:00"
 duration: 120
 cover: ./506739.webp
 topics:

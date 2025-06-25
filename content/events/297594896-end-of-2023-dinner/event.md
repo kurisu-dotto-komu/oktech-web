@@ -1,6 +1,6 @@
 ---
 title: End of 2023 Dinner
-dateTime: '2023-12-23 17:00'
+dateTime: "2023-12-23 17:00"
 duration: 180
 cover: ./528173.webp
 topics:
@@ -26,13 +26,13 @@ In any case, we hope you have a good end of year and we see you again in 2024!
 
 Menu:
 
-* Flower salad
-* Renkon with Mustard
-* Beef+Daikon Oden
-* Satoimo Potato Fries
-* Deep Fried Chicken and Burdock
-* Assorted grilled Vegetables
-* Truffled Mushroom Pizza
-* Shiitake Mushroms and Sea Urchin Grilled in Soy Sauce
-* Vegetable Sushi
-* Dessert
+- Flower salad
+- Renkon with Mustard
+- Beef+Daikon Oden
+- Satoimo Potato Fries
+- Deep Fried Chicken and Burdock
+- Assorted grilled Vegetables
+- Truffled Mushroom Pizza
+- Shiitake Mushroms and Sea Urchin Grilled in Soy Sauce
+- Vegetable Sushi
+- Dessert

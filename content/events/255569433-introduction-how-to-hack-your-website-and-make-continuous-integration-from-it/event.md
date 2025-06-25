@@ -1,6 +1,6 @@
 ---
 title: Introduction how to hack your website and make continuous integration from it.
-dateTime: '2018-11-25 18:00'
+dateTime: "2018-11-25 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 255569433

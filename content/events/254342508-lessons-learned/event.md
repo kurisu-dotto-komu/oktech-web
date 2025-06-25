@@ -1,6 +1,6 @@
 ---
-title: 'Lessons Learned '
-dateTime: '2018-09-22 18:00'
+title: "Lessons Learned "
+dateTime: "2018-09-22 18:00"
 duration: 120
 cover: ./280682.webp
 meetupId: 254342508

@@ -11,11 +11,7 @@ export interface Props {
   description?: string;
 }
 
-const { 
-  title = "Sitemap", 
-  view = "list",
-  description 
-} = Astro.props;
+const { title = "Sitemap", view = "list", description } = Astro.props;
 
 const pageTitle = view === "og" ? `${title} - OG Images` : title;
 
@@ -43,37 +39,35 @@ const finalDescription = description || defaultDescriptions[view];
 ---
 
 <PageLayout title={pageTitle}>
-  {view === "list" ? (
-    <Section>
-      <div class="prose max-w-none">
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-3xl font-bold mt-0">{title}</h2>
-          <ButtonGroup buttons={buttons} active={view} />
+  {
+    view === "list" ? (
+      <Section>
+        <div class="prose max-w-none">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold mt-0">{title}</h2>
+            <ButtonGroup buttons={buttons} active={view} />
+          </div>
+          <p>
+            {finalDescription} <Link href="/sitemap.xml">machine-readable XML sitemap</Link>.
+          </p>
+          <SiteMapTree />
         </div>
-        <p>
-          {finalDescription}
-          {" "}
-          <Link href="/sitemap.xml">machine-readable XML sitemap</Link>.
-        </p>
-        <SiteMapTree />
-      </div>
-    </Section>
-  ) : (
-    <section class="py-18">
-      <div class="mx-auto w-full max-w-[1800px] px-4 md:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-3xl font-bold">{title}</h2>
-          <ButtonGroup buttons={buttons} active={view} />
+      </Section>
+    ) : (
+      <section class="py-18">
+        <div class="mx-auto w-full max-w-[1800px] px-4 md:px-6 lg:px-8">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold">{title}</h2>
+            <ButtonGroup buttons={buttons} active={view} />
+          </div>
+          <p class="mb-4">
+            {finalDescription} <Link href="/sitemap.xml">Download XML sitemap</Link>.
+          </p>
         </div>
-        <p class="mb-4">
-          {finalDescription}
-          {" "}
-          <Link href="/sitemap.xml">Download XML sitemap</Link>.
-        </p>
-      </div>
-      <div class="mx-auto w-full max-w-[1800px] px-0 md:px-6 lg:px-8">
-        <SiteMapTree showOGImages={true} />
-      </div>
-    </section>
-  )}
+        <div class="mx-auto w-full max-w-[1800px] px-0 md:px-6 lg:px-8">
+          <SiteMapTree showOGImages={true} />
+        </div>
+      </section>
+    )
+  }
 </PageLayout>

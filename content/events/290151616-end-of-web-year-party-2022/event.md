@@ -1,6 +1,6 @@
 ---
 title: End of Web-Year (Party) 2022
-dateTime: '2022-12-30 20:00'
+dateTime: "2022-12-30 20:00"
 duration: 120
 cover: ./475265.webp
 topics:

@@ -1,0 +1,36 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import EventsView from "../../components/EventsView.astro";
+
+// Parse the view from the path
+const { eventsView } = Astro.params;
+const view = eventsView || "grid"; // Default to grid if no view specified
+
+// Validate view
+const validViews = ["grid", "compact", "gallery"];
+if (!validViews.includes(view)) {
+  return Astro.redirect("/events");
+}
+
+// Get query parameters
+const url = new URL(Astro.request.url);
+const searchParams = url.searchParams;
+
+const search = searchParams.get("search") || "";
+const topics = searchParams.get("topics")?.split(",").filter(Boolean) || [];
+const location = searchParams.get("location") || "";
+const sort = searchParams.get("sort") || "date-desc";
+
+// Static paths generation
+export async function getStaticPaths() {
+  return [
+    { params: { eventsView: undefined } }, // /events
+    { params: { eventsView: "compact" } }, // /events/compact
+    { params: { eventsView: "gallery" } }, // /events/gallery
+  ];
+}
+---
+
+<PageLayout title="Events">
+  <EventsView view={view} search={search} topics={topics} location={location} sort={sort} />
+</PageLayout>

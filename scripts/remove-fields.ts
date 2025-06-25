@@ -27,10 +27,7 @@ const FILE_PATTERNS = {
 
 type ContentType = keyof typeof CONTENT_DIRS;
 
-async function removeFields(
-  contentType: ContentType,
-  fieldsToRemove: string[]
-): Promise<void> {
+async function removeFields(contentType: ContentType, fieldsToRemove: string[]): Promise<void> {
   const baseDir = CONTENT_DIRS[contentType];
   const filePattern = FILE_PATTERNS[contentType];
 

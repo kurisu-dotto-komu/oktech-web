@@ -1,4 +1,5 @@
 - we are running a dev server in the background so you don't need to run it yourself
 - we are using daisy ui v5 , so always use these components when possible, and use it's theme classes
-- always use astro lucide icons when possible
+- always use astro lucide icons when possible; import { Icon } from "astro-icon/components"
 - never make git commands like commits unless i explicitly instruct you to
+- for internal links, use the Link and LinkReact components as they do prefixing

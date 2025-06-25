@@ -1,6 +1,6 @@
 ---
 title: June Meetup - Cool web stuff to stave off the heat!
-dateTime: '2016-06-18 18:00'
+dateTime: "2016-06-18 18:00"
 duration: 120
 cover: ./506739.webp
 meetupId: 231734870

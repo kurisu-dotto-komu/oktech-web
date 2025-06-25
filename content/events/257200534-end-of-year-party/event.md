@@ -1,6 +1,6 @@
 ---
 title: End of Year Party
-dateTime: '2018-12-28 20:00'
+dateTime: "2018-12-28 20:00"
 duration: 120
 cover: ./073324.webp
 meetupId: 257200534

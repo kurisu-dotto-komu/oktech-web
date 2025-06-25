@@ -1,6 +1,6 @@
 ---
 title: (Casual)  Programming Night
-dateTime: '2023-05-30 17:00'
+dateTime: "2023-05-30 17:00"
 duration: 240
 cover: ./506739.webp
 topics:
