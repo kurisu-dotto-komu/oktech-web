@@ -3,3 +3,4 @@
 - always use astro lucide icons when possible; import { Icon } from "astro-icon/components"
 - never make git commands like commits unless i explicitly instruct you to
 - for internal links, use the Link and LinkReact components as they do prefixing
+- never use --headed mode for playwright tests, always use the default headless option
