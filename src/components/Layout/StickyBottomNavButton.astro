@@ -1,0 +1,55 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import Link from "@/components/Common/Link.astro";
+
+interface Props {
+  href?: string;
+  title?: string;
+  subtitle?: string;
+  image?: ImageMetadata;
+  next?: boolean;
+  class?: string;
+}
+
+const { href, title, subtitle, image, next = false, class: className } = Astro.props;
+
+const isNext = next;
+---
+
+{
+  href ? (
+    <Link
+      href={href}
+      class={`btn h-12 btn-soft flex-1 p-0 px-1 ${isNext ? "flex-row-reverse" : ""} ${className || ""}`}
+      title={title}
+    >
+      <Icon
+        name={`lucide:chevron-${isNext ? "right" : "left"}`}
+        size={20}
+        class="mx-1 md:mx-2 flex-shrink-0"
+      />
+
+      {image && (
+        <figure class="aspect-video h-full flex-shrink-0 overflow-hidden rounded bg-base-300 hidden sm:block">
+          <Image
+            src={image}
+            alt={title || ""}
+            width={80}
+            height={80}
+            class="w-full h-full object-cover"
+          />
+        </figure>
+      )}
+
+      <div class={`flex flex-col flex-1 px-2 py-3  ${isNext ? "text-right" : "text-left"}`}>
+        <div class="flex gap-1 items-baseline text-xs opacity-70 font-normal flex-col md:flex-row">
+          {subtitle && <div class="">{subtitle}</div>}
+        </div>
+        <div class="text-xs hidden sm:inline-block md:text-sm font-semibold truncate lg:max-w-60 overflow-hidden">
+          {title}
+        </div>
+      </div>
+    </Link>
+  ) : null
+}

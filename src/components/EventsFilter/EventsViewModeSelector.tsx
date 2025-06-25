@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import LinkReact from "@/components/LinkReact";
+import LinkReact from "@/components/Common/LinkReact";
 import { useEventsFilter } from "./EventsFilterProvider";
 
 interface EventsViewModeSelectorProps {
   currentView: string;
 }
 
-export const EventsViewModeSelector: React.FC<EventsViewModeSelectorProps> = ({ currentView }) => {
+export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorProps) {
   const { currentFilters } = useEventsFilter();
 
   const views = useMemo(() => {
@@ -50,4 +50,4 @@ export const EventsViewModeSelector: React.FC<EventsViewModeSelectorProps> = ({ 
       ))}
     </div>
   );
-};
+}

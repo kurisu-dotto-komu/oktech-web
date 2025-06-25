@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from "react";
 import Fuse from "fuse.js";
 
 interface EventItem {
@@ -46,7 +46,7 @@ export const useEventsFilter = () => {
 };
 
 interface EventFilterProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   items: EventItem[];
   availableFilters: {
     topics: string[];
@@ -57,14 +57,14 @@ interface EventFilterProviderProps {
   onFiltersChange?: (filters: EventFilters, filteredItems: EventItem[]) => void;
 }
 
-export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({
+export function EventFilterProvider({
   children,
   items,
   availableFilters,
   sortOptions,
   initialFilters,
   onFiltersChange,
-}) => {
+}: EventFilterProviderProps) {
   const [currentFilters, setCurrentFilters] = useState<EventFilters>(() => {
     if (typeof window !== "undefined") {
       console.log("[EventsFilterProvider] Initial URL:", window.location.href);
@@ -278,4 +278,4 @@ export const EventFilterProvider: React.FC<EventFilterProviderProps> = ({
   };
 
   return <EventFilterContext.Provider value={value}>{children}</EventFilterContext.Provider>;
-};
+}

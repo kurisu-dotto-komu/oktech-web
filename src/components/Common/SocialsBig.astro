@@ -1,0 +1,8 @@
+---
+import { SOCIALS } from "@/config";
+import IconCard from "./IconCard.astro";
+---
+
+<div class="flex flex-wrap gap-4 items-start justify-center">
+  {SOCIALS.map((social) => <IconCard {...social} />)}
+</div>

@@ -8,12 +8,12 @@ interface EventsFilterDropdownProps {
   multiple?: boolean;
 }
 
-export const EventsFilterDropdown: React.FC<EventsFilterDropdownProps> = ({
+export default function EventsFilterDropdown({
   id,
   label,
   options,
   multiple = false,
-}) => {
+}: EventsFilterDropdownProps) {
   const { currentFilters, updateFilter, clearFilter } = useEventsFilter();
   const dropdownRef = useRef<HTMLDetailsElement>(null);
 
@@ -120,4 +120,4 @@ export const EventsFilterDropdown: React.FC<EventsFilterDropdownProps> = ({
       </ul>
     </details>
   );
-};
+}

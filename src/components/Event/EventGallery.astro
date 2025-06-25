@@ -1,0 +1,26 @@
+---
+import Section from "@/components/Common/Section.astro";
+import EventGalleryImages from "./EventGalleryImages.astro";
+import { resolveEvent } from "@/data";
+import { getCollection } from "astro:content";
+
+interface Props {
+  eventSlug?: string;
+  class?: string;
+}
+
+const event = await resolveEvent(Astro);
+
+const galleryImages = await getCollection(
+  "eventGalleryImage",
+  (img) => img.data.event.id === event.id,
+);
+---
+
+{
+  galleryImages.length > 0 && (
+    <Section wide grid title="Gallery">
+      <EventGalleryImages eventSlug={Astro.props.eventSlug} />
+    </Section>
+  )
+}

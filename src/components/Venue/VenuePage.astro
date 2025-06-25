@@ -1,11 +1,11 @@
 ---
-import { resolveVenue, getEvents } from "../../data";
+import { resolveVenue, getEvents } from "@/data";
 import VenueInfo from "./VenueInfo.astro";
 import VenueNav from "./VenueNav.astro";
-import EventFeatured from "../EventFeatured.astro";
-import Section from "../Section.astro";
-import StickyNavigation from "../StickyNavigation.astro";
-import PageLayout from "../../layouts/PageLayout.astro";
+import EventFeatured from "@/components/Event/EventFeatured.astro";
+import Section from "@/components/Common/Section.astro";
+import StickyNavigation from "@/components/Layout/StickyNavigation.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
 import { Image } from "astro:assets";
 
 const venue = await resolveVenue(Astro);
@@ -19,7 +19,7 @@ const venueEvents = allEvents.filter(
 // Import the venue markdown content if it exists
 let Content;
 try {
-  const module = await import(`../../content/venues/${venue.id}/venue.md`);
+  const module = await import(`../../../content/venues/${venue.id}/venue.md`);
   Content = module.Content;
 } catch (error) {
   // No markdown content for this venue

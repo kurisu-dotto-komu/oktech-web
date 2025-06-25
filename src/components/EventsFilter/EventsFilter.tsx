@@ -1,8 +1,8 @@
 import { EventFilterProvider } from "./EventsFilterProvider";
-import { EventsSearchInput } from "./EventsSearchInput";
-import { EventsFilterDropdown } from "./EventsFilterDropdown";
-import { EventsSortSelector } from "./EventsSortSelector";
-import { EventsActiveFilters } from "./EventsActiveFilters";
+import EventsSearchInput from "./EventsSearchInput";
+import EventsFilterDropdown from "./EventsFilterDropdown";
+import EventsSortSelector from "./EventsSortSelector";
+import EventsActiveFilters from "./EventsActiveFilters";
 import { EventsViewModeSelector } from "./EventsViewModeSelector";
 
 interface EventsFilterProps {
@@ -17,14 +17,14 @@ interface EventsFilterProps {
   onFiltersChange?: (filters: any, filteredItems: any[]) => void;
 }
 
-export const EventsFilter: React.FC<EventsFilterProps> = ({
+export function EventsFilter({
   items,
   availableFilters,
   sortOptions,
   currentView = "grid",
   initialFilters,
   onFiltersChange,
-}) => {
+}: EventsFilterProps) {
   return (
     <EventFilterProvider
       items={items}
@@ -68,4 +68,4 @@ export const EventsFilter: React.FC<EventsFilterProps> = ({
       </div>
     </EventFilterProvider>
   );
-};
+}

@@ -1,0 +1,45 @@
+---
+import ThemePicker from "@/components/Common/ThemePicker.astro";
+import Socials from "@/components/Common/Socials.astro";
+import Container from "@/components/Common/Container.astro";
+import { MENU, SITE } from "@/config";
+import Link from "@/components/Common/Link.astro";
+import { formatDate } from "@/utils/formatDate";
+import { Icon } from "astro-icon/components";
+import Brand from "@/components/Common/Brand";
+---
+
+<footer class="bg-base-300 text-base-content">
+  <Container class="flex flex-col py-10 gap-8 sm:gap-4">
+    <div class="flex justify-between items-center flex-col sm:flex-row gap-8">
+      <nav class="flex gap-1 flex-wrap justify-center -mx-4">
+        {
+          MENU.map((item) => (
+            <Link href={item.href} class="btn btn-ghost gap-2 text-sm items-center justify-start">
+              {item.icon && <Icon name={item.icon} />}
+              {item.label}
+            </Link>
+          ))
+        }
+      </nav>
+      <div class="flex gap-4 items-center">
+        <Socials />
+        <ThemePicker />
+      </div>
+    </div>
+    <div class="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">
+      <div>
+        <Brand fullText />
+      </div>
+      <div class="text-xs">
+        <a
+          href="https://github.com/owddm/owddm.github.io/commit/e83f4545b44cd939e4f8ea390afbd83697e4c885"
+          target="_blank"
+          class="link link-hover"
+          >Built with <code class="badge badge-xs">{`<3`}</code> on
+          {formatDate(new Date(), "long")}
+        </a>
+      </div>
+    </div>
+  </Container>
+</footer>

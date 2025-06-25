@@ -1,0 +1,17 @@
+---
+import RoleBadge from "./RoleBadge.astro";
+import { type Role } from "@/data";
+
+interface Props {
+  roles: Role[];
+  compact?: boolean;
+}
+
+const { roles, compact = false } = Astro.props;
+
+if (roles.length === 0) return null;
+
+const sortedRoles = roles.sort((a: Role, b: Role) => a.localeCompare(b));
+---
+
+{sortedRoles.map((role: Role) => <RoleBadge role={role} compact={compact} />)}

@@ -1,0 +1,68 @@
+---
+import { Icon } from "astro-icon/components";
+import { MENU, SITE } from "@/config";
+import Container from "@/components/Common/Container.astro";
+import Link from "@/components/Common/Link.astro";
+import Button from "@/components/Common/Button.astro";
+import Brand from "@/components/Common/Brand.tsx";
+
+const items = MENU.filter((item) => item.header !== false);
+---
+
+<div class="fixed top-0 z-50 shadow-sm soft-glass navbar">
+  <Container class="hidden md:flex justify-between">
+    <div class="navbar-start -ml-4">
+      <Link href="/" class="btn btn-ghost p-1">
+        <Brand />
+      </Link>
+    </div>
+    <div class="navbar-end -mr-4">
+      <div class="flex">
+        {
+          items.map((item) => (
+            <Link href={item.href} class="btn btn-ghost gap-3 text-sm items-center justify-start">
+              {/* <Icon name={item.icon} /> */}
+              {item.label}
+            </Link>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</div>
+
+<!-- Mobile Navbar: soft-glass cannot have a soft-glass parent -->
+<div class="fixed top-0 navbar z-60 md:hidden">
+  <Container class="flex justify-between">
+    <div class="navbar-start">
+      <Link href="/" class="btn btn-ghost p-1">
+        <Brand />
+      </Link>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown dropdown-end">
+        <label tabindex="0" class="btn btn-ghost bg-base-100/10">
+          <Icon name="lucide:menu" size={24} />
+        </label>
+        <ul
+          tabindex="0"
+          class="menu menu-lg dropdown-content mt-5 p-2 soft-glass shadow-sm w-42 block rounded-lg"
+        >
+          {
+            items.map((item) => (
+              <li>
+                <Link
+                  href={item.href}
+                  class="btn btn-ghost gap-3 text-sm items-center justify-start"
+                >
+                  {item.icon && <Icon name={item.icon} />}
+                  {item.label}
+                </Link>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Container>
+</div>

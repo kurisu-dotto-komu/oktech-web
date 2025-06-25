@@ -1,6 +1,6 @@
 import { useEventsFilter } from "./EventsFilterProvider";
 
-export const EventsSortSelector: React.FC = () => {
+export default function EventsSortSelector() {
   const { currentFilters, updateFilter, sortOptions } = useEventsFilter();
 
   const handleSortChange = (value: string) => {
@@ -22,4 +22,4 @@ export const EventsSortSelector: React.FC = () => {
       </select>
     </div>
   );
-};
+}
