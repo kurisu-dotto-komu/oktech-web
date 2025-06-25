@@ -1,4 +1,4 @@
-import { resolveInternalHref, resolveFullUrl } from "./urlResolver";
+import { resolveInternalHref, resolveFullUrl } from "../urlResolver";
 
 /**
  * Check if a given route has a specific OG image handler
@@ -13,15 +13,15 @@ function hasOGImageHandler(href: string): boolean {
       cleanHref = "/" + cleanHref;
     }
   }
-  
+
   // Home page
   if (cleanHref === "/") return true;
-  
+
   // Dynamic routes
   if (cleanHref.startsWith("/event/") && cleanHref !== "/events") return true;
   if (cleanHref.startsWith("/person/")) return true;
   if (cleanHref.startsWith("/venue/")) return true;
-  
+
   return false;
 }
 
@@ -40,15 +40,15 @@ function getOGImagePath(href: string): string {
       cleanHref = "/" + cleanHref;
     }
   }
-  
+
   // For sitemap.xml, always use default since it's not a regular page
   if (cleanHref === "/sitemap.xml") {
     return "/og.png";
   }
-  
+
   // Check if this route has a specific OG image handler
   const hasHandler = hasOGImageHandler(href);
-  
+
   if (hasHandler) {
     // Construct the specific OG image path using clean href
     if (cleanHref === "/") {
@@ -59,7 +59,7 @@ function getOGImagePath(href: string): string {
       return `${cleanHref}/og.png`;
     }
   }
-  
+
   // Fallback to default OG image
   return "/og.png";
 }
@@ -72,11 +72,15 @@ function getOGImagePath(href: string): string {
  */
 export function getOGImageWithFallback(href: string, absolute: boolean = false): string {
   const ogPath = getOGImagePath(href);
-  
+
   if (absolute) {
     return resolveFullUrl(ogPath);
   }
-  
+
   return resolveInternalHref(ogPath);
 }
 
+/**
+ * Re-export for backward compatibility
+ */
+export { hasOGImageHandler, getOGImagePath };

@@ -1,9 +1,9 @@
-import type { APIRoute } from "astro";
+import React from "react"; // required here
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
-import React from "react";
+import { OGImageCache } from "./ogCache";
 
-interface OGHandlerOptions {
+export interface OGHandlerOptions {
   component: React.ComponentType<any>;
   props: any;
   width?: number;
@@ -17,6 +17,22 @@ export async function createOGImageHandler({
   height = 630,
 }: OGHandlerOptions): Promise<Response> {
   try {
+    const cache = new OGImageCache();
+
+    // Check if we have a cached version
+    const cachedBuffer = await cache.getCachedImage(props);
+    if (cachedBuffer && process.env.NODE_ENV !== "development") {
+      // console.log("Using cached OG image");
+      return new Response(cachedBuffer, {
+        headers: {
+          "Content-Type": "image/png",
+          "Cache-Control": "public, max-age=31536000, immutable",
+        },
+      });
+    }
+
+    // console.log("Generating new OG image");
+
     // Fetch fonts - including Japanese font support
     const [regularFont, boldFont, japaneseFont, japaneseBoldFont] = await Promise.all([
       fetch("https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.ttf").then(
@@ -26,12 +42,12 @@ export async function createOGImageHandler({
         (res) => res.arrayBuffer(),
       ),
       // Noto Sans JP for Japanese characters
-      fetch("https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-400-normal.ttf").then(
-        (res) => res.arrayBuffer(),
-      ),
-      fetch("https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-700-normal.ttf").then(
-        (res) => res.arrayBuffer(),
-      ),
+      fetch(
+        "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-400-normal.ttf",
+      ).then((res) => res.arrayBuffer()),
+      fetch(
+        "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-700-normal.ttf",
+      ).then((res) => res.arrayBuffer()),
     ]);
 
     // Generate the markup using the provided component
@@ -78,6 +94,9 @@ export async function createOGImageHandler({
     const pngData = resvg.render();
     const pngBuffer = pngData.asPng();
 
+    // Cache the generated image
+    await cache.cacheImage(props, pngBuffer);
+
     return new Response(pngBuffer, {
       headers: {
         "Content-Type": "image/png",
@@ -96,24 +115,25 @@ export async function loadImageAsBase64(imagePath: string): Promise<string | nul
   try {
     const fs = await import("fs/promises");
     const sharp = await import("sharp");
-    
+
     // Read the image file
     const imageBuffer = await fs.readFile(imagePath);
     const extension = imagePath.split(".").pop()?.toLowerCase();
-    
+
     // Convert WebP to JPEG for better compatibility with Satori
     // Also resize if needed to prevent memory issues
     if (extension === "webp") {
-      const convertedBuffer = await sharp.default(imageBuffer)
-        .resize(600, 600, { 
+      const convertedBuffer = await sharp
+        .default(imageBuffer)
+        .resize(600, 600, {
           fit: "inside",
-          withoutEnlargement: true 
+          withoutEnlargement: true,
         })
         .jpeg({ quality: 85 })
         .toBuffer();
       return `data:image/jpeg;base64,${convertedBuffer.toString("base64")}`;
     }
-    
+
     // For other formats, use as-is
     const mimeType = extension === "png" ? "image/png" : "image/jpeg";
     return `data:${mimeType};base64,${imageBuffer.toString("base64")}`;

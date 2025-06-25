@@ -1,5 +1,4 @@
-import React from "react";
-import { SITE } from "../config";
+import { SITE } from "../../config";
 import OGLayout from "./OGLayout";
 
 interface PersonData {

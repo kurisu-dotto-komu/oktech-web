@@ -1,5 +1,3 @@
-import React from "react";
-import { SITE } from "../config";
 import OGLayout, { CalendarIcon, LocationIcon, IconWrapper } from "./OGLayout";
 
 interface EventData {
@@ -44,19 +42,18 @@ export default function OGEvent({ event, mapImageBase64, coverImageBase64 }: OGE
     ? `Topics: ${event.data.topics.join(", ")}`
     : "Join us for this exciting tech meetup event!";
 
-  const bottomLeft =
-    coverImageBase64 ? (
-      <img
-        src={coverImageBase64}
-        style={{
-          width: "320px",
-          height: "180px", // 16:9 aspect ratio
-          borderRadius: "12px",
-          border: "2px solid rgba(255, 255, 255, 0.2)",
-          objectFit: "cover",
-        }}
-      />
-    ) : undefined;
+  const bottomLeft = coverImageBase64 ? (
+    <img
+      src={coverImageBase64}
+      style={{
+        width: "320px",
+        height: "180px", // 16:9 aspect ratio
+        borderRadius: "12px",
+        border: "2px solid rgba(255, 255, 255, 0.2)",
+        objectFit: "cover",
+      }}
+    />
+  ) : undefined;
 
   return (
     <OGLayout bottomLeft={bottomLeft}>
@@ -107,7 +104,9 @@ export default function OGEvent({ event, mapImageBase64, coverImageBase64 }: OGE
           </div>
         </div>
         {mapImageBase64 && event.venue?.title && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}
+          >
             <img
               src={mapImageBase64}
               style={{
@@ -118,10 +117,10 @@ export default function OGEvent({ event, mapImageBase64, coverImageBase64 }: OGE
                 objectFit: "cover",
               }}
             />
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}>
-              <span style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "14px" }}>
-                Venue
-              </span>
+            <div
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}
+            >
+              <span style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "14px" }}>Venue</span>
               <span style={{ color: "white", fontSize: "16px", fontWeight: 500 }}>
                 {event.venue.title}
               </span>
