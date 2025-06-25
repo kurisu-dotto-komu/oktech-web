@@ -26,3 +26,6 @@ pnpm-debug.log*
 
 # OG Image Cache
 .cache/
+
+# playwright reports
+test/results/

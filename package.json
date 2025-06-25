@@ -13,7 +13,9 @@
     "clear": "npx tsx ./scripts/import-data/clear",
     "remove-fields": "npx tsx ./scripts/remove-fields.ts",
     "og-cache:clear": "npx tsx scripts/manage-og-cache.ts clear",
-    "og-cache:stats": "npx tsx scripts/manage-og-cache.ts stats"
+    "og-cache:stats": "npx tsx scripts/manage-og-cache.ts stats",
+    "test:install": "./.devcontainer/installPlaywright.sh",
+    "test": "playwright test"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
@@ -43,6 +45,7 @@
     "@faker-js/faker": "^9.8.0",
     "@iconify-json/cib": "^1.2.2",
     "@iconify-json/lucide": "^1.2.52",
+    "@playwright/test": "^1.53.1",
     "@rollup/plugin-yaml": "^4.1.2",
     "@tailwindcss/typography": "^0.5.16",
     "dotenv": "^16.5.0",
