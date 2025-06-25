@@ -1,0 +1,34 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  value: string;
+  placeholder?: string;
+}
+
+const { value, placeholder = "Search..." } = Astro.props;
+---
+
+<div class="form-control">
+  <label class="input input-bordered flex items-center gap-2">
+    <Icon name="lucide:search" class="w-4 h-4 opacity-70" />
+    <input 
+      type="text" 
+      id="search-input"
+      class="grow" 
+      placeholder={placeholder}
+      value={value}
+      data-filter="search"
+    />
+    {value && (
+      <button 
+        type="button" 
+        class="btn btn-ghost btn-xs"
+        id="clear-search"
+        aria-label="Clear search"
+      >
+        <Icon name="lucide:x" class="w-4 h-4" />
+      </button>
+    )}
+  </label>
+</div>

@@ -28,8 +28,8 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
     icon: "lucide:calendar",
   },
   {
-    label: "Community",
-    href: "/community",
+    label: "People",
+    href: "/people",
     icon: "lucide:users",
   },
   {

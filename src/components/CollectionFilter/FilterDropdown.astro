@@ -1,0 +1,68 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  id: string;
+  label: string;
+  options: string[];
+  selected: string[];
+  multiple?: boolean;
+}
+
+const { id, label, options, selected, multiple = false } = Astro.props;
+---
+
+<div class="dropdown dropdown-bottom">
+  <div 
+    tabindex="0" 
+    role="button" 
+    class="btn btn-sm"
+    data-filter-dropdown={id}
+  >
+    {label}
+    {selected.length > 0 && (
+      <span class="badge badge-primary badge-sm">{selected.length}</span>
+    )}
+    <Icon name="lucide:chevron-down" class="w-4 h-4" />
+  </div>
+  <div 
+    tabindex="0" 
+    class="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 overflow-y-auto"
+  >
+    {options.map((option) => (
+      <label class="label cursor-pointer justify-start gap-2 hover:bg-base-200 rounded px-2">
+        {multiple ? (
+          <input 
+            type="checkbox" 
+            class="checkbox checkbox-sm checkbox-primary"
+            value={option}
+            checked={selected.includes(option)}
+            data-filter={id}
+            data-multiple="true"
+          />
+        ) : (
+          <input 
+            type="radio" 
+            name={`filter-${id}`}
+            class="radio radio-sm radio-primary"
+            value={option}
+            checked={selected.includes(option)}
+            data-filter={id}
+            data-multiple="false"
+          />
+        )}
+        <span class="label-text capitalize">{option}</span>
+      </label>
+    ))}
+    {selected.length > 0 && (
+      <div class="divider my-1"></div>
+      <button 
+        type="button"
+        class="btn btn-ghost btn-xs btn-block"
+        data-clear-filter={id}
+      >
+        Clear
+      </button>
+    )}
+  </div>
+</div>

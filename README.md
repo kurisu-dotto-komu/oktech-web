@@ -1,8 +1,8 @@
 ## TODO
 
-https://docs.astro.build/en/guides/view-transitions/
+Check that responsiveStyles images are being applied
 
-Move the event featured icon to the map
+https://docs.astro.build/en/guides/view-transitions/
 
 Reduce confusion with slug/id definition
 

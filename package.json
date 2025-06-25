@@ -23,6 +23,7 @@
     "astro": "^5.10.1",
     "astro-icon": "^1.1.5",
     "daisyui": "^5.0.43",
+    "fuse.js": "^7.1.0",
     "gray-matter": "^4.0.3",
     "osm-static-maps": "^4.0.2",
     "puppeteer": "^24.10.2",

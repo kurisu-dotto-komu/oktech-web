@@ -1,0 +1,238 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import { getPeople } from "../../data";
+import CollectionFilter from "../../components/CollectionFilter/CollectionFilter.astro";
+import PersonSummary from "../../components/PersonSummary.astro";
+import PersonCompact from "../../components/PersonCompact.astro";
+import Grid from "../../components/Grid.astro";
+import Section from "../../components/Section.astro";
+
+// Parse the view from the path
+const { peopleView } = Astro.params;
+const view = peopleView || "grid"; // Default to grid if no view specified
+
+// Validate view
+const validViews = ["grid", "compact"];
+if (!validViews.includes(view)) {
+  return Astro.redirect("/people");
+}
+
+// Get query parameters
+const url = new URL(Astro.request.url);
+const searchParams = url.searchParams;
+
+const search = searchParams.get("search") || "";
+const selectedRoles = searchParams.get("roles")?.split(",").filter(Boolean) || [];
+const sort = searchParams.get("sort") || "name-asc";
+
+// Get all people
+const allPeople = await getPeople();
+
+// Extract unique roles dynamically from people data
+const allRoles = new Set<string>();
+allPeople.forEach(person => {
+  person.roles?.forEach(role => allRoles.add(role));
+});
+const availableRoles = Array.from(allRoles).sort();
+
+// No server-side filtering - render all people
+// Client-side script will handle all filtering
+const sortedPeople = allPeople;
+
+// Prepare data for client-side
+const collectionData = {
+  items: allPeople.map(person => ({
+    id: person.id,
+    title: person.name,
+    bio: person.bio,
+    company: person.company,
+    roles: person.roles || [],
+    slug: person.id,
+  })),
+  filters: {
+    roles: availableRoles,
+  }
+};
+
+// Sort options for people (only name)
+const sortOptions = [
+  { value: "name-asc", label: "A to Z" },
+  { value: "name-desc", label: "Z to A" }
+];
+
+// Static paths generation
+export async function getStaticPaths() {
+  return [
+    { params: { peopleView: undefined } }, // /people
+    { params: { peopleView: "compact" } }, // /people/compact
+  ];
+}
+---
+
+<PageLayout title="People">
+  <style>
+    /* Hide filters by default (no-JS fallback) */
+    #collection-filter-wrapper { display: none; }
+    /* Show filters when JS is enabled */
+    html.js #collection-filter-wrapper { display: block; }
+    /* Hide items when filters are active to prevent flicker */
+    html.js.has-filters [data-item-id] { visibility: hidden; }
+  </style>
+  
+  <script is:inline>
+    // This runs immediately before anything else
+    document.documentElement.classList.add('js');
+    
+    // Check if there are any filters in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasFilters = urlParams.get('search') || 
+                      urlParams.get('roles') || 
+                      (urlParams.get('sort') && urlParams.get('sort') !== 'name-asc');
+    
+    if (hasFilters) {
+      document.documentElement.classList.add('has-filters');
+    }
+  </script>
+  
+  <Section class="text-center">
+    <h1 class="text-4xl font-bold mb-4">People</h1>
+    <p class="text-lg text-base-content/70">
+      Meet the amazing people who make our events possible
+    </p>
+  </Section>
+  
+  <div class="container mx-auto px-4">
+    <div id="collection-filter-wrapper">
+      <CollectionFilter
+      collection="people"
+      currentFilters={{
+        search,
+        roles: selectedRoles,
+        sort,
+        view
+      }}
+      availableFilters={collectionData.filters}
+      sortOptions={sortOptions}
+    />
+    </div>
+    
+    <div 
+      id="collection-container"
+      data-collection="people"
+      data-items={JSON.stringify(collectionData.items)}
+      data-current-filters={JSON.stringify({ search, roles: selectedRoles, sort, view })}
+      data-available-filters={JSON.stringify(collectionData.filters)}
+      data-sort-options={JSON.stringify(sortOptions)}
+    >
+      {view === "compact" ? (
+        <Section wide class="flex flex-col">
+          {sortedPeople.map((person) => (
+            <div data-item-id={person.id}>
+              <PersonCompact person={person} showRoles />
+            </div>
+          ))}
+        </Section>
+      ) : (
+        <Section wide>
+          <Grid>
+            {sortedPeople.map((person) => (
+              <div data-item-id={person.id} class="max-w-sm mx-auto w-full">
+                <PersonSummary person={person} showRoles />
+              </div>
+            ))}
+          </Grid>
+        </Section>
+      )}
+    </div>
+  </div>
+  
+  <script is:inline data-collection-items={JSON.stringify(collectionData.items)}>
+    // This runs immediately, blocking render to prevent flicker
+    (function() {
+      // Get URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const filters = {
+        search: urlParams.get('search') || '',
+        roles: urlParams.get('roles')?.split(',').filter(Boolean) || [],
+        sort: urlParams.get('sort') || 'name-asc'
+      };
+      
+      // Get items data from script tag
+      const scriptTag = document.currentScript;
+      const items = JSON.parse(scriptTag.dataset.collectionItems);
+      
+      // Quick filter function
+      let filtered = items;
+      
+      // Apply filters
+      if (filters.roles.length > 0) {
+        filtered = filtered.filter(item => 
+          item.roles?.some(role => filters.roles.includes(role))
+        );
+      }
+      
+      if (filters.search) {
+        const searchLower = filters.search.toLowerCase();
+        filtered = filtered.filter(item => 
+          item.title.toLowerCase().includes(searchLower) ||
+          item.bio?.toLowerCase().includes(searchLower) ||
+          item.company?.toLowerCase().includes(searchLower)
+        );
+      }
+      
+      // Apply sorting
+      if (filters.sort === 'name-desc') {
+        filtered.sort((a, b) => b.title.localeCompare(a.title));
+      } else {
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+      }
+      
+      // Create a set of visible IDs
+      const visibleIds = new Set(filtered.map(item => item.id));
+      
+      // Hide non-matching items and reorder
+      document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('collection-container');
+        const items = container.querySelectorAll('[data-item-id]');
+        const itemsMap = new Map();
+        
+        // First pass: hide non-matching items
+        items.forEach(item => {
+          const id = item.getAttribute('data-item-id');
+          itemsMap.set(id, item);
+          if (!visibleIds.has(id)) {
+            item.style.display = 'none';
+          }
+        });
+        
+        // Second pass: reorder visible items
+        if (filtered.length > 0 && items[0]) {
+          const parent = items[0].parentElement;
+          const fragment = document.createDocumentFragment();
+          
+          // Append in sorted order
+          filtered.forEach(item => {
+            const element = itemsMap.get(item.id);
+            if (element) {
+              fragment.appendChild(element);
+            }
+          });
+          
+          // Append hidden items at the end
+          items.forEach(element => {
+            if (element.style.display === 'none') {
+              fragment.appendChild(element);
+            }
+          });
+          
+          parent.appendChild(fragment);
+        }
+        
+        // Show all visible items now that they're properly sorted
+        document.documentElement.classList.remove('has-filters');
+      });
+    })();
+  </script>
+  
+  <script src="../../scripts/collection-filter.ts"></script>
+</PageLayout>

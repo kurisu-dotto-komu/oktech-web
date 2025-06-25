@@ -1,0 +1,75 @@
+---
+import { Icon } from "astro-icon/components";
+import Link from "../Link.astro";
+
+export interface Props {
+  selected: string;
+  collection: "events" | "people";
+}
+
+const { selected, collection } = Astro.props;
+
+// Define view modes based on collection
+const viewModes = collection === "events" 
+  ? [
+      { value: "grid", path: "/events", icon: "lucide:layout-grid", label: "Grid View" },
+      { value: "compact", path: "/events/compact", icon: "lucide:list", label: "Compact View" },
+      { value: "gallery", path: "/events/gallery", icon: "lucide:images", label: "Gallery View" }
+    ]
+  : [
+      { value: "grid", path: "/people", icon: "lucide:layout-grid", label: "Grid View" },
+      { value: "compact", path: "/people/compact", icon: "lucide:list", label: "Compact View" }
+    ];
+---
+
+<div class="join" id="view-mode-selector">
+  {viewModes.map((mode) => (
+    <Link
+      href={mode.path}
+      class={`join-item btn btn-sm ${selected === mode.value ? 'btn-primary' : ''} view-mode-link`}
+      data-view-path={mode.path}
+      aria-label={mode.label}
+      title={mode.label}
+    >
+      <Icon name={mode.icon} class="w-4 h-4" />
+    </Link>
+  ))}
+</div>
+
+<script>
+  // Get the base path prefix from the current URL
+  function getPathPrefix() {
+    const pathname = window.location.pathname;
+    // Extract prefix before /events or /people
+    const match = pathname.match(/^(.*?)\/(events|people)/);
+    return match ? match[1] : '';
+  }
+
+  // Update view mode links with current URL parameters
+  function updateViewModeLinks() {
+    const currentParams = new URLSearchParams(window.location.search);
+    const prefix = getPathPrefix();
+    const links = document.querySelectorAll('.view-mode-link');
+    
+    links.forEach((link) => {
+      const basePath = link.getAttribute('data-view-path');
+      if (basePath) {
+        const queryString = currentParams.toString();
+        const fullPath = prefix + basePath;
+        link.setAttribute('href', queryString ? `${fullPath}?${queryString}` : fullPath);
+      }
+    });
+  }
+
+  // Update on page load
+  updateViewModeLinks();
+
+  // Listen for URL changes (from filter updates)
+  window.addEventListener('popstate', updateViewModeLinks);
+  
+  // Also update when filters change
+  const container = document.getElementById('collection-container');
+  if (container) {
+    container.addEventListener('items-filtered', updateViewModeLinks);
+  }
+</script>

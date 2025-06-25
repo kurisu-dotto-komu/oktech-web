@@ -3,8 +3,6 @@ import { getCollection } from "astro:content";
 import EventFeatured from "./EventFeatured.astro";
 import EventGalleryImages from "./EventGalleryImages.astro";
 import Grid from "./Grid.astro";
-import Section from "./Section.astro";
-import EventCompact from "./EventCompact.astro";
 
 interface Props {
   events: any[]; // Type from getEvents()
@@ -17,40 +15,34 @@ const allGalleryImages = await getCollection("eventGalleryImage");
 
 // Create a Set of event IDs that have gallery images
 const eventsWithGallery = new Set(allGalleryImages.map((img) => img.data.event.id));
-
-// Separate events with and without galleries
-const eventsWithGalleryItems = events.filter((event) => eventsWithGallery.has(event.id));
-const eventsWithoutGallery = events.filter((event) => !eventsWithGallery.has(event.id));
 ---
 
-<!-- Collapsible section for events without galleries -->{
-  eventsWithoutGallery.length > 0 && (
-    <Section wide>
-      <details class="collapse collapse-arrow bg-base-200">
-        <summary class="collapse-title text-lg font-medium">
-          Hiding {eventsWithoutGallery.length} events without a gallery
-        </summary>
-        <div class="collapse-content">
-          <div class="flex flex-col max-w-5xl mx-auto pt-4">
-            {eventsWithoutGallery.map((event) => (
-              <EventCompact eventSlug={event.id} class="border-b border-base-300 last:border-0" />
-            ))}
-          </div>
+<div class="space-y-8">
+  {
+    events.map((event, i) => {
+      const hasGallery = eventsWithGallery.has(event.id);
+      
+      return (
+        <div 
+          data-item-id={event.slug || event.id}
+          class:list={[
+            "py-8",
+            i % 2 === 0 ? "" : "bg-base-100/50",
+            !hasGallery && "hidden"
+          ]}
+        >
+          {hasGallery && (
+            <div class="container mx-auto px-4">
+              <div class="flex flex-col gap-12">
+                <EventFeatured eventSlug={event.id} />
+                <Grid>
+                  <EventGalleryImages eventSlug={event.id} />
+                </Grid>
+              </div>
+            </div>
+          )}
         </div>
-      </details>
-    </Section>
-  )
-}
-<!-- Events with galleries -->
-{
-  eventsWithGalleryItems.map((event, i) => (
-    <Section wide class:list={i % 2 === 0 ? "" : "bg-base-100/50"}>
-      <div class="flex flex-col gap-12">
-        <EventFeatured eventSlug={event.id} />
-        <Grid>
-          <EventGalleryImages eventSlug={event.id} />
-        </Grid>
-      </div>
-    </Section>
-  ))
-}
+      );
+    })
+  }
+</div>

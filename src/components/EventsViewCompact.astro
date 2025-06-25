@@ -12,7 +12,9 @@ const { events } = Astro.props;
 <Section wide class="flex flex-col">
   {
     events.map((event) => (
-      <EventCompact eventSlug={event.id} class="border-b border-base-300 last:border-0" />
+      <div data-item-id={event.slug || event.id}>
+        <EventCompact eventSlug={event.id} class="border-b border-base-300 last:border-0" />
+      </div>
     ))
   }
 </Section>
