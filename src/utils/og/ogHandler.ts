@@ -22,7 +22,6 @@ export async function createOGImageHandler({
     // Check if we have a cached version
     const cachedBuffer = await cache.getCachedImage(props);
     if (cachedBuffer && process.env.NODE_ENV !== "development") {
-      // console.log("Using cached OG image");
       return new Response(cachedBuffer, {
         headers: {
           "Content-Type": "image/png",
@@ -30,8 +29,6 @@ export async function createOGImageHandler({
         },
       });
     }
-
-    // console.log("Generating new OG image");
 
     // Fetch fonts - including Japanese font support
     const [regularFont, boldFont, japaneseFont, japaneseBoldFont] = await Promise.all([

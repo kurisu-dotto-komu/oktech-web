@@ -168,8 +168,6 @@ export class OGImageCache {
 
       // Write the image to cache
       await fs.writeFile(cachePath, imageBuffer);
-
-      // console.log(`OG image cached: ${cacheKey}`);
     } catch (error) {
       console.error("Failed to cache OG image:", error);
     }

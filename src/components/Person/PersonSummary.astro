@@ -16,15 +16,8 @@ const { person } = Astro.props;
   href={`/person/${person.id}`}
   class="hover-zoom relative card bg-primary-content text-primary"
 >
-  <!-- {
-    person.roles.length > 0 && (
-      <div class="absolute -top-1 -right-1 bg-white rounded-md shadow-sm flex flex-wrap join">
-        <RoleBadges roles={person.roles} compact />
-      </div>
-    )
-  } -->
   <div class="card-body p-2">
-    <!-- TODO usae https://daisyui.com/components/avatar/ -->
+    <!-- TODO use https://daisyui.com/components/avatar/ -->
     <div class="flex gap-6 items-center">
       <figure class="w-28 h-40 flex-shrink-0">
         <PersonImage person={person} />

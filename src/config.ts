@@ -52,12 +52,6 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
 ];
 
 export const SOCIALS = [
-  // {
-  //   icon: "lucide:mail",
-  //   href: "mailto:todo@example.com",
-  //   label: "Email",
-  //   description: "Send us a good old fashioned Email",
-  // },
   {
     icon: "cib:twitter",
     href: "https://x.com/owddm",
@@ -66,7 +60,7 @@ export const SOCIALS = [
   },
   {
     icon: "cib:github",
-    href: "https://github.com/owddm/owddm.comm",
+    href: "https://github.com/owddm/owddm.com",
     label: "GitHub",
     description: "Developers can watch us on Github",
   },
