@@ -23,6 +23,7 @@ DO include:
 
 Improved code quality and testing infrastructure for better reliability and performance.
 
+- Add OG images to astro cache folder for faster builds
 - Added comprehensive test suite using Playwright for automated testing across all pages
 - Implemented TypeScript type checking to improve code reliability
 - Enhanced codebase organization with better import structure and component organization
