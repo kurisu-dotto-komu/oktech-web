@@ -22,13 +22,14 @@ const stickyNavId = `sticky-nav-${Math.random().toString(36).substring(7)}`;
 </div>
 
 <script is:inline define:vars={{ stickyNavId, navigationClass }}>
+  // @ts-nocheck
   (() => {
     // Get the sticky nav element using the injected variable from define:vars
-    const stickyNav = document.getElementById(window.stickyNavId);
+    const stickyNav = document.getElementById(stickyNavId);
     if (!stickyNav) return;
 
     // Get the bottom navigation element
-    const bottomNav = document.querySelector(`.${window.navigationClass}`);
+    const bottomNav = document.querySelector(`.${navigationClass}`);
 
     if (!bottomNav) return;
 
