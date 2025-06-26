@@ -17,7 +17,8 @@
     "og-cache:stats": "npx tsx scripts/manage-og-cache.ts stats",
     "test:install": "./.devcontainer/installPlaywright.sh",
     "test": "playwright test",
-    "sync-ai-rules": "claude --dangerously-skip-permissions 'read prompts/sync-rules.md and execute this as a prompt'"
+    "claude:sync-rules": "claude --dangerously-skip-permissions 'read prompts/sync-rules.md and execute this as a prompt'",
+    "claude:code-review": "claude --dangerously-skip-permissions 'read prompts/code-review.md and execute this as a prompt'"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
