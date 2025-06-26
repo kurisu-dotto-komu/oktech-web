@@ -26,5 +26,9 @@
 ## File Management
 
 - always prefer editing existing files over creating new ones
-- never proactively create documentation files (\*.md) unless explicitly requested
+- never proactively create documentation files (*.md) unless explicitly requested
 - follow existing patterns and check neighboring files for style/structure
+
+## Communication Guidelines
+
+- don't add unnecessary comments
