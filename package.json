@@ -19,7 +19,8 @@
     "test": "playwright test",
     "claude:sync-rules": "claude --dangerously-skip-permissions 'read prompts/sync-rules.md and execute this as a prompt'",
     "claude:code-review": "claude --dangerously-skip-permissions 'read prompts/code-review.md and execute this as a prompt'",
-    "claude:typecheck-fix": "claude --dangerously-skip-permissions 'read prompts/typecheck-fix.md and execute this as a prompt'"
+    "claude:typecheck-fix": "claude --dangerously-skip-permissions 'read prompts/typecheck-fix.md and execute this as a prompt'",
+    "claude:code-smell": "claude --dangerously-skip-permissions 'read prompts/code-smell.md and execute this as a prompt'"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
