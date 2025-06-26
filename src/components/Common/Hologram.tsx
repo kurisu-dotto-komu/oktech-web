@@ -100,15 +100,6 @@ export default function Hologram() {
     };
   }, [mounted]);
 
-  // Convert HSL to color stops for conic gradient
-  const generateGradientStops = () => {
-    const stops = [];
-    for (let i = 0; i < 6; i++) {
-      const angle = (hue + i * 60) % 360;
-      stops.push(`hsl(${angle}, 70%, 50%)`);
-    }
-    return stops.join(", ");
-  };
 
   // Render static placeholder during SSR
   if (!mounted) {

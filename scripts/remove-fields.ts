@@ -38,7 +38,7 @@ async function removeFields(contentType: ContentType, fieldsToRemove: string[]):
   let filesModified = 0;
 
   // Find all matching files
-  const files = await glob(filePattern, { cwd: baseDir });
+  const files = glob(filePattern, { cwd: baseDir });
 
   for await (const file of files) {
     const filePath = path.join(baseDir, file);

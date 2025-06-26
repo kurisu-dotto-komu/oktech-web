@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { EventsFilter } from "./EventsFilter";
 import type { EventItem, EventFilters } from "./EventsFilterProvider";
 

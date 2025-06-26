@@ -3,7 +3,7 @@ import path from "path";
 
 const events = defineCollection({
   loader: async () => {
-    const imports = await import.meta.glob("/content/events/**/event.md", { eager: true });
+    const imports = import.meta.glob("/content/events/**/event.md", { eager: true });
     return Object.entries(imports).map(([fileName, module]) => {
       const basePath = fileName.replace("/event.md", "");
       const slug = basePath.split("/").pop() as string;
@@ -74,7 +74,7 @@ const people = defineCollection({
   loader: async () => {
     // Load every person markdown file located at `/content/people/**/person.md`
     // The folder name will be used as the unique slug / id for the person.
-    const imports = await import.meta.glob("/content/people/**/person.md", {
+    const imports = import.meta.glob("/content/people/**/person.md", {
       eager: true,
     });
 
@@ -131,7 +131,7 @@ const people = defineCollection({
 
 const venues = defineCollection({
   loader: async () => {
-    const imports = await import.meta.glob("/content/venues/**/venue.md", {
+    const imports = import.meta.glob("/content/venues/**/venue.md", {
       eager: true,
     });
 

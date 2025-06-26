@@ -4,7 +4,7 @@ import EventFeatured from "@/components/Event/EventFeatured.astro";
 import { getEvents } from "@/data";
 const events = await getEvents();
 const futureEvents = events.filter((event) => event.data.dateTime > new Date()).reverse();
-const [nextEvent, ...otherFutureEvents] = futureEvents;
+const [nextEvent] = futureEvents;
 const countdownDate = new Date(nextEvent.data.dateTime);
 ---
 

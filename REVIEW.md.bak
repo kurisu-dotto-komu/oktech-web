@@ -1,0 +1,249 @@
+# Code Review Report
+
+_Generated on: 2025-06-26_
+
+## Executive Summary
+
+- **Overall Assessment**: GOOD
+- **Critical Issues**: 2 (Dependency vulnerabilities, Missing @astrojs/check)
+- **Security Vulnerabilities**: 1 (High severity npm dependencies)
+- **Performance Issues**: 4 (Bundle optimization, missing memoization)
+- **Recommended Action**: MEDIUM priority
+
+## Key Findings
+
+### 🔴 Critical Issues
+
+1. **Dependency Vulnerabilities** (Security)
+   - Multiple high-severity vulnerabilities in `osm-static-maps` and related dependencies
+   - `cross-spawn` < 6.0.6 has ReDoS vulnerability
+   - Action: Run `npm audit fix` immediately
+
+2. **Missing TypeScript Check Dependency**
+   - `@astrojs/check` is not installed but required for `npm run typecheck`
+   - Build process requires manual intervention
+   - Action: Add to dependencies: `npm i @astrojs/check typescript`
+
+### 🟡 Important Issues
+
+1. **TypeScript Type Safety**
+   - 11 files contain `any` types, reducing type safety
+   - Type assertions (`as`) used in 10 files
+   - Missing shared type definitions for domain models
+
+2. **Performance Optimizations Missing**
+   - No React.memo usage in any components
+   - Fuse.js (~44KB) loaded synchronously
+   - Missing lazy loading for images
+   - Inefficient debounce implementation
+
+3. **Accessibility Gaps**
+   - Missing aria-labels on icon-only buttons
+   - Form inputs without proper labels
+   - Deprecated `tabindex` syntax (should be `tabIndex`)
+
+4. **XSS Risk in Development**
+   - `innerHTML` usage in `DevInfo.astro` without sanitization
+   - Limited to development mode but still a concern
+
+### 🟢 Minor Issues
+
+1. **Code Quality**
+   - Console.log statements in production code
+   - Missing error boundaries for React components
+   - Some components lack proper documentation
+
+2. **Build Configuration**
+   - No explicit Vite chunking strategy
+   - Missing optimization for React vendor bundles
+
+### ✅ Strengths
+
+1. **Excellent Architecture**
+   - Clear separation between Astro (static) and React (interactive)
+   - Well-organized component structure
+   - Proper use of React Context for state management
+
+2. **Strong TypeScript Usage**
+   - Consistent use of TypeScript across the project
+   - Good type inference usage
+   - Proper interface definitions
+
+3. **Security Best Practices**
+   - No hardcoded credentials or API keys
+   - Proper input validation for routes
+   - Safe file system operations
+
+4. **Modern Development Practices**
+   - Consistent import patterns using `@/`
+   - Good component composition
+   - Proper separation of concerns
+
+## Detailed Analysis
+
+### Code Quality
+
+**TypeScript Usage:**
+
+- ✅ 100% TypeScript (no JavaScript files)
+- ⚠️ 11 files with `any` types need improvement
+- ✅ Good use of utility types (`satisfies`, `Awaited`)
+- ✅ Consistent `export default function` pattern for React
+
+**Key files needing type improvements:**
+
+- `/src/utils/og/ogCache.ts` - Interface properties using `any`
+- `/src/components/EventsFilter/*.tsx` - Multiple `any[]` for items/filters
+- `/src/data.ts:70` - Suspicious type assertion `as unknown as string`
+
+### Security Review
+
+**Vulnerabilities Found:**
+
+1. **npm dependencies** - 5 high severity vulnerabilities
+   - Primary issue: `osm-static-maps@4.0.2` and dependencies
+   - Solution: Update or replace the package
+
+2. **XSS Potential** - Limited to dev mode
+   - File: `/src/components/Common/DevInfo.astro`
+   - Risk: Medium (dev only)
+   - Fix: Sanitize `ogImageUrl` before interpolation
+
+**Good Security Practices:**
+
+- ✅ Environment variables for sensitive config
+- ✅ No SQL injection risks (no database)
+- ✅ Proper path traversal protection
+- ✅ Input validation on all routes
+
+### Performance Analysis
+
+**Bundle Size Issues:**
+
+1. **Fuse.js** - 44KB loaded synchronously
+   - Location: `EventsFilterProvider.tsx`
+   - Fix: Dynamic import with lazy loading
+
+2. **Missing Optimizations:**
+   - No React.memo usage
+   - No manual chunks in Vite config
+   - Missing lazy loading attributes on images
+
+**Component-Specific Issues:**
+
+- `Countdown.tsx` - Re-renders every second without memoization
+- `EventsSearchInput.tsx` - Inefficient debounce with state
+- `SiteMapTree.tsx` - Loads all data at module level
+
+### Architecture Assessment
+
+**Component Design:**
+
+- ✅ Excellent separation of concerns
+- ✅ Single responsibility principle followed
+- ✅ Good component granularity
+- ✅ Minimal props drilling via Context
+
+**State Management:**
+
+- ✅ Proper React Context implementation
+- ✅ URL as source of truth for filters
+- ✅ Good use of local state where appropriate
+
+**Module Organization:**
+
+- ✅ Clear dependency direction
+- ✅ Centralized data layer (`/data.ts`)
+- ✅ Type-safe interfaces throughout
+
+## File-Specific Findings
+
+### `/src/components/EventsFilter/`
+
+- Multiple `any` type usage
+- Missing React.memo for performance
+- Good Context implementation
+
+### `/src/components/Common/DevInfo.astro`
+
+- XSS vulnerability with innerHTML
+- Only affects development mode
+
+### `/src/utils/og/ogCache.ts`
+
+- Interface properties using `any`
+- Otherwise well-structured caching logic
+
+### `/src/components/Common/SearchBox.astro`
+
+- Missing label for search input
+- Accessibility concern
+
+## Rule Compliance
+
+### Project Rules Adherence:
+
+- ✅ **TypeScript Only** - 100% compliance
+- ✅ **Prefer Astro Components** - Properly followed
+- ✅ **Use DaisyUI** - Consistently applied
+- ✅ **Import Patterns** - All use `@/` correctly
+- ✅ **React Patterns** - `export default function` used
+
+## Recommendations
+
+### Immediate (Fix Now)
+
+1. **Fix Dependency Vulnerabilities**
+
+   ```bash
+   npm audit fix
+   npm i @astrojs/check typescript
+   ```
+
+2. **Add Missing Accessibility**
+   - Add aria-labels to all icon buttons
+   - Fix `tabindex` → `tabIndex` syntax
+   - Add labels to form inputs
+
+3. **Remove Production Console Logs**
+   - Search and remove all console.log statements
+
+### Short-term (1-2 weeks)
+
+1. **Improve Type Safety**
+   - Replace all `any` types with proper interfaces
+   - Create shared types directory
+   - Fix suspicious type assertions
+
+2. **Performance Optimizations**
+   - Add React.memo to frequently updating components
+   - Implement lazy loading for Fuse.js
+   - Add loading="lazy" to all images
+
+3. **Fix XSS in DevInfo**
+   - Sanitize URLs before innerHTML usage
+   - Consider using textContent instead
+
+### Long-term (1-2 months)
+
+1. **Bundle Optimization**
+   - Configure Vite manual chunks
+   - Implement code splitting strategy
+   - Add build-time optimizations
+
+2. **Component Documentation**
+   - Add JSDoc comments to complex components
+   - Consider Storybook for component library
+
+3. **Testing Infrastructure**
+   - Expand test coverage beyond route tests
+   - Add component-level tests
+   - Implement visual regression tests
+
+## Summary
+
+The OKTech Web codebase demonstrates solid engineering practices with a well-thought-out architecture. The hybrid Astro/React approach is excellently executed, with clear separation of concerns and good performance characteristics.
+
+The main areas requiring immediate attention are dependency vulnerabilities and minor accessibility issues. Type safety improvements and performance optimizations would significantly enhance the codebase quality.
+
+Overall, this is a well-maintained project that follows modern web development best practices. With the recommended improvements, it would achieve an EXCELLENT rating.
