@@ -19,6 +19,24 @@ DO include:
 - Performance improvements users will notice
 -->
 
+### June 26, 2025
+
+Improved code quality and testing infrastructure for better reliability and performance.
+
+- Added comprehensive test suite using Playwright for automated testing across all pages
+- Implemented TypeScript type checking to improve code reliability
+- Enhanced codebase organization with better import structure and component organization
+- Improved Open Graph image generation with caching for faster page loads
+- Fixed sitemap generation issues
+
+### June 25, 2025
+
+Enhanced event and people filtering with real-time client-side search capabilities.
+
+- Added instant client-side filtering for events and people pages, making it easier to find specific content
+- Improved filtering performance with responsive search that updates as you type
+- Reorganized component architecture for better performance
+
 ### June 22, 2025
 
 Enhanced venue presentation and event resources with cover images and media links.
