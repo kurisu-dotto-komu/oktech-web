@@ -1,0 +1,18 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# File Management Rules
+
+## File Creation and Editing
+- ALWAYS prefer editing existing files over creating new ones
+- Only create new files when absolutely necessary for the task
+- Never proactively create documentation files (*.md) or README files
+- Only create documentation when explicitly requested by the user
+
+## Code Organization
+- Follow existing patterns in the codebase
+- Place new components in appropriate existing directories
+- Maintain consistency with existing file naming conventions
+- Check neighboring files for style and structure patterns

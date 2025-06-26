@@ -13,7 +13,7 @@ Every `.astro` file must have both opening and closing frontmatter fences:
 
 ```astro
 ---
-// JavaScript/TypeScript code goes here
+// TypeScript code goes here
 const myVar = "Hello";
 ---
 

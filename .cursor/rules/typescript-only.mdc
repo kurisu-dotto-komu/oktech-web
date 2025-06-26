@@ -1,0 +1,58 @@
+# TypeScript Only
+
+## Always use TypeScript, never JavaScript
+
+This project is TypeScript-only. All code files must use TypeScript.
+
+## File Extensions
+
+### ✅ Correct
+- `.ts` for TypeScript files
+- `.tsx` for React components with JSX
+- `.astro` for Astro components (TypeScript in frontmatter)
+
+### ❌ Never Use
+- `.js` files
+- `.jsx` files
+- `.mjs` files
+- `.cjs` files
+
+## Examples
+
+### ✅ Correct
+```typescript
+// utils/format.ts
+export function formatDate(date: Date): string {
+  return date.toLocaleDateString()
+}
+
+// components/Button.tsx
+interface ButtonProps {
+  label: string
+  onClick: () => void
+}
+
+export function Button({ label, onClick }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>
+}
+```
+
+### ❌ Incorrect
+```javascript
+// utils/format.js
+export function formatDate(date) {
+  return date.toLocaleDateString()
+}
+
+// components/Button.jsx
+export function Button({ label, onClick }) {
+  return <button onClick={onClick}>{label}</button>
+}
+```
+
+## Type Safety
+
+- Define types for all function parameters and return values
+- Use interfaces or types for component props
+- Leverage TypeScript's type inference where appropriate
+- Run `npm run typecheck` to verify type correctness

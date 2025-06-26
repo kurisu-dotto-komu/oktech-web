@@ -1,0 +1,22 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Workflow Rules
+
+## Development Environment
+- A dev server is running in the background - do not start it yourself
+- Use existing dev server for testing and verification
+
+## Git Operations
+- Never make git commits unless explicitly instructed
+- No automatic commits, pushes, or other git operations
+- Wait for explicit user permission before any git action
+
+## Testing
+- For Playwright tests, always use headless mode (default)
+- Never use --headed mode unless specifically requested
+- Use `npm run typecheck` after editing imports to ensure they're working (quick and easy)
+- Run tests with: `npm run test` for dev testing (somewhat expensive)
+- Use `npm run test:build` very sparingly at the end of big changes (very expensive)

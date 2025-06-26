@@ -1,0 +1,37 @@
+# Import Patterns
+
+## Always use @/ imports for absolute paths
+
+- use `@/` imports unless the component is a direct `./` sibling
+- avoid `../` imports - they make refactoring harder and code less readable
+- `@/` is configured to resolve to the `src/` directory
+
+## Examples
+
+### ✅ Correct
+```typescript
+import { Button } from "@/components/Button"
+import { userStore } from "@/stores/user"
+import type { User } from "@/types/user"
+import Layout from "@/layouts/Layout.astro"
+```
+
+### ✅ Correct (direct siblings)
+```typescript
+// In src/components/Header.astro
+import Logo from "./Logo.astro"  // Direct sibling is OK
+```
+
+### ❌ Incorrect
+```typescript
+import { Button } from "../components/Button"
+import { userStore } from "../../stores/user"
+import Layout from "../layouts/Layout.astro"
+```
+
+## Why this matters
+
+1. **Consistency** - All imports follow the same pattern
+2. **Refactoring** - Moving files doesn't break relative import chains
+3. **Readability** - Clear where imports come from
+4. **IDE Support** - Better autocomplete and go-to-definition

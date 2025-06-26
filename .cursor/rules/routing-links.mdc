@@ -1,0 +1,29 @@
+---
+description: 
+globs: *.astro,*.tsx
+alwaysApply: false
+---
+# Internal Links and Routing
+
+For all internal links within the application, use the specialized Link components that handle path prefixing:
+
+## Astro Components
+```astro
+---
+import Link from "@/components/Common/Link.astro";
+---
+
+<Link href="/about">About Us</Link>
+```
+
+## React Components
+```tsx
+import LinkReact from "@/components/Common/LinkReact";
+
+<LinkReact href="/products">Products</LinkReact>
+```
+
+Key points:
+- These components automatically handle path prefixing
+- Never use raw `<a>` tags for internal navigation
+- External links can use standard `<a>` tags with `target="_blank"` and `rel="noopener noreferrer"`

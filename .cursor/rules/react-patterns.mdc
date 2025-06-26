@@ -1,0 +1,52 @@
+# React Component Patterns
+
+## Export Pattern
+
+For React components, always use the `export default function ComponentName` pattern, not named exports.
+
+### ✅ Correct
+```tsx
+// components/Button.tsx
+interface ButtonProps {
+  label: string
+  onClick: () => void
+}
+
+export default function Button({ label, onClick }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>
+}
+
+// Usage
+import Button from "@/components/Button"
+```
+
+### ❌ Incorrect
+```tsx
+// components/Button.tsx
+export const Button = ({ label, onClick }: ButtonProps) => {
+  return <button onClick={onClick}>{label}</button>
+}
+
+// or
+
+export function Button({ label, onClick }: ButtonProps) {
+  return <button onClick={onClick}>{label}</button>
+}
+
+// Usage would require named import
+import { Button } from "@/components/Button"
+```
+
+## Why This Pattern
+
+1. **Consistency** - All React components follow the same export pattern
+2. **Clarity** - The component name matches the file name
+3. **Import simplicity** - Default imports are cleaner and more intuitive
+4. **Refactoring** - Easier to rename components without changing imports
+
+## Additional React Guidelines
+
+- Only create React components (.tsx) when client-side interactivity is needed
+- Prefer Astro components (.astro) for static content
+- Always use TypeScript interfaces for props
+- Follow the established component structure in the codebase
