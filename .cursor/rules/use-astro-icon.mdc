@@ -1,38 +1,56 @@
----
-description: 
-globs: *.astro
-alwaysApply: false
----
-# Using Icons in Components
+# Astro Icon Usage Rule
 
-When adding icons to components, use `astro-icon/components` with the following pattern:
+## Core Principle
+Always use astro-icon when possible. Import with: `import { Icon } from "astro-icon/components"`
 
+## Icon Prefixes
+- `cib:` for brand icons (GitHub, Twitter, LinkedIn, etc.)
+- `lucide:` for general icons (arrows, UI elements, actions)
+
+## Implementation
+
+### In Astro Components
 ```astro
 ---
 import { Icon } from "astro-icon/components";
 ---
 
-<Icon name="icon-name" size={24} />
+<Icon name="lucide:home" class="w-5 h-5" />
+<Icon name="cib:github" class="w-6 h-6" />
 ```
 
-## Icon Sets and Prefixes
+### Icon Sizing
+- Always specify width and height classes
+- Use Tailwind classes: w-4 h-4, w-5 h-5, w-6 h-6, etc.
 
-For icons, use these prefixes:
-- `cib:` for brand icons (e.g., `cib:github`, `cib:twitter`, `cib:meetup`)
-- `lucide:` for general icons (e.g., `lucide:shopping-cart`, `lucide:user`, `lucide:settings`)
+## Common Icons
 
-Example:
+### Navigation & UI (lucide:)
+- lucide:home
+- lucide:menu
+- lucide:x (close)
+- lucide:chevron-right
+- lucide:arrow-right
+- lucide:search
+- lucide:settings
+
+### Brands (cib:)
+- cib:github
+- cib:twitter
+- cib:linkedin
+- cib:facebook
+- cib:instagram
+
+### Bad Practices ✗
 ```astro
-<div class="flex gap-4">
-  <Icon name="cib:github" size={24} /> <!-- Brand icon -->
-  <Icon name="lucide:shopping-cart" size={24} />   <!-- General icon -->
-</div>
+<!-- Don't use SVGs directly -->
+<svg>...</svg>
+
+<!-- Don't import individual icon files -->
+import HomeIcon from "@/icons/home.svg";
 ```
 
-Key points:
-- Import from "astro-icon/components" (not "astro-icon")
-- Use appropriate prefix for the icon type (cib/lucide)
-- Set size using the size prop
-- Icons are automatically optimized at build time
-
-Example implementation can be found in [src/components/Socials.astro](mdc:src/components/Socials.astro)
+## Finding Icons
+- Lucide icons: https://lucide.dev/icons
+- Brand icons: Look for "cib:" prefix in astro-icon
+- Search available icons in node_modules/astro-icon or documentation

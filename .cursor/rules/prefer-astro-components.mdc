@@ -1,50 +1,69 @@
----
-description: 
-globs: 
-alwaysApply: true
----
-# Prefer Astro Components Over React
+# Prefer Astro Components Rule
 
-Always prefer Astro components (`.astro`) over React components (`.tsx`) unless you specifically need client-side interactivity.
+## Core Principle
+Prefer Astro components (.astro) over React components (.tsx) unless client-side interactivity is needed.
 
-## Correct Astro Syntax
+## Astro Component Requirements
+- Astro templates require opening and closing frontmatter fences (---) with TypeScript code in between
+- Import statements go in the frontmatter
+- Props interface definition goes in the frontmatter
+- Component logic and data fetching go in the frontmatter
 
-Every `.astro` file must have both opening and closing frontmatter fences:
+## When to Use Astro Components
+- Static content presentation
+- Server-side data fetching
+- SEO-critical content
+- Layout components
+- Pages
+- Components that don't need client-side state
 
+## When to Use React Components
+- Interactive forms
+- Real-time updates
+- Client-side state management
+- Dynamic UI elements (dropdowns, modals with state)
+- Components using hooks like useState, useEffect
+
+## Examples
+
+### Good Astro Component ✓
 ```astro
 ---
-// TypeScript code goes here
-const myVar = "Hello";
----
-
-<!-- Template goes here -->
-<div>{myVar}</div>
-```
-
-Don't use React/JSX patterns in Astro files:
-
-❌ Wrong (React/JSX style):
-```astro
-const Component = () => {
-  return <div>{data.map(item => <span>{item}</span>)}</div>
+// UserCard.astro
+interface Props {
+  name: string;
+  email: string;
 }
-```
 
-✅ Correct (Astro style):
-```astro
----
-const data = ["item1", "item2"];
+const { name, email } = Astro.props;
 ---
 
-<div>
-  {data.map(item => (
-    <span>{item}</span>
-  ))}
+<div class="card">
+  <h3>{name}</h3>
+  <p>{email}</p>
 </div>
 ```
 
-Key differences:
-- No component functions - just frontmatter and template
-- No JSX expressions - use Astro's template syntax, importantly, using the `---` fences.
-- No clien: directives unless specifically needed
+### When React is Appropriate ✓
+```tsx
+// InteractiveForm.tsx
+export default function InteractiveForm() {
+  const [formData, setFormData] = useState({});
+  
+  // Client-side interactivity needed
+  return <form>...</form>;
+}
+```
 
+## Integration Pattern
+```astro
+---
+// Page.astro
+import InteractiveForm from "@/components/InteractiveForm";
+---
+
+<div>
+  <h1>Static content in Astro</h1>
+  <InteractiveForm client:load />
+</div>
+```

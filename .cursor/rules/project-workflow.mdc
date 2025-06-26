@@ -1,22 +1,41 @@
----
-description: 
-globs: 
-alwaysApply: true
----
 # Project Workflow Rules
 
-## Development Environment
-- A dev server is running in the background - do not start it yourself
-- Use existing dev server for testing and verification
+## Development Server
+- A dev server is running in the background - you don't need to run it yourself
+- Changes are automatically reflected in the running application
+- No need to restart or manage the development server
 
 ## Git Operations
-- Never make git commits unless explicitly instructed
-- No automatic commits, pushes, or other git operations
-- Wait for explicit user permission before any git action
+- Never make git commands like commits unless explicitly instructed
+- Don't run git add, commit, push, or any other git operations proactively
+- When asked to commit, follow the user's exact instructions
 
-## Testing
-- For Playwright tests, always use headless mode (default)
-- Never use --headed mode unless specifically requested
-- Use `npm run typecheck` after editing imports to ensure they're working (quick and easy)
-- Run tests with: `npm run test` for dev testing (somewhat expensive)
-- Use `npm run test:build` very sparingly at the end of big changes (very expensive)
+## Testing Guidelines
+
+### Playwright Tests
+- Never use --headed mode for playwright tests
+- Always use the default headless option
+- This ensures tests run efficiently in the background
+
+### Running Tests
+- Use `npm run test` for development testing
+- Use `npm run test:build` very sparingly at the end of big changes
+- Run tests to verify your changes work correctly
+
+### Type Checking
+- Use `npm run typecheck` after editing imports
+- This is quick and ensures TypeScript compilation succeeds
+- Always fix TypeScript errors before considering work complete
+
+## Development Workflow
+1. Make changes to code
+2. Run `npm run typecheck` if imports were modified
+3. Run `npm run test` to verify functionality
+4. Only run `npm run test:build` for major changes
+5. Wait for explicit instructions before any git operations
+
+## Best Practices
+- Test incrementally during development
+- Fix errors as they appear
+- Don't accumulate technical debt
+- Keep the codebase in a working state

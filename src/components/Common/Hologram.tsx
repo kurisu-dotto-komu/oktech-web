@@ -1,5 +1,7 @@
 "use client";
 
+// WORK IN PROGRESS! This is just an AI generated far from final.
+
 import { useEffect, useRef, useState } from "react";
 
 // Type declaration for Gyroscope API
@@ -31,6 +33,7 @@ export default function Hologram() {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [hue, setHue] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -100,7 +103,6 @@ export default function Hologram() {
     };
   }, [mounted]);
 
-
   // Render static placeholder during SSR
   if (!mounted) {
     return (
@@ -118,7 +120,20 @@ export default function Hologram() {
   }
 
   return (
-    <div ref={containerRef} className="relative w-64 h-64 mx-auto perspective-1000">
+    <div
+      ref={containerRef}
+      className="relative w-64 h-64 mx-auto perspective-1000"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Hover tooltip */}
+      {isHovered && (
+        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 z-50 px-3 py-2 bg-base-300 text-base-content text-sm rounded-lg shadow-lg border border-primary/20 whitespace-nowrap">
+          This is an AI generated one-shot attempt, far from complete!
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-base-300"></div>
+        </div>
+      )}
+
       {/* 3D transformed container */}
       <div
         className="relative w-full h-full transform-gpu transition-transform duration-100 ease-out"

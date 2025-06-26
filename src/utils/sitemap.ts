@@ -1,34 +1,10 @@
-import { getEvents, POSSIBLE_ROLES, getPeople, getVenues } from "../data";
+import { getEvents, getPeople, getVenues } from "../data";
 import { resolveFullUrl } from "./urlResolver";
 
 /**
- * Generate all event route paths for different views and filters
+ * Generate event view route paths that actually exist
  */
 export async function generateEventRoutePaths() {
-  const events = await getEvents();
-
-  // Get all unique topics
-  const topicsSet = new Set<string>();
-  events.forEach((event) => {
-    if (event.data.topics) {
-      event.data.topics.forEach((topic: string) => {
-        const slug = topic
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-|-$/g, "");
-        topicsSet.add(slug);
-      });
-    }
-  });
-
-  // Get all unique cities
-  const citiesSet = new Set<string>();
-  events.forEach((event) => {
-    if (event.venue?.city) {
-      citiesSet.add(event.venue.city);
-    }
-  });
-
   const paths: string[] = [];
   const views = ["", "compact", "gallery"]; // "" represents default view
 
@@ -38,30 +14,14 @@ export async function generateEventRoutePaths() {
     paths.push(basePath);
   });
 
-  // Topic filter paths
-  views.forEach((view) => {
-    topicsSet.forEach((topic) => {
-      const basePath = view === "" ? "/events" : `/events/${view}`;
-      paths.push(`${basePath}/topic/${topic}`);
-    });
-  });
-
-  // Location filter paths
-  views.forEach((view) => {
-    citiesSet.forEach((city) => {
-      const basePath = view === "" ? "/events" : `/events/${view}`;
-      paths.push(`${basePath}/location/${encodeURIComponent(city)}`);
-    });
-  });
-
-  return { paths, topics: Array.from(topicsSet), cities: Array.from(citiesSet) };
+  return { paths };
 }
 
 /**
  * Core routes that are always present in the application.
  * They should start with a leading slash and have no trailing slash (except root).
  */
-export const STATIC_ROUTES = ["/", "/about", "/events", "/community", "/sitemap"] as const;
+export const STATIC_ROUTES = ["/", "/about", "/events", "/people", "/sitemap"] as const;
 
 /**
  * Generate a list of absolute URLs used in sitemaps.
@@ -72,22 +32,15 @@ export const STATIC_ROUTES = ["/", "/about", "/events", "/community", "/sitemap"
 export async function generateSitemapURLs(): Promise<string[]> {
   const urls: string[] = [];
 
-  // Static pages (excluding /events since it's handled below)
-  const staticRoutesWithoutEvents = STATIC_ROUTES.filter((route) => route !== "/events");
-  urls.push(...staticRoutesWithoutEvents.map((route) => resolveFullUrl(route)));
+  // Static pages
+  urls.push(...STATIC_ROUTES.map((route) => resolveFullUrl(route)));
 
-  // Community role filter pages
-  POSSIBLE_ROLES.forEach((role) => {
-    urls.push(resolveFullUrl(`/community/${role}`));
-  });
-
-  // All event route variations (views and filters)
+  // Event view variations
   const { paths: eventPaths } = await generateEventRoutePaths();
   eventPaths.forEach((path) => {
     urls.push(resolveFullUrl(path));
   });
 
-  // Individual event pages
   const events = await getEvents();
   events.forEach(({ id }) => {
     urls.push(resolveFullUrl(`/event/${id}`));

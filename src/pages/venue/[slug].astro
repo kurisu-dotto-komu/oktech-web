@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import VenuePage from "../../components/Venue/VenuePage.astro";
+import VenuePage from "@/components/Venue/VenuePage.astro";
 
 export async function getStaticPaths() {
   const venues = await getCollection("venues");

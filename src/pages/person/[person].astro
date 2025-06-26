@@ -1,6 +1,6 @@
 ---
-import PersonPage from "../../components/Person/PersonPage.astro";
-import { getPeople } from "../../data";
+import PersonPage from "@/components/Person/PersonPage.astro";
+import { getPeople } from "@/data";
 
 export async function getStaticPaths() {
   const people = await getPeople();

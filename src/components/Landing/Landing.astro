@@ -1,0 +1,72 @@
+---
+import Section from "@/components/Common/Section.astro";
+import Hero from "@/components/Landing/Hero.astro";
+import PageLayout from "@/layouts/PageLayout.astro";
+import { getEvents } from "@/data";
+import EventSummary from "@/components/Event/EventSummary.astro";
+import LandingStats from "@/components/Landing/LandingStats.astro";
+import EventsUpcoming from "@/components/Events/EventsUpcoming.astro";
+import ImagePlaceholder from "@/components/Common/ImagePlaceholder.astro";
+import PersonAvatars from "@/components/Person/PersonAvatars.astro";
+import Hologram from "@/components/Common/Hologram";
+import Banner from "@/components/Common/Banner.astro";
+
+const events = await getEvents();
+---
+
+<PageLayout
+  description="Join the Osaka Kansai Tech Meetup Group (OKTech) - A vibrant community for web developers, designers, and tech enthusiasts. Discover upcoming events, workshops, and networking opportunities in the Kansai region."
+  ogImageParams={{
+    type: "default",
+  }}
+>
+  <Banner />
+  <Hero
+    title="Welcome to OKTech"
+    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+  >
+    <Hologram client:load />
+  </Hero>
+  <Section wide class="bg-secondary/20">
+    <EventsUpcoming />
+  </Section>
+  <Section split title="About OKTech" lorem={1} button={{ text: "Learn More", href: "/about" }}>
+    <ImagePlaceholder />
+  </Section>
+
+  <Section>
+    <LandingStats />
+  </Section>
+  <Section
+    inline
+    wide
+    grid
+    class="bg-primary/20"
+    title="Recent Events"
+    button={{ text: "More Events", href: "/events" }}
+  >
+    {
+      events
+        .slice(5, 9)
+        .map((event, i) => (
+          <EventSummary class={i > 2 ? "lg:hidden xl:block" : undefined} eventSlug={event.id} />
+        ))
+    }
+  </Section>
+
+  <Section
+    wide
+    title="Community"
+    description="Join our vibrant community of tech enthusiasts, professionals, and innovators. Connect with like-minded individuals, share knowledge, and grow together in the ever-evolving tech landscape."
+  >
+    <PersonAvatars />
+  </Section>
+
+  <Hero
+    slim
+    title="Get Involved"
+    description="Ready to be part of something bigger? Whether you want to speak at our events, sponsor our initiatives, or simply join our community, we welcome your participation and ideas."
+    button={{ text: "Get Involved", href: "/about#contact" }}
+    class="text-lg text-center"
+  />
+</PageLayout>

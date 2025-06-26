@@ -1,7 +1,7 @@
 ---
 import PersonImage from "./PersonImage.astro";
 import { Icon } from "astro-icon/components";
-import { ROLE_CONFIGS } from "@/data";
+import PersonRoleBadges from "./PersonRoleBadges.astro";
 
 import type { Person } from "@/data";
 
@@ -32,12 +32,7 @@ const { person, showRoles = false } = Astro.props;
     {
       showRoles && person.roles?.length > 0 && (
         <div class="flex gap-2 mt-1">
-          {person.roles.map((role: string) => {
-            const config = ROLE_CONFIGS[role as keyof typeof ROLE_CONFIGS];
-            return config ? (
-              <span class={`badge badge-sm ${config.color}`}>{config.label}</span>
-            ) : null;
-          })}
+          <PersonRoleBadges roles={person.roles} compact />
         </div>
       )
     }

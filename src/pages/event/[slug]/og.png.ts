@@ -1,5 +1,5 @@
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getEvents } from "../../../data";
+import { getEvents } from "@/data";
 import path from "path";
 import OGEvent from "@/components/OG/OGEvent";
 import { createOGImageHandler, loadImageAsBase64 } from "@/utils/og";

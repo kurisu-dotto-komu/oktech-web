@@ -1,5 +1,5 @@
 ---
-import RoleBadge from "./RoleBadge.astro";
+import PersonRoleBadge from "./PersonRoleBadge.astro";
 import { type Role } from "@/data";
 
 interface Props {
@@ -14,4 +14,4 @@ if (roles.length === 0) return null;
 const sortedRoles = roles.sort((a: Role, b: Role) => a.localeCompare(b));
 ---
 
-{sortedRoles.map((role: Role) => <RoleBadge role={role} compact={compact} />)}
+{sortedRoles.map((role: Role) => <PersonRoleBadge role={role} compact={compact} />)}

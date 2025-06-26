@@ -1,6 +1,6 @@
 ---
-import { getEvents } from "../../../data";
-import EventProjector from "../../../components/Event/EventProjector.astro";
+import { getEvents } from "@/data";
+import EventProjector from "@/components/Event/EventProjector.astro";
 
 export async function getStaticPaths() {
   const events = await getEvents();

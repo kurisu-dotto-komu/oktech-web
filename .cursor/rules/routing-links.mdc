@@ -1,13 +1,11 @@
----
-description: 
-globs: *.astro,*.tsx
-alwaysApply: false
----
-# Internal Links and Routing
+# Routing and Links Rule
 
-For all internal links within the application, use the specialized Link components that handle path prefixing:
+## Core Principle
+For internal links, use the Link and LinkReact components as they handle prefixing.
 
-## Astro Components
+## Import Patterns
+
+### For Astro Components
 ```astro
 ---
 import Link from "@/components/Common/Link.astro";
@@ -16,14 +14,43 @@ import Link from "@/components/Common/Link.astro";
 <Link href="/about">About Us</Link>
 ```
 
-## React Components
+### For React Components
 ```tsx
 import LinkReact from "@/components/Common/LinkReact";
 
-<LinkReact href="/products">Products</LinkReact>
+export default function Navigation() {
+  return (
+    <nav>
+      <LinkReact href="/products">Products</LinkReact>
+    </nav>
+  );
+}
 ```
 
-Key points:
-- These components automatically handle path prefixing
-- Never use raw `<a>` tags for internal navigation
-- External links can use standard `<a>` tags with `target="_blank"` and `rel="noopener noreferrer"`
+## Why Use These Components
+- Automatic path prefixing for deployment
+- Consistent link behavior across the app
+- Built-in accessibility features
+- Type safety for internal routes
+
+## Bad Practices ✗
+```astro
+<!-- Don't use raw anchor tags for internal links -->
+<a href="/about">About</a>
+
+<!-- Don't use Astro's built-in link -->
+<a href={`${import.meta.env.BASE_URL}/about`}>About</a>
+```
+
+## External Links
+For external links, regular anchor tags are acceptable:
+```astro
+<a href="https://example.com" target="_blank" rel="noopener noreferrer">
+  External Site
+</a>
+```
+
+## Link Props
+- href: Required, the destination path
+- class/className: For styling
+- All standard anchor attributes are supported

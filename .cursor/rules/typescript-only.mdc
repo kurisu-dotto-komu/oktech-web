@@ -1,58 +1,38 @@
-# TypeScript Only
+# TypeScript-Only Rule
 
-## Always use TypeScript, never JavaScript
+## Core Principle
+Always use TypeScript, never JavaScript. This project is strictly TypeScript-only.
 
-This project is TypeScript-only. All code files must use TypeScript.
-
-## File Extensions
-
-### ✅ Correct
-- `.ts` for TypeScript files
-- `.tsx` for React components with JSX
-- `.astro` for Astro components (TypeScript in frontmatter)
-
-### ❌ Never Use
-- `.js` files
-- `.jsx` files
-- `.mjs` files
-- `.cjs` files
+## Implementation Details
+- All files must use `.ts` or `.tsx` extensions (never `.js` or `.jsx`)
+- For Astro components, use TypeScript in the frontmatter section
+- Enable strict TypeScript settings in tsconfig.json
+- No `any` types unless absolutely necessary and well-documented
 
 ## Examples
 
-### ✅ Correct
+### Good ✓
 ```typescript
-// utils/format.ts
-export function formatDate(date: Date): string {
-  return date.toLocaleDateString()
+// file.ts
+interface User {
+  id: string;
+  name: string;
 }
 
-// components/Button.tsx
-interface ButtonProps {
-  label: string
-  onClick: () => void
-}
-
-export function Button({ label, onClick }: ButtonProps) {
-  return <button onClick={onClick}>{label}</button>
+export function getUser(id: string): User {
+  // ...
 }
 ```
 
-### ❌ Incorrect
+### Bad ✗
 ```javascript
-// utils/format.js
-export function formatDate(date) {
-  return date.toLocaleDateString()
-}
-
-// components/Button.jsx
-export function Button({ label, onClick }) {
-  return <button onClick={onClick}>{label}</button>
+// file.js
+export function getUser(id) {
+  // ...
 }
 ```
 
-## Type Safety
-
-- Define types for all function parameters and return values
-- Use interfaces or types for component props
-- Leverage TypeScript's type inference where appropriate
-- Run `npm run typecheck` to verify type correctness
+## Type Checking
+- Run `npm run typecheck` after making import changes
+- Ensure all imports are properly typed
+- Fix all TypeScript errors before considering work complete

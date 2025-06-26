@@ -1,34 +1,40 @@
----
-description: 
-globs: *.astro,*.tsx
-alwaysApply: false
----
-# Use Daisy UI Components
+# DaisyUI Usage Rule
 
-When creating elements or components, always try to use Daisy UI v5 components and utilities as much as reasonably possible.
+## Core Principle
+We are using DaisyUI v5. Always use DaisyUI components when possible, and use its theme classes.
 
-## Component Usage Guidelines
+## Implementation Details
+- Prefer DaisyUI components over custom implementations
+- Use DaisyUI's semantic color classes (primary, secondary, accent, etc.)
+- Leverage DaisyUI's utility classes for spacing, typography, and layout
+- Follow DaisyUI's component patterns and naming conventions
 
-❌ Wrong:
-```html
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Click me
-</button>
-```
+## Examples
 
-✅ Correct:
-```html
+### Good ✓
+```astro
 <button class="btn btn-primary">Click me</button>
+<div class="card bg-base-200 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">Card title</h2>
+  </div>
+</div>
 ```
 
-## Theme Configuration
-- Use Daisy UI theme colors (primary, secondary, accent, etc.)
-- Maintain consistent theme across components
+### Bad ✗
+```astro
+<!-- Don't create custom button styles when DaisyUI provides them -->
+<button class="px-4 py-2 bg-blue-500 text-white rounded">Click me</button>
+```
 
-## Best Practices
-1. Check the [Daisy UI Components](mdc:https:/daisyui.com/components) documentation first
-2. Use semantic class names (e.g., `btn-primary` over custom color classes)
-3. Combine with Tailwind utilities when needed for fine-tuning
-4. Keep accessibility in mind - Daisy UI components are built with a11y in mind
+## Component Reference
+- Buttons: btn, btn-primary, btn-secondary, btn-accent
+- Cards: card, card-body, card-title, card-actions
+- Forms: input, select, textarea, checkbox, radio
+- Layout: drawer, navbar, footer, hero
+- Data display: table, badge, avatar, progress
 
-Example implementation in the navigation component.
+## Theme Classes
+- Colors: primary, secondary, accent, neutral, base-100/200/300
+- States: hover:, focus:, active:
+- Sizes: btn-xs, btn-sm, btn-md, btn-lg

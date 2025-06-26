@@ -2,6 +2,7 @@
 import { type Person } from "@/data";
 import PersonSocialLink from "./PersonSocialLink.astro";
 import PersonImage from "./PersonImage.astro";
+import PersonRoleBadges from "./PersonRoleBadges.astro";
 
 interface Props {
   person: Person;
@@ -39,11 +40,11 @@ const { Content } = await import(`../../../content/people/${person.id}/person.md
           {
             (person.roles.length > 0 || person.skills.length > 0) && (
               <div class="flex flex-col gap-2">
-                {/* {person.roles.length > 0 && (
+                {person.roles.length > 0 && (
                   <div class="flex flex-wrap gap-2">
-                    <RoleBadges roles={person.roles} />
+                    <PersonRoleBadges roles={person.roles} />
                   </div>
-                )} */}
+                )}
                 {person.skills.length > 0 && (
                   <div class="flex flex-wrap gap-2">
                     {person.skills.map((skill) => (

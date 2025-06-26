@@ -1,8 +1,7 @@
 import Link from "@/components/Common/LinkReact";
 
 // Data helpers
-import { POSSIBLE_ROLES, ROLE_CONFIGS, getEvents, getPeople, getVenues } from "@/data";
-import { generateEventRoutePaths } from "@/utils/sitemap";
+import { getEvents, getPeople, getVenues } from "@/data";
 import { getOGImageWithFallback } from "@/utils/og";
 
 interface PageEntry {
@@ -38,46 +37,23 @@ const buildSections = async (): Promise<SectionEntry[]> => {
     }))
     .sort((a, b) => a.title.localeCompare(b.title));
 
+  // Add projector pages for events
+  const projectorPages: PageEntry[] = events
+    .map((e) => ({
+      href: `/event/${e.id}/projector`,
+      title: `${e.data.title} (Projector)`,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
   sections.push({
     title: "Events",
     href: "/events",
-    children: eventPages,
-  });
-
-  // Event Topics section
-  const { topics } = await generateEventRoutePaths();
-  sections.push({
-    title: "Event Topics",
-    children: topics
-      .map((topic) => ({
-        href: `/events/topic/${topic}`,
-        title: topic.charAt(0).toUpperCase() + topic.slice(1).replace(/-/g, " "),
-      }))
-      .sort((a, b) => a.title.localeCompare(b.title)),
-  });
-
-  // Event Locations section
-  const { cities } = await generateEventRoutePaths();
-  sections.push({
-    title: "Event Locations",
-    children: cities
-      .map((city) => ({
-        href: `/events/location/${encodeURIComponent(city)}`,
-        title: city.charAt(0).toUpperCase() + city.slice(1),
-      }))
-      .sort((a, b) => a.title.localeCompare(b.title)),
-  });
-
-  // Community section
-  const rolePages = POSSIBLE_ROLES.map((role) => ({
-    href: `/community/${role}`,
-    title: ROLE_CONFIGS[role].plural,
-  }));
-
-  sections.push({
-    title: "Community",
-    href: "/community",
-    children: rolePages,
+    children: [
+      { href: "/events/compact", title: "Events (Compact View)" },
+      { href: "/events/gallery", title: "Events (Gallery View)" },
+      ...eventPages,
+      ...projectorPages,
+    ],
   });
 
   // People section
@@ -91,6 +67,7 @@ const buildSections = async (): Promise<SectionEntry[]> => {
 
   sections.push({
     title: "People",
+    href: "/people",
     children: peoplePages,
   });
 
@@ -108,7 +85,7 @@ const buildSections = async (): Promise<SectionEntry[]> => {
     children: venuePages,
   });
 
-  // About and Sitemap
+  // About and other static pages
   sections.push({
     title: "About",
     href: "/about",
@@ -118,7 +95,10 @@ const buildSections = async (): Promise<SectionEntry[]> => {
   sections.push({
     title: "Sitemap",
     href: "/sitemap",
-    children: [{ href: "/sitemap.xml", title: "XML Sitemap" }],
+    children: [
+      { href: "/sitemap.xml", title: "XML Sitemap" },
+      { href: "/rss.xml", title: "RSS Feed" },
+    ],
   });
 
   return sections;

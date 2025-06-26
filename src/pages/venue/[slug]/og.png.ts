@@ -1,7 +1,7 @@
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getVenue, getVenues } from "../../../data";
-import OGVenue from "../../../components/OG/OGVenue";
-import { createOGImageHandler } from "../../../utils/og";
+import { getVenue, getVenues } from "@/data";
+import OGVenue from "@/components/OG/OGVenue";
+import { createOGImageHandler } from "@/utils/og";
 
 export const GET: APIRoute = async ({ params }) => {
   const slug = params.slug;
