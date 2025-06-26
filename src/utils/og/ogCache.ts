@@ -52,8 +52,8 @@ export class OGImageCache {
   private cacheDir: string;
 
   constructor() {
-    // Use .cache/og-images directory to avoid committing cache files
-    this.cacheDir = path.join(process.cwd(), ".cache", "og-images");
+    // Hijack astro's cache directory to save the cache so it's used by vercel etc.
+    this.cacheDir = path.join(process.cwd(), "node_modules", ".astro", "assets", "og-images");
   }
 
   /**
@@ -187,7 +187,11 @@ export class OGImageCache {
       console.log(`Cleared ${deletedFiles.length} cached OG images`);
     } catch (error) {
       // Cache directory might not exist yet
-      if (error instanceof Error && "code" in error && (error as NodeJS.ErrnoException).code === "ENOENT") {
+      if (
+        error instanceof Error &&
+        "code" in error &&
+        (error as NodeJS.ErrnoException).code === "ENOENT"
+      ) {
         console.log("OG cache directory does not exist yet");
       } else {
         console.error("Failed to clear OG image cache:", error);
