@@ -1,19 +1,21 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from "react";
-import Fuse from "fuse.js";
+import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
+import type Fuse from "fuse.js";
+import type { Venue } from "@/data";
+import type { ImageMetadata } from "astro";
 
-interface EventItem {
+export interface EventItem {
   id: string;
   title: string;
   description?: string;
   date: string;
   topics?: string[];
   location?: string;
-  venue?: any;
-  poster?: string;
+  venue?: Venue;
+  poster?: ImageMetadata;
   slug: string;
 }
 
-interface EventFilters {
+export interface EventFilters {
   search: string;
   topics: string[];
   location: string;
@@ -29,7 +31,7 @@ interface EventFilterContextType {
   };
   sortOptions: Array<{ value: string; label: string }>;
   filteredItems: EventItem[];
-  updateFilter: (filterType: keyof EventFilters, value: any) => void;
+  updateFilter: (filterType: keyof EventFilters, value: EventFilters[keyof EventFilters]) => void;
   clearFilter: (filterType: keyof EventFilters) => void;
   clearAllFilters: () => void;
   removeFilterValue: (filterType: string, value: string) => void;
@@ -67,11 +69,10 @@ export function EventFilterProvider({
 }: EventFilterProviderProps) {
   const [currentFilters, setCurrentFilters] = useState<EventFilters>(() => {
     if (typeof window !== "undefined") {
-      console.log("[EventsFilterProvider] Initial URL:", window.location.href);
-      console.log("[EventsFilterProvider] Initial search params:", window.location.search);
+      // Initial URL and search params
     }
     if (initialFilters) {
-      console.log("[EventsFilterProvider] Using initialFilters:", initialFilters);
+      // Using initialFilters
       return initialFilters;
     }
 
@@ -84,7 +85,7 @@ export function EventFilterProvider({
         location: urlParams.get("location") || "",
         sort: (urlParams.get("sort") as "date-desc" | "date-asc") || "date-desc",
       };
-      console.log("[EventsFilterProvider] Parsed filters from URL:", filters);
+      // Parsed filters from URL
       return filters;
     }
 
@@ -97,12 +98,18 @@ export function EventFilterProvider({
     };
   });
 
-  const fuse = useMemo(() => {
-    return new Fuse(items, {
-      keys: ["title", "description", "topics", "location"],
-      threshold: 0.3,
-      includeScore: true,
-    });
+  const fuseRef = useRef<Fuse<EventItem> | null>(null);
+
+  const initializeFuse = useCallback(async () => {
+    if (!fuseRef.current) {
+      const { default: Fuse } = await import("fuse.js");
+      fuseRef.current = new Fuse(items, {
+        keys: ["title", "description", "topics", "location"],
+        threshold: 0.3,
+        includeScore: true,
+      });
+    }
+    return fuseRef.current;
   }, [items]);
 
   const sortItems = useCallback(
@@ -118,10 +125,11 @@ export function EventFilterProvider({
     [currentFilters.sort],
   );
 
-  const getFilteredItems = useCallback((): EventItem[] => {
+  const getFilteredItems = useCallback(async (): Promise<EventItem[]> => {
     let filtered = [...items];
 
     if (currentFilters.search) {
+      const fuse = await initializeFuse();
       const results = fuse.search(currentFilters.search);
       filtered = results.map((result) => result.item);
     }
@@ -139,16 +147,23 @@ export function EventFilterProvider({
     }
 
     return sortItems(filtered);
-  }, [items, currentFilters, fuse, sortItems]);
+  }, [items, currentFilters, initializeFuse, sortItems]);
 
-  const filteredItems = useMemo(() => getFilteredItems(), [getFilteredItems]);
+  const [filteredItems, setFilteredItems] = useState<EventItem[]>([]);
+
+  useEffect(() => {
+    const updateFilteredItems = async () => {
+      const filtered = await getFilteredItems();
+      setFilteredItems(filtered);
+    };
+    updateFilteredItems();
+  }, [getFilteredItems]);
   const [isInitialMount, setIsInitialMount] = useState(true);
 
   const updateURL = useCallback((filters: EventFilters) => {
     if (typeof window === "undefined") return; // Skip on SSR
 
-    console.log("[updateURL] Called with filters:", filters);
-    console.log("[updateURL] Current URL before update:", window.location.href);
+    // Updating URL with filters
     const url = new URL(window.location.href);
 
     // Clear only filter-related params, preserve others like 'view'
@@ -170,18 +185,13 @@ export function EventFilterProvider({
       url.searchParams.set("sort", filters.sort);
     }
 
-    console.log("[updateURL] New URL:", url.toString());
+    // Updated URL
     window.history.pushState(filters, "", url.toString());
     // Don't dispatch popstate - it can cause unwanted side effects
   }, []);
 
   useEffect(() => {
-    console.log(
-      "[EventsFilterProvider useEffect] isInitialMount:",
-      isInitialMount,
-      "filters:",
-      currentFilters,
-    );
+    // Effect triggered for filter changes
     if (onFiltersChange) {
       onFiltersChange(currentFilters, filteredItems);
     }
@@ -192,18 +202,18 @@ export function EventFilterProvider({
   }, [currentFilters, filteredItems, onFiltersChange, updateURL, isInitialMount]);
 
   useEffect(() => {
-    console.log("[EventsFilterProvider] Setting isInitialMount to false");
+    // Initial mount complete
     setIsInitialMount(false);
   }, []);
 
-  const updateFilter = useCallback((filterType: keyof EventFilters, value: any) => {
+  const updateFilter = useCallback((filterType: keyof EventFilters, value: EventFilters[keyof EventFilters]) => {
     setCurrentFilters((prev) => {
       const newFilters = { ...prev };
 
       if (filterType === "search") {
-        newFilters.search = value;
+        newFilters.search = value as string;
       } else if (filterType === "sort") {
-        newFilters.sort = value;
+        newFilters.sort = value as "date-desc" | "date-asc";
       } else if (filterType === "topics") {
         if (Array.isArray(value)) {
           newFilters.topics = value;
@@ -215,7 +225,7 @@ export function EventFilterProvider({
           }
         }
       } else if (filterType === "location") {
-        newFilters.location = value;
+        newFilters.location = value as string;
       }
 
       return newFilters;

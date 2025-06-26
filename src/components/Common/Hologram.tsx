@@ -2,6 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 
+// Type declaration for Gyroscope API
+interface Gyroscope extends EventTarget {
+  x: number;
+  y: number;
+  z: number;
+  start(): void;
+  stop(): void;
+}
+
+interface GyroscopeConstructor {
+  new (options: { frequency: number }): Gyroscope;
+}
+
+declare global {
+  interface Window {
+    Gyroscope?: GyroscopeConstructor;
+  }
+}
+
 export default function Hologram() {
   const text = "Osaka Kansai Web Development Meetup Group • ";
   const radius = 85; // Reduced from 120 to bring text closer
@@ -29,7 +48,7 @@ export default function Hologram() {
         .then((result) => {
           if (result.state === "granted") {
             try {
-              const sensor = new (window as any).Gyroscope({ frequency: 60 });
+              const sensor = new window.Gyroscope!({ frequency: 60 });
               sensor.addEventListener("reading", () => {
                 setRotation({ x: sensor.x * 10, y: sensor.y * 10 });
                 const angle = (Math.atan2(sensor.y, sensor.x) * 180) / Math.PI;

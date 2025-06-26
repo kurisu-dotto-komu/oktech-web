@@ -3,8 +3,10 @@ import PersonImage from "./PersonImage.astro";
 import { Icon } from "astro-icon/components";
 import { ROLE_CONFIGS } from "@/data";
 
+import type { Person } from "@/data";
+
 export interface Props {
-  person: any;
+  person: Person;
   showRoles?: boolean;
 }
 

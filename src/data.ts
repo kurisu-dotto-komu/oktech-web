@@ -67,7 +67,7 @@ export async function getPeople(): Promise<Person[]> {
       company: "",
       department: "",
       bio: data.bio ?? "",
-      avatar: (data.avatar as unknown as string) ?? "",
+      avatar: data.avatar?.src ?? "",
       skills: (data.skills as string[]) ?? [],
       location: "Osaka, Japan",
       email: "",
@@ -80,9 +80,22 @@ export async function getPeople(): Promise<Person[]> {
 }
 
 export type Venue = InferEntrySchema<"venues">;
-export type EventEntry = Awaited<ReturnType<typeof getEvent>>;
 export type EventData = InferEntrySchema<"events">;
 export type VenueEntry = Awaited<ReturnType<typeof getVenue>>;
+export type EventEntry = Awaited<ReturnType<typeof getEvent>>;
+
+// Enhanced event type that includes joined venue data
+export type EventWithVenue = {
+  id: string;
+  slug?: string;
+  collection: "events";
+  data: EventData;
+  venue?: Venue;
+  venueSlug?: string;
+};
+
+// Type for events array from getEvents()
+export type EventsArray = EventWithVenue[];
 
 // Export getVenues as it's needed for static path generation
 export async function getVenues() {

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import type { CSSProperties } from "react";
 
 interface CountdownProps {
   targetDate: Date;
 }
 
-export default function Countdown({ targetDate }: CountdownProps) {
+const Countdown = memo(function Countdown({ targetDate }: CountdownProps) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -94,4 +94,6 @@ export default function Countdown({ targetDate }: CountdownProps) {
       </div>
     </div>
   );
-}
+});
+
+export default Countdown;

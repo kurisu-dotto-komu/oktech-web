@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback, type ChangeEvent } from "react";
+import { useState, useEffect, useCallback, useRef, type ChangeEvent } from "react";
 import { useEventsFilter } from "./EventsFilterProvider";
 
 export default function EventsSearchInput() {
   const { currentFilters, updateFilter, clearFilter } = useEventsFilter();
   const [localValue, setLocalValue] = useState(currentFilters.search);
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setLocalValue(currentFilters.search);
@@ -15,17 +15,15 @@ export default function EventsSearchInput() {
       const value = e.target.value;
       setLocalValue(value);
 
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
       }
 
-      const timer = setTimeout(() => {
+      debounceTimerRef.current = setTimeout(() => {
         updateFilter("search", value);
       }, 300);
-
-      setDebounceTimer(timer);
     },
-    [debounceTimer, updateFilter],
+    [updateFilter],
   );
 
   const handleClear = useCallback(() => {
@@ -35,11 +33,11 @@ export default function EventsSearchInput() {
 
   useEffect(() => {
     return () => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [debounceTimer]);
+  }, []);
 
   return (
     <div className="form-control">

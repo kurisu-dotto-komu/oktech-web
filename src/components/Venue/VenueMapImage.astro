@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 interface Props {
-  mapImage: any;
+  mapImage: { default: ImageMetadata } | null;
   marker?: boolean | string;
 }
 

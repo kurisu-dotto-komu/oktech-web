@@ -2,13 +2,50 @@ import crypto from "crypto";
 import path from "path";
 import fs from "fs/promises";
 
-interface CacheableContent {
-  event?: any;
-  person?: any;
-  venue?: any;
+interface EventData {
+  id: string;
+  data: {
+    title: string;
+    dateTime: string;
+    topics?: string[];
+  };
+  venue?: {
+    id: string;
+    title: string;
+    city?: string;
+  };
+}
+
+interface PersonData {
+  id: string;
+  name?: string;
+  bio?: string;
+  title?: string;
+  data?: {
+    name?: string;
+    bio?: string;
+    title?: string;
+  };
+}
+
+interface VenueData {
+  id: string;
+  name?: string;
+  description?: string;
+  city?: string;
+  data?: {
+    name?: string;
+    description?: string;
+    city?: string;
+  };
+}
+
+export interface CacheableContent {
+  event?: EventData;
+  person?: PersonData;
+  venue?: VenueData;
   mapImageBase64?: string | null;
   coverImageBase64?: string | null;
-  [key: string]: any;
 }
 
 export class OGImageCache {
@@ -23,7 +60,7 @@ export class OGImageCache {
    * Generate a cache key based on the content that affects the OG image
    */
   private generateCacheKey(content: CacheableContent): string {
-    const hashContent: any = {};
+    const hashContent: Record<string, unknown> = {};
 
     // Handle event data
     if (content.event) {
@@ -152,7 +189,7 @@ export class OGImageCache {
       console.log(`Cleared ${deletedFiles.length} cached OG images`);
     } catch (error) {
       // Cache directory might not exist yet
-      if (error instanceof Error && "code" in error && error.code === "ENOENT") {
+      if (error instanceof Error && "code" in error && (error as NodeJS.ErrnoException).code === "ENOENT") {
         console.log("OG cache directory does not exist yet");
       } else {
         console.error("Failed to clear OG image cache:", error);

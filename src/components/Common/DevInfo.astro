@@ -115,10 +115,18 @@ if (!DEV_MODE) return;
     const ogUrlElement = document.getElementById("dev-og-url");
 
     if (ogImageContainer && ogImageUrl) {
-      ogImageContainer.innerHTML = `
-        <img src="${ogImageUrl}" alt="OG Image Preview" class="rounded-lg shadow-lg max-w-full" 
-             onerror="this.parentElement.innerHTML='<div class=\\'alert alert-error\\'>Failed to load OG image</div>'" />
-      `;
+      // Create image element safely to prevent XSS
+      const img = document.createElement('img');
+      img.src = ogImageUrl;
+      img.alt = 'OG Image Preview';
+      img.className = 'rounded-lg shadow-lg max-w-full';
+      img.onerror = function() {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'alert alert-error';
+        errorDiv.textContent = 'Failed to load OG image';
+        this.parentElement?.replaceChildren(errorDiv);
+      };
+      ogImageContainer.replaceChildren(img);
     }
 
     if (ogUrlElement) {

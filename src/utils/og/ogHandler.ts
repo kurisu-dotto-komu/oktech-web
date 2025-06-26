@@ -1,11 +1,11 @@
 import React from "react"; // required here
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
-import { OGImageCache } from "./ogCache";
+import { OGImageCache, type CacheableContent } from "./ogCache";
 
 export interface OGHandlerOptions {
-  component: React.ComponentType<any>;
-  props: any;
+  component: React.ComponentType<Record<string, unknown>>;
+  props: Record<string, unknown>;
   width?: number;
   height?: number;
 }

@@ -9,12 +9,14 @@ const { placeholder = "Search events..." } = Astro.props;
 ---
 
 <div class="join w-full max-w-md">
+  <label class="sr-only" for="search-input">Search</label>
   <input
+    id="search-input"
     type="text"
     placeholder={placeholder}
     class="input input-bordered input-lg join-item w-full"
   />
-  <button class="btn btn-primary btn-lg join-item">
+  <button class="btn btn-primary btn-lg join-item" aria-label="Search">
     <Icon name="lucide:search" size={20} />
   </button>
 </div>

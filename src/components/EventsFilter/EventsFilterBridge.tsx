@@ -1,22 +1,23 @@
 import { useEffect, useRef } from "react";
 import { EventsFilter } from "./EventsFilter";
+import type { EventItem, EventFilters } from "./EventsFilterProvider";
 
 interface EventsFilterBridgeProps {
-  items: any[];
+  items: EventItem[];
   availableFilters: {
     topics: string[];
     locations: string[];
   };
   sortOptions: Array<{ value: string; label: string }>;
   currentView?: string;
-  initialFilters?: any;
+  initialFilters?: EventFilters;
   useClientUrlParams?: boolean; // Flag to use client-side URL params
 }
 
 export default function EventsFilterBridge(props: EventsFilterBridgeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleFiltersChange = (filters: any, filteredItems: any[]) => {
+  const handleFiltersChange = (filters: EventFilters, filteredItems: EventItem[]) => {
     if (!containerRef.current) return;
 
     const container = document.getElementById("collection-container");
@@ -38,7 +39,7 @@ export default function EventsFilterBridge(props: EventsFilterBridgeProps) {
     }
   };
 
-  const updateVisibleItems = (filtered: any[]) => {
+  const updateVisibleItems = (filtered: EventItem[]) => {
     const filteredIds = new Set(filtered.map((item) => item.id));
 
     const itemElements = document.querySelectorAll("[data-item-id]");

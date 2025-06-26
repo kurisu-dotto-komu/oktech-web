@@ -33,7 +33,7 @@ const collectionData = {
   items: allEvents.map((event) => ({
     id: event.id,
     title: event.data.title,
-    date: event.data.dateTime,
+    date: event.data.dateTime.toISOString(),
     topics: event.data.topics || [],
     location: event.venue?.city || "",
     venue: event.venue,
@@ -115,7 +115,7 @@ const sortOptions = [
 <script is:inline data-collection-items={JSON.stringify(collectionData.items)}>
   // This runs immediately, blocking render to prevent flicker
   (function () {
-    console.log("[EventsView inline script] Initial URL:", window.location.href);
+    // Initial URL processing
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const filters = {

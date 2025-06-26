@@ -1,8 +1,9 @@
 ---
 import EventsFilterBridge from "./EventsFilterBridge";
+import type { EventItem } from "./EventsFilterProvider";
 
 export interface Props {
-  items: any[];
+  items: EventItem[];
   currentFilters: {
     search: string;
     topics?: string[];

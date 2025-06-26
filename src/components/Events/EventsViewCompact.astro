@@ -2,8 +2,10 @@
 import EventCompact from "@/components/Event/EventCompact.astro";
 import Section from "@/components/Common/Section.astro";
 
+import type { EventsArray } from "@/data";
+
 interface Props {
-  events: any[]; // Type from getEvents()
+  events: EventsArray;
 }
 
 const { events } = Astro.props;

@@ -5,8 +5,10 @@ import EventGalleryImages from "@/components/Event/EventGalleryImages.astro";
 import Grid from "@/components/Common/Grid.astro";
 import { Icon } from "astro-icon/components";
 
+import type { EventsArray } from "@/data";
+
 interface Props {
-  events: any[]; // Type from getEvents()
+  events: EventsArray;
 }
 
 const { events } = Astro.props;

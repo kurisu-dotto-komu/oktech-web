@@ -1,4 +1,4 @@
-import { EventFilterProvider } from "./EventsFilterProvider";
+import { EventFilterProvider, type EventItem, type EventFilters } from "./EventsFilterProvider";
 import EventsSearchInput from "./EventsSearchInput";
 import EventsFilterDropdown from "./EventsFilterDropdown";
 import EventsSortSelector from "./EventsSortSelector";
@@ -6,15 +6,15 @@ import EventsActiveFilters from "./EventsActiveFilters";
 import { EventsViewModeSelector } from "./EventsViewModeSelector";
 
 interface EventsFilterProps {
-  items: any[];
+  items: EventItem[];
   availableFilters: {
     topics: string[];
     locations: string[];
   };
   sortOptions: Array<{ value: string; label: string }>;
   currentView?: string;
-  initialFilters?: any;
-  onFiltersChange?: (filters: any, filteredItems: any[]) => void;
+  initialFilters?: EventFilters;
+  onFiltersChange?: (filters: EventFilters, filteredItems: EventItem[]) => void;
 }
 
 export function EventsFilter({
