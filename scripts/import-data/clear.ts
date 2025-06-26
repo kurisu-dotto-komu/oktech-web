@@ -31,12 +31,12 @@ async function removeEmptyDirectories(dir: string): Promise<void> {
 }
 
 export async function clearMarkdown() {
-  const eventsFiles = await glob("**/*.md", { cwd: EVENTS_BASE_DIR });
+  const eventsFiles = glob("**/*.md", { cwd: EVENTS_BASE_DIR });
   for await (const file of eventsFiles) {
     await rm(path.join(EVENTS_BASE_DIR, file), { force: true });
   }
 
-  const venuesFiles = await glob("**/*.md", { cwd: VENUES_BASE_DIR });
+  const venuesFiles = glob("**/*.md", { cwd: VENUES_BASE_DIR });
   for await (const file of venuesFiles) {
     await rm(path.join(VENUES_BASE_DIR, file), { force: true });
   }
@@ -47,7 +47,7 @@ export async function clearMarkdown() {
 }
 
 export async function clearEventMarkdown() {
-  const files = await glob("**/*.md", { cwd: EVENTS_BASE_DIR });
+  const files = glob("**/*.md", { cwd: EVENTS_BASE_DIR });
   for await (const file of files) {
     await rm(path.join(EVENTS_BASE_DIR, file), { force: true });
   }
@@ -57,7 +57,7 @@ export async function clearEventMarkdown() {
 }
 
 export async function clearVenueMarkdown() {
-  const files = await glob("**/*.md", { cwd: VENUES_BASE_DIR });
+  const files = glob("**/*.md", { cwd: VENUES_BASE_DIR });
   for await (const file of files) {
     await rm(path.join(VENUES_BASE_DIR, file), { force: true });
   }
@@ -70,7 +70,7 @@ export async function clearImageFiles() {
   const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
   const patterns = imageExtensions.map((ext) => `**/*.${ext}`);
   for (const pattern of patterns) {
-    const files = await glob(pattern, { cwd: EVENTS_BASE_DIR });
+    const files = glob(pattern, { cwd: EVENTS_BASE_DIR });
     for await (const file of files) {
       await rm(path.join(EVENTS_BASE_DIR, file), { force: true });
     }
@@ -78,14 +78,14 @@ export async function clearImageFiles() {
 }
 
 export async function clearImageMetadat() {
-  const files = await glob("**/*.json", { cwd: EVENTS_BASE_DIR });
+  const files = glob("**/*.json", { cwd: EVENTS_BASE_DIR });
   for await (const file of files) {
     await rm(path.join(EVENTS_BASE_DIR, file), { force: true });
   }
 }
 
 export async function clearMaps() {
-  const mapFiles = await glob("**/map.jpg", { cwd: VENUES_BASE_DIR });
+  const mapFiles = glob("**/map.jpg", { cwd: VENUES_BASE_DIR });
   let mapsCleared = 0;
   for await (const file of mapFiles) {
     await rm(path.join(VENUES_BASE_DIR, file), { force: true });

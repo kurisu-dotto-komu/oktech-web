@@ -1,4 +1,3 @@
-import { SITE } from "@/config";
 import OGLayout from "./OGLayout";
 
 interface PersonData {

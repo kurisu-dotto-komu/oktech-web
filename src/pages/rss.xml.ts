@@ -1,11 +1,10 @@
 import rss from "@astrojs/rss";
-import type { APIContext } from "astro";
 import { SITE } from "../config";
 import { getEvents } from "../data";
 import { formatDate } from "../utils/formatDate";
 import { resolveBaseUrl, resolveFullUrl } from "../utils/urlResolver";
 
-export async function GET(context: APIContext) {
+export async function GET() {
   const events = await getEvents();
 
   // Sort events by date (newest first)
