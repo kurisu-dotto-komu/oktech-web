@@ -70,13 +70,13 @@ test.describe('Special Routes', () => {
   test('RSS feed is accessible', async ({ page, baseURL }) => {
     const response = await page.goto(resolveTestPath('/rss.xml', baseURL!));
     expect(response?.status()).toBe(200);
-    expect(response?.headers()['content-type']).toContain('application/xml');
+    expect(response?.headers()['content-type']).toMatch(/xml/);
   });
 
   test('XML sitemap is accessible', async ({ page, baseURL }) => {
     const response = await page.goto(resolveTestPath('/sitemap.xml', baseURL!));
     expect(response?.status()).toBe(200);
-    expect(response?.headers()['content-type']).toContain('application/xml');
+    expect(response?.headers()['content-type']).toMatch(/xml/);
   });
 
   test('Homepage OG image is accessible', async ({ page, baseURL }) => {

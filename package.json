@@ -16,6 +16,8 @@
     "og-cache:stats": "npx tsx scripts/manage-og-cache.ts stats",
     "test:install": "./.devcontainer/installPlaywright.sh",
     "test": "playwright test",
+    "test:build": "npm run build && TEST_BUILD=true playwright test",
+    "test:build:fast": "TEST_BUILD=true playwright test",
     "claude:sync-rules": "claude --dangerously-skip-permissions 'read prompts/sync-rules.md and execute this as a prompt'",
     "claude:code-review": "claude --dangerously-skip-permissions 'read prompts/code-review.md and execute this as a prompt'",
     "claude:typecheck-fix": "claude --dangerously-skip-permissions 'read prompts/typecheck-fix.md and execute this as a prompt'",
