@@ -50,7 +50,7 @@ export default function EventsActiveFilters() {
   );
 }
 
-interface FilterBadgeProps {
+export interface FilterBadgeProps {
   type: string;
   value: string;
   onRemove: () => void;

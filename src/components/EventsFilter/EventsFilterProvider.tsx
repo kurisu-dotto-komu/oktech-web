@@ -47,7 +47,7 @@ export const useEventsFilter = () => {
   return context;
 };
 
-interface EventFilterProviderProps {
+export interface EventFilterProviderProps {
   children: ReactNode;
   items: EventItem[];
   availableFilters: {
