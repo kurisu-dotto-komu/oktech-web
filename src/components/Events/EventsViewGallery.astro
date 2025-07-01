@@ -44,7 +44,7 @@ const eventsWithoutGalleryCount = events.filter((event) => !eventsWithGallery.ha
       return (
         <div
           data-item-id={event.slug || event.id}
-          class:list={[!hasGallery ? "hidden" : ["py-8", i % 2 === 0 ? "" : "bg-base-100/50"]]}
+          class:list={[!hasGallery ? "hidden" : ["transition-all", "duration-200", "py-8", i % 2 === 0 ? "" : "bg-base-100/50"]]}
         >
           {hasGallery && (
             <div class="container mx-auto px-4">

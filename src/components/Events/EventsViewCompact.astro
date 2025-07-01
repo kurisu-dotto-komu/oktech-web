@@ -14,7 +14,7 @@ const { events } = Astro.props;
 <Section wide class="flex flex-col">
   {
     events.map((event) => (
-      <div data-item-id={event.slug || event.id}>
+      <div data-item-id={event.slug || event.id} class="transition-all duration-200">
         <EventCompact eventSlug={event.id} class="border-b border-base-300 last:border-0" />
       </div>
     ))

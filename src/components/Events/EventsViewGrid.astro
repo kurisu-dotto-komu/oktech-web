@@ -14,7 +14,7 @@ const { events } = Astro.props;
 <Section grid wide>
   {
     events.map((event) => (
-      <div data-item-id={event.slug || event.id}>
+      <div data-item-id={event.slug || event.id} class="transition-all duration-200">
         <EventSummary eventSlug={event.id} />
       </div>
     ))

@@ -45,17 +45,32 @@ export default function EventsFilterBridge(props: EventsFilterBridgeProps) {
   const updateVisibleItems = (filtered: EventItem[]) => {
     const filteredIds = new Set(filtered.map((item) => item.id));
 
-    const itemElements = document.querySelectorAll("[data-item-id]");
-    const itemsMap = new Map<string, Element>();
+    const itemElements: NodeListOf<HTMLElement> = document.querySelectorAll(
+      "[data-item-id]",
+    );
+    const itemsMap = new Map<string, HTMLElement>();
 
     itemElements.forEach((element) => {
       const itemId = element.getAttribute("data-item-id");
       if (itemId) {
         itemsMap.set(itemId, element);
-        if (filteredIds.has(itemId)) {
-          element.classList.remove("hidden");
+
+        // Smooth fade
+        const shouldShow = filteredIds.has(itemId);
+
+        if (shouldShow) {
+          // Prepare element for showing
+          element.classList.remove("pointer-events-none", "opacity-0", "hidden");
+
+          // Force reflow so transition runs
+          void element.offsetWidth; // eslint-disable-line @typescript-eslint/no-unused-expressions
         } else {
-          element.classList.add("hidden");
+          // Fade out first
+          element.classList.add("opacity-0", "pointer-events-none");
+          // After transition ends, ensure it's hidden to skip in layout calculations
+          setTimeout(() => {
+            element.classList.add("hidden");
+          }, 200);
         }
       }
     });

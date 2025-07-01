@@ -4,7 +4,7 @@ import { useEventsFilter } from "./EventsFilterProvider";
 export default function EventsSearchInput() {
   const { currentFilters, updateFilter, clearFilter } = useEventsFilter();
   const [localValue, setLocalValue] = useState(currentFilters.search);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     setLocalValue(currentFilters.search);
