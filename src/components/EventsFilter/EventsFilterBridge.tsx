@@ -30,7 +30,10 @@ export default function EventsFilterBridge(props: EventsFilterBridgeProps) {
         }),
       );
 
-      updateVisibleItems(filteredItems);
+      // Defer DOM intensive updates to the next animation frame for smoother UI
+      window.requestAnimationFrame(() => {
+        updateVisibleItems(filteredItems);
+      });
     }
 
     const countElement = document.getElementById("filtered-count");
