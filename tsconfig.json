@@ -9,7 +9,11 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["react", "react-dom"],
-    "lib": ["DOM", "DOM.Iterable", "ES2017"]
+    "types": ["astro/client", "react", "react-dom", "fuse.js"],
+    "lib": ["DOM", "DOM.Iterable", "ES2017"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }
