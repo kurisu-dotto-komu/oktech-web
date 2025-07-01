@@ -8,6 +8,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["react", "react-dom"],
+    "lib": ["DOM", "DOM.Iterable", "ES2017"]
   }
 }
