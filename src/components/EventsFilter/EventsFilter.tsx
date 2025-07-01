@@ -33,8 +33,8 @@ export function EventsFilter({
       initialFilters={initialFilters}
       onFiltersChange={onFiltersChange}
     >
-      <div className="sticky top-0 z-40 bg-base-100 border-b border-base-200 py-4 mb-6">
-        <div className="flex flex-wrap gap-4 items-center">
+      <div className="sticky top-0 z-40 bg-base-100 border-b border-base-200 py-2 mb-4">
+        <div className="flex flex-col md:flex-row flex-wrap gap-2 md:gap-4 items-center">
           <div className="flex-1 min-w-[200px]">
             <EventsSearchInput />
           </div>
