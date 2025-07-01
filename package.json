@@ -57,6 +57,7 @@
     "tailwindcss": "^4.1.10",
     "theme-change": "^2.5.0",
     "typescript": "^5.8.3",
-    "yaml": "^2.8.0"
+    "yaml": "^2.8.0",
+    "@types/fuse.js": "^3.3.4"
   }
 }

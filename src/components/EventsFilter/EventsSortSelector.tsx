@@ -1,3 +1,4 @@
+import type * as React from "react";
 import { useEventsFilter } from "./EventsFilterProvider";
 
 export default function EventsSortSelector() {

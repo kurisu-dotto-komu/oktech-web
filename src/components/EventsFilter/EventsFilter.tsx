@@ -1,3 +1,4 @@
+import type * as React from "react";
 import { EventFilterProvider, type EventItem, type EventFilters } from "./EventsFilterProvider";
 import EventsSearchInput from "./EventsSearchInput";
 import EventsFilterDropdown from "./EventsFilterDropdown";
