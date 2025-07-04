@@ -7,6 +7,7 @@ interface ShaderBackgroundProps {
   variant?: 'dots' | 'waves' | 'grid';
   intensity?: number;
   color?: string;
+  secondaryColor?: string;
   backgroundColor?: string;
   interactive?: boolean;
 }
@@ -16,6 +17,7 @@ export default function ShaderBackground({
   variant = 'dots',
   intensity = 0.6,
   color = '#ffffff',
+  secondaryColor = '#888888',
   backgroundColor = 'transparent',
   interactive = true
 }: ShaderBackgroundProps) {
@@ -41,6 +43,7 @@ export default function ShaderBackground({
     uniform float u_time;
     uniform float u_intensity;
     uniform vec3 u_color;
+    uniform vec3 u_secondaryColor;
     uniform vec3 u_backgroundColor;
     
     // SDF circle function
@@ -48,15 +51,21 @@ export default function ShaderBackground({
       return length(p) - r;
     }
     
-    // Smooth minimum function for blending
-    float smin(float a, float b, float k) {
-      float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
-      return mix(b, a, h) - k * h * (1.0 - h);
-    }
-    
-    // Noise function
+    // Enhanced noise function
     float noise(vec2 p) {
       return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+    }
+    
+    // Multi-octave noise for more complex patterns
+    float fbm(vec2 p) {
+      float value = 0.0;
+      float amplitude = 0.5;
+      for (int i = 0; i < 3; i++) {
+        value += amplitude * noise(p);
+        p *= 2.0;
+        amplitude *= 0.5;
+      }
+      return value;
     }
     
     void main() {
@@ -64,28 +73,44 @@ export default function ShaderBackground({
       vec2 aspectRatio = vec2(u_resolution.x / u_resolution.y, 1.0);
       vec2 correctedUv = (uv - 0.5) * aspectRatio;
       
-      // Grid parameters
-      float gridSize = ${variant === 'dots' ? '20.0' : variant === 'waves' ? '15.0' : '25.0'};
-      float dotRadius = ${variant === 'dots' ? '0.15' : variant === 'waves' ? '0.12' : '0.18'};
+      // Grid parameters - smaller dots
+      float gridSize = ${variant === 'dots' ? '25.0' : variant === 'waves' ? '20.0' : '30.0'};
+      float baseDotRadius = ${variant === 'dots' ? '0.08' : variant === 'waves' ? '0.06' : '0.10'};
       
       // Create grid coordinates
       vec2 gridUv = fract(correctedUv * gridSize + 0.5) - 0.5;
       vec2 gridId = floor(correctedUv * gridSize + 0.5);
+      vec2 cellCenter = (gridId + 0.5) / gridSize;
       
-      // Mouse influence
+      // Mouse influence with proximity scaling
       vec2 mouseUv = (u_mouse / u_resolution.xy - 0.5) * aspectRatio;
-      float mouseDistance = length(correctedUv - mouseUv);
-      float mouseInfluence = smoothstep(0.3, 0.0, mouseDistance);
+      float cellToMouseDistance = length(cellCenter - mouseUv);
+      float mouseInfluence = smoothstep(0.4, 0.0, cellToMouseDistance);
       
-      // Time-based animation
-      float timeOffset = u_time * 0.5;
+      // Mouse proximity scaling - dots get bigger when mouse is near
+      float scaleFromMouse = 1.0 + mouseInfluence * 1.5;
+      float dynamicDotRadius = baseDotRadius * scaleFromMouse;
+      
+      // Enhanced sparkling animation
+      float timeOffset = u_time * 0.8;
       float cellNoise = noise(gridId * 0.1);
+      float sparkleNoise = fbm(gridId * 0.05 + u_time * 0.1);
+      
+      // Primary pulse animation
       float pulsePhase = timeOffset + cellNoise * 6.28318;
       float pulse = sin(pulsePhase) * 0.5 + 0.5;
       
+      // Secondary sparkle animation
+      float sparklePhase = timeOffset * 1.3 + cellNoise * 8.0;
+      float sparkle = pow(sin(sparklePhase) * 0.5 + 0.5, 3.0);
+      
+      // Random sparkle trigger
+      float sparkleChance = smoothstep(0.7, 0.9, sparkleNoise);
+      sparkle *= sparkleChance;
+      
       // Distance from center for radial gradient
       float centerDistance = length(correctedUv);
-      float radialMask = smoothstep(0.8, 0.3, centerDistance);
+      float radialMask = smoothstep(0.8, 0.2, centerDistance);
       
       ${variant === 'waves' ? `
       // Wave distortion
@@ -96,25 +121,34 @@ export default function ShaderBackground({
       ${variant === 'grid' ? `
       // Grid line effect
       vec2 gridLines = abs(gridUv);
-      float lineWidth = 0.02;
+      float lineWidth = 0.015;
       float lines = 1.0 - smoothstep(lineWidth, lineWidth + 0.01, min(gridLines.x, gridLines.y));
       ` : ''}
       
-      // Create dot/shape
-      float shape = sdCircle(gridUv, dotRadius);
+      // Create dot/shape with dynamic radius
+      float shape = sdCircle(gridUv, dynamicDotRadius);
       float smoothShape = 1.0 - smoothstep(0.0, 0.02, shape);
       
       ${variant === 'grid' ? `
       smoothShape = max(smoothShape, lines);
       ` : ''}
       
-      // Apply mouse interaction and animation
-      float finalIntensity = smoothShape * radialMask * u_intensity;
-      finalIntensity += mouseInfluence * 0.3;
-      finalIntensity += pulse * 0.1 * radialMask;
+      // Calculate intensities for primary and secondary colors
+      float baseIntensity = smoothShape * radialMask * u_intensity;
+      float primaryIntensity = baseIntensity * (pulse * 0.8 + 0.2);
+      float secondaryIntensity = baseIntensity * sparkle * 0.6;
       
-      // Color mixing
-      vec3 finalColor = mix(u_backgroundColor, u_color, finalIntensity);
+      // Add mouse interaction boost with subtle glow
+      float mouseGlow = smoothstep(0.6, 0.0, cellToMouseDistance) * 0.3;
+      primaryIntensity += mouseInfluence * 0.4 + mouseGlow;
+      secondaryIntensity += mouseInfluence * sparkle * 0.3 + mouseGlow * sparkle;
+      
+      // Color mixing with sparkling secondary color
+      vec3 primaryContribution = u_color * primaryIntensity;
+      vec3 secondaryContribution = u_secondaryColor * secondaryIntensity;
+      vec3 combinedColors = primaryContribution + secondaryContribution;
+      
+      vec3 finalColor = mix(u_backgroundColor, combinedColors, min(primaryIntensity + secondaryIntensity, 1.0));
       
       gl_FragColor = vec4(finalColor, 1.0);
     }
@@ -216,13 +250,16 @@ export default function ShaderBackground({
     
     // Parse colors - handle CSS custom properties
     const resolvedColor = color.startsWith('var(') ? getCSSProperty(color.slice(4, -1)) : color;
+    const resolvedSecondaryColor = secondaryColor.startsWith('var(') ? getCSSProperty(secondaryColor.slice(4, -1)) : secondaryColor;
     const resolvedBgColor = backgroundColor === 'transparent' ? 'transparent' : 
                            backgroundColor.startsWith('var(') ? getCSSProperty(backgroundColor.slice(4, -1)) : backgroundColor;
     
     const colorRgb = hexToRgb(resolvedColor);
+    const secondaryColorRgb = hexToRgb(resolvedSecondaryColor);
     const bgColorRgb = resolvedBgColor === 'transparent' ? [0, 0, 0] : hexToRgb(resolvedBgColor);
     
     gl.uniform3f(uniforms.u_color, colorRgb[0], colorRgb[1], colorRgb[2]);
+    gl.uniform3f(uniforms.u_secondaryColor, secondaryColorRgb[0], secondaryColorRgb[1], secondaryColorRgb[2]);
     gl.uniform3f(uniforms.u_backgroundColor, bgColorRgb[0], bgColorRgb[1], bgColorRgb[2]);
     
     // Draw
@@ -230,7 +267,7 @@ export default function ShaderBackground({
     
     // Continue animation
     animationRef.current = requestAnimationFrame(() => render(gl, program, uniforms));
-  }, [intensity, color, backgroundColor]);
+  }, [intensity, color, secondaryColor, backgroundColor]);
 
   const hexToRgb = (hex: string): [number, number, number] => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -274,6 +311,7 @@ export default function ShaderBackground({
       u_time: gl.getUniformLocation(program, 'u_time')!,
       u_intensity: gl.getUniformLocation(program, 'u_intensity')!,
       u_color: gl.getUniformLocation(program, 'u_color')!,
+      u_secondaryColor: gl.getUniformLocation(program, 'u_secondaryColor')!,
       u_backgroundColor: gl.getUniformLocation(program, 'u_backgroundColor')!,
     };
 
@@ -310,10 +348,10 @@ export default function ShaderBackground({
       <div 
         className={`absolute inset-0 w-full h-full pointer-events-none opacity-20 ${className}`}
         style={{
-          background: `radial-gradient(circle at 50% 50%, ${color}20 0%, transparent 50%), 
-                      repeating-linear-gradient(0deg, transparent, transparent 20px, ${color}10 21px, transparent 22px),
-                      repeating-linear-gradient(90deg, transparent, transparent 20px, ${color}10 21px, transparent 22px)`,
-          animation: 'subtle-pulse 4s ease-in-out infinite alternate',
+          background: `radial-gradient(circle at 50% 50%, ${color}20 0%, ${secondaryColor}10 30%, transparent 50%), 
+                      repeating-linear-gradient(0deg, transparent, transparent 25px, ${color}08 26px, transparent 27px),
+                      repeating-linear-gradient(90deg, transparent, transparent 25px, ${secondaryColor}06 26px, transparent 27px)`,
+          animation: 'subtle-sparkle 6s ease-in-out infinite',
           display: 'var(--webgl-fallback, block)',
         }}
       />
@@ -328,9 +366,11 @@ export default function ShaderBackground({
       />
       
       <style>{`
-        @keyframes subtle-pulse {
-          from { opacity: 0.1; }
-          to { opacity: 0.3; }
+        @keyframes subtle-sparkle {
+          0%, 100% { opacity: 0.1; transform: scale(1); }
+          25% { opacity: 0.2; transform: scale(1.02); }
+          50% { opacity: 0.3; transform: scale(1); }
+          75% { opacity: 0.15; transform: scale(0.98); }
         }
         :root {
           --webgl-fallback: none;
