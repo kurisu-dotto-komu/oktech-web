@@ -49,9 +49,13 @@ export default function ShaderBackground({
     uniform vec3 u_accentColor;
     uniform vec3 u_backgroundColor;
     
-    // SDF circle function
-    float sdCircle(vec2 p, float r) {
-      return length(p) - r;
+    // SDF hexagon function
+    float sdHexagon(vec2 p, float r) {
+      const vec3 k = vec3(-0.866025404, 0.5, 0.577350269);
+      p = abs(p);
+      p -= 2.0 * min(dot(k.xy, p), 0.0) * k.xy;
+      p -= vec2(clamp(p.x, -k.z * r, k.z * r), r);
+      return length(p) * sign(p.y);
     }
     
     // Enhanced noise function
@@ -71,103 +75,139 @@ export default function ShaderBackground({
       return value;
     }
     
-    void main() {
-      vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-      vec2 aspectRatio = vec2(u_resolution.x / u_resolution.y, 1.0);
-      vec2 correctedUv = (uv - 0.5) * aspectRatio;
-      
-      // Grid parameters - smaller dots
-      float gridSize = ${variant === 'dots' ? '25.0' : variant === 'waves' ? '20.0' : '30.0'};
-      float baseDotRadius = ${variant === 'dots' ? '0.08' : variant === 'waves' ? '0.06' : '0.10'};
-      
-      // Create grid coordinates
-      vec2 gridUv = fract(correctedUv * gridSize + 0.5) - 0.5;
-      vec2 gridId = floor(correctedUv * gridSize + 0.5);
-      vec2 cellCenter = (gridId + 0.5) / gridSize;
-      
-      // Mouse influence with proximity scaling
-      vec2 mouseUv = (u_mouse / u_resolution.xy - 0.5) * aspectRatio;
-      float cellToMouseDistance = length(cellCenter - mouseUv);
-      float mouseInfluence = smoothstep(0.4, 0.0, cellToMouseDistance);
-      
-      // Mouse proximity scaling - dots get bigger when mouse is near
-      float scaleFromMouse = 1.0 + mouseInfluence * 1.5;
-      float dynamicDotRadius = baseDotRadius * scaleFromMouse;
-      
-             // Enhanced subtle sparkling animation
-       float timeOffset = u_time * 0.6;
-       float cellNoise = noise(gridId * 0.1);
-       float sparkleNoise = fbm(gridId * 0.03 + u_time * 0.05);
-       
-       // Primary gentle pulse animation
-       float pulsePhase = timeOffset + cellNoise * 6.28318;
-       float pulse = sin(pulsePhase) * 0.3 + 0.7; // More gentle pulse
-       
-       // Subtle secondary sparkle animation with smooth fade
-       float sparklePhase = timeOffset * 0.7 + cellNoise * 4.0;
-       float sparkleBase = sin(sparklePhase) * 0.5 + 0.5;
-       
-       // Smooth fade in/out sparkle effect
-       float sparkleChance = smoothstep(0.8, 0.9, sparkleNoise);
-       float sparkleFade = smoothstep(0.0, 0.3, sparkleBase) * smoothstep(1.0, 0.7, sparkleBase);
-       float sparkle = sparkleFade * sparkleChance * 0.8; // More subtle intensity
-       
-       // Accent color background animation
-       float accentPhase = u_time * 0.3 + cellNoise * 2.0;
-       float accentPulse = sin(accentPhase) * 0.2 + 0.8;
-      
-      // Distance from center for radial gradient
-      float centerDistance = length(correctedUv);
-      float radialMask = smoothstep(0.8, 0.2, centerDistance);
-      
-      ${variant === 'waves' ? `
-      // Wave distortion
-      float wave = sin(correctedUv.x * 10.0 + u_time) * 0.1;
-      gridUv.y += wave;
-      ` : ''}
-      
-      ${variant === 'grid' ? `
-      // Grid line effect
-      vec2 gridLines = abs(gridUv);
-      float lineWidth = 0.015;
-      float lines = 1.0 - smoothstep(lineWidth, lineWidth + 0.01, min(gridLines.x, gridLines.y));
-      ` : ''}
-      
-      // Create dot/shape with dynamic radius
-      float shape = sdCircle(gridUv, dynamicDotRadius);
-      float smoothShape = 1.0 - smoothstep(0.0, 0.02, shape);
-      
-      ${variant === 'grid' ? `
-      smoothShape = max(smoothShape, lines);
-      ` : ''}
-      
-             // Calculate intensities for all color layers
-       float baseIntensity = smoothShape * radialMask * u_intensity;
-       float primaryIntensity = baseIntensity * pulse;
-       float secondaryIntensity = baseIntensity * sparkle * 0.4; // More subtle sparkle
-       
-       // Add mouse interaction boost with subtle glow
-       float mouseGlow = smoothstep(0.6, 0.0, cellToMouseDistance) * 0.2;
-       primaryIntensity += mouseInfluence * 0.3 + mouseGlow;
-       secondaryIntensity += mouseInfluence * sparkle * 0.2 + mouseGlow * sparkle * 0.5;
-       
-       // Accent color for background ambience (very subtle)
-       float accentIntensity = (1.0 - smoothShape) * radialMask * accentPulse * 0.1;
-       
-       // Lighter background mixing
-       vec3 lightBackground = mix(u_backgroundColor, u_accentColor, 0.05); // Very subtle accent tint
-       
-       // Color composition with multiple layers
-       vec3 primaryContribution = u_color * primaryIntensity;
-       vec3 secondaryContribution = u_secondaryColor * secondaryIntensity;
-       vec3 accentContribution = u_accentColor * accentIntensity;
-       
-       vec3 dotColors = primaryContribution + secondaryContribution;
-       vec3 finalColor = mix(lightBackground, dotColors + accentContribution, 
-                            min(primaryIntensity + secondaryIntensity + accentIntensity, 1.0));
-      
-      gl_FragColor = vec4(finalColor, 1.0);
+    // Rotation matrix
+    mat2 rotate(float angle) {
+      float s = sin(angle);
+      float c = cos(angle);
+      return mat2(c, -s, s, c);
     }
+    
+          void main() {
+        vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+        vec2 aspectRatio = vec2(u_resolution.x / u_resolution.y, 1.0);
+        vec2 correctedUv = (uv - 0.5) * aspectRatio;
+        
+        // Hexagon flower parameters
+        float gridSize = ${variant === 'dots' ? '12.0' : variant === 'waves' ? '10.0' : '15.0'};
+        float baseHexRadius = ${variant === 'dots' ? '0.12' : variant === 'waves' ? '0.10' : '0.15'};
+        
+        // Create grid coordinates
+        vec2 gridUv = fract(correctedUv * gridSize + 0.5) - 0.5;
+        vec2 gridId = floor(correctedUv * gridSize + 0.5);
+        vec2 cellCenter = (gridId + 0.5) / gridSize;
+        
+        // Mouse influence with proximity scaling
+        vec2 mouseUv = (u_mouse / u_resolution.xy - 0.5) * aspectRatio;
+        float cellToMouseDistance = length(cellCenter - mouseUv);
+        float mouseInfluence = smoothstep(0.4, 0.0, cellToMouseDistance);
+        
+        // Mouse proximity scaling - hexagons get bigger when mouse is near
+        float scaleFromMouse = 1.0 + mouseInfluence * 1.8;
+        float dynamicHexRadius = baseHexRadius * scaleFromMouse;
+        
+        // Enhanced animation for floating flowers
+        float timeOffset = u_time * 0.4;
+        float cellNoise = noise(gridId * 0.1);
+        float sparkleNoise = fbm(gridId * 0.03 + u_time * 0.02);
+        
+        // Floating animation - hexagons gently drift
+        vec2 floatOffset = vec2(
+          sin(timeOffset * 0.8 + cellNoise * 3.14) * 0.15,
+          cos(timeOffset * 0.6 + cellNoise * 2.0) * 0.12
+        );
+        vec2 animatedGridUv = gridUv + floatOffset;
+        
+        // Rotation animation for flower-like movement
+        float rotationSpeed = 0.3 + cellNoise * 0.4;
+        float rotationAngle = timeOffset * rotationSpeed + cellNoise * 6.28318;
+        
+        // Primary gentle pulse animation
+        float pulsePhase = timeOffset + cellNoise * 6.28318;
+        float pulse = sin(pulsePhase) * 0.3 + 0.7;
+        
+        // Subtle secondary sparkle animation with smooth fade
+        float sparklePhase = timeOffset * 0.5 + cellNoise * 3.0;
+        float sparkleBase = sin(sparklePhase) * 0.5 + 0.5;
+        
+        // Smooth fade in/out sparkle effect
+        float sparkleChance = smoothstep(0.7, 0.9, sparkleNoise);
+        float sparkleFade = smoothstep(0.0, 0.3, sparkleBase) * smoothstep(1.0, 0.7, sparkleBase);
+        float sparkle = sparkleFade * sparkleChance * 0.6;
+        
+        // Accent color background animation
+        float accentPhase = u_time * 0.2 + cellNoise * 1.5;
+        float accentPulse = sin(accentPhase) * 0.2 + 0.8;
+        
+        // Distance from center for radial gradient
+        float centerDistance = length(correctedUv);
+        float radialMask = smoothstep(0.9, 0.3, centerDistance);
+        
+        ${variant === 'waves' ? `
+        // Wave distortion for flowing movement
+        float wave = sin(correctedUv.x * 8.0 + u_time * 0.8) * 0.08;
+        animatedGridUv.y += wave;
+        ` : ''}
+        
+        // Create flower-like hexagon with multiple layers
+        vec2 rotatedUv = rotate(rotationAngle) * animatedGridUv;
+        
+        // Main hexagon flower
+        float hexShape = sdHexagon(rotatedUv, dynamicHexRadius);
+        float smoothHex = 1.0 - smoothstep(0.0, 0.02, hexShape);
+        
+        // Inner hexagon for flower center
+        float innerHexShape = sdHexagon(rotatedUv, dynamicHexRadius * 0.4);
+        float smoothInnerHex = 1.0 - smoothstep(0.0, 0.015, innerHexShape);
+        
+        // Outer petals (smaller hexagons around the main one)
+        float petalIntensity = 0.0;
+        for (int i = 0; i < 6; i++) {
+          float angle = float(i) * 1.047197551 + rotationAngle * 0.5; // 60 degrees apart
+          vec2 petalOffset = vec2(cos(angle), sin(angle)) * dynamicHexRadius * 0.8;
+          vec2 petalUv = animatedGridUv - petalOffset;
+          float petalShape = sdHexagon(petalUv, dynamicHexRadius * 0.3);
+          float smoothPetal = 1.0 - smoothstep(0.0, 0.025, petalShape);
+          petalIntensity += smoothPetal * 0.6;
+        }
+        
+        // Combine all hexagon elements
+        float totalShape = smoothHex + smoothInnerHex * 0.8 + petalIntensity;
+      
+                     // Calculate intensities for all flower layers
+         float baseIntensity = totalShape * radialMask * u_intensity;
+         float primaryIntensity = baseIntensity * pulse;
+         float secondaryIntensity = baseIntensity * sparkle * 0.5;
+         
+         // Add mouse interaction boost with subtle glow
+         float mouseGlow = smoothstep(0.6, 0.0, cellToMouseDistance) * 0.3;
+         primaryIntensity += mouseInfluence * 0.4 + mouseGlow;
+         secondaryIntensity += mouseInfluence * sparkle * 0.3 + mouseGlow * sparkle * 0.6;
+         
+         // Different color assignment for flower parts
+         float centerIntensity = smoothInnerHex * radialMask * u_intensity * pulse;
+         float petalMainIntensity = smoothHex * radialMask * u_intensity * pulse;
+         float petalAccentIntensity = petalIntensity * radialMask * u_intensity * sparkle;
+         
+         // Accent color for background ambience (very subtle)
+         float accentIntensity = (1.0 - totalShape) * radialMask * accentPulse * 0.08;
+         
+         // Lighter background mixing
+         vec3 lightBackground = mix(u_backgroundColor, u_accentColor, 0.06);
+         
+         // Flower color composition with layered approach
+         vec3 centerContribution = u_accentColor * centerIntensity * 0.8; // Accent color for center
+         vec3 mainPetalContribution = u_color * petalMainIntensity; // Primary color for main hexagon
+         vec3 outerPetalContribution = u_secondaryColor * petalAccentIntensity; // Secondary for outer petals
+         vec3 sparkleContribution = u_secondaryColor * secondaryIntensity * 0.7; // Sparkle effects
+         vec3 accentContribution = u_accentColor * accentIntensity;
+         
+         vec3 flowerColors = centerContribution + mainPetalContribution + outerPetalContribution + sparkleContribution;
+         float totalFlowerIntensity = min(centerIntensity + petalMainIntensity + petalAccentIntensity + secondaryIntensity + accentIntensity, 1.0);
+         
+         vec3 finalColor = mix(lightBackground, flowerColors + accentContribution, totalFlowerIntensity);
+         
+         gl_FragColor = vec4(finalColor, 1.0);
+       }
   `, [variant]);
 
   const createShader = useCallback((gl: WebGLRenderingContext, type: number, source: string) => {
@@ -366,12 +406,12 @@ export default function ShaderBackground({
     <>
       {/* CSS Fallback for unsupported browsers */}
       <div 
-        className={`absolute inset-0 w-full h-full pointer-events-none opacity-15 ${className}`}
+        className={`absolute inset-0 w-full h-full pointer-events-none opacity-12 ${className}`}
         style={{
-          background: `radial-gradient(circle at 50% 50%, ${accentColor}08 0%, ${color}15 40%, ${secondaryColor}08 70%, transparent 90%), 
-                      repeating-linear-gradient(0deg, transparent, transparent 30px, ${color}06 31px, transparent 32px),
-                      repeating-linear-gradient(90deg, transparent, transparent 30px, ${secondaryColor}04 31px, transparent 32px)`,
-          animation: 'subtle-sparkle 8s ease-in-out infinite',
+          background: `radial-gradient(circle at 50% 50%, ${accentColor}06 0%, ${color}12 30%, ${secondaryColor}06 60%, transparent 85%), 
+                      repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, ${color}04 60deg, transparent 120deg, ${secondaryColor}03 180deg, transparent 240deg, ${accentColor}02 300deg, transparent 360deg),
+                      radial-gradient(ellipse 40px 35px at 50% 50%, ${color}08, transparent 70%)`,
+          animation: 'flower-float 12s ease-in-out infinite',
           display: 'var(--webgl-fallback, block)',
         }}
       />
@@ -386,11 +426,11 @@ export default function ShaderBackground({
       />
       
       <style>{`
-        @keyframes subtle-sparkle {
-          0%, 100% { opacity: 0.08; transform: scale(1); }
-          20% { opacity: 0.12; transform: scale(1.01); }
-          50% { opacity: 0.18; transform: scale(1); }
-          80% { opacity: 0.10; transform: scale(0.99); }
+        @keyframes flower-float {
+          0%, 100% { opacity: 0.06; transform: scale(1) rotate(0deg); }
+          25% { opacity: 0.10; transform: scale(1.02) rotate(90deg); }
+          50% { opacity: 0.14; transform: scale(1.01) rotate(180deg); }
+          75% { opacity: 0.08; transform: scale(0.98) rotate(270deg); }
         }
         :root {
           --webgl-fallback: none;
