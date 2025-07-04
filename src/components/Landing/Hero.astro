@@ -10,10 +10,12 @@ const { title, description, button, slim } = Astro.props;
   <ShaderBackground 
     client:load 
     variant="dots" 
-    intensity={0.4}
+    intensity={0.5}
     color="var(--primary)"
     secondaryColor="var(--color-secondary)"
-    className="opacity-30"
+    accentColor="var(--color-accent)"
+    backgroundColor="var(--color-base-100)"
+    className="opacity-40"
     interactive={true}
   />
   

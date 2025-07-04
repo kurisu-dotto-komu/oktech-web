@@ -8,6 +8,7 @@ interface ShaderBackgroundProps {
   intensity?: number;
   color?: string;
   secondaryColor?: string;
+  accentColor?: string;
   backgroundColor?: string;
   interactive?: boolean;
 }
@@ -18,6 +19,7 @@ export default function ShaderBackground({
   intensity = 0.6,
   color = '#ffffff',
   secondaryColor = '#888888',
+  accentColor = '#ffaa00',
   backgroundColor = 'transparent',
   interactive = true
 }: ShaderBackgroundProps) {
@@ -44,6 +46,7 @@ export default function ShaderBackground({
     uniform float u_intensity;
     uniform vec3 u_color;
     uniform vec3 u_secondaryColor;
+    uniform vec3 u_accentColor;
     uniform vec3 u_backgroundColor;
     
     // SDF circle function
@@ -91,22 +94,27 @@ export default function ShaderBackground({
       float scaleFromMouse = 1.0 + mouseInfluence * 1.5;
       float dynamicDotRadius = baseDotRadius * scaleFromMouse;
       
-      // Enhanced sparkling animation
-      float timeOffset = u_time * 0.8;
-      float cellNoise = noise(gridId * 0.1);
-      float sparkleNoise = fbm(gridId * 0.05 + u_time * 0.1);
-      
-      // Primary pulse animation
-      float pulsePhase = timeOffset + cellNoise * 6.28318;
-      float pulse = sin(pulsePhase) * 0.5 + 0.5;
-      
-      // Secondary sparkle animation
-      float sparklePhase = timeOffset * 1.3 + cellNoise * 8.0;
-      float sparkle = pow(sin(sparklePhase) * 0.5 + 0.5, 3.0);
-      
-      // Random sparkle trigger
-      float sparkleChance = smoothstep(0.7, 0.9, sparkleNoise);
-      sparkle *= sparkleChance;
+             // Enhanced subtle sparkling animation
+       float timeOffset = u_time * 0.6;
+       float cellNoise = noise(gridId * 0.1);
+       float sparkleNoise = fbm(gridId * 0.03 + u_time * 0.05);
+       
+       // Primary gentle pulse animation
+       float pulsePhase = timeOffset + cellNoise * 6.28318;
+       float pulse = sin(pulsePhase) * 0.3 + 0.7; // More gentle pulse
+       
+       // Subtle secondary sparkle animation with smooth fade
+       float sparklePhase = timeOffset * 0.7 + cellNoise * 4.0;
+       float sparkleBase = sin(sparklePhase) * 0.5 + 0.5;
+       
+       // Smooth fade in/out sparkle effect
+       float sparkleChance = smoothstep(0.8, 0.9, sparkleNoise);
+       float sparkleFade = smoothstep(0.0, 0.3, sparkleBase) * smoothstep(1.0, 0.7, sparkleBase);
+       float sparkle = sparkleFade * sparkleChance * 0.8; // More subtle intensity
+       
+       // Accent color background animation
+       float accentPhase = u_time * 0.3 + cellNoise * 2.0;
+       float accentPulse = sin(accentPhase) * 0.2 + 0.8;
       
       // Distance from center for radial gradient
       float centerDistance = length(correctedUv);
@@ -133,22 +141,30 @@ export default function ShaderBackground({
       smoothShape = max(smoothShape, lines);
       ` : ''}
       
-      // Calculate intensities for primary and secondary colors
-      float baseIntensity = smoothShape * radialMask * u_intensity;
-      float primaryIntensity = baseIntensity * (pulse * 0.8 + 0.2);
-      float secondaryIntensity = baseIntensity * sparkle * 0.6;
-      
-      // Add mouse interaction boost with subtle glow
-      float mouseGlow = smoothstep(0.6, 0.0, cellToMouseDistance) * 0.3;
-      primaryIntensity += mouseInfluence * 0.4 + mouseGlow;
-      secondaryIntensity += mouseInfluence * sparkle * 0.3 + mouseGlow * sparkle;
-      
-      // Color mixing with sparkling secondary color
-      vec3 primaryContribution = u_color * primaryIntensity;
-      vec3 secondaryContribution = u_secondaryColor * secondaryIntensity;
-      vec3 combinedColors = primaryContribution + secondaryContribution;
-      
-      vec3 finalColor = mix(u_backgroundColor, combinedColors, min(primaryIntensity + secondaryIntensity, 1.0));
+             // Calculate intensities for all color layers
+       float baseIntensity = smoothShape * radialMask * u_intensity;
+       float primaryIntensity = baseIntensity * pulse;
+       float secondaryIntensity = baseIntensity * sparkle * 0.4; // More subtle sparkle
+       
+       // Add mouse interaction boost with subtle glow
+       float mouseGlow = smoothstep(0.6, 0.0, cellToMouseDistance) * 0.2;
+       primaryIntensity += mouseInfluence * 0.3 + mouseGlow;
+       secondaryIntensity += mouseInfluence * sparkle * 0.2 + mouseGlow * sparkle * 0.5;
+       
+       // Accent color for background ambience (very subtle)
+       float accentIntensity = (1.0 - smoothShape) * radialMask * accentPulse * 0.1;
+       
+       // Lighter background mixing
+       vec3 lightBackground = mix(u_backgroundColor, u_accentColor, 0.05); // Very subtle accent tint
+       
+       // Color composition with multiple layers
+       vec3 primaryContribution = u_color * primaryIntensity;
+       vec3 secondaryContribution = u_secondaryColor * secondaryIntensity;
+       vec3 accentContribution = u_accentColor * accentIntensity;
+       
+       vec3 dotColors = primaryContribution + secondaryContribution;
+       vec3 finalColor = mix(lightBackground, dotColors + accentContribution, 
+                            min(primaryIntensity + secondaryIntensity + accentIntensity, 1.0));
       
       gl_FragColor = vec4(finalColor, 1.0);
     }
@@ -251,15 +267,18 @@ export default function ShaderBackground({
     // Parse colors - handle CSS custom properties
     const resolvedColor = color.startsWith('var(') ? getCSSProperty(color.slice(4, -1)) : color;
     const resolvedSecondaryColor = secondaryColor.startsWith('var(') ? getCSSProperty(secondaryColor.slice(4, -1)) : secondaryColor;
+    const resolvedAccentColor = accentColor.startsWith('var(') ? getCSSProperty(accentColor.slice(4, -1)) : accentColor;
     const resolvedBgColor = backgroundColor === 'transparent' ? 'transparent' : 
                            backgroundColor.startsWith('var(') ? getCSSProperty(backgroundColor.slice(4, -1)) : backgroundColor;
     
     const colorRgb = hexToRgb(resolvedColor);
     const secondaryColorRgb = hexToRgb(resolvedSecondaryColor);
+    const accentColorRgb = hexToRgb(resolvedAccentColor);
     const bgColorRgb = resolvedBgColor === 'transparent' ? [0, 0, 0] : hexToRgb(resolvedBgColor);
     
     gl.uniform3f(uniforms.u_color, colorRgb[0], colorRgb[1], colorRgb[2]);
     gl.uniform3f(uniforms.u_secondaryColor, secondaryColorRgb[0], secondaryColorRgb[1], secondaryColorRgb[2]);
+    gl.uniform3f(uniforms.u_accentColor, accentColorRgb[0], accentColorRgb[1], accentColorRgb[2]);
     gl.uniform3f(uniforms.u_backgroundColor, bgColorRgb[0], bgColorRgb[1], bgColorRgb[2]);
     
     // Draw
@@ -267,7 +286,7 @@ export default function ShaderBackground({
     
     // Continue animation
     animationRef.current = requestAnimationFrame(() => render(gl, program, uniforms));
-  }, [intensity, color, secondaryColor, backgroundColor]);
+  }, [intensity, color, secondaryColor, accentColor, backgroundColor]);
 
   const hexToRgb = (hex: string): [number, number, number] => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -312,6 +331,7 @@ export default function ShaderBackground({
       u_intensity: gl.getUniformLocation(program, 'u_intensity')!,
       u_color: gl.getUniformLocation(program, 'u_color')!,
       u_secondaryColor: gl.getUniformLocation(program, 'u_secondaryColor')!,
+      u_accentColor: gl.getUniformLocation(program, 'u_accentColor')!,
       u_backgroundColor: gl.getUniformLocation(program, 'u_backgroundColor')!,
     };
 
@@ -346,12 +366,12 @@ export default function ShaderBackground({
     <>
       {/* CSS Fallback for unsupported browsers */}
       <div 
-        className={`absolute inset-0 w-full h-full pointer-events-none opacity-20 ${className}`}
+        className={`absolute inset-0 w-full h-full pointer-events-none opacity-15 ${className}`}
         style={{
-          background: `radial-gradient(circle at 50% 50%, ${color}20 0%, ${secondaryColor}10 30%, transparent 50%), 
-                      repeating-linear-gradient(0deg, transparent, transparent 25px, ${color}08 26px, transparent 27px),
-                      repeating-linear-gradient(90deg, transparent, transparent 25px, ${secondaryColor}06 26px, transparent 27px)`,
-          animation: 'subtle-sparkle 6s ease-in-out infinite',
+          background: `radial-gradient(circle at 50% 50%, ${accentColor}08 0%, ${color}15 40%, ${secondaryColor}08 70%, transparent 90%), 
+                      repeating-linear-gradient(0deg, transparent, transparent 30px, ${color}06 31px, transparent 32px),
+                      repeating-linear-gradient(90deg, transparent, transparent 30px, ${secondaryColor}04 31px, transparent 32px)`,
+          animation: 'subtle-sparkle 8s ease-in-out infinite',
           display: 'var(--webgl-fallback, block)',
         }}
       />
@@ -367,10 +387,10 @@ export default function ShaderBackground({
       
       <style>{`
         @keyframes subtle-sparkle {
-          0%, 100% { opacity: 0.1; transform: scale(1); }
-          25% { opacity: 0.2; transform: scale(1.02); }
-          50% { opacity: 0.3; transform: scale(1); }
-          75% { opacity: 0.15; transform: scale(0.98); }
+          0%, 100% { opacity: 0.08; transform: scale(1); }
+          20% { opacity: 0.12; transform: scale(1.01); }
+          50% { opacity: 0.18; transform: scale(1); }
+          80% { opacity: 0.10; transform: scale(0.99); }
         }
         :root {
           --webgl-fallback: none;
