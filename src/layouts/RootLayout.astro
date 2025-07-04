@@ -3,6 +3,7 @@ import "@/styles/global.css";
 import { SITE } from "@/config";
 import { resolveInternalHref } from "@/utils/urlResolver";
 import SEO from "@/components/Common/SEO.astro";
+import SparklesCursor from "@/components/Common/SparklesCursor.tsx";
 
 export interface Props {
   title?: string;
@@ -57,5 +58,6 @@ const { title, ...seoProps } = Astro.props;
   </head>
   <body class="bg-base-100">
     <slot />
+    <SparklesCursor client:load />
   </body>
 </html>
