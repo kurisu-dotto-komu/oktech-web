@@ -394,6 +394,7 @@ async function main() {
   ]);
 
   const photosByEvent: Record<string, Photo[]> = {};
+  const photoBatchesByEvent: Record<string, Array<{ timestamp: number; photos: Photo[] }>> = {};
 
   Object.values(photosJSON.groups).forEach((grp) => {
     if (grp.event) {
@@ -401,6 +402,11 @@ async function main() {
       const list = photosByEvent[grp.event] ?? [];
       list.push(...grp.photos);
       photosByEvent[grp.event] = list;
+      
+      // Track batches for redistribution
+      const batches = photoBatchesByEvent[grp.event] ?? [];
+      batches.push({ timestamp: grp.timestamp, photos: grp.photos });
+      photoBatchesByEvent[grp.event] = batches;
     } else if (INFER_EVENTS) {
       // Attempt to infer the event based on timestamp
       const inferred = inferEventByTimestamp(grp.timestamp, eventsWithVenuesJSON);
@@ -412,6 +418,11 @@ async function main() {
         const list = photosByEvent[inferred.event.id] ?? [];
         list.push(...grp.photos);
         photosByEvent[inferred.event.id] = list;
+        
+        // Track batches for redistribution
+        const batches = photoBatchesByEvent[inferred.event.id] ?? [];
+        batches.push({ timestamp: grp.timestamp, photos: grp.photos });
+        photoBatchesByEvent[inferred.event.id] = batches;
       } else {
         logger.warn(`Could not infer event for photos batch with timestamp ${grp.timestamp}`);
       }
@@ -421,6 +432,76 @@ async function main() {
       );
     }
   });
+
+  // Redistribute photo batches from events with multiple batches to events without photos
+  const allEvents: Array<{ id: string; title: string; timestamp: number }> = [];
+  for (const groupData of Object.values(eventsWithVenuesJSON.groups)) {
+    for (const event of groupData.events) {
+      allEvents.push({
+        id: event.id,
+        title: event.title,
+        timestamp: new Date(event.time).getTime(),
+      });
+    }
+  }
+
+  // Sort all events by timestamp (newest first)
+  allEvents.sort((a, b) => b.timestamp - a.timestamp);
+
+  // Find events with multiple batches and events without photos
+  const eventsWithMultipleBatches = Object.entries(photoBatchesByEvent)
+    .filter(([_, batches]) => batches.length > 1)
+    .map(([eventId, batches]) => ({
+      eventId,
+      batches,
+      event: allEvents.find(e => e.id === eventId)!
+    }))
+    .filter(item => item.event) // Ensure event exists
+    .sort((a, b) => b.event.timestamp - a.event.timestamp); // Sort by event date, newest first
+
+  const eventsWithoutPhotos = allEvents.filter(event => !photosByEvent[event.id]);
+
+  if (eventsWithMultipleBatches.length > 0 && eventsWithoutPhotos.length > 0) {
+    logger.section("Redistributing Photo Batches");
+    
+    for (const { eventId, batches, event: eventInfo } of eventsWithMultipleBatches) {
+      // Sort batches by upload timestamp (ascending) to maintain order
+      const sortedBatches = [...batches].sort((a, b) => a.timestamp - b.timestamp);
+      
+      // For events with multiple batches, distribute them in order to nearby events without photos
+      // The latest batch should go to the event it was originally assigned to
+      // Earlier batches should go to earlier events without photos
+      
+      // Find nearby events without photos (before this event)
+      const nearbyEventsWithoutPhotos = eventsWithoutPhotos
+        .filter(e => e.timestamp < eventInfo.timestamp)
+        .sort((a, b) => b.timestamp - a.timestamp); // Most recent first
+      
+      // Keep the latest batch with the current event, redistribute earlier batches
+      for (let i = 0; i < sortedBatches.length - 1 && nearbyEventsWithoutPhotos.length > 0; i++) {
+        const batch = sortedBatches[i];
+        const targetEvent = nearbyEventsWithoutPhotos.shift()!; // Take the most recent event without photos
+        
+        logger.info(
+          `Redistributing photo batch ${i + 1}/${sortedBatches.length} (timestamp: ${batch.timestamp}) from event ${eventId} (${eventInfo.title}) → event ${targetEvent.id} (${targetEvent.title})`,
+        );
+
+        // Remove photos from original event
+        photosByEvent[eventId] = photosByEvent[eventId].filter(
+          photo => !batch.photos.includes(photo)
+        );
+
+        // Add photos to new event
+        photosByEvent[targetEvent.id] = batch.photos;
+
+        // Remove this event from the main "without photos" list
+        const index = eventsWithoutPhotos.findIndex(e => e.id === targetEvent.id);
+        if (index > -1) {
+          eventsWithoutPhotos.splice(index, 1);
+        }
+      }
+    }
+  }
 
   // Process events
   for (const [group, groupData] of Object.entries(eventsWithVenuesJSON.groups)) {
