@@ -29,3 +29,6 @@ pnpm-debug.log*
 
 # playwright reports
 test/results/
+
+# ignore events so they aren't committed (perhaps change this in the future)
+content/events/
