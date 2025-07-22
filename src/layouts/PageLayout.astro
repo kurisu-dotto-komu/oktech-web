@@ -1,8 +1,8 @@
 ---
 import RootLayout from "./RootLayout.astro";
-import TopBar from "@/components/Layout/TopBar.astro";
+import TopBar from "@/components/Layout/TopBar";
 import Footer from "@/components/Layout/Footer.astro";
-import DevInfo from "@/components/Common/DevInfo.astro";
+import DevInfo from "@/components/Common/DevInfo.tsx";
 ---
 
 <RootLayout {...Astro.props}>
@@ -18,5 +18,5 @@ import DevInfo from "@/components/Common/DevInfo.astro";
       <Footer />
     </footer>
   </div>
-  <DevInfo />
+  <DevInfo client:load />
 </RootLayout>

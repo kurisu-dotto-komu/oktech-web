@@ -1,14 +1,13 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import { getPeople } from "../data";
-import PersonSummary from "../components/Person/PersonSummary.astro";
-import Grid from "../components/Common/Grid.astro";
+import PersonSummary from "../components/Person/PersonSummary";
+import Grid from "../components/Common/Grid";
 import Section from "../components/Common/Section.astro";
 
 // Get all people and sort by name
 const allPeople = await getPeople();
 const sortedPeople = allPeople.sort((a, b) => a.name.localeCompare(b.name));
-
 ---
 
 <PageLayout title="People">

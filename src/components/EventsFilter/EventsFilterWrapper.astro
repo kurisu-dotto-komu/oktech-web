@@ -1,32 +1,6 @@
 ---
-import EventsFilterBridge from "./EventsFilterBridge";
-import type { EventItem } from "./EventsFilterProvider";
-
-export interface Props {
-  items: EventItem[];
-  currentFilters: {
-    search: string;
-    topics?: string[];
-    location?: string;
-    sort: string;
-    view: string;
-  };
-  availableFilters: {
-    topics: string[];
-    locations: string[];
-  };
-  sortOptions: Array<{ value: string; label: string }>;
-}
-
-const { items, currentFilters, availableFilters, sortOptions } = Astro.props;
-
-// Don't pass initialFilters - let the client read URL params directly
+import EventsFilterWrapperComponent from "./EventsFilterWrapper.tsx";
+const props = Astro.props;
 ---
 
-<EventsFilterBridge
-  client:load
-  items={items}
-  availableFilters={availableFilters}
-  sortOptions={sortOptions}
-  currentView={currentFilters.view}
-/>
+<EventsFilterWrapperComponent {...props} client:load />

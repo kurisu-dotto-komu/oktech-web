@@ -1,4 +1,12 @@
-import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  type ReactNode,
+} from "react";
 import type Fuse from "fuse.js";
 import type { Venue } from "@/data";
 import type { ImageMetadata } from "astro";
@@ -206,31 +214,34 @@ export function EventFilterProvider({
     setIsInitialMount(false);
   }, []);
 
-  const updateFilter = useCallback((filterType: keyof EventFilters, value: EventFilters[keyof EventFilters]) => {
-    setCurrentFilters((prev) => {
-      const newFilters = { ...prev };
+  const updateFilter = useCallback(
+    (filterType: keyof EventFilters, value: EventFilters[keyof EventFilters]) => {
+      setCurrentFilters((prev) => {
+        const newFilters = { ...prev };
 
-      if (filterType === "search") {
-        newFilters.search = value as string;
-      } else if (filterType === "sort") {
-        newFilters.sort = value as "date-desc" | "date-asc";
-      } else if (filterType === "topics") {
-        if (Array.isArray(value)) {
-          newFilters.topics = value;
-        } else {
-          if (newFilters.topics.includes(value)) {
-            newFilters.topics = newFilters.topics.filter((t) => t !== value);
+        if (filterType === "search") {
+          newFilters.search = value as string;
+        } else if (filterType === "sort") {
+          newFilters.sort = value as "date-desc" | "date-asc";
+        } else if (filterType === "topics") {
+          if (Array.isArray(value)) {
+            newFilters.topics = value;
           } else {
-            newFilters.topics = [...newFilters.topics, value];
+            if (newFilters.topics.includes(value)) {
+              newFilters.topics = newFilters.topics.filter((t) => t !== value);
+            } else {
+              newFilters.topics = [...newFilters.topics, value];
+            }
           }
+        } else if (filterType === "location") {
+          newFilters.location = value as string;
         }
-      } else if (filterType === "location") {
-        newFilters.location = value as string;
-      }
 
-      return newFilters;
-    });
-  }, []);
+        return newFilters;
+      });
+    },
+    [],
+  );
 
   const clearFilter = useCallback((filterType: keyof EventFilters) => {
     setCurrentFilters((prev) => ({

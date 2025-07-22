@@ -2,11 +2,11 @@ import { forwardRef } from "react";
 import { resolveInternalHref } from "@/utils/urlResolver";
 
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  href: string;
+  href?: string;
 }
 
-const LinkReact = forwardRef<HTMLAnchorElement, LinkProps>(function LinkReact(
-  { href, children, ...rest },
+const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
+  { href = "", children, ...rest },
   ref,
 ) {
   const finalHref = resolveInternalHref(href);
@@ -18,4 +18,4 @@ const LinkReact = forwardRef<HTMLAnchorElement, LinkProps>(function LinkReact(
   );
 });
 
-export default LinkReact;
+export default Link;
