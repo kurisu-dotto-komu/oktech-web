@@ -116,12 +116,8 @@ export async function clearEmptyDirectories() {
   await removeEmptyDirectories(VENUES_BASE_DIR);
 }
 
-async function main() {
-  const command = process.argv[2];
-
-  logger.debug("Command:", { command });
-
-  switch (command) {
+export async function handleClear(clearType: string) {
+  switch (clearType) {
     case "markdown":
       logger.info("Clearing all markdown files...");
       await clearMarkdown();
@@ -168,14 +164,11 @@ async function main() {
       logger.success("Empty directories cleared.");
       break;
     default:
+      logger.error(`Unknown clear type: ${clearType}`);
+      logger.error("");
       logger.error(
-        "Usage: npm run clear -- [markdown|events|venues|image-files|image-metadata|images|maps|empty-dirs|all]",
+        "Valid clear types: markdown, events, venues, image-files, image-metadata, images, maps, empty-dirs, all",
       );
       process.exit(1);
   }
 }
-
-main().catch((err) => {
-  logger.error("Clear operation failed:", err);
-  process.exit(1);
-});

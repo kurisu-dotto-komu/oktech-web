@@ -1,0 +1,167 @@
+import type { EventsWithVenuesJSON, PhotoJSON } from "./types";
+import { logger } from "./logger";
+import { EVENTS_URL, PHOTOS_URL } from "./constants";
+import { createStatistics } from "./statistics";
+import { assignPhotosToEvents } from "./photos";
+import { processEvent } from "./events";
+import { processVenue, unmatchedCities } from "./venues";
+
+export async function handleImport(args: string[]) {
+  const overwriteMaps = args.includes("--overwrite-maps");
+
+  if (overwriteMaps) {
+    logger.info("Map overwrite mode enabled - existing maps will be regenerated");
+  }
+
+  // Initialize statistics
+  const stats = createStatistics();
+
+  // Fetch data
+  logger.section("Fetching Data");
+  const [eventsWithVenuesJSON, photosJSON] = await Promise.all([
+    fetch(EVENTS_URL).then((r) => r.json()) as Promise<EventsWithVenuesJSON>,
+    fetch(PHOTOS_URL).then((r) => r.json()) as Promise<PhotoJSON>,
+  ]);
+
+  // Process photos
+  const { photosByEvent } = assignPhotosToEvents(photosJSON, eventsWithVenuesJSON, stats);
+
+  // Process events
+  logger.section("Processing Events");
+  for (const [group, groupData] of Object.entries(eventsWithVenuesJSON.groups)) {
+    for (const event of groupData.events) {
+      stats.totalEvents++;
+      const photos = photosByEvent[event.id] ?? [];
+      await processEvent(event, group, photos, stats);
+    }
+  }
+
+  // Process venues
+  logger.section("Processing Venues");
+  if (eventsWithVenuesJSON.venues) {
+    for (const venue of eventsWithVenuesJSON.venues) {
+      stats.totalVenues++;
+      await processVenue(venue, overwriteMaps, stats);
+    }
+  }
+
+  // Report results
+  logger.section("Import Summary");
+
+  // Helper to format numbers with alignment
+  const fmt = (n: number): string => {
+    return n === 0 ? "-" : n.toString();
+  };
+
+  // Helper to format with suffix
+  const fmtWithSuffix = (n: number, suffix: string): string => {
+    return n === 0 ? "-" : `${n} ${suffix}`;
+  };
+
+  // Create summary rows
+  const rows = [
+    ["", "Total", "Created", "Updated", "Unchanged", "Other"],
+    [
+      "Events",
+      fmt(stats.totalEvents),
+      fmt(stats.markdownCreated),
+      fmt(stats.markdownUpdated),
+      fmt(stats.markdownUnchanged),
+      "-",
+    ],
+    [
+      "Venues",
+      fmt(stats.totalVenues),
+      fmt(stats.venuesCreated),
+      fmt(stats.venuesUpdated),
+      fmt(stats.venuesUnchanged),
+      "-",
+    ],
+    [
+      "Maps",
+      fmt(stats.totalVenues),
+      fmt(stats.mapsGenerated),
+      "-",
+      fmt(stats.mapsUnchanged),
+      fmtWithSuffix(stats.mapsFailed, "failed"),
+    ],
+    ["", "", "", "", "", ""],
+    [
+      "Photo Batches",
+      fmt(stats.photoBatchesTotal),
+      "-",
+      "-",
+      fmt(stats.photoBatchesTotal),
+      // Show inferred count in Other column
+      stats.photoBatchesCreated + stats.photoBatchesUpdated > 0 || stats.photoBatchesUnassigned > 0
+        ? `${stats.photoBatchesCreated + stats.photoBatchesUpdated} inferred${stats.photoBatchesUnassigned > 0 ? `, ${stats.photoBatchesUnassigned} unassigned` : ""}`
+        : "-",
+    ],
+    [
+      "Gallery Images",
+      fmt(stats.galleryImagesDownloaded + stats.galleryImagesUnchanged),
+      fmt(stats.galleryImagesDownloaded),
+      "-",
+      fmt(stats.galleryImagesUnchanged),
+      fmtWithSuffix(stats.galleryImagesDeleted, "deleted"),
+    ],
+  ];
+
+  // Calculate column widths dynamically
+  const colWidths = rows[0].map((_, colIndex) => {
+    return Math.max(...rows.map((row) => row[colIndex].length)) + 2;
+  });
+
+  // Print header
+  const header = rows[0]
+    .map((cell, i) => {
+      return i === 0 ? cell.padEnd(colWidths[i]) : cell.padStart(colWidths[i]);
+    })
+    .join("");
+  logger.info(header);
+  logger.info("─".repeat(header.length));
+
+  // Print data rows
+  rows.slice(1).forEach((row) => {
+    if (row[0] === "") {
+      return; // Skip empty separator rows
+    }
+    const formattedRow = row
+      .map((cell, i) => {
+        return i === 0 ? cell.padEnd(colWidths[i]) : cell.padStart(colWidths[i]);
+      })
+      .join("");
+    logger.info(formattedRow);
+  });
+
+  if (stats.photoBatchesUnassigned > 0) {
+    logger.warn(
+      `${stats.photoBatchesUnassigned} photo batch(es) could not be assigned to any event`,
+    );
+  }
+
+  // Report map generation issues
+  if (stats.mapsFailed > 0) {
+    logger.section("Map Generation Issues");
+    if (stats.mapsFailed === stats.totalVenues) {
+      logger.warn("All map generations failed. Common causes:");
+      logger.warn("  1. Missing API key - Create .env.local with STADIA_MAPS_API_KEY");
+      logger.warn(
+        "  2. Or change CHOSEN_PROVIDER in scripts/import-data/maps.ts to a free provider",
+      );
+      logger.info("See .env.local.example for more details");
+    } else {
+      logger.warn(`${stats.mapsFailed} map(s) failed to generate. Check error messages above.`);
+    }
+  }
+
+  if (unmatchedCities.length > 0) {
+    logger.section("Unmatched Cities (not found in cityMap)");
+    unmatchedCities.forEach(({ city, venueId, venueName }) => {
+      logger.warn(`  - "${city}" (Venue ID: ${venueId}, Name: "${venueName}")`);
+    });
+    logger.warn(`Total unmatched cities: ${unmatchedCities.length}`);
+  } else {
+    logger.success("All cities were successfully mapped!");
+  }
+}

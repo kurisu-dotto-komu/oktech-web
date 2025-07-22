@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import { glob } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import { logger } from "./import-data/logger";
+import { logger } from "./logger";
 
 // Base directories for different content types
 const CONTENT_DIRS = {
@@ -83,42 +83,16 @@ async function removeFields(contentType: ContentType, fieldsToRemove: string[]):
   logger.info(`- Files unchanged: ${filesProcessed - filesModified}`);
 }
 
-function showHelp(): void {
-  console.log(`
-Usage: npm run remove-fields -- <content-type> [options]
+export async function handleRemoveFields(args: string[]) {
+  // Remove the 'remove-fields' command from args
+  const commandArgs = args.slice(1);
 
-Content Types:
-  venues    Remove fields from venue files
-  events    Remove fields from event files
-  people    Remove fields from people files
-
-Options:
-  --fields <field1,field2,...>  Comma-separated list of fields to remove
-  --help                        Show this help message
-
-Examples:
-  npm run remove-fields -- venues                          # Remove default venue fields
-  npm run remove-fields -- venues --fields city,state      # Remove specific venue fields
-  npm run remove-fields -- events --fields meetupId        # Remove meetupId from events
-  npm run remove-fields -- people --fields skills          # Remove skills from people
-
-Default fields:
-  - venues: ${DEFAULT_FIELDS.venues.join(", ") || "none"}
-  - events: ${DEFAULT_FIELDS.events.join(", ") || "none"}
-  - people: ${DEFAULT_FIELDS.people.join(", ") || "none"}
-`);
-}
-
-// Parse command line arguments
-async function main() {
-  const args = process.argv.slice(2);
-
-  if (args.length === 0 || args.includes("--help")) {
-    showHelp();
+  if (commandArgs.length === 0 || commandArgs.includes("--help")) {
+    showRemoveFieldsHelp();
     process.exit(0);
   }
 
-  const contentType = args[0] as ContentType;
+  const contentType = commandArgs[0] as ContentType;
 
   // Validate content type
   if (!CONTENT_DIRS[contentType]) {
@@ -130,16 +104,16 @@ async function main() {
   // Parse fields to remove
   let fieldsToRemove = DEFAULT_FIELDS[contentType] || [];
 
-  for (let i = 1; i < args.length; i++) {
-    if (args[i] === "--fields" && args[i + 1]) {
-      fieldsToRemove = args[i + 1].split(",").map((field) => field.trim());
+  for (let i = 1; i < commandArgs.length; i++) {
+    if (commandArgs[i] === "--fields" && commandArgs[i + 1]) {
+      fieldsToRemove = commandArgs[i + 1].split(",").map((field) => field.trim());
       break;
     }
   }
 
   // Check if fields were provided without --fields flag
-  if (args[1] && !args[1].startsWith("--")) {
-    fieldsToRemove = args[1].split(",").map((field) => field.trim());
+  if (commandArgs[1] && !commandArgs[1].startsWith("--")) {
+    fieldsToRemove = commandArgs[1].split(",").map((field) => field.trim());
   }
 
   if (fieldsToRemove.length === 0) {
@@ -151,9 +125,39 @@ async function main() {
   try {
     await removeFields(contentType, fieldsToRemove);
   } catch (error) {
-    logger.error("Script failed:", error);
+    logger.error("Remove fields failed:", error);
     process.exit(1);
   }
 }
 
-main();
+export function showRemoveFieldsHelp(): void {
+  logger.info("Remove Fields:");
+  logger.info("  npm run import -- remove-fields <content-type> [options]");
+  logger.info("");
+  logger.info("Content Types:");
+  logger.info("  venues    Remove fields from venue files");
+  logger.info("  events    Remove fields from event files");
+  logger.info("  people    Remove fields from people files");
+  logger.info("");
+  logger.info("Options:");
+  logger.info("  --fields <field1,field2,...>  Comma-separated list of fields to remove");
+  logger.info("");
+  logger.info("Examples:");
+  logger.info(
+    "  npm run import -- remove-fields venues                      # Remove default venue fields",
+  );
+  logger.info(
+    "  npm run import -- remove-fields venues --fields city,state  # Remove specific venue fields",
+  );
+  logger.info(
+    "  npm run import -- remove-fields events --fields meetupId    # Remove meetupId from events",
+  );
+  logger.info(
+    "  npm run import -- remove-fields people --fields skills      # Remove skills from people",
+  );
+  logger.info("");
+  logger.info("Default fields:");
+  logger.info(`  - venues: ${DEFAULT_FIELDS.venues.join(", ") || "none"}`);
+  logger.info(`  - events: ${DEFAULT_FIELDS.events.join(", ") || "none"}`);
+  logger.info(`  - people: ${DEFAULT_FIELDS.people.join(", ") || "none"}`);
+}

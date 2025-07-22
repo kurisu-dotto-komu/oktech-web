@@ -1,5 +1,4 @@
 import fs from "node:fs/promises";
-import { existsSync } from "node:fs";
 import path from "node:path";
 // @ts-ignore
 import osmStaticMaps from "osm-static-maps";
@@ -7,6 +6,8 @@ import { getMapProviderConfig, type ProviderKey } from "./map-providers";
 import { logger } from "./logger";
 
 // Set the chosen provider here
+// Free providers: "openstreetmap", "carto", "cartoPositron", "cartoDarkMatter"
+// Paid providers (require API key): "stadiaWaterColor", "stadiaBright", etc.
 const CHOSEN_PROVIDER: ProviderKey = "stadiaWaterColor";
 
 export interface MapOptions {
@@ -15,16 +16,10 @@ export interface MapOptions {
   width?: number;
   height?: number;
   zoom?: number;
-  overwrite?: boolean;
 }
 
 export async function generateStaticMap(outputPath: string, options: MapOptions): Promise<boolean> {
-  const { lat, lng, width = 1024, height = 1024, zoom = 15, overwrite = false } = options;
-
-  // Check if map already exists and overwrite is not enabled
-  if (existsSync(outputPath) && !overwrite) {
-    return false; // Map already generated
-  }
+  const { lat, lng, width = 1024, height = 1024, zoom = 15 } = options;
 
   try {
     // Get provider configuration with validation
@@ -56,7 +51,21 @@ export async function generateStaticMap(outputPath: string, options: MapOptions)
     logger.success(`Generated map → ${outputPath}`);
     return true;
   } catch (error) {
-    logger.error(`Failed to generate map for ${outputPath}:`, error);
+    // Provide more detailed error messages
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
+    if (errorMessage.includes("STADIA_API_KEY")) {
+      logger.error(
+        `Map generation failed - Missing API key for provider "${CHOSEN_PROVIDER}". Set STADIA_MAPS_API_KEY in .env.local`,
+      );
+    } else if (errorMessage.includes("ECONNREFUSED") || errorMessage.includes("ETIMEDOUT")) {
+      logger.error(`Map generation failed - Could not connect to tile server: ${errorMessage}`);
+    } else if (errorMessage.includes("status code")) {
+      logger.error(`Map generation failed - Tile server error: ${errorMessage}`);
+    } else {
+      logger.error(`Map generation failed for ${outputPath}: ${errorMessage}`);
+    }
+
     return false;
   }
 }
