@@ -65,14 +65,14 @@ export default function EventInfo({ event }: Props) {
       {/* Map Section */}
       {event.venue && event.venueSlug && (
         <div className="w-full aspect-video relative">
-          <VenueMap 
-            venue={{ 
-              id: event.venueSlug, 
+          <VenueMap
+            venue={{
+              id: event.venueSlug,
               collection: "venues" as const,
-              data: event.venue 
-            }} 
-            marker={event.venue.title} 
-            link={true} 
+              data: event.venue,
+            }}
+            marker={event.venue.title}
+            link={true}
           />
           {event.venue.city && (
             <div className="absolute bottom-2 right-2">

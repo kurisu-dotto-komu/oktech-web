@@ -1,6 +1,10 @@
 import { useEventsFilter } from "./EventsFilterProvider";
 
-export default function EventsSortSelector() {
+interface Props {
+  "data-testid"?: string;
+}
+
+export default function EventsSortSelector({ "data-testid": dataTestId }: Props = {}) {
   const { currentFilters, updateFilter, sortOptions } = useEventsFilter();
 
   const handleSortChange = (value: string) => {
@@ -13,9 +17,14 @@ export default function EventsSortSelector() {
         className="select select-bordered select-sm"
         value={currentFilters.sort}
         onChange={(e) => handleSortChange(e.target.value)}
+        data-testid={dataTestId}
       >
         {sortOptions.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option
+            key={option.value}
+            value={option.value}
+            data-testid={`sort-option-${option.value}`}
+          >
             {option.label}
           </option>
         ))}

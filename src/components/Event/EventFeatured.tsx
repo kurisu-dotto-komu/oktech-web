@@ -1,6 +1,5 @@
 import { LuCalendar, LuClock, LuMapPin } from "react-icons/lu";
 import type { EventWithVenue } from "@/data";
-import type { CollectionEntry } from "astro:content";
 import Link from "@/components/Common/LinkReact";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import VenueMap from "@/components/Venue/VenueMap";
@@ -8,11 +7,10 @@ import EventCity from "./EventCity";
 
 interface Props {
   event: EventWithVenue;
-  venue?: CollectionEntry<"venues"> | null;
   hideMap?: boolean;
 }
 
-export default function EventFeatured({ event, venue, hideMap = false }: Props) {
+export default function EventFeatured({ event, hideMap = false }: Props) {
   const formattedDate = formatDate(event.data.dateTime, "long");
   const formattedTime = formatTime(event.data.dateTime);
 
@@ -44,12 +42,14 @@ export default function EventFeatured({ event, venue, hideMap = false }: Props) 
           <div className="flex flex-col h-full md:flex-row">
             {/* Left side - Event Details */}
             <div className={`flex flex-col p-6 ${hideMap ? "w-full" : "md:w-2/3"}`}>
-              <h3 className="card-title text-2xl mb-4">{event.data.title}</h3>
+              <h3 className="card-title text-2xl mb-4" data-testid="event-title">
+                {event.data.title}
+              </h3>
 
               <div className="flex flex-col gap-3 text-base mb-4">
                 <div className="flex gap-2 items-center">
                   <LuCalendar size={20} />
-                  <span>
+                  <span data-testid="event-date" data-date={event.data.dateTime}>
                     {formattedDate} • {formattedTime}
                   </span>
                 </div>
@@ -83,12 +83,19 @@ export default function EventFeatured({ event, venue, hideMap = false }: Props) 
             </div>
 
             {/* Right side - Map */}
-            {!hideMap && venue && (
+            {!hideMap && event.venue && event.venueSlug && (
               <div className="w-full md:w-1/2 lg:w-1/3 h-full hidden lg:block border-l-2 border-dotted border-base-content/30 relative">
                 <div className="h-full w-full">
-                  <VenueMap venue={venue} marker={event.venue?.title} />
+                  <VenueMap
+                    venue={{
+                      id: event.venueSlug,
+                      collection: "venues" as const,
+                      data: event.venue,
+                    }}
+                    marker={event.venue.title}
+                  />
                 </div>
-                {event.venue?.city && (
+                {event.venue.city && (
                   <div className="absolute bottom-2 right-2">
                     <EventCity city={event.venue.city} />
                   </div>

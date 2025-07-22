@@ -42,7 +42,12 @@ export default function EventsActiveFilters() {
             />
           )}
         </div>
-        <button type="button" className="btn btn-sm btn-ghost" onClick={clearAllFilters}>
+        <button
+          type="button"
+          className="btn btn-sm btn-ghost"
+          onClick={clearAllFilters}
+          data-testid="clear-all-filters"
+        >
           Clear All
         </button>
       </div>
@@ -58,7 +63,7 @@ interface FilterBadgeProps {
 
 function FilterBadge({ type, value, onRemove }: FilterBadgeProps) {
   return (
-    <div className="badge badge-primary gap-1">
+    <div className="badge badge-primary gap-1" data-testid="active-filter-chip">
       <span>
         {type}: {value}
       </span>

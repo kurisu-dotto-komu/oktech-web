@@ -40,10 +40,11 @@ export default function VenueMap({
 
   // Get map image from venue data - check if it's already an image object or a string
   const mapImage = venue.data.mapImage
-    ? { 
-        default: typeof venue.data.mapImage === 'string' 
-          ? { src: venue.data.mapImage } 
-          : venue.data.mapImage 
+    ? {
+        default:
+          typeof venue.data.mapImage === "string"
+            ? { src: venue.data.mapImage }
+            : venue.data.mapImage,
       }
     : null;
 

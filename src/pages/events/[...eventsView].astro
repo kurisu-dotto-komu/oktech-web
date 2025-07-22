@@ -1,10 +1,11 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
-import EventsView from "@/components/Events/EventsView.astro";
+import EventsPage from "@/components/Events/EventsPage";
+import { getEvents } from "@/data";
+import { getCollection } from "astro:content";
 
-// Parse the view from the path
 const { eventsView } = Astro.params;
-const view = eventsView || "grid"; // Default to grid if no view specified
+const view = (eventsView || "grid") as "grid" | "compact" | "gallery";
 
 // Validate view
 const validViews = ["grid", "compact", "gallery"];
@@ -12,25 +13,20 @@ if (!validViews.includes(view)) {
   return Astro.redirect("/events");
 }
 
-// Get query parameters
-const url = new URL(Astro.request.url);
-const searchParams = url.searchParams;
+const events = await getEvents();
 
-const search = searchParams.get("search") || "";
-const topics = searchParams.get("topics")?.split(",").filter(Boolean) || [];
-const location = searchParams.get("location") || "";
-const sort = searchParams.get("sort") || "date-desc";
+// Fetch gallery images if in gallery view
+const galleryImages = view === "gallery" ? await getCollection("eventGalleryImage") : [];
 
-// Static paths generation
 export async function getStaticPaths() {
   return [
-    { params: { eventsView: undefined } }, // /events
-    { params: { eventsView: "compact" } }, // /events/compact
-    { params: { eventsView: "gallery" } }, // /events/gallery
+    { params: { eventsView: undefined } },
+    { params: { eventsView: "compact" } },
+    { params: { eventsView: "gallery" } },
   ];
 }
 ---
 
 <PageLayout title="Events">
-  <EventsView view={view} search={search} topics={topics} location={location} sort={sort} />
+  <EventsPage events={events} view={view} galleryImages={galleryImages} client:load />
 </PageLayout>

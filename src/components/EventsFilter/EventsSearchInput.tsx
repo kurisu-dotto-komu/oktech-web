@@ -61,6 +61,7 @@ export default function EventsSearchInput() {
           placeholder="Search events..."
           value={localValue}
           onChange={handleInputChange}
+          data-testid="events-search-input"
         />
         {localValue && (
           <button

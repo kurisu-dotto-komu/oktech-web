@@ -35,11 +35,13 @@ export default function EventSummary({ event, className, class: classFromAstro }
         )}
       </figure>
       <div className="card-body p-4 gap-4 flex flex-col">
-        <h3 className="card-title text-lg">{event.data.title}</h3>
+        <h3 className="card-title text-lg" data-testid="event-title">
+          {event.data.title}
+        </h3>
         <div className="flex flex-col gap-1 text-sm">
           <div className="flex gap-2 items-center">
             <LuCalendar size={16} />
-            <span>
+            <span data-testid="event-date" data-date={event.data.dateTime}>
               {formattedDate} • {formattedTime}
             </span>
           </div>

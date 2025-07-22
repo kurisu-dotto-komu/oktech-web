@@ -6,6 +6,7 @@ interface EventsFilterDropdownProps {
   label: string;
   options: string[];
   multiple?: boolean;
+  "data-testid"?: string;
 }
 
 export default function EventsFilterDropdown({
@@ -13,6 +14,7 @@ export default function EventsFilterDropdown({
   label,
   options,
   multiple = false,
+  "data-testid": dataTestId,
 }: EventsFilterDropdownProps) {
   const { currentFilters, updateFilter, clearFilter } = useEventsFilter();
   const dropdownRef = useRef<HTMLDetailsElement>(null);
@@ -56,7 +58,7 @@ export default function EventsFilterDropdown({
   };
 
   return (
-    <details className="dropdown" ref={dropdownRef}>
+    <details className="dropdown" ref={dropdownRef} data-testid={dataTestId}>
       <summary className="btn btn-sm m-1">
         {label}
         {selected.length > 0 && (
@@ -78,7 +80,10 @@ export default function EventsFilterDropdown({
       <ul className="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 overflow-y-auto">
         {options.map((option) => (
           <li key={option}>
-            <label className="label cursor-pointer justify-start gap-2">
+            <label
+              className="label cursor-pointer justify-start gap-2"
+              data-testid={`${id === "topics" ? "topic" : id}-option`}
+            >
               {multiple ? (
                 <input
                   type="checkbox"

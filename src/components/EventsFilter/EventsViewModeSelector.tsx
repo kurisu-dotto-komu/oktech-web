@@ -44,6 +44,7 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
           href={view.href}
           className={`btn btn-sm ${currentView === view.value ? "btn-primary" : "btn-ghost"}`}
           data-view={view.value}
+          data-testid={`view-mode-${view.value}`}
         >
           {view.label}
         </LinkReact>

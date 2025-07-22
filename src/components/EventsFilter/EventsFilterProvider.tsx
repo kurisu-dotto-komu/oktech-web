@@ -21,6 +21,7 @@ export interface EventItem {
   venue?: Venue;
   poster?: ImageMetadata;
   slug: string;
+  hasGallery?: boolean;
 }
 
 export interface EventFilters {
@@ -76,25 +77,15 @@ export function EventFilterProvider({
   onFiltersChange,
 }: EventFilterProviderProps) {
   const [currentFilters, setCurrentFilters] = useState<EventFilters>(() => {
-    if (typeof window !== "undefined") {
-      // Initial URL and search params
-    }
-    if (initialFilters) {
-      // Using initialFilters
-      return initialFilters;
-    }
-
     // Only parse URL params on client side
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
-      const filters = {
+      return {
         search: urlParams.get("search") || "",
         topics: urlParams.get("topics")?.split(",").filter(Boolean) || [],
         location: urlParams.get("location") || "",
         sort: (urlParams.get("sort") as "date-desc" | "date-asc") || "date-desc",
       };
-      // Parsed filters from URL
-      return filters;
     }
 
     // Default filters for SSR

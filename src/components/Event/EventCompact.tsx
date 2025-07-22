@@ -36,13 +36,15 @@ export default function EventCompact({ event, className, class: classFromAstro }
       </figure>
 
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-base truncate">{event.data.title}</h3>
+        <h3 className="font-semibold text-base truncate" data-testid="event-title">
+          {event.data.title}
+        </h3>
       </div>
 
       <div className="flex items-center gap-6 text-sm text-base-content/70 flex-shrink-0">
         <div className="flex items-center gap-2">
           <LuCalendar size={16} />
-          <span className="whitespace-nowrap">
+          <span className="whitespace-nowrap" data-testid="event-date" data-date={event.data.dateTime}>
             {formattedDate} • {formattedTime}
           </span>
         </div>
