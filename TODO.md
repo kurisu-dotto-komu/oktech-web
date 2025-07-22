@@ -1,3 +1,7 @@
+Remove ROLE logic
+
+Switch to a github pages workflow for deployment
+
 Update CLAUDE.md to be consistent, use
 
 Clean up this repo

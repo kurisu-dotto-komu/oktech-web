@@ -1,31 +1,55 @@
-# Code
+## Agent Behavior
 
-- don't add unnecessary comments
-- always use typescript, never javascript
-- we are running a dev server in the background so you don't need to run it yourself
-- use `@/` imports unless the component is a direct `./` sibling, avoid `../` imports
-- we are using daisy ui v5, so always use these components when possible, and use it's theme classes
-- prefer Astro components (.astro) over React components (.tsx) unless client-side interactivity is needed
-- Astro templates require opening and closing frontmatter fences (---) with TypeScript code in between
-- always use astro lucide icons when possible; import { Icon } from "astro-icon/components"
-- use `react-icons` for react components, and `astro-icon` for astro components
-- use icon prefixes: `cib:` for brand icons, `lucide:` for general icons
-- import { IconName } from "react-icons/lu";
-- for React components, use the `export default function ComponentName` pattern, not named exports
-- for internal links, use the Link and LinkReact components as they do prefixing
-- import Link from "@/components/Common/Link.astro" for Astro components
-- import LinkReact from "@/components/Common/LinkReact" for React components
-- follow existing patterns and check neighboring files for style/structure
+- **Never assume missing context** - ask questions if uncertain
+- **Never hallucinate libraries or functions** - only use verified packages from package.json
+- **Always confirm file paths and module names** exist before referencing them
+- **Use the `context7` MCP tool** for unfamiliar or updated libraries
+- **Never make git commands** unless explicitly instructed
+- **Do what has been asked; nothing more, nothing less**
+- **Always prefer editing existing files** over creating new ones
+- **Never create files unless absolutely necessary**
+- **Never proactively create documentation files** (\*.md) unless explicitly requested
+- **Clean up after yourself** - remove unused imports, variables, functions, and components
+- **Actively identify and remove dead code** - if code isn't being used, delete it
 
-# Development
+## Development Workflow
 
-- Context is everything, so don't be afraid to ask questions
-- you can check with the `context7` mcp server for library usage.
-- never make git commands like commits unless I explicitly instruct you to
-- never use --headed mode for playwright tests, always use the default headless option
-- always prefer editing existing files over creating new ones
-- never proactively create documentation files (\*.md) unless explicitly requested
-- you can use use `npm run typecheck` to confirm there aren't any import issues if you have recently edited components, feel free to do this frequently as it's cheap
-- you can use `npm run test` to make sure everything's working during development, but only do this sparingly as it's quite expensive
-- you can use `npm run test:build` to double check things are working after making a big change, use very rarely
-- the build step might take a long time, so don't timeout early
+- **We are running a dev server in the background** - don't start your own
+- **Use TDD for new features** - create failing tests first, then implement
+- **Update existing tests** when logic changes
+- **Never use `--headed` or `--debug`** with playwright tests - use default headless mode
+- **Use `npm run checks`** frequently to verify imports (it's cheap)
+- **Use `npm run test`** sparingly during development (it's expensive)
+- **Use `npm run test:build`** rarely for big changes
+- **The build step might take a long time**, so don't timeout early
+
+## Code Structure & Modularity
+
+- **Never create a file longer than 150 lines of code** - refactor into modules or helper files
+- **Use consistent naming conventions, file structure, and architecture patterns**
+- **Organize code into clearly separated modules**, grouped by feature or responsibility
+- **Use `@/` imports** unless the component is a direct `./` sibling, avoid `../` imports
+- **For React components, use `export default function ComponentName`** pattern, not named exports
+- **Prefer React components (.tsx) over Astro components (.tsx)**, save Astro components for pages and layouts
+- **Follow existing patterns** and check neighboring files for style/structure
+
+## Style & Conventions
+
+- **Always use TypeScript**, never JavaScript
+- **Follow the DRY principle** - avoid duplication
+- **Keep comments minimal** - only for important or unintuitive nuances, use `// Reason:` for complex logic
+- **Never use `any`, `// eslint-disable-next-line`**, or similar type shortcuts
+- **Astro templates require opening and closing frontmatter fences (---)** with TypeScript code in between
+- **We are using daisy ui v5**, so always use these components when possible, and use its theme classes
+
+## Icons & Components
+
+- **Icon libraries**: Use `lucide:` for Astro and `lu` for React for general icons, and `cib` for brand icons
+- **For Astro components**: use astro-icon - `import { Icon } from "astro-icon/components"` with `<Icon name="lucide:home" />`
+- **For React components**: use react-icons - `import { Home } from "react-icons/lu"`
+
+## Internal Links
+
+- **Use LinkAstro and LinkReact components** as they handle URL prefixing
+- **Import for Astro**: `import Link from "@/components/Common/LinkAstro.astro"`
+- **Import for React**: `import Link from "@/components/Common/LinkReact"`

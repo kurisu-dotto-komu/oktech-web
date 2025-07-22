@@ -5,8 +5,6 @@ const config: KnipConfig = {
   entry: [
     "src/pages/**/*.{astro,tsx,ts}",
     "src/layouts/**/*.{astro,tsx,ts}",
-    "astro.config.ts",
-    "playwright.config.ts",
     "scripts/**/*.{ts,js}",
   ],
 
@@ -21,7 +19,6 @@ const config: KnipConfig = {
   // Astro plugin configuration
   astro: {
     entry: ["src/pages/**/*.{astro,tsx,ts}", "src/content/config.ts"],
-    project: ["src/**/*.{astro,tsx,ts}"],
   },
 
   // TypeScript configuration

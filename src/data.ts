@@ -27,7 +27,6 @@ export const ROLE_CONFIGS = {
 } as const;
 
 export type Role = keyof typeof ROLE_CONFIGS;
-export const POSSIBLE_ROLES = Object.keys(ROLE_CONFIGS) as Role[];
 
 export type Person = {
   id: string;
@@ -81,8 +80,6 @@ export async function getPeople(): Promise<Person[]> {
 
 export type Venue = InferEntrySchema<"venues">;
 export type EventData = InferEntrySchema<"events">;
-export type VenueEntry = Awaited<ReturnType<typeof getVenue>>;
-export type EventEntry = Awaited<ReturnType<typeof getEvent>>;
 
 // Enhanced event type that includes joined venue data
 export type EventWithVenue = {
