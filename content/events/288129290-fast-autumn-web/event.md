@@ -1,6 +1,6 @@
 ---
 title: Fast Autumn Web
-dateTime: "2022-09-17 16:15"
+dateTime: 2022-09-17 16:15
 duration: 150
 cover: ./659715.webp
 topics:
@@ -16,9 +16,9 @@ venue: 27370028
 
 We survived this summer!And this months meeting will be all about speed. 🚀
 
-Long time member _Gregory King_ will be looking into _what’s it like working with WebAssembly on the “Frontend”?_
+Long time member *Gregory King* will be looking into *what’s it like working with WebAssembly on the “Frontend”?*
 
-Have you ever wondered _what it’s like writing in WebAssembly (WASM)_? or if we can write WASM like we do React? - Do you love web development, but had enough of JavaScript? In this short talk, we explore what it’s like building web apps with [Yew](https://yew.rs), a Rust based web framework for writing frontend web apps in WebAssembly.
+Have you ever wondered *what it’s like writing in WebAssembly (WASM)*? or if we can write WASM like we do React? - Do you love web development, but had enough of JavaScript? In this short talk, we explore what it’s like building web apps with [Yew](https://yew.rs), a Rust based web framework for writing frontend web apps in WebAssembly.
 
 There is still space/time for another presentation. If you have something you want to talk about, [propose a presentation](https://forms.gle/umcRKdEy9SekLQL68)!
 

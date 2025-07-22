@@ -1,8 +1,6 @@
 ---
-title: >-
-  Autumn the beautiful season of colors - Osaka Web Dev & Design Meetup in
-  October
-dateTime: "2019-10-26 18:00"
+title: Autumn the beautiful season of colors - Osaka Web Dev & Design Meetup in October
+dateTime: 2019-10-26 18:00
 duration: 120
 cover: ./033876.webp
 meetupId: 264050187
