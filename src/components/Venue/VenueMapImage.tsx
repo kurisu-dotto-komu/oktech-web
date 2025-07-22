@@ -35,8 +35,8 @@ export default function VenueMapImage({
           <div className="relative">
             {typeof marker === "string" && (
               <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2">
-                <div className="bg-base-100/90 px-3 py-1 rounded-lg shadow-md whitespace-nowrap">
-                  <span className="text-base font-medium text-base-content">{marker}</span>
+                <div className="bg-base-100/90 px-3 py-1 rounded-lg shadow-md max-w-[200px]">
+                  <span className="text-base font-medium text-base-content truncate block">{marker}</span>
                 </div>
               </div>
             )}
