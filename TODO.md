@@ -1,3 +1,11 @@
+Update CLAUDE.md to be consistent, use
+
+Clean up this repo
+
+Styling
+
+Test the import script, convert to a package?
+
 ## Refactor Release
 
 Sanity check all files and fix stuff as you go

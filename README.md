@@ -1,6 +1,33 @@
 # OKTech Web
 
-A WIP Astro Project.
+> **Work in Progress**
+
+The website for Osaka Tech community events and meetups.
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Type checking
+npm run typecheck
+
+# Run tests
+npx playwright install-deps
+npx palywright install chrome --with-deps
+npm run test
+```
+
+## Data Import
+
+For importing event and venue data from external sources, see the [Import Script README](./scripts/import-data/README.md).
 
 ## Artificial Intelligence (AI) and Large Language Model (LLM) Disclosure
 

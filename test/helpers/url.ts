@@ -11,21 +11,21 @@
  */
 export function resolveTestPath(path: string, baseURL: string): string {
   // If path is already absolute, return as is
-  if (path.startsWith('http://') || path.startsWith('https://')) {
+  if (path.startsWith("http://") || path.startsWith("https://")) {
     return path;
   }
-  
+
   // For root path, just return the baseURL
-  if (!path || path === '/') {
+  if (!path || path === "/") {
     return baseURL;
   }
-  
+
   // Ensure path starts with /
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+
   // Combine baseURL and path
   const combined = `${baseURL}${cleanPath}`;
-  
+
   // Fix protocol double slashes that might get collapsed
-  return combined.replace(/^(https?):\/([^\/])/, '$1://$2');
+  return combined.replace(/^(https?):\/([^\/])/, "$1://$2");
 }
