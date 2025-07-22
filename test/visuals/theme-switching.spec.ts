@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import { resolveTestPath } from "../helpers/url";
 
 test.describe("Theme Switching", () => {
   test("should switch between light and dark themes", async ({ page, baseURL }) => {

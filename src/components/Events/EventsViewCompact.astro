@@ -1,5 +1,5 @@
 ---
-import EventCompact from "@/components/Event/EventCompact.astro";
+import EventCompact from "@/components/Event/EventCompact";
 import Section from "@/components/Common/Section";
 
 import type { EventsArray } from "@/data";
@@ -15,7 +15,7 @@ const { events } = Astro.props;
   {
     events.map((event) => (
       <div data-item-id={event.slug || event.id}>
-        <EventCompact eventSlug={event.id} class="border-b border-base-300 last:border-0" />
+        <EventCompact event={event} class="border-b border-base-300 last:border-0" />
       </div>
     ))
   }

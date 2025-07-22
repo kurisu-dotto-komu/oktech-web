@@ -7,7 +7,10 @@ const events = defineCollection({
     return Object.entries(imports).map(([fileName, module]) => {
       const basePath = fileName.replace("/event.md", "");
       const slug = basePath.split("/").pop() as string;
-      const { frontmatter } = module as { frontmatter: Record<string, unknown> };
+      const { frontmatter, rawContent } = module as {
+        frontmatter: Record<string, unknown>;
+        rawContent: () => string;
+      };
       const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);
       const [date, time] = (frontmatter.dateTime as string).split(" ");
       const devOnly = frontmatter.devOnly as boolean | undefined;
@@ -15,6 +18,17 @@ const events = defineCollection({
       // Convert venue number to string if it exists
       const venueId = frontmatter.venue;
       const venue = venueId ? String(venueId) : undefined;
+
+      // Get the markdown content without frontmatter
+      let markdownContent = "";
+      try {
+        const fullContent = rawContent();
+        // Remove frontmatter
+        const contentWithoutFrontmatter = fullContent.replace(/^---[\s\S]*?---\s*/, "");
+        markdownContent = contentWithoutFrontmatter.trim();
+      } catch {
+        markdownContent = "";
+      }
 
       return {
         id: slug,
@@ -26,6 +40,7 @@ const events = defineCollection({
         devOnly: devOnly ?? false,
         venue,
         topics: frontmatter.topics as string[] | undefined,
+        markdownContent,
       };
     });
   },
@@ -39,6 +54,7 @@ const events = defineCollection({
       devOnly: z.boolean().optional().default(false),
       venue: reference("venues").optional(),
       topics: z.array(z.string()).optional(),
+      markdownContent: z.string().optional(),
     }),
 });
 
@@ -82,9 +98,14 @@ const people = defineCollection({
       const basePath = fileName.replace("/person.md", "");
       const slug = basePath.split("/").pop() as string;
 
-      const { frontmatter, default: body } = module as {
+      const {
+        frontmatter,
+        default: body,
+        rawContent,
+      } = module as {
         frontmatter: Record<string, unknown>;
         default: { render: () => { html: string } };
+        rawContent: () => string;
       };
 
       const avatar = frontmatter.avatar
@@ -106,6 +127,17 @@ const people = defineCollection({
         bio = undefined;
       }
 
+      // Get the markdown content without frontmatter
+      let markdownContent = "";
+      try {
+        const fullContent = rawContent();
+        // Remove frontmatter
+        const contentWithoutFrontmatter = fullContent.replace(/^---[\s\S]*?---\s*/, "");
+        markdownContent = contentWithoutFrontmatter.trim();
+      } catch {
+        markdownContent = "";
+      }
+
       return {
         id: slug,
         name: frontmatter.name as string,
@@ -114,6 +146,7 @@ const people = defineCollection({
         avatar,
         theme,
         bio,
+        markdownContent,
       };
     });
   },
@@ -126,6 +159,7 @@ const people = defineCollection({
       avatar: image().optional(),
       theme: z.string().optional(),
       bio: z.string().optional(),
+      markdownContent: z.string().optional(),
     }),
 });
 
@@ -135,15 +169,34 @@ const venues = defineCollection({
       eager: true,
     });
 
+    const mapImages = import.meta.glob("/content/venues/**/map.jpg", {
+      eager: true,
+    });
+
     return Object.entries(imports).map(([fileName, module]) => {
       const basePath = fileName.replace("/venue.md", "");
       const slug = basePath.split("/").pop() as string;
 
-      const { frontmatter } = module as {
+      const { frontmatter, rawContent } = module as {
         frontmatter: Record<string, unknown>;
+        rawContent: () => string;
       };
 
       const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);
+
+      const mapImagePath = path.join(basePath, "map.jpg");
+      const mapImage = mapImages[mapImagePath] ? mapImagePath : undefined;
+
+      // Get the markdown content without frontmatter
+      let markdownContent = "";
+      try {
+        const fullContent = rawContent();
+        // Remove frontmatter
+        const contentWithoutFrontmatter = fullContent.replace(/^---[\s\S]*?---\s*/, "");
+        markdownContent = contentWithoutFrontmatter.trim();
+      } catch {
+        markdownContent = "";
+      }
 
       return {
         id: slug,
@@ -160,6 +213,8 @@ const venues = defineCollection({
         hasPage: frontmatter.hasPage as boolean | undefined,
         description: frontmatter.description as string | undefined,
         cover,
+        mapImage,
+        markdownContent,
       };
     });
   },
@@ -184,6 +239,8 @@ const venues = defineCollection({
       hasPage: z.boolean().optional(),
       description: z.string().optional(),
       cover: image().optional(),
+      mapImage: image().optional(),
+      markdownContent: z.string().optional(),
     }),
 });
 

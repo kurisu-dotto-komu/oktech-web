@@ -48,6 +48,7 @@ export type Person = {
     linkedin?: string;
     website?: string;
   };
+  markdownContent?: string;
 };
 
 // Define Tailwind color classes for users
@@ -95,6 +96,7 @@ export async function getPeople(): Promise<Person[]> {
       theme: color,
       events: data.events ?? [],
       links: {},
+      markdownContent: data.markdownContent,
     } satisfies Person;
   });
 }
@@ -197,31 +199,4 @@ export async function getPerson(id: string | undefined) {
     throw `No person found for id ${id}`;
   }
   return person;
-}
-
-export async function resolveEvent({ params, props }: AstroGlobal) {
-  // pull the eventSlug if it's passed, otherwise, use the path's `slug` param
-  const eventSlug = props.eventSlug ?? params.slug;
-  if (!eventSlug) {
-    throw `Event slug not defined ${JSON.stringify({ params, props })}`;
-  }
-  return await getEvent(eventSlug);
-}
-
-export async function resolveVenue({ params, props }: AstroGlobal) {
-  // pull the venueSlug if it's passed, otherwise, use the path's `slug` param
-  const venueSlug = props.venueSlug ?? params.slug;
-  if (!venueSlug) {
-    throw `Venue slug not defined ${JSON.stringify({ params, props })}`;
-  }
-  return await getVenue(venueSlug);
-}
-
-export async function resolvePerson({ params, props }: AstroGlobal) {
-  // pull the ID if it's passed, otherwise, use the path's `person` param
-  const personId = props.person ?? params.person;
-  if (!personId) {
-    throw `Person ID not defined ${JSON.stringify({ params, props })}`;
-  }
-  return await getPerson(personId);
 }

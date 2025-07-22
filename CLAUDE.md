@@ -23,6 +23,16 @@
 - **Use `npm run test:build`** rarely for big changes
 - **The build step might take a long time**, so don't timeout early
 
+## Testing Guidelines
+
+- **All tests go in the `/test` directory** - never create test files outside this location
+- **E2E tests go in `/test/e2e`** - for testing user flows, navigation, and feature interactions
+- **Visual tests go in `/test/visuals`** - for UI consistency, theme switching, and layout verification
+- **Use descriptive test names** that clearly indicate what is being tested
+- **Follow existing test patterns** in each directory for consistency
+- **Test helpers go in `/test/helpers`** - reusable utilities for tests
+- **Visual test screenshots are stored in `/test/screenshots`** - reference images for visual regression
+
 ## Code Structure & Modularity
 
 - **Never create a file longer than 150 lines of code** - refactor into modules or helper files

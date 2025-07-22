@@ -1,5 +1,5 @@
 ---
-import EventSummary from "@/components/Event/EventSummary.astro";
+import EventSummary from "@/components/Event/EventSummary";
 import Section from "@/components/Common/Section";
 
 import type { EventsArray } from "@/data";
@@ -15,7 +15,7 @@ const { events } = Astro.props;
   {
     events.map((event) => (
       <div data-item-id={event.slug || event.id}>
-        <EventSummary eventSlug={event.id} />
+        <EventSummary event={event} />
       </div>
     ))
   }

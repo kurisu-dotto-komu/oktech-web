@@ -1,6 +1,6 @@
 ---
 import Countdown from "@/components/Common/Countdown";
-import EventFeatured from "@/components/Event/EventFeatured.astro";
+import EventFeatured from "@/components/Event/EventFeatured";
 import { getEvents } from "@/data";
 const events = await getEvents();
 const futureEvents = events.filter((event) => event.data.dateTime > new Date()).reverse();
@@ -15,5 +15,5 @@ const countdownDate = new Date(nextEvent.data.dateTime);
     <div class="text-lg">Next event starts in</div>
     <Countdown client:load targetDate={countdownDate} />
   </div>
-  {futureEvents.map(({ data: { id } }) => <EventFeatured eventSlug={id} />)}
+  {futureEvents.map((event) => <EventFeatured event={event} />)}
 </div>

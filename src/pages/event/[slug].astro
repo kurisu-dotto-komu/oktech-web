@@ -1,11 +1,58 @@
 ---
-import { getEvents } from "@/data";
-import EventPage from "@/components/Event/EventPage.astro";
+import { getEvents, getEvent, getVenue, getPeople } from "@/data";
+import { getCollection } from "astro:content";
+import fs from "fs/promises";
+import path from "path";
+import yaml from "yaml";
+import EventPage from "@/components/Event/EventPage";
+import EventNav from "@/components/Event/EventNav";
+import EventPeople from "@/components/Event/EventPeople";
+import EventLinks from "@/components/Event/EventLinks";
+import EventGallery from "@/components/Event/EventGallery";
+import type { EventLink } from "@/components/Event/EventLinks";
+import PageLayout from "@/layouts/PageLayout.astro";
+import StickyNavigation from "@/components/Layout/StickyNavigation";
 
 export async function getStaticPaths() {
   const events = await getEvents();
   return events.map(({ id }) => ({ params: { slug: id } }));
 }
+
+const { slug } = Astro.params;
+const event = await getEvent(slug);
+const events = await getEvents();
+const venue = event.venueSlug ? await getVenue(event.venueSlug) : null;
+const people = await getPeople();
+
+// Get gallery images for this event
+const galleryImages = await getCollection(
+  "eventGalleryImage",
+  (img) => img.data.event.id === event.id,
+);
+
+// Load links for this event
+let links: EventLink[] = [];
+try {
+  const linksPath = path.join(process.cwd(), "content", "events", event.id, "links.yaml");
+  const linksContent = await fs.readFile(linksPath, "utf-8");
+  links = yaml.parse(linksContent) as EventLink[];
+} catch (error) {
+  // No links.yaml file found for this event
+}
+
+// Get topics as a description
+const description = event.data.topics?.length
+  ? `Topics: ${event.data.topics.join(", ")}`
+  : "Join us for this exciting tech meetup event!";
 ---
 
-<EventPage />
+<PageLayout title={`${event.data.title} - Events`} description={description} type="article">
+  <EventPage event={event} events={events} venue={venue}>
+    <EventPeople event={event} people={people} />
+    <EventLinks links={links} />
+    <EventGallery galleryImages={galleryImages} />
+  </EventPage>
+  <StickyNavigation navigationClass="event-navigation" client:load>
+    <EventNav event={event} events={events} />
+  </StickyNavigation>
+</PageLayout>

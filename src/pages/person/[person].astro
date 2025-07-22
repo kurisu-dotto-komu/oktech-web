@@ -1,6 +1,10 @@
 ---
-import PersonPage from "@/components/Person/PersonPage.astro";
-import { getPeople } from "@/data";
+import PersonPage from "@/components/Person/PersonPage";
+import PersonNav from "@/components/Person/PersonNav";
+import EventFeatured from "@/components/Event/EventFeatured";
+import PageLayout from "@/layouts/PageLayout.astro";
+import StickyNavigation from "@/components/Layout/StickyNavigation";
+import { getPeople, getPerson, getEvents } from "@/data";
 
 export async function getStaticPaths() {
   const people = await getPeople();
@@ -8,6 +12,31 @@ export async function getStaticPaths() {
     params: { person: person.id },
   }));
 }
+
+const { person: personId } = Astro.params;
+const person = await getPerson(personId);
+const people = await getPeople();
+
+const events = await getEvents();
+const personEvents = events.filter((event) =>
+  person.events.find((e) => event.id.startsWith(`${e}`)),
+);
+
+// Create description from bio or roles
+const roleDescriptions = person.roles
+  .map((role) => role.charAt(0).toUpperCase() + role.slice(1))
+  .join(", ");
+const description = person.bio
+  ? person.bio.slice(0, 160) + (person.bio.length > 160 ? "..." : "")
+  : `${person.name} - ${roleDescriptions} at ${person.company || "the tech community"}`;
 ---
 
-<PersonPage />
+<PageLayout title={`${person.name} - Community`} description={description} type="profile">
+  <PersonPage person={person} people={people} personEvents={personEvents}>
+    {personEvents.map((event) => <EventFeatured event={event} />)}
+  </PersonPage>
+
+  <StickyNavigation navigationClass="person-navigation" client:load>
+    <PersonNav person={person} people={people} />
+  </StickyNavigation>
+</PageLayout>

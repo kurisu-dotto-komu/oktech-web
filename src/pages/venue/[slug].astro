@@ -1,6 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import VenuePage from "@/components/Venue/VenuePage.astro";
+import VenuePage from "@/components/Venue/VenuePage";
+import EventFeatured from "@/components/Event/EventFeatured";
+import PageLayout from "@/layouts/PageLayout.astro";
+import StickyNavigation from "@/components/Layout/StickyNavigation";
+import VenueNav from "@/components/Venue/VenueNav";
+import { getVenue, getVenues, getEvents } from "@/data";
 
 export async function getStaticPaths() {
   const venues = await getCollection("venues");
@@ -14,6 +19,26 @@ export async function getStaticPaths() {
 
   return venuePaths;
 }
+
+const { slug } = Astro.params;
+const venue = await getVenue(slug);
+const venues = await getVenues();
+const allEvents = await getEvents();
+const venueEvents = allEvents.filter(
+  (event) => event.data.venue?.id === venue.data.meetupId.toString(),
+);
+
+// Create description
+const description =
+  venue.data.description ||
+  `${venue.data.title} - Event venue in ${venue.data.city || "Osaka"}. ${venueEvents.length} events hosted.`;
 ---
 
-<VenuePage />
+<PageLayout title={`${venue.data.title} - Venues`} description={description}>
+  <VenuePage venue={venue} venues={venues} venueEvents={venueEvents}>
+    {venueEvents.map((event) => <EventFeatured event={event} hideMap={true} />)}
+  </VenuePage>
+  <StickyNavigation navigationClass="venue-navigation" client:load>
+    <VenueNav venue={venue} venues={venues} />
+  </StickyNavigation>
+</PageLayout>

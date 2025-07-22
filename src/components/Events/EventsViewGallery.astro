@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import EventFeatured from "@/components/Event/EventFeatured.astro";
-import EventGalleryImages from "@/components/Event/EventGalleryImages.astro";
+import EventFeatured from "@/components/Event/EventFeatured";
+import EventGalleryImages from "@/components/Event/EventGalleryImages";
 import Grid from "@/components/Common/Grid";
 import { Icon } from "astro-icon/components";
 
@@ -49,9 +49,11 @@ const eventsWithoutGalleryCount = events.filter((event) => !eventsWithGallery.ha
           {hasGallery && (
             <div class="container mx-auto px-4">
               <div class="flex flex-col gap-12">
-                <EventFeatured eventSlug={event.id} />
+                <EventFeatured event={event} />
                 <Grid>
-                  <EventGalleryImages eventSlug={event.id} />
+                  <EventGalleryImages
+                    galleryImages={allGalleryImages.filter((img) => img.data.event.id === event.id)}
+                  />
                 </Grid>
               </div>
             </div>
