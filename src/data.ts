@@ -1,5 +1,5 @@
 import type { AstroGlobal } from "astro";
-import { THEMES, DEV_MODE } from "./config";
+import { DEV_MODE } from "./config";
 import { getCollection, getEntry, type InferEntrySchema } from "astro:content";
 
 export const ROLE_CONFIGS = {
@@ -50,14 +50,35 @@ export type Person = {
   };
 };
 
+// Define Tailwind color classes for users
+const TAILWIND_COLORS = [
+  "red",
+  "orange",
+  "amber",
+  "yellow",
+  "lime",
+  "green",
+  "emerald",
+  "teal",
+  "cyan",
+  "sky",
+  "blue",
+  "indigo",
+  "violet",
+  "purple",
+  "fuchsia",
+  "pink",
+  "rose",
+] as const;
+
 export async function getPeople(): Promise<Person[]> {
   const people = await getCollection("people");
 
   return people.map(({ data }) => {
-    // Use a hash of the person's ID to deterministically select a theme
+    // Use a hash of the person's ID to deterministically select a color
     const hash = data.id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const themeIndex = hash % THEMES.length;
-    const theme = THEMES[themeIndex];
+    const colorIndex = hash % TAILWIND_COLORS.length;
+    const color = TAILWIND_COLORS[colorIndex];
 
     return {
       id: data.id,
@@ -71,7 +92,7 @@ export async function getPeople(): Promise<Person[]> {
       location: "Osaka, Japan",
       email: "",
       roles: ["speaker"],
-      theme: theme,
+      theme: color,
       events: data.events ?? [],
       links: {},
     } satisfies Person;

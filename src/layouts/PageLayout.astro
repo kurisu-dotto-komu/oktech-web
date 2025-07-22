@@ -1,7 +1,7 @@
 ---
 import RootLayout from "./RootLayout.astro";
 import TopBar from "@/components/Layout/TopBar";
-import Footer from "@/components/Layout/Footer.astro";
+import Footer from "@/components/Layout/Footer";
 import DevInfo from "@/components/Common/DevInfo.tsx";
 ---
 
@@ -15,7 +15,7 @@ import DevInfo from "@/components/Common/DevInfo.tsx";
       <slot />
     </main>
     <footer>
-      <Footer />
+      <Footer client:load />
     </footer>
   </div>
   <DevInfo client:load />

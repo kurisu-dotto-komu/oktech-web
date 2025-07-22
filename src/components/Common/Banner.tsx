@@ -3,10 +3,12 @@ import { LuTriangleAlert } from "react-icons/lu";
 
 export default function Banner() {
   return (
-    <div className="alert alert-error rounded-none">
+    <div className="w-full bg-error text-error-content">
       <Container>
-        <div className="flex items-center gap-4">
-          <LuTriangleAlert className="w-10 h-10" />
+        <div className="flex items-center py-3">
+          <div className="flex items-center justify-center w-12 h-12 mr-4">
+            <LuTriangleAlert className="w-8 h-8" />
+          </div>
           <div>
             <strong>Work in Progress!</strong> This site is under active development and the design
             is currently garbage slop. Do not fear, as the human hand will be applied to it soon.

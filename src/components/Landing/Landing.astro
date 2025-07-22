@@ -1,5 +1,5 @@
 ---
-import Section from "@/components/Common/Section.astro";
+import Section from "@/components/Common/Section";
 import Hero from "@/components/Landing/Hero";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { getEvents } from "@/data";
@@ -16,9 +16,6 @@ const events = await getEvents();
 
 <PageLayout
   description="Join the Osaka Kansai Tech Meetup Group (OKTech) - A vibrant community for web developers, designers, and tech enthusiasts. Discover upcoming events, workshops, and networking opportunities in the Kansai region."
-  ogImageParams={{
-    type: "default",
-  }}
 >
   <Banner />
   <Hero

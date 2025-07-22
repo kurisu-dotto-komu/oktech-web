@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { resolveEvent } from "@/data";
-import Link from "@/components/Common/Link.astro";
+import Link from "@/components/Common/LinkAstro.astro";
 import { Image } from "astro:assets";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import EventCity from "./EventCity";
@@ -32,7 +32,9 @@ const formattedTime = formatTime(event.data.dateTime);
     />
   </figure>
   <div class="card-body p-4 gap-4 flex flex-col">
-    <h3 class="card-title text-lg">{event.data.title}</h3>
+    <h3 class="card-title text-lg">
+      {event.data.title}
+    </h3>
     <div class="flex flex-col gap-1 text-sm">
       <div class="flex gap-2 items-center">
         <Icon name="lucide:calendar" size={16} />
@@ -43,7 +45,11 @@ const formattedTime = formatTime(event.data.dateTime);
           <div class="flex gap-2 items-center text-base-content/70">
             <Icon name="lucide:map-pin" size={16} />
             <span>{event.venue.title}</span>
-            {event.venue.city && <EventCity city={event.venue.city} class="ml-auto" />}
+            {event.venue.city && (
+              <div class="ml-auto">
+                <EventCity city={event.venue.city} />
+              </div>
+            )}
           </div>
         )
       }

@@ -1,6 +1,5 @@
 import EventsFilterBridge from "./EventsFilterBridge";
 import type { EventItem } from "./EventsFilterProvider";
-import Test from "./Test";
 
 export interface Props {
   items: EventItem[];
@@ -25,14 +24,11 @@ export default function EventsFilterWrapper({
   sortOptions,
 }: Props) {
   return (
-    <>
-      <Test items={items} />
-      <EventsFilterBridge
-        items={items}
-        availableFilters={availableFilters}
-        sortOptions={sortOptions}
-        currentView={currentFilters.view}
-      />
-    </>
+    <EventsFilterBridge
+      items={items}
+      availableFilters={availableFilters}
+      sortOptions={sortOptions}
+      currentView={currentFilters.view}
+    />
   );
 }

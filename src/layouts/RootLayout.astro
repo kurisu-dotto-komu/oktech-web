@@ -3,6 +3,7 @@ import "@/styles/global.css";
 import { SITE } from "@/config";
 import { resolveInternalHref } from "@/utils/urlResolver";
 import SEO from "@/components/Common/SEO.astro";
+import { ClientRouter } from "astro:transitions";
 
 export interface Props {
   title?: string;
@@ -18,10 +19,6 @@ export interface Props {
   };
   noindex?: boolean;
   nofollow?: boolean;
-  ogImageParams?: {
-    type?: "default" | "event" | "person" | "venue";
-    slug?: string;
-  };
 }
 
 const { title, ...seoProps } = Astro.props;
@@ -44,16 +41,19 @@ const { title, ...seoProps } = Astro.props;
     />
     <script is:inline>
       // ☝️ This script prevents the FART effect.
-      if (localStorage.getItem("theme") === null) {
-        document.documentElement.setAttribute("data-theme", "wireframe");
+      const storedTheme = localStorage.getItem("theme");
+
+      if (storedTheme === "oktech-light" || storedTheme === "oktech-dark") {
+        document.documentElement.setAttribute("data-theme", storedTheme);
       } else {
-        document.documentElement.setAttribute("data-theme", localStorage.getItem("theme"));
+        // Check system preference
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const defaultTheme = prefersDark ? "oktech-dark" : "oktech-light";
+        document.documentElement.setAttribute("data-theme", defaultTheme);
+        localStorage.setItem("theme", defaultTheme);
       }
     </script>
-    <script>
-      import { themeChange } from "theme-change";
-      themeChange();
-    </script>
+    <ClientRouter />
   </head>
   <body class="bg-base-100">
     <slot />

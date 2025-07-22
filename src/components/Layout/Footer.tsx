@@ -4,6 +4,7 @@ import { MENU } from "@/config";
 import LinkReact from "@/components/Common/LinkReact";
 import { formatDate } from "@/utils/formatDate";
 import Brand from "@/components/Common/Brand";
+import ThemeToggle from "@/components/Common/ThemeToggle";
 import { LuHouse, LuCalendar, LuUsers, LuInfo, LuMap, LuRss } from "react-icons/lu";
 
 const iconMap = {
@@ -37,7 +38,7 @@ export default function Footer() {
           </nav>
           <div className="flex gap-4 items-center">
             <Socials />
-            {/* ThemePicker will need to be converted separately */}
+            <ThemeToggle />
           </div>
         </div>
         <div className="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">

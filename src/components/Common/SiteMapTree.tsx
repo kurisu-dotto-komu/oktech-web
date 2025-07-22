@@ -37,14 +37,6 @@ const buildSections = async (): Promise<SectionEntry[]> => {
     }))
     .sort((a, b) => a.title.localeCompare(b.title));
 
-  // Add projector pages for events
-  const projectorPages: PageEntry[] = events
-    .map((e) => ({
-      href: `/event/${e.id}/projector`,
-      title: `${e.data.title} (Projector)`,
-    }))
-    .sort((a, b) => a.title.localeCompare(b.title));
-
   sections.push({
     title: "Events",
     href: "/events",
@@ -52,7 +44,6 @@ const buildSections = async (): Promise<SectionEntry[]> => {
       { href: "/events/compact", title: "Events (Compact View)" },
       { href: "/events/gallery", title: "Events (Gallery View)" },
       ...eventPages,
-      ...projectorPages,
     ],
   });
 

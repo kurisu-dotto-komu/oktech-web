@@ -15,6 +15,7 @@
     "import": "tsx ./scripts/import-data",
     "og-cache": "tsx scripts/manage-og-cache.ts",
     "test": "playwright test",
+    "test:visuals": "TEST_TYPE=visuals playwright test",
     "test:build": "npm run build && TEST_BUILD=true playwright test",
     "test:build:fast": "TEST_BUILD=true playwright test"
   },
@@ -50,7 +51,6 @@
     "sharp": "^0.34.2",
     "slugify": "^1.6.6",
     "tailwindcss": "^4.1.10",
-    "theme-change": "^2.5.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "yaml": "^2.8.0"

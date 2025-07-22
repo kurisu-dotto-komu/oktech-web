@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { resolveEvent } from "@/data";
-import Link from "@/components/Common/Link.astro";
+import Link from "@/components/Common/LinkAstro.astro";
 import { Image } from "astro:assets";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import EventCity from "./EventCity";
@@ -33,7 +33,9 @@ const formattedTime = formatTime(event.data.dateTime);
   </figure>
 
   <div class="flex-1 min-w-0">
-    <h3 class="font-semibold text-base truncate">{event.data.title}</h3>
+    <h3 class="font-semibold text-base truncate">
+      {event.data.title}
+    </h3>
   </div>
 
   <div class="flex items-center gap-6 text-sm text-base-content/70 flex-shrink-0">
@@ -47,7 +49,11 @@ const formattedTime = formatTime(event.data.dateTime);
         <div class="flex items-center gap-2">
           <Icon name="lucide:map-pin" size={16} />
           <span class="max-w-[200px] truncate">{event.venue.title}</span>
-          {event.venue.city && <EventCity city={event.venue.city} />}
+          {event.venue.city && (
+            <div>
+              <EventCity city={event.venue.city} />
+            </div>
+          )}
         </div>
       )
     }

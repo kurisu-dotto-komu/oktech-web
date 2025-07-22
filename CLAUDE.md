@@ -41,6 +41,7 @@
 - **Never use `any`, `// eslint-disable-next-line`**, or similar type shortcuts
 - **Astro templates require opening and closing frontmatter fences (---)** with TypeScript code in between
 - **We are using daisy ui v5**, so always use these components when possible, and use its theme classes
+- **Use Tailwind classes instead of inline styles** - prefer `className="text-[2vw]"` over `style={{ fontSize: '2vw' }}`
 
 ## Icons & Components
 

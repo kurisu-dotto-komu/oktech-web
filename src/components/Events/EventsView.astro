@@ -1,10 +1,10 @@
 ---
 import { getEvents } from "@/data";
-import EventsFilterWrapper from "@/components/EventsFilter/EventsFilterWrapper.astro";
+import EventsFilterWrapper from "@/components/EventsFilter/EventsFilterWrapper";
 import EventsViewGrid from "./EventsViewGrid.astro";
 import EventsViewCompact from "./EventsViewCompact.astro";
 import EventsViewGallery from "./EventsViewGallery.astro";
-import Section from "@/components/Common/Section.astro";
+import Section from "@/components/Common/Section";
 
 export interface Props {
   view: string;
@@ -77,7 +77,7 @@ const sortOptions = [
   document.documentElement.classList.add("js");
 </script>
 
-<Section class="text-center mb-8">
+<Section class="text-center mb-8" client:load>
   <h1 class="text-4xl font-bold mb-4">Events</h1>
   <p class="text-lg text-base-content/70">Discover and join our community events</p>
 </Section>
@@ -95,6 +95,7 @@ const sortOptions = [
       }}
       availableFilters={collectionData.filters}
       sortOptions={sortOptions}
+      client:load
     />
   </div>
 

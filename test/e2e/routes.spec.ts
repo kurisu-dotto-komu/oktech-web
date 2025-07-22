@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { resolveTestPath } from "./helpers/url";
+import { resolveTestPath } from "../helpers/url";
 
 // Static routes tests
 test.describe("Static Routes", () => {
@@ -48,18 +48,6 @@ test.describe("Dynamic Routes", () => {
     await page.waitForLoadState("networkidle");
     // Event pages typically have the event name in the title
     await expect(page).toHaveTitle(/OKTech Study Session.*OKTech/);
-  });
-
-  test("Event projector view loads", async ({ page, baseURL }) => {
-    await page.goto(
-      resolveTestPath(
-        "/event/307774539-oktech-study-session-a-walking-skeleton-approach/projector",
-        baseURL!,
-      ),
-    );
-    await page.waitForLoadState("networkidle");
-    // Projector view might have different title pattern
-    await expect(page).toHaveTitle(/OKTech/);
   });
 
   test("Individual person page loads with correct title", async ({ page, baseURL }) => {

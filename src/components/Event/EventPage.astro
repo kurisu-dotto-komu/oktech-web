@@ -1,13 +1,13 @@
 ---
 import { resolveEvent } from "@/data";
 import PageLayout from "@/layouts/PageLayout.astro";
-import Section from "@/components/Common/Section.astro";
+import Section from "@/components/Common/Section";
 import EventDetails from "./EventDetails.astro";
 import EventGallery from "./EventGallery.astro";
 import EventNav from "./EventNav.astro";
 import EventPeople from "./EventPeople.astro";
 import EventLinks from "./EventLinks.astro";
-import StickyNavigation from "@/components/Layout/StickyNavigation.astro";
+import StickyNavigation from "@/components/Layout/StickyNavigation";
 
 const event = await resolveEvent(Astro);
 
@@ -15,20 +15,9 @@ const event = await resolveEvent(Astro);
 const description = event.data.topics?.length
   ? `Topics: ${event.data.topics.join(", ")}`
   : "Join us for this exciting tech meetup event!";
-
-// Prepare event-specific OG image params
-const ogImageParams = {
-  type: "event" as const,
-  slug: event.id,
-};
 ---
 
-<PageLayout
-  title={`${event.data.title} - Events`}
-  description={description}
-  type="article"
-  ogImageParams={ogImageParams}
->
+<PageLayout title={`${event.data.title} - Events`} description={description} type="article">
   <Section>
     <EventDetails />
   </Section>
@@ -38,7 +27,7 @@ const ogImageParams = {
   <Section>
     <EventNav class="event-navigation" />
   </Section>
-  <StickyNavigation navigationClass="event-navigation">
+  <StickyNavigation navigationClass="event-navigation" client:load>
     <EventNav />
   </StickyNavigation>
 </PageLayout>

@@ -1,3 +1,5 @@
+Kitchen Sink Page with all Components, dark and light theme.
+
 Remove ROLE logic
 
 Switch to a github pages workflow for deployment

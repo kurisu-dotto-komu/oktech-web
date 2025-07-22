@@ -39,7 +39,3 @@ export function formatTime(date: Date | string): string {
     timeZone: "Asia/Tokyo",
   });
 }
-
-export function formatDateTime(date: Date | string, format: DateFormat = "short"): string {
-  return `${formatDate(date, format)} • ${formatTime(date)}`;
-}

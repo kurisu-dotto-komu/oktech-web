@@ -3,6 +3,7 @@ import EventInfo from "./EventInfo.astro";
 import { resolveEvent } from "@/data";
 
 import EventJoinButton from "./EventJoinButton";
+import EventProjectorButton from "./EventProjectorButton";
 import { Image } from "astro:assets";
 
 const event = await resolveEvent(Astro);
@@ -12,7 +13,9 @@ const { Content } = await import(`../../../content/events/${event.id}/event.md`)
 
 <div class="w-full flex flex-col gap-8">
   <div class="md:hidden flex flex-col gap-10">
-    <h1 class="text-4xl font-bold pt-6">{event.data.title}</h1>
+    <h1 class="text-4xl font-bold pt-6">
+      {event.data.title}
+    </h1>
     <EventInfo />
     <EventJoinButton />
   </div>
@@ -28,7 +31,9 @@ const { Content } = await import(`../../../content/events/${event.id}/event.md`)
           height={512}
         />
       </figure>
-      <h1 class="hidden md:block text-4xl font-bold pt-6">{event.data.title}</h1>
+      <h1 class="hidden md:block text-4xl font-bold pt-6">
+        {event.data.title}
+      </h1>
       <div class="max-w-none prose prose-lg">
         <Content />
       </div>
@@ -44,5 +49,10 @@ const { Content } = await import(`../../../content/events/${event.id}/event.md`)
         <EventJoinButton />
       </div>
     </div>
+  </div>
+
+  <!-- Projector button at the bottom -->
+  <div class="mt-8 flex justify-center">
+    <EventProjectorButton event={event} client:load />
   </div>
 </div>

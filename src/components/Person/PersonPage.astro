@@ -1,10 +1,10 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
-import Section from "@/components/Common/Section.astro";
+import Section from "@/components/Common/Section";
 import PersonDetails from "./PersonDetails.astro";
 import PersonNav from "./PersonNav.astro";
 import EventFeatured from "@/components/Event/EventFeatured.astro";
-import StickyNavigation from "@/components/Layout/StickyNavigation.astro";
+import StickyNavigation from "@/components/Layout/StickyNavigation";
 
 import { getEvents, resolvePerson } from "@/data";
 
@@ -22,20 +22,9 @@ const roleDescriptions = person.roles
 const description = person.bio
   ? person.bio.slice(0, 160) + (person.bio.length > 160 ? "..." : "")
   : `${person.name} - ${roleDescriptions} at ${person.company || "the tech community"}`;
-
-// OG image params for person
-const ogImageParams = {
-  type: "person" as const,
-  slug: person.id,
-};
 ---
 
-<PageLayout
-  title={`${person.name} - Community`}
-  description={description}
-  type="profile"
-  ogImageParams={ogImageParams}
->
+<PageLayout title={`${person.name} - Community`} description={description} type="profile">
   <Section>
     <PersonDetails person={person} />
   </Section>
@@ -54,7 +43,7 @@ const ogImageParams = {
     <PersonNav class="person-navigation" />
   </Section>
 
-  <StickyNavigation navigationClass="person-navigation">
+  <StickyNavigation navigationClass="person-navigation" client:load>
     <PersonNav />
   </StickyNavigation>
 </PageLayout>

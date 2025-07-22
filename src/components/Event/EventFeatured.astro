@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { resolveEvent } from "@/data";
-import Link from "@/components/Common/Link.astro";
+import Link from "@/components/Common/LinkAstro.astro";
 import { Image } from "astro:assets";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import VenueMap from "@/components/Venue/VenueMap.astro";
@@ -42,7 +42,9 @@ const formattedTime = formatTime(event.data.dateTime);
       <div class="flex flex-col h-full md:flex-row">
         <!-- Left side - Event Details -->
         <div class={`flex flex-col p-6 ${hideMap ? "w-full" : "md:w-2/3"}`}>
-          <h3 class="card-title text-2xl mb-4">{event.data.title}</h3>
+          <h3 class="card-title text-2xl mb-4">
+            {event.data.title}
+          </h3>
 
           <div class="flex flex-col gap-3 text-base mb-4">
             <div class="flex gap-2 items-center">

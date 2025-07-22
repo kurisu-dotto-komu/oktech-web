@@ -3,8 +3,8 @@ import { resolveVenue, getEvents } from "@/data";
 import VenueInfo from "./VenueInfo.astro";
 import VenueNav from "./VenueNav.astro";
 import EventFeatured from "@/components/Event/EventFeatured.astro";
-import Section from "@/components/Common/Section.astro";
-import StickyNavigation from "@/components/Layout/StickyNavigation.astro";
+import Section from "@/components/Common/Section";
+import StickyNavigation from "@/components/Layout/StickyNavigation";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { Image } from "astro:assets";
 
@@ -30,18 +30,9 @@ try {
 const description =
   venue.data.description ||
   `${venue.data.title} - Event venue in ${venue.data.city || "Osaka"}. ${venueEvents.length} events hosted.`;
-
-const ogImageParams = {
-  type: "venue" as const,
-  slug: venue.id,
-};
 ---
 
-<PageLayout
-  title={`${venue.data.title} - Venues`}
-  description={description}
-  ogImageParams={ogImageParams}
->
+<PageLayout title={`${venue.data.title} - Venues`} description={description}>
   <Section>
     <div class="flex flex-col lg:flex-row gap-12">
       <div class="flex flex-col gap-10 flex-1">
@@ -98,7 +89,7 @@ const ogImageParams = {
   <Section>
     <VenueNav class="venue-navigation" />
   </Section>
-  <StickyNavigation navigationClass="venue-navigation">
+  <StickyNavigation navigationClass="venue-navigation" client:load>
     <VenueNav />
   </StickyNavigation>
 </PageLayout>
