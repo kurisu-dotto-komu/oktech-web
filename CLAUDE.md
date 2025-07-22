@@ -8,7 +8,9 @@
 - prefer Astro components (.astro) over React components (.tsx) unless client-side interactivity is needed
 - Astro templates require opening and closing frontmatter fences (---) with TypeScript code in between
 - always use astro lucide icons when possible; import { Icon } from "astro-icon/components"
+- use `react-icons` for react components, and `astro-icon` for astro components
 - use icon prefixes: `cib:` for brand icons, `lucide:` for general icons
+- import { IconName } from "react-icons/lu";
 - for React components, use the `export default function ComponentName` pattern, not named exports
 - for internal links, use the Link and LinkReact components as they do prefixing
 - import Link from "@/components/Common/Link.astro" for Astro components
@@ -17,6 +19,8 @@
 
 # Development
 
+- Context is everything, so don't be afraid to ask questions
+- you can check with the `context7` mcp server for library usage.
 - never make git commands like commits unless I explicitly instruct you to
 - never use --headed mode for playwright tests, always use the default headless option
 - always prefer editing existing files over creating new ones
