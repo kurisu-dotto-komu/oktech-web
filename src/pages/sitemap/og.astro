@@ -1,5 +1,14 @@
 ---
-import Sitemap from "@/components/Common/Sitemap.astro";
+import SiteMapTree from "@/components/Common/SiteMapTree";
+import Link from "@/components/Common/LinkAstro.astro";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import sitemapNav from "./sitemapNav";
 ---
 
-<Sitemap view="og" />
+<ArticleLayout title="Sitemap" pageTitle="Sitemap - OG Images" buttons={sitemapNav} active="og">
+  <p class="mb-4">
+    This page displays all OG (Open Graph) images for every route on the website.
+    <Link href="/sitemap.xml">Download XML sitemap</Link>.
+  </p>
+  <SiteMapTree showOGImages={true} />
+</ArticleLayout>

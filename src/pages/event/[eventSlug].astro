@@ -3,14 +3,15 @@ import { getEvents, getEvent, getPeople } from "@/content";
 import fs from "fs/promises";
 import path from "path";
 import yaml from "yaml";
-import EventPage from "@/components/Event/EventPage";
 import EventNav from "@/components/Event/EventNav";
 import EventPeople from "@/components/Event/EventPeople";
 import EventLinks from "@/components/Event/EventLinks";
 import EventGallery from "@/components/Event/EventGallery";
 import type { EventLink } from "@/components/Event/EventLinks";
 import PageLayout from "@/layouts/PageLayout.astro";
-import StickyNavigation from "@/components/Layout/StickyNavigation";
+import StickyNavigation from "@/components/Common/StickyNavigation";
+import Section from "@/components/Common/Section";
+import EventDetails from "@/components/Event/EventDetails";
 
 export async function getStaticPaths() {
   const events = await getEvents();
@@ -41,11 +42,15 @@ const description = event.data.topics?.length
 ---
 
 <PageLayout title={`${event.data.title} - Events`} description={description} type="article">
-  <EventPage event={event} events={events} client:load>
-    <EventPeople event={event} people={people} />
-    <EventLinks links={links} />
-    <EventGallery event={event} />
-  </EventPage>
+  <Section>
+    <EventDetails event={event} />
+  </Section>
+  <EventPeople event={event} people={people} />
+  <EventLinks links={links} />
+  <EventGallery event={event} />
+  <Section>
+    <EventNav event={event} events={events} className="event-navigation" keyboardEvents />
+  </Section>
   <StickyNavigation navigationClass="event-navigation" client:load>
     <EventNav event={event} events={events} />
   </StickyNavigation>

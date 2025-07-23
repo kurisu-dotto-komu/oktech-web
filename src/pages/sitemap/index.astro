@@ -1,0 +1,17 @@
+---
+import SiteMapTree from "@/components/Common/SiteMapTree";
+import Link from "@/components/Common/LinkAstro.astro";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import sitemapNav from "./sitemapNav";
+---
+
+<ArticleLayout title="Sitemap" buttons={sitemapNav} active="list">
+  <div class="prose max-w-none">
+    <p class="mb-4">
+      This page lists every accessible route on the website for easy navigation. You can also
+      download the
+      <Link href="/sitemap.xml">machine-readable XML sitemap</Link>.
+    </p>
+    <SiteMapTree />
+  </div>
+</ArticleLayout>

@@ -1,5 +1,5 @@
 import type { EventEnriched } from "@/content";
-import { useEventsFilter } from "@/components/EventsFilter/EventsFilterProvider";
+import { useEventsFilter } from "@/components/Events/EventsFilterProvider";
 import EventsGridView from "./EventsGridView";
 import EventsCompactView from "./EventsCompactView";
 import EventsGalleryView from "./EventsGalleryView";

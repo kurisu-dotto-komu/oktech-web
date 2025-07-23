@@ -5,10 +5,11 @@ import {
   useEffect,
   useCallback,
   useRef,
+  useMemo,
   type ReactNode,
 } from "react";
 import type Fuse from "fuse.js";
-import type { Venue } from "@/content";
+import type { EventEnriched, Venue } from "@/content";
 import type { ImageMetadata } from "astro";
 
 export interface EventItem {
@@ -58,22 +59,50 @@ export const useEventsFilter = () => {
 
 interface EventFilterProviderProps {
   children: ReactNode;
-  items: EventItem[];
-  availableFilters: {
-    topics: string[];
-    locations: string[];
-  };
-  sortOptions: Array<{ value: string; label: string }>;
+  events: EventEnriched[];
   onFiltersChange?: (filters: EventFilters, filteredItems: EventItem[]) => void;
 }
 
 export function EventFilterProvider({
   children,
-  items,
-  availableFilters,
-  sortOptions,
+  events,
   onFiltersChange,
 }: EventFilterProviderProps) {
+  // Transform events to items and extract filters
+  const { items, availableFilters, sortOptions } = useMemo(() => {
+    const allTopics = new Set<string>();
+    const allLocations = new Set<string>();
+
+    const eventItems: EventItem[] = events.map((event) => {
+      event.data.topics?.forEach((topic) => allTopics.add(topic));
+      if (event.venue?.city) allLocations.add(event.venue.city);
+
+      return {
+        id: event.id,
+        title: event.data.title,
+        description: event.data.markdownContent,
+        date: event.data.dateTime.toISOString(),
+        topics: event.data.topics || [],
+        location: event.venue?.city || "",
+        venue: event.venue,
+        poster: event.data.cover,
+        slug: event.id,
+        hasGallery: event.galleryImages && event.galleryImages.length > 0,
+      };
+    });
+
+    return {
+      items: eventItems,
+      availableFilters: {
+        topics: Array.from(allTopics).sort(),
+        locations: Array.from(allLocations).sort(),
+      },
+      sortOptions: [
+        { value: "date-desc", label: "Newest First" },
+        { value: "date-asc", label: "Oldest First" },
+      ],
+    };
+  }, [events]);
   const [currentFilters, setCurrentFilters] = useState<EventFilters>(() => {
     // Only parse URL params on client side
     if (typeof window !== "undefined") {

@@ -1,27 +1,114 @@
 import { getEvents, getPeople, getVenues } from "@/content";
 import { resolveFullUrl } from "./urlResolver";
 
-/**
- * Generate event view route paths that actually exist
- */
-export async function generateEventRoutePaths() {
-  const paths: string[] = [];
-  const views = ["", "compact", "gallery"]; // "" represents default view
+export interface PageEntry {
+  href: string;
+  title: string;
+}
 
-  // Base paths for each view
-  views.forEach((view) => {
-    const basePath = view === "" ? "/events" : `/events/${view}`;
-    paths.push(basePath);
-  });
-
-  return { paths };
+export interface SectionEntry {
+  title: string;
+  href?: string;
+  children: PageEntry[];
 }
 
 /**
- * Core routes that are always present in the application.
- * They should start with a leading slash and have no trailing slash (except root).
+ * Build organized sections for the sitemap
  */
-export const STATIC_ROUTES = ["/", "/about", "/events", "/people", "/sitemap"] as const;
+export async function buildSitemapSections(): Promise<SectionEntry[]> {
+  const sections: SectionEntry[] = [];
+
+  // Home section (single link)
+  sections.push({
+    title: "Home",
+    href: "/",
+    children: [],
+  });
+
+  // Events section
+  const events = await getEvents();
+  const eventPages: PageEntry[] = events
+    .map((e) => ({
+      href: `/event/${e.id}`,
+      title: e.data.title,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
+  sections.push({
+    title: "Events",
+    href: "/events",
+    children: [
+      { href: "/events/compact", title: "Events (Compact View)" },
+      { href: "/events/gallery", title: "Events (Gallery View)" },
+      ...eventPages,
+    ],
+  });
+
+  // People section
+  const people = await getPeople();
+  const peoplePages: PageEntry[] = people
+    .map((p) => ({
+      href: `/person/${p.id}`,
+      title: p.name,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
+  sections.push({
+    title: "People",
+    href: "/people",
+    children: peoplePages,
+  });
+
+  // Venues section
+  const venues = await getVenues();
+  const venuePages: PageEntry[] = venues
+    .map((v) => ({
+      href: `/venue/${v.id}`,
+      title: v.data.title,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
+  sections.push({
+    title: "Venues",
+    children: venuePages,
+  });
+
+  // About and other static pages
+  sections.push({
+    title: "About",
+    href: "/about",
+    children: [],
+  });
+
+  sections.push({
+    title: "Sitemap",
+    href: "/sitemap",
+    children: [
+      { href: "/sitemap.xml", title: "XML Sitemap" },
+      { href: "/rss.xml", title: "RSS Feed" },
+    ],
+  });
+
+  return sections;
+}
+
+/**
+ * Extract all URLs from sitemap sections (recursively)
+ */
+export function extractUrlsFromSections(sections: SectionEntry[]): string[] {
+  const urls: string[] = [];
+
+  for (const section of sections) {
+    if (section.href) {
+      urls.push(section.href);
+    }
+    for (const child of section.children) {
+      urls.push(child.href);
+    }
+  }
+
+  return urls;
+}
 
 /**
  * Generate a list of absolute URLs used in sitemaps.
@@ -30,33 +117,12 @@ export const STATIC_ROUTES = ["/", "/about", "/events", "/people", "/sitemap"] a
  * @returns Array of URL strings.
  */
 export async function generateSitemapURLs(): Promise<string[]> {
-  const urls: string[] = [];
+  const sections = await buildSitemapSections();
+  const paths = extractUrlsFromSections(sections);
 
-  // Static pages
-  urls.push(...STATIC_ROUTES.map((route) => resolveFullUrl(route)));
+  // Filter out non-HTML paths (XML, RSS)
+  const htmlPaths = paths.filter((path) => !path.endsWith(".xml"));
 
-  // Event view variations
-  const { paths: eventPaths } = await generateEventRoutePaths();
-  eventPaths.forEach((path) => {
-    urls.push(resolveFullUrl(path));
-  });
-
-  const events = await getEvents();
-  events.forEach(({ id }) => {
-    urls.push(resolveFullUrl(`/event/${id}`));
-  });
-
-  // Person pages
-  const people = await getPeople();
-  people.forEach(({ id }) => {
-    urls.push(resolveFullUrl(`/person/${id}`));
-  });
-
-  // Venue pages
-  const venues = await getVenues();
-  venues.forEach(({ id }) => {
-    urls.push(resolveFullUrl(`/venue/${id}`));
-  });
-
-  return urls;
+  // Convert to absolute URLs
+  return htmlPaths.map((path) => resolveFullUrl(path));
 }

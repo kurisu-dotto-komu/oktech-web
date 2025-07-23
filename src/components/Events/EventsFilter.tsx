@@ -3,13 +3,14 @@ import EventsFilterDropdown from "./EventsFilterDropdown";
 import EventsSortSelector from "./EventsSortSelector";
 import EventsActiveFilters from "./EventsActiveFilters";
 import { EventsViewModeSelector } from "./EventsViewModeSelector";
+import type { EventsOrganizerViews } from "./EventsOrganizer";
 
 interface EventsFilterProps {
+  currentView: EventsOrganizerViews;
   availableFilters: {
     topics: string[];
     locations: string[];
   };
-  currentView: "grid" | "compact" | "gallery";
 }
 
 export function EventsFilter({ availableFilters, currentView }: EventsFilterProps) {

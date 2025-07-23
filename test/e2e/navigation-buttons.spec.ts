@@ -70,15 +70,14 @@ test.describe("Navigation Buttons", () => {
 
       // Verify we're on an event page
       expect(page.url()).toContain("/event/");
-      
+
       // Check that back button exists and is visible
       const backButton = page.getByTestId("nav-button-back").first();
       await expect(backButton).toBeVisible();
-      
 
       // Click the back button
       await backButton.click();
-      
+
       // Wait a bit for navigation
       await page.waitForTimeout(2000);
       await page.waitForLoadState("networkidle");
@@ -102,7 +101,7 @@ test.describe("Navigation Buttons", () => {
 
       // Wait for navigation to complete
       await page.waitForLoadState("networkidle");
-      
+
       // Wait for the person name to be visible and contain the person's name
       await expect(page.getByTestId("person-name")).toBeVisible();
       await expect(page.getByTestId("person-name")).toContainText(secondPersonName || "");
@@ -114,7 +113,7 @@ test.describe("Navigation Buttons", () => {
 
       // Click previous button
       await page.getByTestId("nav-button-prev").first().click();
-      
+
       // Wait for navigation with timeout
       await page.waitForTimeout(2000);
       await page.waitForLoadState("networkidle");
@@ -122,7 +121,7 @@ test.describe("Navigation Buttons", () => {
       // Verify we're on a different person page
       const currentUrl = page.url();
       expect(currentUrl).toContain("/person/");
-      
+
       // Wait for person name to be visible before getting its text
       await expect(page.getByTestId("person-name")).toBeVisible();
       const currentName = await page.getByTestId("person-name").textContent();
@@ -130,7 +129,7 @@ test.describe("Navigation Buttons", () => {
 
       // Click next button to go back
       await page.getByTestId("nav-button-next").first().click();
-      
+
       // Wait for navigation with timeout
       await page.waitForTimeout(2000);
       await page.waitForLoadState("networkidle");
@@ -185,15 +184,14 @@ test.describe("Navigation Buttons", () => {
 
       // Verify we're on a person page
       expect(page.url()).toContain("/person/");
-      
+
       // Check that back button exists and is visible
       const backButton = page.getByTestId("nav-button-back").first();
       await expect(backButton).toBeVisible();
-      
 
       // Click the back button
       await backButton.click();
-      
+
       // Wait a bit for navigation
       await page.waitForTimeout(2000);
       await page.waitForLoadState("networkidle");

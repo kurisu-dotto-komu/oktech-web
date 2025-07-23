@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import StickyBottomNavButton from "./StickyBottomNavButton";
 import LinkReact from "@/components/Common/LinkReact";
