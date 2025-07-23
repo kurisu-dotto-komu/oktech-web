@@ -58,6 +58,7 @@
 - **Use descriptive test names** that clearly indicate what is being tested
 - **Follow existing test patterns** in each directory for consistency
 - **Use playwright conventional data-testid attributes for testing** - `data-testid="tag"` and `getByTestId("tag")`
+- **ALWAYS use data-testid selectors** - avoid using h1, h3, class selectors, or other CSS selectors. If an element needs to be tested, it should have a data-testid attribute
 - **All tests go in the `/test/e2e/**.spec.ts`or`/test/screenshots/**.test.ts` directory** - never create test files outside this location
 - **E2E tests go in `/test/e2e`** - for testing user flows, navigation, and feature interactions, checking elements exist, etc. but not for visual tests, and should not take screenshots.
 - **Visual tests go in `/test/screenshots`** - for UI consistency, layout verification, overflowing, etc. and should always take at least screenshot and a simple dom element existance check. do not test for logical correctness, just visual correctness. check with multiple viewports when necessary using `VIEWPORTS.forEach((viewport) => {`

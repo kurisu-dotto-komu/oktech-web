@@ -6,11 +6,10 @@ interface Props {
   people: Person[];
   className?: string;
   class?: string;
+  keyboardEvents?: boolean;
 }
 
-export default function PersonNav({ person, people, className, class: classFromAstro }: Props) {
-  const finalClassName = className || classFromAstro || "";
-
+export default function PersonNav({ person, people, className, keyboardEvents }: Props) {
   // Get current index and prev/next people
   const currentIndex = people.findIndex((p) => p.id === person.id);
   // Loop to last person if at first, loop to first person if at last
@@ -42,7 +41,8 @@ export default function PersonNav({ person, people, className, class: classFromA
       prevItem={prevItem}
       nextItem={nextItem}
       backButton={backButton}
-      className={finalClassName}
+      className={className}
+      keyboardEvents={keyboardEvents}
     />
   );
 }

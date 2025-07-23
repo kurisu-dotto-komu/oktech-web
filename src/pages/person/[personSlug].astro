@@ -1,9 +1,10 @@
 ---
-import PersonPage from "@/components/Person/PersonPage";
+import PersonDetails from "@/components/Person/PersonDetails";
 import PersonNav from "@/components/Person/PersonNav";
 import EventFeatured from "@/components/Event/EventFeatured";
 import PageLayout from "@/layouts/PageLayout.astro";
 import StickyNavigation from "@/components/Layout/StickyNavigation";
+import Section from "@/components/Common/Section";
 import { getPeople, getPerson, getEvents } from "@/content";
 
 export async function getStaticPaths() {
@@ -32,9 +33,31 @@ const description = person.bio
 ---
 
 <PageLayout title={`${person.name} - Community`} description={description} type="profile">
-  <PersonPage person={person} people={people} personEvents={personEvents}>
-    {personEvents.map((event) => <EventFeatured event={event} />)}
-  </PersonPage>
+  <Section>
+    <PersonDetails person={person} />
+  </Section>
+
+  {
+    personEvents.length > 0 && (
+      <Section title="Events">
+        <div class="flex flex-col gap-8 pt-8">
+          {personEvents.map((event) => (
+            <EventFeatured event={event} />
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <Section>
+    <PersonNav
+      person={person}
+      people={people}
+      className="person-navigation"
+      keyboardEvents
+      client:load
+    />
+  </Section>
 
   <StickyNavigation navigationClass="person-navigation" client:load>
     <PersonNav person={person} people={people} />

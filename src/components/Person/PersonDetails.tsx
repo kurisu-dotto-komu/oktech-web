@@ -44,7 +44,7 @@ export default function PersonDetails({ person }: Props) {
           <div className="w-full flex flex-col gap-8">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-2">
-                <h3 className="card-title text-4xl font-bold">{person.name}</h3>
+                <h3 className="card-title text-4xl font-bold" data-testid="person-name">{person.name}</h3>
                 <p className="text-xl">{person.jobTitle}</p>
               </div>
             </div>

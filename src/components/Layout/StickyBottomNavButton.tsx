@@ -30,6 +30,7 @@ export default function StickyBottomNavButton({
       href={href}
       className={`btn h-12 btn-soft p-0 px-1 max-w-full ${isNext ? "flex-row-reverse" : ""} ${finalClassName}`}
       title={title}
+      data-testid={isNext ? "nav-button-next" : "nav-button-prev"}
     >
       {isNext ? (
         <LuChevronRight size={20} className="mx-1 md:mx-2 flex-shrink-0" />

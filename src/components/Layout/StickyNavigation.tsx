@@ -6,17 +6,10 @@ interface Props {
   navigationClass: string;
   children: ReactNode;
   className?: string;
-  class?: string;
 }
 
-export default function StickyNavigation({
-  navigationClass,
-  children,
-  className,
-  class: classFromAstro,
-}: Props) {
+export default function StickyNavigation({ navigationClass, children, className }: Props) {
   const stickyNavRef = useRef<HTMLDivElement>(null);
-  const finalClassName = className || classFromAstro || "";
 
   useEffect(() => {
     const stickyNav = stickyNavRef.current;
@@ -77,7 +70,7 @@ export default function StickyNavigation({
   return (
     <div
       ref={stickyNavRef}
-      className={`fixed bottom-0 left-0 right-0 z-40 soft-glass transition-opacity duration-300 ${finalClassName}`}
+      className={`fixed bottom-0 left-0 right-0 z-40 soft-glass transition-opacity duration-300 ${className}`}
     >
       <Container className="py-2">{children}</Container>
     </div>

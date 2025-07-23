@@ -7,11 +7,10 @@ interface Props {
   events: EventEnriched[];
   className?: string;
   class?: string;
+  keyboardEvents?: boolean;
 }
 
-export default function EventNav({ event, events, className, class: classFromAstro }: Props) {
-  const finalClassName = className || classFromAstro || "";
-
+export default function EventNav({ event, events, className, keyboardEvents }: Props) {
   const currentIndex = events.findIndex(({ data }) => data.id === event.id);
   // Since events are sorted newest first, previous index is newer/future event
   const nextEvent = currentIndex > 0 ? events[currentIndex - 1] : null;
@@ -47,7 +46,8 @@ export default function EventNav({ event, events, className, class: classFromAst
       prevItem={prevItem}
       nextItem={nextItem}
       backButton={backButton}
-      className={finalClassName}
+      className={className}
+      keyboardEvents={keyboardEvents}
     />
   );
 }

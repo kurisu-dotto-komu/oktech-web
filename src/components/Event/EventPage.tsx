@@ -19,7 +19,7 @@ export default function EventPage({ event, events, children }: Props) {
       {/* EventPeople, EventLinks, and EventGallery will be rendered by parent */}
       {children}
       <Section>
-        <EventNav event={event} events={events} className="event-navigation" />
+        <EventNav event={event} events={events} className="event-navigation" keyboardEvents />
       </Section>
     </>
   );
