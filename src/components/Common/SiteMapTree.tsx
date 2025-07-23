@@ -1,7 +1,7 @@
 import Link from "@/components/Common/LinkReact";
 
 // Data helpers
-import { getEvents, getPeople, getVenues } from "@/data";
+import { getEvents, getPeople, getVenues } from "@/content";
 import { getOGImageWithFallback } from "@/utils/og";
 
 interface PageEntry {

@@ -1,7 +1,7 @@
 import Section from "@/components/Common/Section";
 import PersonDetails from "./PersonDetails";
 import PersonNav from "./PersonNav";
-import type { Person } from "@/data";
+import type { Person } from "@/content";
 import type { CollectionEntry } from "astro:content";
 import type { ReactNode } from "react";
 

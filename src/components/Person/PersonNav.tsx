@@ -1,5 +1,5 @@
 import StickyBottomNavButtons from "@/components/Layout/StickyBottomNavButtons";
-import type { Person } from "@/data";
+import type { Person } from "@/content";
 
 interface Props {
   person: Person;

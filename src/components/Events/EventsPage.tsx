@@ -1,17 +1,15 @@
-import type { EventWithVenue } from "@/data";
-import type { CollectionEntry } from "astro:content";
+import type { EventEnriched } from "@/content";
 import { EventFilterProvider } from "@/components/EventsFilter/EventsFilterProvider";
 import { EventsFilter } from "@/components/EventsFilter/EventsFilter";
 import EventsContainer from "./EventsContainer";
 import Section from "@/components/Common/Section";
 
 interface Props {
-  events: EventWithVenue[];
+  events: EventEnriched[];
   view: "grid" | "compact" | "gallery";
-  galleryImages?: CollectionEntry<"eventGalleryImage">[];
 }
 
-export default function EventsPage({ events, view, galleryImages = [] }: Props) {
+export default function EventsPage({ events, view }: Props) {
   // Extract unique topics and locations for filters
   const allTopics = new Set<string>();
   const allLocations = new Set<string>();
@@ -20,9 +18,6 @@ export default function EventsPage({ events, view, galleryImages = [] }: Props) 
     event.data.topics?.forEach((topic) => allTopics.add(topic));
     if (event.venue?.city) allLocations.add(event.venue.city);
   });
-
-  // Create a Set of event IDs that have gallery images
-  const eventsWithGalleryIds = new Set(galleryImages.map((img) => img.data.event.id));
 
   // Prepare data for filtering
   const eventItems = events.map((event) => ({
@@ -35,7 +30,7 @@ export default function EventsPage({ events, view, galleryImages = [] }: Props) 
     venue: event.venue,
     poster: event.data.cover,
     slug: event.id,
-    hasGallery: eventsWithGalleryIds.has(event.id),
+    hasGallery: event.galleryImages && event.galleryImages.length > 0,
   }));
 
   const availableFilters = {
@@ -61,12 +56,8 @@ export default function EventsPage({ events, view, galleryImages = [] }: Props) 
           availableFilters={availableFilters}
           sortOptions={sortOptions}
         >
-          <EventsFilter
-            availableFilters={availableFilters}
-            sortOptions={sortOptions}
-            currentView={view}
-          />
-          <EventsContainer events={events} view={view} galleryImages={galleryImages} />
+          <EventsFilter availableFilters={availableFilters} currentView={view} />
+          <EventsContainer events={events} view={view} />
         </EventFilterProvider>
       </div>
     </>

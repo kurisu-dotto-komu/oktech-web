@@ -1,4 +1,5 @@
-import { type Role, ROLE_CONFIGS } from "@/data";
+import { ROLE_CONFIGS } from "@/constants";
+import type { Role } from "@/content";
 import { LuStar } from "react-icons/lu";
 
 interface PersonRoleBadgeProps {

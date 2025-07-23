@@ -1,31 +1,16 @@
 /**
  * URL helper for Playwright tests
- * Resolves internal paths relative to the baseURL configured in playwright.config.ts
+ * Contains test constants for development-only events and venues
  */
 
-/**
- * Resolve an internal path for navigation in tests
- * @param path - The internal path (e.g., "/about", "/event/123")
- * @param baseURL - The base URL from Playwright context
- * @returns The resolved path for navigation
- */
-export function resolveTestPath(path: string, baseURL: string): string {
-  // If path is already absolute, return as is
-  if (path.startsWith("http://") || path.startsWith("https://")) {
-    return path;
-  }
+// Test event constants - these are development-only events that should be used in tests
+export const TEST_EVENTS = {
+  PRIMARY: "999999999-example-dev-event",
+  SECONDARY: "999999998-example-dev-event-2",
+} as const;
 
-  // For root path, just return the baseURL
-  if (!path || path === "/") {
-    return baseURL;
-  }
-
-  // Ensure path starts with /
-  const cleanPath = path.startsWith("/") ? path : `/${path}`;
-
-  // Combine baseURL and path
-  const combined = `${baseURL}${cleanPath}`;
-
-  // Fix protocol double slashes that might get collapsed
-  return combined.replace(/^(https?):\/([^\/])/, "$1://$2");
-}
+// Test venue constants that are used by test events
+export const TEST_VENUES = {
+  TEST_VENUE_1: "999999997-test-venue-1", // Used by PRIMARY test event
+  TEST_VENUE_2: "999999996-test-venue-2", // Used by SECONDARY test event
+} as const;

@@ -1,8 +1,8 @@
 import VenueMapImage from "./VenueMapImage";
-import type { CollectionEntry } from "astro:content";
+import type { ProcessedVenue } from "@/content";
 
 interface Props {
-  venue: CollectionEntry<"venues">;
+  venue: ProcessedVenue;
   marker?: boolean | string;
   link?: boolean;
   className?: string;
@@ -23,28 +23,25 @@ export default function VenueMap({
     // Show link if either showMarker is true or marker prop is provided
     if (marker === undefined) return null;
 
-    if (venue.data.gmaps) {
-      return venue.data.gmaps;
+    if (venue.gmaps) {
+      return venue.gmaps;
     }
-    if (venue.data.coordinates?.lat && venue.data.coordinates?.lng) {
-      return `https://www.google.com/maps/search/?api=1&query=${venue.data.coordinates.lat},${venue.data.coordinates.lng}`;
+    if (venue.coordinates?.lat && venue.coordinates?.lng) {
+      return `https://www.google.com/maps/search/?api=1&query=${venue.coordinates.lat},${venue.coordinates.lng}`;
     }
 
-    if (venue.data.address) {
-      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.data.address)}`;
+    if (venue.address) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.address)}`;
     }
     return null;
   };
 
   const mapUrl = getMapUrl();
 
-  // Get map image from venue data - check if it's already an image object or a string
-  const mapImage = venue.data.mapImage
+  // Get processed map image from venue data
+  const mapImage = venue.mapImageSrc
     ? {
-        default:
-          typeof venue.data.mapImage === "string"
-            ? { src: venue.data.mapImage }
-            : venue.data.mapImage,
+        default: { src: venue.mapImageSrc },
       }
     : null;
 
@@ -56,6 +53,7 @@ export default function VenueMap({
           target="_blank"
           rel="noopener noreferrer"
           className={`block w-full h-full hover:opacity-90 transition-opacity cursor-pointer ${finalClassName}`}
+          data-testid="venue-map-link"
         >
           <VenueMapImage mapImage={mapImage} marker={marker} />
         </a>

@@ -1,7 +1,7 @@
 ---
 import Countdown from "@/components/Common/Countdown";
 import EventFeatured from "@/components/Event/EventFeatured";
-import { getEvents } from "@/data";
+import { getEvents } from "@/content";
 const events = await getEvents();
 const futureEvents = events.filter((event) => event.data.dateTime > new Date()).reverse();
 const [nextEvent] = futureEvents;

@@ -1,8 +1,7 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
 import EventsPage from "@/components/Events/EventsPage";
-import { getEvents } from "@/data";
-import { getCollection } from "astro:content";
+import { getEvents } from "@/content";
 
 const { eventsView } = Astro.params;
 const view = (eventsView || "grid") as "grid" | "compact" | "gallery";
@@ -15,8 +14,7 @@ if (!validViews.includes(view)) {
 
 const events = await getEvents();
 
-// Fetch gallery images if in gallery view
-const galleryImages = view === "gallery" ? await getCollection("eventGalleryImage") : [];
+// Gallery images are now included in each event's data
 
 export async function getStaticPaths() {
   return [
@@ -28,5 +26,5 @@ export async function getStaticPaths() {
 ---
 
 <PageLayout title="Events">
-  <EventsPage events={events} view={view} galleryImages={galleryImages} client:load />
+  <EventsPage events={events} view={view} client:load />
 </PageLayout>

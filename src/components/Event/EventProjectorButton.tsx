@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { LuProjector } from "react-icons/lu";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import EventProjectorOverlay from "./EventProjectorOverlay";
 
 interface EventProjectorButtonProps {
-  event: EventWithVenue;
+  event: EventEnriched;
 }
 
 export default function EventProjectorButton({ event }: EventProjectorButtonProps) {
@@ -16,6 +16,7 @@ export default function EventProjectorButton({ event }: EventProjectorButtonProp
         onClick={() => setIsOpen(true)}
         className="btn btn-outline btn-primary"
         aria-label="Open projector view"
+        data-testid="projector-view-button"
       >
         <LuProjector className="w-4 h-4" />
         Projector View

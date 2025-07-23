@@ -1,11 +1,17 @@
-import type { CollectionEntry } from "astro:content";
+import type { EventEnriched } from "@/content";
 
 interface Props {
-  galleryImages: CollectionEntry<"eventGalleryImage">[];
+  event: EventEnriched;
   class?: string;
 }
 
-export default function EventGalleryImages({ galleryImages }: Props) {
+export default function EventGalleryImages({ event }: Props) {
+  const galleryImages = event.galleryImages || [];
+
+  if (galleryImages.length === 0) {
+    return null;
+  }
+
   return (
     <>
       {galleryImages
@@ -14,12 +20,12 @@ export default function EventGalleryImages({ galleryImages }: Props) {
         .map((img) => (
           <img
             key={img.id}
-            src={img.data.image.src}
+            src={img.thumbnailSrc}
             alt={img.data.caption ?? ""}
             className="w-full aspect-[4/3] object-cover rounded-lg hover:opacity-90 transition-opacity bg-base-300"
             loading="lazy"
-            width={512}
-            height={512}
+            width={320}
+            height={240}
           />
         ))}
     </>

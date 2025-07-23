@@ -1,4 +1,4 @@
-import { MENU } from "@/config";
+import { MENU } from "@/constants";
 import Container from "@/components/Common/Container";
 import LinkReact from "@/components/Common/LinkReact";
 import Brand from "@/components/Common/Brand";
@@ -9,7 +9,7 @@ export default function TopBar() {
 
   return (
     <>
-      <div className="fixed top-0 z-50 shadow-sm soft-glass navbar">
+      <div className="fixed top-0 z-50 shadow-sm soft-glass navbar" data-testid="navbar">
         <Container className="hidden md:flex justify-between">
           <div className="navbar-start -ml-4">
             <LinkReact href="/" className="btn btn-ghost p-1">
@@ -33,7 +33,7 @@ export default function TopBar() {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="fixed top-0 navbar z-60 md:hidden">
+      <div className="fixed top-0 navbar z-60 md:hidden" data-testid="navbar-mobile">
         <Container className="flex justify-between">
           <div className="navbar-start">
             <LinkReact href="/" className="btn btn-ghost p-1">

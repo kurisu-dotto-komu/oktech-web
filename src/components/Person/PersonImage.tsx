@@ -1,4 +1,4 @@
-import { type Person } from "@/data";
+import { type Person } from "@/content";
 import { LuUser } from "react-icons/lu";
 
 interface PersonImageProps {

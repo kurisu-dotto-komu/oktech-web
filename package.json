@@ -6,6 +6,7 @@
     "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview --host",
+    "start": "npm run build && npm run preview",
     "knip": "knip",
     "format": "prettier --write . --log-level warn",
     "typecheck": "npm-run-all -p typecheck:astro typecheck:tsc",
@@ -15,7 +16,7 @@
     "import": "tsx ./scripts/import-data",
     "og-cache": "tsx scripts/manage-og-cache.ts",
     "test": "playwright test",
-    "test:visuals": "TEST_TYPE=visuals playwright test",
+    "test:screenshots": "rm -rf test/screenshots/output && TEST_TYPE=screenshots playwright test",
     "test:build": "npm run build && TEST_BUILD=true playwright test",
     "test:build:fast": "TEST_BUILD=true playwright test"
   },

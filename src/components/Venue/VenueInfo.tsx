@@ -1,10 +1,10 @@
 import { LuMapPin, LuBuilding, LuGlobe } from "react-icons/lu";
 import EventCity from "@/components/Event/EventCity";
 import VenueMap from "./VenueMap";
-import type { CollectionEntry } from "astro:content";
+import type { VenueEnriched } from "@/content";
 
 interface Props {
-  venue: CollectionEntry<"venues">;
+  venue: VenueEnriched;
 }
 
 export default function VenueInfo({ venue }: Props) {
@@ -56,7 +56,7 @@ export default function VenueInfo({ venue }: Props) {
       </div>
 
       <div className="w-full aspect-video lg:aspect-square relative">
-        <VenueMap venue={venue} marker={venue.data.title} link={true} />
+        <VenueMap venue={venue.data} marker={venue.data.title} link={true} />
         {venue.data.city && (
           <div className="absolute bottom-2 right-2">
             <EventCity city={venue.data.city} />

@@ -1,4 +1,4 @@
-import { SOCIALS } from "@/config";
+import { SOCIALS } from "@/constants";
 import { FaFacebook } from "react-icons/fa";
 
 export default function Socials() {

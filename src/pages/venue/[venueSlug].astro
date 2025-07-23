@@ -5,7 +5,7 @@ import EventFeatured from "@/components/Event/EventFeatured";
 import PageLayout from "@/layouts/PageLayout.astro";
 import StickyNavigation from "@/components/Layout/StickyNavigation";
 import VenueNav from "@/components/Venue/VenueNav";
-import { getVenue, getVenues, getEvents } from "@/data";
+import { getVenue, getVenues, getEvents } from "@/content";
 
 export async function getStaticPaths() {
   const venues = await getCollection("venues");
@@ -14,14 +14,14 @@ export async function getStaticPaths() {
   const venuePaths = venues
     .filter((venue) => venue.data.hasPage)
     .map((venue) => ({
-      params: { slug: venue.id },
+      params: { venueSlug: venue.id },
     }));
 
   return venuePaths;
 }
 
-const { slug } = Astro.params;
-const venue = await getVenue(slug);
+const { venueSlug } = Astro.params;
+const venue = await getVenue(venueSlug);
 const venues = await getVenues();
 const allEvents = await getEvents();
 const venueEvents = allEvents.filter(

@@ -1,11 +1,11 @@
 import { LuCalendar, LuMapPin } from "react-icons/lu";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import Link from "@/components/Common/LinkReact";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import EventCity from "./EventCity";
 
 interface Props {
-  event: EventWithVenue;
+  event: EventEnriched;
   className?: string;
   class?: string;
 }
@@ -44,7 +44,11 @@ export default function EventCompact({ event, className, class: classFromAstro }
       <div className="flex items-center gap-6 text-sm text-base-content/70 flex-shrink-0">
         <div className="flex items-center gap-2">
           <LuCalendar size={16} />
-          <span className="whitespace-nowrap" data-testid="event-date" data-date={event.data.dateTime}>
+          <span
+            className="whitespace-nowrap"
+            data-testid="event-date"
+            data-date={event.data.dateTime}
+          >
             {formattedDate} • {formattedTime}
           </span>
         </div>

@@ -1,19 +1,19 @@
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getEvents } from "@/data";
+import { getEvents } from "@/content";
 import path from "path";
 import OGEvent from "@/components/OG/OGEvent";
 import { createOGImageHandler, loadImageAsBase64 } from "@/utils/og";
 
 export const GET: APIRoute = async ({ params }) => {
-  const slug = params.slug;
+  const eventSlug = params.eventSlug;
 
-  if (!slug) {
-    return new Response("Slug is required", { status: 400 });
+  if (!eventSlug) {
+    return new Response("Event slug is required", { status: 400 });
   }
 
   // Get event data
   const events = await getEvents();
-  const event = events.find((e) => e.id === slug);
+  const event = events.find((e) => e.id === eventSlug);
 
   if (!event) {
     return new Response("Not found", { status: 404 });
@@ -51,6 +51,6 @@ export const GET: APIRoute = async ({ params }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const events = await getEvents();
   return events.map((event) => ({
-    params: { slug: event.id },
+    params: { eventSlug: event.id },
   }));
 };

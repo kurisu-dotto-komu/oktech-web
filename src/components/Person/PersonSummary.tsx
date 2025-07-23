@@ -1,4 +1,4 @@
-import { type Person } from "@/data";
+import { type Person } from "@/content";
 import LinkReact from "@/components/Common/LinkReact";
 import PersonImage from "./PersonImage";
 

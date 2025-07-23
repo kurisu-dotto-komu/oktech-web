@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { LuCalendar } from "react-icons/lu";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import Brand from "@/components/Common/Brand";
 
 interface EventProjectorOverlayProps {
-  event: EventWithVenue;
+  event: EventEnriched;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -60,8 +60,9 @@ export default function EventProjectorOverlay({
   return (
     <div
       id="projector-overlay"
-      className="fixed inset-0 z-50 w-screen h-screen flex items-center justify-center bg-neutral"
+      className="fixed inset-0 z-50 w-screen h-screen flex items-center justify-center bg-black"
       data-theme="night"
+      data-testid="projector-overlay"
     >
       <div
         className="relative bg-gradient-to-br from-primary to-secondary text-base-100 flex"
@@ -78,12 +79,20 @@ export default function EventProjectorOverlay({
         <div className="flex-1 flex flex-col justify-between" style={{ paddingRight: "2vw" }}>
           {/* Top: Title and Description */}
           <div className="flex flex-col" style={{ gap: "2vw" }}>
-            <h1 className="font-bold leading-tight line-clamp-3" style={{ fontSize: "5vw" }}>
+            <h1
+              className="font-bold leading-tight line-clamp-3"
+              style={{ fontSize: "5vw" }}
+              data-testid="projector-title"
+            >
               {event.data.title}
             </h1>
 
             {event.data.topics && event.data.topics.length > 0 && (
-              <p className="opacity-80 line-clamp-2" style={{ fontSize: "2vw" }}>
+              <p
+                className="opacity-80 line-clamp-2"
+                style={{ fontSize: "2vw" }}
+                data-testid="projector-topics"
+              >
                 {event.data.topics.join(" • ")}
               </p>
             )}
@@ -100,6 +109,7 @@ export default function EventProjectorOverlay({
             <span
               className="font-medium whitespace-nowrap overflow-hidden text-ellipsis"
               style={{ fontSize: "2vw" }}
+              data-testid="projector-datetime"
             >
               {formattedDate} • {formattedTime}
               {event.data.duration && (
@@ -125,11 +135,19 @@ export default function EventProjectorOverlay({
           {event.venue && (
             <div className="self-end" style={{ width: "20vw" }}>
               <div className="bg-base-100/20 rounded-box shadow-2xl" style={{ padding: "1.5vw" }}>
-                <h3 className="font-bold" style={{ fontSize: "1.5vw", marginBottom: "0.5vw" }}>
+                <h3
+                  className="font-bold"
+                  style={{ fontSize: "1.5vw", marginBottom: "0.5vw" }}
+                  data-testid="projector-venue-title"
+                >
                   {event.venue.title}
                 </h3>
                 {event.venue.address && (
-                  <p className="opacity-80" style={{ fontSize: "1.2vw" }}>
+                  <p
+                    className="opacity-80"
+                    style={{ fontSize: "1.2vw" }}
+                    data-testid="projector-venue-address"
+                  >
                     {event.venue.address}
                   </p>
                 )}

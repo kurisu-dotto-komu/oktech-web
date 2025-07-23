@@ -1,4 +1,4 @@
-import { SOCIALS } from "@/config";
+import { SOCIALS } from "@/constants";
 import IconCard from "./IconCard";
 
 export default function SocialsBig() {

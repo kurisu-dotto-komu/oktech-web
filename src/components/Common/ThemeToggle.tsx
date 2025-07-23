@@ -28,6 +28,7 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       className="btn btn-ghost btn-circle"
       aria-label={`Switch to ${theme === "oktech-light" ? "dark" : "light"} mode`}
+      data-testid="theme-toggle"
     >
       {theme === "oktech-light" ? <LuMoon className="h-5 w-5" /> : <LuSun className="h-5 w-5" />}
     </button>

@@ -1,11 +1,11 @@
 import { LuCalendar, LuMapPin } from "react-icons/lu";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import Link from "@/components/Common/LinkReact";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import EventCity from "./EventCity";
 
 interface Props {
-  event: EventWithVenue;
+  event: EventEnriched;
   className?: string;
   class?: string;
 }

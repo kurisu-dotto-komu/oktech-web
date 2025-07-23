@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import type Fuse from "fuse.js";
-import type { Venue } from "@/data";
+import type { Venue } from "@/content";
 import type { ImageMetadata } from "astro";
 
 export interface EventItem {
@@ -64,7 +64,6 @@ interface EventFilterProviderProps {
     locations: string[];
   };
   sortOptions: Array<{ value: string; label: string }>;
-  initialFilters?: EventFilters;
   onFiltersChange?: (filters: EventFilters, filteredItems: EventItem[]) => void;
 }
 
@@ -73,7 +72,6 @@ export function EventFilterProvider({
   items,
   availableFilters,
   sortOptions,
-  initialFilters,
   onFiltersChange,
 }: EventFilterProviderProps) {
   const [currentFilters, setCurrentFilters] = useState<EventFilters>(() => {
@@ -148,7 +146,15 @@ export function EventFilterProvider({
     return sortItems(filtered);
   }, [items, currentFilters, initializeFuse, sortItems]);
 
-  const [filteredItems, setFilteredItems] = useState<EventItem[]>([]);
+  const [filteredItems, setFilteredItems] = useState<EventItem[]>(() => {
+    // Initialize with sorted items for SSR/first load
+    const sorted = [...items];
+    if (currentFilters.sort === "date-asc") {
+      return sorted.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    } else {
+      return sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }
+  });
 
   useEffect(() => {
     const updateFilteredItems = async () => {

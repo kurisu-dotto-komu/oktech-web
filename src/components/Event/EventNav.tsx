@@ -1,10 +1,10 @@
 import StickyBottomNavButtons from "@/components/Layout/StickyBottomNavButtons";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import { formatDate } from "@/utils/formatDate";
 
 interface Props {
-  event: EventWithVenue;
-  events: EventWithVenue[];
+  event: EventEnriched;
+  events: EventEnriched[];
   className?: string;
   class?: string;
 }
@@ -13,24 +13,26 @@ export default function EventNav({ event, events, className, class: classFromAst
   const finalClassName = className || classFromAstro || "";
 
   const currentIndex = events.findIndex(({ data }) => data.id === event.id);
-  const futureEvent = currentIndex > 0 ? events[currentIndex - 1] : null;
-  const pastEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : null;
+  // Since events are sorted newest first, previous index is newer/future event
+  const nextEvent = currentIndex > 0 ? events[currentIndex - 1] : null;
+  // And next index is older/past event
+  const prevEvent = currentIndex < events.length - 1 ? events[currentIndex + 1] : null;
 
-  const prevItem = pastEvent
+  const prevItem = prevEvent
     ? {
-        href: `/event/${pastEvent.data.id}`,
-        title: pastEvent.data.title,
-        subtitle: formatDate(pastEvent.data.dateTime, "short"),
-        image: pastEvent.data.cover,
+        href: `/event/${prevEvent.data.id}`,
+        title: formatDate(prevEvent.data.dateTime, "short"),
+        subtitle: prevEvent.data.title,
+        image: prevEvent.data.cover,
       }
     : undefined;
 
-  const nextItem = futureEvent
+  const nextItem = nextEvent
     ? {
-        href: `/event/${futureEvent.data.id}`,
-        title: futureEvent.data.title,
-        subtitle: formatDate(futureEvent.data.dateTime, "short"),
-        image: futureEvent.data.cover,
+        href: `/event/${nextEvent.data.id}`,
+        title: formatDate(nextEvent.data.dateTime, "short"),
+        subtitle: nextEvent.data.title,
+        image: nextEvent.data.cover,
       }
     : undefined;
 

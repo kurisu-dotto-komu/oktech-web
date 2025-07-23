@@ -38,31 +38,32 @@ export default function StickyBottomNavButtons({
   const finalClassName = className || classFromAstro || "";
 
   return (
-    <div className={`flex gap-4 w-full py-2 ${finalClassName}`}>
-      {prevItem && (
-        <div className="flex-1">
-          <StickyBottomNavButton {...prevItem} />
+    <div className={`w-full py-2 px-2 min-h-[3rem] ${finalClassName}`}>
+      <div className="grid grid-cols-5 items-center gap-2">
+        {/* Prev button - left column */}
+        <div className=" col-span-2">{prevItem && <StickyBottomNavButton {...prevItem} />}</div>
+
+        {/* Back button - center column, always centered */}
+        <div className="flex justify-center">
+          {backButton && (
+            <LinkReact
+              href={backButton.href}
+              className="btn btn-neutral flex items-center justify-center whitespace-nowrap"
+              title={backButton.text}
+            >
+              {backButton.icon &&
+                iconMap[backButton.icon] &&
+                React.createElement(iconMap[backButton.icon], { size: 20 })}
+              <span className="ml-2 hidden sm:inline">{backButton.text}</span>
+            </LinkReact>
+          )}
         </div>
-      )}
-      {backButton && (
-        <div className="bg-blue-200 flex-0">
-          <LinkReact
-            href={backButton.href}
-            className="btn btn-neutral flex items-center justify-center h-full whitespace-nowrap"
-            title={backButton.text}
-          >
-            {backButton.icon &&
-              iconMap[backButton.icon] &&
-              React.createElement(iconMap[backButton.icon], { size: 20 })}
-            <span className="ml-2 hidden sm:inline">{backButton.text}</span>
-          </LinkReact>
+
+        {/* Next button - right column */}
+        <div className="flex justify-end min-w-0  col-span-2">
+          {nextItem && <StickyBottomNavButton {...nextItem} next />}
         </div>
-      )}
-      {nextItem && (
-        <div className="text-end flex-1">
-          <StickyBottomNavButton {...nextItem} next />
-        </div>
-      )}
+      </div>
     </div>
   );
 }

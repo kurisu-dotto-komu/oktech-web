@@ -1,4 +1,4 @@
-import type { Person } from "@/data";
+import type { Person } from "@/content";
 import PersonSocialLink from "./PersonSocialLink";
 import PersonImage from "./PersonImage";
 import PersonRoleBadges from "./PersonRoleBadges";

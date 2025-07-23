@@ -1,11 +1,11 @@
 import EventInfo from "./EventInfo";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import EventJoinButton from "./EventJoinButton";
 import EventProjectorButton from "./EventProjectorButton";
 import ReactMarkdown from "react-markdown";
 
 interface Props {
-  event: EventWithVenue;
+  event: EventEnriched;
 }
 
 export default function EventDetails({ event }: Props) {

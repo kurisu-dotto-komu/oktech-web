@@ -5,7 +5,7 @@
 /**
  * Get the base URL for the site (origin + base path)
  * Uses Astro's SITE config which is set in astro.config.ts
- * @returns The base URL including origin and base path (e.g., "http://localhost:4322/chris-wireframe")
+ * @returns The base URL including origin and base path
  */
 export function resolveBaseUrl(): string {
   // Astro provides SITE from astro.config.ts
@@ -15,7 +15,8 @@ export function resolveBaseUrl(): string {
   if (!site) {
     // This shouldn't happen if astro.config.ts is set up correctly
     console.warn("SITE env var not found, using fallback");
-    return `http://localhost:4322${basePath}`.replace(/\/$/, "");
+    const port = import.meta.env.DEV_PORT || "4321";
+    return `http://localhost:${port}${basePath}`.replace(/\/$/, "");
   }
 
   // Combine site and base path
@@ -29,7 +30,7 @@ export function resolveBaseUrl(): string {
 /**
  * Resolve an internal href/path with the base path
  * @param href - The internal path (e.g., "/about", "/event/123")
- * @returns The path with base path prefix (e.g., "/chris-wireframe/about")
+ * @returns The path with base path prefix (e.g., "/subdirectory/about")
  */
 export function resolveInternalHref(href: string): string {
   const basePath = import.meta.env.BASE_URL || "/";
@@ -54,7 +55,7 @@ export function resolveInternalHref(href: string): string {
 /**
  * Get the full URL for an internal path
  * @param href - The internal path (e.g., "/about", "/event/123")
- * @returns The full URL (e.g., "http://localhost:4321/chris-wireframe/about")
+ * @returns The full URL (e.g., "http://localhost:4321/subdirectory/about")
  */
 export function resolveFullUrl(href: string): string {
   const baseUrl = resolveBaseUrl();

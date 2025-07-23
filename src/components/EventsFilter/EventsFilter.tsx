@@ -9,11 +9,10 @@ interface EventsFilterProps {
     topics: string[];
     locations: string[];
   };
-  sortOptions: Array<{ value: string; label: string }>;
   currentView: "grid" | "compact" | "gallery";
 }
 
-export function EventsFilter({ availableFilters, sortOptions, currentView }: EventsFilterProps) {
+export function EventsFilter({ availableFilters, currentView }: EventsFilterProps) {
   return (
     <div className="sticky top-0 z-40 bg-base-100 border-b border-base-200 py-4 mb-6">
       <div className="flex flex-wrap gap-4 items-center">

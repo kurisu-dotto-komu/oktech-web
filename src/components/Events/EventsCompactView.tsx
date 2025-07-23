@@ -1,9 +1,9 @@
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import EventCompact from "@/components/Event/EventCompact";
 import Section from "@/components/Common/Section";
 
 interface Props {
-  events: EventWithVenue[];
+  events: EventEnriched[];
 }
 
 export default function EventsCompactView({ events }: Props) {

@@ -1,21 +1,18 @@
-import type { EventWithVenue } from "@/data";
-import type { CollectionEntry } from "astro:content";
+import type { EventEnriched } from "@/content";
 import EventFeatured from "@/components/Event/EventFeatured";
 import EventGalleryImages from "@/components/Event/EventGalleryImages";
 import Grid from "@/components/Common/Grid";
 import { LuInfo } from "react-icons/lu";
 
 interface Props {
-  events: EventWithVenue[];
-  galleryImages: CollectionEntry<"eventGalleryImage">[];
+  events: EventEnriched[];
 }
 
-export default function EventsGalleryView({ events, galleryImages }: Props) {
-  // Create a Set of event IDs that have gallery images
-  const eventsWithGallery = new Set(galleryImages.map((img) => img.data.event.id));
-
+export default function EventsGalleryView({ events }: Props) {
   // Filter events to only show those with gallery images
-  const eventsToShow = events.filter((event) => eventsWithGallery.has(event.id));
+  const eventsToShow = events.filter(
+    (event) => event.galleryImages && event.galleryImages.length > 0,
+  );
   const eventsWithoutGalleryCount = events.length - eventsToShow.length;
 
   return (
@@ -32,9 +29,6 @@ export default function EventsGalleryView({ events, galleryImages }: Props) {
         </div>
       )}
       {eventsToShow.map((event, i) => {
-        // Get gallery images for this event
-        const eventGalleryImages = galleryImages.filter((img) => img.data.event.id === event.id);
-
         return (
           <div
             key={event.id}
@@ -44,11 +38,9 @@ export default function EventsGalleryView({ events, galleryImages }: Props) {
             <div className="container mx-auto px-4">
               <div className="flex flex-col gap-12">
                 <EventFeatured event={event} />
-                {eventGalleryImages.length > 0 && (
-                  <Grid data-testid="event-gallery-images">
-                    <EventGalleryImages galleryImages={eventGalleryImages} />
-                  </Grid>
-                )}
+                <Grid data-testid="event-gallery-images">
+                  <EventGalleryImages event={event} />
+                </Grid>
               </div>
             </div>
           </div>

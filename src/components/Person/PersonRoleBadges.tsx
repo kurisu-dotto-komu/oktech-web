@@ -1,5 +1,5 @@
 import PersonRoleBadge from "./PersonRoleBadge";
-import { type Role } from "@/data";
+import { type Role } from "@/content";
 
 interface PersonRoleBadgesProps {
   roles: Role[];

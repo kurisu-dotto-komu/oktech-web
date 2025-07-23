@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { SITE } from "@/config";
+import { SITE } from "@/constants";
 
 interface OGLayoutProps {
   children: ReactNode;

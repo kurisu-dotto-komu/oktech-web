@@ -9,10 +9,12 @@ const isTestingBuild = process.env.TEST_BUILD === "true";
 // Check which type of tests to run
 const testType = process.env.TEST_TYPE || "e2e"; // "e2e" or "visuals"
 
-// Use environment variable if set, otherwise generate a new port
-const port = process.env.PLAYWRIGHT_TEST_PORT
-  ? parseInt(process.env.PLAYWRIGHT_TEST_PORT)
-  : getRandomPort();
+// Use TEST_PORT environment variable if set, otherwise generate a random port
+const port = process.env.TEST_PORT
+  ? parseInt(process.env.TEST_PORT)
+  : process.env.PLAYWRIGHT_TEST_PORT
+    ? parseInt(process.env.PLAYWRIGHT_TEST_PORT)
+    : getRandomPort();
 
 // Set it in env to ensure consistency across config reloads
 process.env.PLAYWRIGHT_TEST_PORT = String(port);
@@ -21,27 +23,30 @@ console.log(
   `Using port ${port} for Playwright ${testType} tests (${isTestingBuild ? "preview" : "dev"} mode)`,
 );
 
+// Get base path from environment variable
+const basePath = process.env.BASE_PATH || "";
+
 export default defineConfig({
-  testDir: testType === "visuals" ? "./test/visuals" : "./test/e2e",
+  testDir: testType === "screenshots" ? "./test/screenshots" : "./test/e2e",
   outputDir:
-    testType === "visuals" ? "./test/results/visual-test-results" : "./test/results/test-results",
+    testType === "screenshots" ? "./test/results/screenshots" : "./test/results/test-results",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    [
-      "html",
-      {
-        outputFolder:
-          testType === "visuals"
-            ? "./test/results/playwright-visual-report"
-            : "./test/results/playwright-report",
-      },
-    ],
-  ],
+  // reporter: [
+  //   [
+  //     "html",
+  //     {
+  //       outputFolder:
+  //         testType === "visuals"
+  //           ? "./test/results/playwright-visual-report"
+  //           : "./test/results/playwright-report",
+  //     },
+  //   ],
+  // ],
   use: {
-    baseURL: `http://localhost:${port}/chris-wireframe`,
+    baseURL: `http://localhost:${port}${basePath}`,
     trace: "on-first-retry",
     // Visual tests typically need more time for screenshot operations
     ...(testType === "visuals" && {
@@ -59,12 +64,17 @@ export default defineConfig({
 
   webServer: {
     command: isTestingBuild
-      ? `npm run preview -- --port ${port} --base /chris-wireframe`
+      ? `npm run preview -- --port ${port}${basePath ? ` --base ${basePath}` : ""}`
       : `npm run dev -- --port ${port}`,
     port: port,
     timeout: 120 * 1000,
     reuseExistingServer: false,
     stdout: "pipe",
     stderr: "pipe",
+    env: {
+      ...process.env,
+      DEV_PORT: String(port), // Pass the test port as DEV_PORT to the server
+      BASE_PATH: basePath,
+    },
   },
 });

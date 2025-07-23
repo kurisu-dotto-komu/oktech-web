@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { DEV_MODE } from "@/config";
+import { DEV_MODE } from "@/constants";
 
 export default function DevInfo() {
   const [metaTags, setMetaTags] = useState<string>("");

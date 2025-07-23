@@ -26,7 +26,7 @@ const {
   nofollow = false,
 } = Astro.props;
 
-import { SITE } from "@/config";
+import { SITE } from "@/constants";
 import { getOGImageWithFallback } from "@/utils/og";
 
 const pageTitle = title ? SITE.title.template.replace("%s", title) : SITE.title.default;

@@ -1,6 +1,6 @@
 import Socials from "@/components/Common/Socials";
 import Container from "@/components/Common/Container";
-import { MENU } from "@/config";
+import { MENU } from "@/constants";
 import LinkReact from "@/components/Common/LinkReact";
 import { formatDate } from "@/utils/formatDate";
 import Brand from "@/components/Common/Brand";

@@ -1,12 +1,12 @@
 import { LuClock, LuMapPin } from "react-icons/lu";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import VenueMap from "@/components/Venue/VenueMap";
 import Link from "@/components/Common/LinkReact";
 import EventCity from "./EventCity";
 
 interface Props {
-  event: EventWithVenue;
+  event: EventEnriched;
 }
 
 export default function EventInfo({ event }: Props) {
@@ -27,7 +27,7 @@ export default function EventInfo({ event }: Props) {
   return (
     <div className="bg-base-100 rounded-lg overflow-hidden">
       {/* Date and Time Section */}
-      <div className="p-6 space-y-4">
+      <div className="p-6 space-y-4" data-testid="event-info">
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 mt-1">
             <LuClock className="w-6 h-6 text-primary" />
@@ -48,14 +48,19 @@ export default function EventInfo({ event }: Props) {
                 <Link
                   href={`/venue/${event.venueSlug}`}
                   className="text-lg underline font-semibold text-base-content hover:text-primary transition-colors"
+                  data-testid="venue-title-link"
                 >
                   {event.venue.title}
                 </Link>
               ) : (
-                <span className="text-lg font-semibold text-base-content">{event.venue.title}</span>
+                <span className="text-lg font-semibold text-base-content" data-testid="venue-title">
+                  {event.venue.title}
+                </span>
               )}
               {event.venue.address && (
-                <span className="text-base-content/70 mt-1">{event.venue.address}</span>
+                <span className="text-base-content/70 mt-1" data-testid="venue-address">
+                  {event.venue.address}
+                </span>
               )}
             </div>
           </div>
@@ -65,15 +70,7 @@ export default function EventInfo({ event }: Props) {
       {/* Map Section */}
       {event.venue && event.venueSlug && (
         <div className="w-full aspect-video relative">
-          <VenueMap
-            venue={{
-              id: event.venueSlug,
-              collection: "venues" as const,
-              data: event.venue,
-            }}
-            marker={event.venue.title}
-            link={true}
-          />
+          <VenueMap venue={event.venue} marker={event.venue.title} link={true} />
           {event.venue.city && (
             <div className="absolute bottom-2 right-2">
               <EventCity city={event.venue.city} />

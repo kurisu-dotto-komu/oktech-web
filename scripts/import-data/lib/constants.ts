@@ -1,8 +1,10 @@
 import path from "node:path";
 
-export const EVENTS_URL = "https://owddm.com/public/events.json";
-export const PHOTOS_URL = "https://owddm.com/public/photos.json";
+// TODO use the repo and fetch hash etc.
+
 export const PUBLIC_BASE = "https://owddm.com/public/";
+export const EVENTS_URL = `${PUBLIC_BASE}events.json`;
+export const PHOTOS_URL = `${PUBLIC_BASE}photos.json`;
 export const CONTENT_DIR = path.join("content");
 export const EVENTS_BASE_DIR = path.join(CONTENT_DIR, "events");
 export const VENUES_BASE_DIR = path.join(CONTENT_DIR, "venues");

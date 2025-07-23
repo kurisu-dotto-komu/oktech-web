@@ -3,7 +3,7 @@ import { LuTriangleAlert } from "react-icons/lu";
 
 export default function Banner() {
   return (
-    <div className="w-full bg-error text-error-content">
+    <div className="w-full bg-error text-error-content" data-testid="banner">
       <Container>
         <div className="flex items-center py-3">
           <div className="flex items-center justify-center w-12 h-12 mr-4">

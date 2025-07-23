@@ -1,4 +1,4 @@
-import type { Person } from "@/data";
+import type { Person } from "@/content";
 import Button from "@/components/Common/Button";
 import PersonImage from "@/components/Person/PersonImage";
 

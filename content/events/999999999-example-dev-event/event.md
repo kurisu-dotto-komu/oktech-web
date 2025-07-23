@@ -1,8 +1,8 @@
 ---
-title: Another Test Event
+title: Future Test Event 1
 dateTime: "2027-04-15 18:00"
 duration: 120
-cover: ./test2.webp
+cover: ./test1.webp
 devOnly: true
 topics:
   - Testing
@@ -12,7 +12,7 @@ topics:
   - AI/ML
 meetupId: 999999999
 group: 15632202
-venue: 25472037
+venue: 999999997
 ---
 
 **This is a test event that only appears in development mode.**

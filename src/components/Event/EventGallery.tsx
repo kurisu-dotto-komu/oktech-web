@@ -1,20 +1,22 @@
 import Section from "@/components/Common/Section";
 import EventGalleryImages from "./EventGalleryImages";
-import type { CollectionEntry } from "astro:content";
+import type { EventEnriched } from "@/content";
 
 interface Props {
-  galleryImages: CollectionEntry<"eventGalleryImage">[];
+  event: EventEnriched;
   class?: string;
 }
 
-export default function EventGallery({ galleryImages }: Props) {
+export default function EventGallery({ event }: Props) {
+  const galleryImages = event.galleryImages || [];
+
   if (galleryImages.length === 0) {
     return null;
   }
 
   return (
     <Section wide grid title="Gallery">
-      <EventGalleryImages galleryImages={galleryImages} />
+      <EventGalleryImages event={event} />
     </Section>
   );
 }

@@ -28,7 +28,7 @@ export default function StickyBottomNavButton({
   return (
     <LinkReact
       href={href}
-      className={`btn h-12 btn-soft flex-1 p-0 px-1 ${isNext ? "flex-row-reverse" : ""} ${finalClassName}`}
+      className={`btn h-12 btn-soft p-0 px-1 max-w-full ${isNext ? "flex-row-reverse" : ""} ${finalClassName}`}
       title={title}
     >
       {isNext ? (
@@ -38,7 +38,7 @@ export default function StickyBottomNavButton({
       )}
 
       {image && (
-        <figure className="aspect-video h-full flex-shrink-0 overflow-hidden rounded bg-base-300 hidden sm:block">
+        <figure className="aspect-video h-full flex-shrink-0 overflow-hidden rounded bg-base-300">
           <img
             src={image.src}
             alt={title || ""}
@@ -49,13 +49,11 @@ export default function StickyBottomNavButton({
         </figure>
       )}
 
-      <div className={`flex flex-col flex-1 px-2 py-3 ${isNext ? "text-right" : "text-left"}`}>
-        <div className="flex gap-1 items-baseline text-xs opacity-70 font-normal flex-col md:flex-row">
-          {subtitle && <div className="">{subtitle}</div>}
-        </div>
-        <div className="text-xs hidden sm:inline-block md:text-sm font-semibold truncate lg:max-w-60 overflow-hidden">
-          {title}
-        </div>
+      <div
+        className={`flex flex-col px-2 py-3 min-w-0 max-w-60 ${isNext ? "text-right" : "text-left"}`}
+      >
+        {title && <div className="text-xs md:text-sm font-semibold truncate">{title}</div>}
+        {subtitle && <div className="text-xs opacity-70 truncate">{subtitle}</div>}
       </div>
     </LinkReact>
   );

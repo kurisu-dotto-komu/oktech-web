@@ -1,9 +1,9 @@
 import Section from "@/components/Common/Section";
 import PersonSummary from "@/components/Person/PersonSummary";
-import type { EventWithVenue, Person } from "@/data";
+import type { EventEnriched, Person } from "@/content";
 
 interface Props {
-  event: EventWithVenue;
+  event: EventEnriched;
   people: Person[];
 }
 

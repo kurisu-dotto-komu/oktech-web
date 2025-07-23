@@ -1,12 +1,12 @@
 import { LuCalendar, LuClock, LuMapPin } from "react-icons/lu";
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import Link from "@/components/Common/LinkReact";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import VenueMap from "@/components/Venue/VenueMap";
 import EventCity from "./EventCity";
 
 interface Props {
-  event: EventWithVenue;
+  event: EventEnriched;
   hideMap?: boolean;
 }
 
@@ -86,14 +86,7 @@ export default function EventFeatured({ event, hideMap = false }: Props) {
             {!hideMap && event.venue && event.venueSlug && (
               <div className="w-full md:w-1/2 lg:w-1/3 h-full hidden lg:block border-l-2 border-dotted border-base-content/30 relative">
                 <div className="h-full w-full">
-                  <VenueMap
-                    venue={{
-                      id: event.venueSlug,
-                      collection: "venues" as const,
-                      data: event.venue,
-                    }}
-                    marker={event.venue.title}
-                  />
+                  <VenueMap venue={event.venue} marker={event.venue.title} />
                 </div>
                 {event.venue.city && (
                   <div className="absolute bottom-2 right-2">

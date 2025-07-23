@@ -1,9 +1,9 @@
-import type { EventWithVenue } from "@/data";
+import type { EventEnriched } from "@/content";
 import EventSummary from "@/components/Event/EventSummary";
 import Section from "@/components/Common/Section";
 
 interface Props {
-  events: EventWithVenue[];
+  events: EventEnriched[];
 }
 
 export default function EventsGridView({ events }: Props) {

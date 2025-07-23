@@ -1,4 +1,4 @@
-import { getEvents, getPeople, getVenues } from "../data";
+import { getEvents, getPeople, getVenues } from "@/content";
 import { resolveFullUrl } from "./urlResolver";
 
 /**

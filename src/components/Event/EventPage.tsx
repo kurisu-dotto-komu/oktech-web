@@ -1,18 +1,16 @@
-import type { EventWithVenue } from "@/data";
-import type { CollectionEntry } from "astro:content";
+import type { EventEnriched } from "@/content";
 import Section from "@/components/Common/Section";
 import EventDetails from "./EventDetails";
 import EventNav from "./EventNav";
 import type { ReactNode } from "react";
 
 interface Props {
-  event: EventWithVenue;
-  events: EventWithVenue[];
-  venue?: CollectionEntry<"venues"> | null;
+  event: EventEnriched;
+  events: EventEnriched[];
   children?: ReactNode;
 }
 
-export default function EventPage({ event, events, venue, children }: Props) {
+export default function EventPage({ event, events, children }: Props) {
   return (
     <>
       <Section>

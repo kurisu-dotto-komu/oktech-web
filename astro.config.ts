@@ -7,32 +7,35 @@ import yaml from "@rollup/plugin-yaml";
 
 // Determine the site URL and base path
 const isVercel = !!process.env.VERCEL_PROJECT_PRODUCTION_URL;
+
+// Get port from environment variable, default to 4321
+const port = process.env.DEV_PORT || "4321";
+
+// Get base path from environment variable, default to "" (root)
+const base = process.env.BASE_PATH || "";
+
+const localSite = `http://localhost:${port}`;
+const siteUrl = process.env.SITE_URL || localSite;
+const isProd = process.env.NODE_ENV === "production";
 const isDev = process.env.NODE_ENV === "development";
 
 const getSiteConfig = () => {
   if (isVercel) {
     return {
       site: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
-      base: "",
     };
   }
 
-  // In development, we still need to set site for proper URL generation
-  if (isDev || (!isVercel && !process.env.SITE)) {
-    return {
-      site: "http://localhost:4321", // Using your dev server port
-      base: "/chris-wireframe",
-    };
+  if (isProd && siteUrl === localSite) {
+    console.warn(`SITE_URL is not set, using ${localSite}.`);
   }
 
-  // Production non-Vercel
   return {
-    site: "https://owddm.com",
-    base: "/chris-wireframe",
+    site: siteUrl,
   };
 };
 
-const { site, base } = getSiteConfig();
+const { site } = getSiteConfig();
 
 // https://astro.build/config
 export default defineConfig({

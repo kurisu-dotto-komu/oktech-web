@@ -1,6 +1,6 @@
 import rss from "@astrojs/rss";
-import { SITE } from "../config";
-import { getEvents } from "../data";
+import { SITE } from "@/constants";
+import { getEvents } from "@/content";
 import { formatDate } from "../utils/formatDate";
 import { resolveBaseUrl, resolveFullUrl } from "../utils/urlResolver";
 

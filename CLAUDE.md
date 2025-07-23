@@ -19,19 +19,7 @@
 - **Update existing tests** when logic changes
 - **Never use `--headed` or `--debug`** with playwright tests - use default headless mode
 - **Use `npm run checks`** frequently to verify imports (it's cheap)
-- **Use `npm run test`** sparingly during development (it's expensive)
-- **Use `npm run test:build`** rarely for big changes
-- **The build step might take a long time**, so don't timeout early
-
-## Testing Guidelines
-
-- **All tests go in the `/test` directory** - never create test files outside this location
-- **E2E tests go in `/test/e2e`** - for testing user flows, navigation, and feature interactions
-- **Visual tests go in `/test/visuals`** - for UI consistency, theme switching, and layout verification
-- **Use descriptive test names** that clearly indicate what is being tested
-- **Follow existing test patterns** in each directory for consistency
-- **Test helpers go in `/test/helpers`** - reusable utilities for tests
-- **Visual test screenshots are stored in `/test/screenshots`** - reference images for visual regression
+- **Use `npm run test -- my-test-name`** during development to run a single test
 
 ## Code Structure & Modularity
 
@@ -64,3 +52,16 @@
 - **Use LinkAstro and LinkReact components** as they handle URL prefixing
 - **Import for Astro**: `import Link from "@/components/Common/LinkAstro.astro"`
 - **Import for React**: `import Link from "@/components/Common/LinkReact"`
+
+## Testing Guidelines
+
+- **Use descriptive test names** that clearly indicate what is being tested
+- **Follow existing test patterns** in each directory for consistency
+- **Use playwright conventional data-testid attributes for testing** - `data-testid="tag"` and `getByTestId("tag")`
+- **All tests go in the `/test/e2e/**.spec.ts`or`/test/screenshots/**.test.ts` directory** - never create test files outside this location
+- **E2E tests go in `/test/e2e`** - for testing user flows, navigation, and feature interactions, checking elements exist, etc. but not for visual tests, and should not take screenshots.
+- **Visual tests go in `/test/screenshots`** - for UI consistency, layout verification, overflowing, etc. and should always take at least screenshot and a simple dom element existance check. do not test for logical correctness, just visual correctness. check with multiple viewports when necessary using `VIEWPORTS.forEach((viewport) => {`
+- **Use the `takeScreenshot` helper** - `import { takeScreenshot } from "../helpers/screenshot"` for all screenshot operations in tests
+- **Use the `VIEWPORTS` helper** - `import { VIEWPORTS } from "../helpers/viewports"` for all viewport operations in tests
+- **Screenshot naming** - use descriptive names without file extensions, the helper adds `.png` automatically
+- **Visual test screenshots are stored in `/test/screenshots/output`** - you can reference these for visual checks

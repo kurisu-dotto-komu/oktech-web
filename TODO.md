@@ -1,6 +1,10 @@
+Scripts for LLM decoration (generate venus, people, tags, etc.)
+
 Transitions
 
 Add copy about real life.
+
+Remove testIds in prod?
 
 Thin astro data fetchers, passing to React
 
@@ -37,3 +41,9 @@ https://docs.astro.build/en/guides/view-transitions/
 Reduce confusion with slug/id definition
 
 Members: with hasPage: true.
+
+## Maybe Later
+
+- Conditionally hide/fade-in event results on page load when URL has filter params
+  - Challenge: Preventing flash of unfiltered content while maintaining SSR benefits
+  - Would need reliable hydration detection and careful timing of hide/show logic

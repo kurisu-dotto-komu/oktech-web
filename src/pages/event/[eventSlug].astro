@@ -1,6 +1,5 @@
 ---
-import { getEvents, getEvent, getVenue, getPeople } from "@/data";
-import { getCollection } from "astro:content";
+import { getEvents, getEvent, getPeople } from "@/content";
 import fs from "fs/promises";
 import path from "path";
 import yaml from "yaml";
@@ -15,20 +14,15 @@ import StickyNavigation from "@/components/Layout/StickyNavigation";
 
 export async function getStaticPaths() {
   const events = await getEvents();
-  return events.map(({ id }) => ({ params: { slug: id } }));
+  return events.map(({ id }) => ({ params: { eventSlug: id } }));
 }
 
-const { slug } = Astro.params;
-const event = await getEvent(slug);
+const { eventSlug } = Astro.params;
+const event = await getEvent(eventSlug);
 const events = await getEvents();
-const venue = event.venueSlug ? await getVenue(event.venueSlug) : null;
 const people = await getPeople();
 
-// Get gallery images for this event
-const galleryImages = await getCollection(
-  "eventGalleryImage",
-  (img) => img.data.event.id === event.id,
-);
+// Gallery images are now included in the event data
 
 // Load links for this event
 let links: EventLink[] = [];
@@ -47,10 +41,10 @@ const description = event.data.topics?.length
 ---
 
 <PageLayout title={`${event.data.title} - Events`} description={description} type="article">
-  <EventPage event={event} events={events} venue={venue}>
+  <EventPage event={event} events={events} client:load>
     <EventPeople event={event} people={people} />
     <EventLinks links={links} />
-    <EventGallery galleryImages={galleryImages} />
+    <EventGallery event={event} />
   </EventPage>
   <StickyNavigation navigationClass="event-navigation" client:load>
     <EventNav event={event} events={events} />
