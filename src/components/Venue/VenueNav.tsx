@@ -6,9 +6,16 @@ interface Props {
   venues: CollectionEntry<"venues">[];
   className?: string;
   class?: string;
+  keyboardEvents?: boolean;
 }
 
-export default function VenueNav({ venue, venues, className, class: classFromAstro }: Props) {
+export default function VenueNav({
+  venue,
+  venues,
+  className,
+  class: classFromAstro,
+  keyboardEvents = false,
+}: Props) {
   const finalClassName = className || classFromAstro || "";
 
   // Get current index and prev/next venues
@@ -28,6 +35,11 @@ export default function VenueNav({ venue, venues, className, class: classFromAst
 
   // No back button since there's no venues list page
   return (
-    <StickyBottomNavButtons prevItem={prevItem} nextItem={nextItem} className={finalClassName} />
+    <StickyBottomNavButtons
+      prevItem={prevItem}
+      nextItem={nextItem}
+      className={finalClassName}
+      keyboardEvents={keyboardEvents}
+    />
   );
 }

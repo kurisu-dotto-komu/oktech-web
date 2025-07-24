@@ -1,7 +1,6 @@
 import { defineCollection, reference, z, type CollectionEntry, getEntry, getCollection } from "astro:content";
 import path from "path";
 import { memoize } from "@/utils/memoize";
-import { extractMarkdownContent } from "@/utils/markdown";
 import { safeGetImage } from "@/utils/imageOptimization";
 import { DEV_MODE } from "@/constants";
 import { processVenue, type ProcessedVenue } from "./venues";
@@ -39,9 +38,6 @@ export const eventsCollection = defineCollection({
       const venueId = frontmatter.venue;
       const venue = venueId ? String(venueId) : undefined;
 
-      // Get the markdown content without frontmatter
-      const markdownContent = extractMarkdownContent(rawContent);
-
       return {
         id: slug,
         cover,
@@ -52,7 +48,6 @@ export const eventsCollection = defineCollection({
         devOnly: devOnly ?? false,
         venue,
         topics: frontmatter.topics as string[] | undefined,
-        markdownContent,
       };
     });
   },
@@ -66,7 +61,6 @@ export const eventsCollection = defineCollection({
       devOnly: z.boolean().optional().default(false),
       venue: reference("venues").optional(),
       topics: z.array(z.string()).optional(),
-      markdownContent: z.string().optional(),
     }),
 });
 

@@ -95,7 +95,7 @@
 }
 
 .hover-zoom {
-  @apply transition-all duration-100 ease-in-out hover:scale-[1.01];
+  @apply transition-all duration-100 ease-in-out hover:scale-[1.01] shadow-md hover:shadow-lg;
 }
 
 .soft-glass {

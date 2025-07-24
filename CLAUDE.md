@@ -1,6 +1,31 @@
+## Project Overview
+
+- **The website is built with Astro** - a static site builder, version 4.x
+
+### Project Structure
+
+```
+oktech-web/
+├── content/                     # Static content and data - do not touch!
+├── src/                         # Source code
+│   ├── components/              # React and Astro components
+│   ├── layouts/                 # Page layouts
+│   ├── pages/                   # Astro pages (routes)
+│   ├── styles/                  # Global CSS
+│   └── utils/                   # Utility functions
+├── scripts/                     # Build and data scripts
+├── test/                        # Test files
+│   ├── e2e/                     # End-to-end tests
+│   └── screenshots/             # Visual regression tests
+├── package.json                 # NPM dependencies and scripts
+├── astro.config.ts              # Astro framework configuration
+└── tsconfig.json                # TypeScript configuration
+```
+
 ## Agent Behavior
 
-- **Never assume missing context** - ask questions if uncertain
+- **Never assume missing context** - liberally ask questions if even slightly uncertain
+- **Only install libraries if you need to** - our framework may support much of what you need already
 - **Never hallucinate libraries or functions** - only use verified packages from package.json
 - **Always confirm file paths and module names** exist before referencing them
 - **Use the `context7` MCP tool** for unfamiliar or updated libraries

@@ -1,7 +1,6 @@
 import { defineCollection, z, type InferEntrySchema, type CollectionEntry, getEntry, getCollection } from "astro:content";
 import path from "path";
 import { memoize } from "@/utils/memoize";
-import { extractMarkdownContent } from "@/utils/markdown";
 import { safeGetImage } from "@/utils/imageOptimization";
 
 // Type definitions
@@ -42,9 +41,6 @@ export const venuesCollection = defineCollection({
       const mapImagePath = path.join(basePath, "map.jpg");
       const mapImage = mapImages[mapImagePath] ? mapImagePath : undefined;
 
-      // Get the markdown content without frontmatter
-      const markdownContent = extractMarkdownContent(rawContent);
-
       return {
         id: slug,
         title: frontmatter.title as string,
@@ -61,7 +57,6 @@ export const venuesCollection = defineCollection({
         description: frontmatter.description as string | undefined,
         cover,
         mapImage,
-        markdownContent,
       };
     });
   },
@@ -87,7 +82,6 @@ export const venuesCollection = defineCollection({
       description: z.string().optional(),
       cover: image().optional(),
       mapImage: image().optional(),
-      markdownContent: z.string().optional(),
     }),
 });
 

@@ -1,7 +1,6 @@
 import { defineCollection, z, getCollection } from "astro:content";
 import path from "path";
 import { memoize } from "@/utils/memoize";
-import { extractMarkdownContent } from "@/utils/markdown";
 import { ROLE_CONFIGS } from "@/constants";
 
 // Define Tailwind color classes for users
@@ -48,7 +47,6 @@ export type Person = {
     linkedin?: string;
     website?: string;
   };
-  markdownContent?: string;
 };
 
 // Collection definition
@@ -93,8 +91,6 @@ export const peopleCollection = defineCollection({
         bio = undefined;
       }
 
-      // Get the markdown content without frontmatter
-      const markdownContent = extractMarkdownContent(rawContent);
 
       return {
         id: slug,
@@ -104,7 +100,6 @@ export const peopleCollection = defineCollection({
         avatar,
         theme,
         bio,
-        markdownContent,
       };
     });
   },
@@ -117,7 +112,6 @@ export const peopleCollection = defineCollection({
       avatar: image().optional(),
       theme: z.string().optional(),
       bio: z.string().optional(),
-      markdownContent: z.string().optional(),
     }),
 });
 
@@ -146,7 +140,6 @@ export const getPeople = memoize(async (): Promise<Person[]> => {
       theme: color,
       events: data.events ?? [],
       links: {},
-      markdownContent: data.markdownContent,
     } satisfies Person;
   });
 });

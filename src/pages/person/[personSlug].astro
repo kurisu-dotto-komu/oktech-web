@@ -1,11 +1,15 @@
 ---
-import PersonDetails from "@/components/Person/PersonDetails";
 import PersonNav from "@/components/Person/PersonNav";
+import PersonSocialLink from "@/components/Person/PersonSocialLink";
+import PersonImage from "@/components/Person/PersonImage";
+import PersonRoleBadges from "@/components/Person/PersonRoleBadges";
 import EventFeatured from "@/components/Event/EventFeatured";
 import PageLayout from "@/layouts/PageLayout.astro";
 import StickyNavigation from "@/components/Common/StickyNavigation";
 import Section from "@/components/Common/Section";
 import { getPeople, getPerson, getEvents } from "@/content";
+import { getEntry } from "astro:content";
+import { render } from "astro:content";
 
 export async function getStaticPaths() {
   const people = await getPeople();
@@ -23,20 +27,92 @@ const personEvents = events.filter((event) =>
   person.events.find((e) => event.id.startsWith(`${e}`)),
 );
 
-// Create description from bio or roles
-const roleDescriptions = person.roles
-  .map((role) => role.charAt(0).toUpperCase() + role.slice(1))
-  .join(", ");
-const description = person.bio
-  ? person.bio.slice(0, 160) + (person.bio.length > 160 ? "..." : "")
-  : `${person.name} - ${roleDescriptions} at ${person.company || "the tech community"}`;
+const markdownFile = await getEntry("peopleMarkdown", personSlug);
+if (!markdownFile) {
+  throw new Error(`Person ${personSlug} not found`);
+}
+const { Content } = await render(markdownFile);
+
+// Map color names to light background classes
+const backgroundColorClasses = {
+  red: "bg-red-50",
+  orange: "bg-orange-50",
+  amber: "bg-amber-50",
+  yellow: "bg-yellow-50",
+  lime: "bg-lime-50",
+  green: "bg-green-50",
+  emerald: "bg-emerald-50",
+  teal: "bg-teal-50",
+  cyan: "bg-cyan-50",
+  sky: "bg-sky-50",
+  blue: "bg-blue-50",
+  indigo: "bg-indigo-50",
+  violet: "bg-violet-50",
+  purple: "bg-purple-50",
+  fuchsia: "bg-fuchsia-50",
+  pink: "bg-pink-50",
+  rose: "bg-rose-50",
+} as const;
+
+const backgroundClass =
+  backgroundColorClasses[person.theme as keyof typeof backgroundColorClasses] || "bg-blue-50";
 ---
 
-<PageLayout title={`${person.name} - Community`} description={description} type="profile">
+<PageLayout title={`${person.name} - Community`} type="profile">
   <Section>
-    <PersonDetails person={person} />
-  </Section>
+    <div class={`card w-full ${backgroundClass}`}>
+      <div class="card-body p-8">
+        <div class="w-full flex flex-col md:flex-row gap-8">
+          <figure class="md:w-1/3">
+            <PersonImage person={person} class="w-full h-[400px] shadow-lg rounded-lg" />
+          </figure>
 
+          <div class="w-full flex flex-col gap-8">
+            <div class="flex justify-between items-start">
+              <div class="flex flex-col gap-2">
+                <h3 class="card-title text-4xl font-bold" data-testid="person-name">
+                  {person.name}
+                </h3>
+                <p class="text-xl">{person.jobTitle}</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-4">
+              <PersonSocialLink type="email" url={person.email} client:load />
+              <PersonSocialLink type="website" url={person.links?.website} client:load />
+              <PersonSocialLink type="github" url={person.links?.github} client:load />
+              <PersonSocialLink type="twitter" url={person.links?.twitter} client:load />
+              <PersonSocialLink type="linkedin" url={person.links?.linkedin} client:load />
+            </div>
+
+            {
+              (person.roles.length > 0 || person.skills.length > 0) && (
+                <div class="flex flex-col gap-2">
+                  {person.roles.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                      <PersonRoleBadges roles={person.roles} />
+                    </div>
+                  )}
+                  {person.skills.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                      {person.skills.map((skill) => (
+                        <span class="badge badge-primary badge-lg">{skill}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            }
+
+            <div class="flex flex-col gap-4 max-w-none prose prose-lg">
+              <Content />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+  <!-- 
   {
     personEvents.length > 0 && (
       <Section title="Events">
@@ -47,7 +123,7 @@ const description = person.bio
         </div>
       </Section>
     )
-  }
+  } -->
 
   <Section>
     <PersonNav

@@ -44,11 +44,22 @@ export default function StickyBottomNavButtons({
   const finalClassName = className || classFromAstro || "";
   const prevButtonRef = useRef<HTMLDivElement>(null);
   const nextButtonRef = useRef<HTMLDivElement>(null);
+  const isGalleryModalOpenRef = useRef(false);
 
   useEffect(() => {
     if (!keyboardEvents) return;
 
+    // Handle gallery modal events
+    const handleGalleryModalToggle = (e: CustomEvent) => {
+      isGalleryModalOpenRef.current = e.detail.open;
+    };
+
+    window.addEventListener("gallery-modal-toggle", handleGalleryModalToggle as EventListener);
+
     const handleKeyDown = (event: KeyboardEvent) => {
+      // Don't handle keyboard navigation if gallery modal is open
+      if (isGalleryModalOpenRef.current) return;
+
       // Prevent navigation when typing in input fields
       if (
         event.target instanceof HTMLInputElement ||
@@ -75,6 +86,7 @@ export default function StickyBottomNavButtons({
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("gallery-modal-toggle", handleGalleryModalToggle as EventListener);
     };
   }, [prevItem, nextItem, keyboardEvents]);
 

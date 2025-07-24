@@ -80,7 +80,6 @@ export function EventFilterProvider({
       return {
         id: event.id,
         title: event.data.title,
-        description: event.data.markdownContent,
         date: event.data.dateTime.toISOString(),
         topics: event.data.topics || [],
         location: event.venue?.city || "",
@@ -130,7 +129,7 @@ export function EventFilterProvider({
     if (!fuseRef.current) {
       const { default: Fuse } = await import("fuse.js");
       fuseRef.current = new Fuse(items, {
-        keys: ["title", "description", "topics", "location"],
+        keys: ["title", "topics"],
         threshold: 0.3,
         includeScore: true,
       });

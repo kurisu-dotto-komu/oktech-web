@@ -57,10 +57,7 @@ export default function PersonSummary({ person }: PersonSummaryProps) {
 
   return (
     <LinkReact href={`/person/${person.id}`} className="hover-zoom relative block">
-      <div
-        className={`card h-full ${backgroundClass}`}
-        style={{ viewTransitionName: `person-card-${person.id}` }}
-      >
+      <div className={`card h-full ${backgroundClass}`}>
         <div className="card-body p-2">
           <div className="flex gap-6 items-center">
             <figure className="w-28 h-40 flex-shrink-0">

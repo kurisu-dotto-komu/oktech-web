@@ -16,7 +16,7 @@ export default function EventFeatured({ event, hideMap = false }: Props) {
 
   return (
     <Link
-      className="card rounded-xl bg-base-100 h-full hover-zoom flex flex-col lg:flex-row shadow-md w-full hover:shadow-lg overflow-hidden"
+      className="card rounded-xl bg-base-100 h-full hover-zoom flex flex-col lg:flex-row w-full overflow-hidden"
       href={`/event/${event.id}`}
     >
       {/* Left side - Image (1/3 width) */}

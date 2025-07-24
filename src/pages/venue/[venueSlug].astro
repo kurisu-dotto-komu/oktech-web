@@ -1,10 +1,11 @@
 ---
-import { getCollection } from "astro:content";
-import VenuePage from "@/components/Venue/VenuePage";
+import { getCollection, getEntry, render } from "astro:content";
+import VenueInfo from "@/components/Venue/VenueInfo";
+import VenueNav from "@/components/Venue/VenueNav";
 import EventFeatured from "@/components/Event/EventFeatured";
 import PageLayout from "@/layouts/PageLayout.astro";
 import StickyNavigation from "@/components/Common/StickyNavigation";
-import VenueNav from "@/components/Venue/VenueNav";
+import Section from "@/components/Common/Section";
 import { getVenue, getVenues, getEvents } from "@/content";
 
 export async function getStaticPaths() {
@@ -28,6 +29,18 @@ const venueEvents = allEvents.filter(
   (event) => event.data.venue?.id === venue.data.meetupId.toString(),
 );
 
+// Get markdown content
+let Content: any = null;
+try {
+  const markdownFile = await getEntry("venuesMarkdown", venueSlug);
+  if (markdownFile) {
+    const rendered = await render(markdownFile);
+    Content = rendered.Content;
+  }
+} catch (e) {
+  // No markdown file found, which is fine
+}
+
 // Create description
 const description =
   venue.data.description ||
@@ -35,10 +48,70 @@ const description =
 ---
 
 <PageLayout title={`${venue.data.title} - Venues`} description={description}>
-  <VenuePage venue={venue} venues={venues} venueEvents={venueEvents}>
-    {venueEvents.map((event) => <EventFeatured event={event} hideMap={true} />)}
-  </VenuePage>
+  <Section>
+    <div class="flex flex-col lg:flex-row gap-12">
+      <div class="flex flex-col gap-10 flex-1">
+        {
+          venue.data.cover && (
+            <figure class="rounded-xl aspect-video w-full bg-white shadow-xl overflow-hidden">
+              <img
+                src={venue.data.cover.src}
+                alt={`${venue.data.title} cover`}
+                class="w-full h-full object-contain p-8"
+                width={512}
+                height={512}
+              />
+            </figure>
+          )
+        }
+
+        <h1 class="text-4xl font-bold pt-6">{venue.data.title}</h1>
+
+        {
+          Content && (
+            <div class="max-w-none prose prose-lg">
+              <Content />
+            </div>
+          )
+        }
+      </div>
+
+      <div class="lg:w-80">
+        <div class="lg:sticky lg:top-20">
+          <div class="card bg-base-100 shadow-lg rounded-lg overflow-hidden">
+            <div class="card-body p-0">
+              <VenueInfo venue={venue} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  {
+    venueEvents.length > 0 && (
+      <Section>
+        <h2 class="text-2xl font-bold mb-8">Events Hosted at {venue.data.title}</h2>
+        <div class="flex flex-col gap-8">
+          {venueEvents.map((event) => (
+            <EventFeatured event={event} hideMap={true} />
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <Section>
+    <VenueNav
+      venue={venue}
+      venues={venues}
+      className="venue-navigation"
+      keyboardEvents
+      client:load
+    />
+  </Section>
+
   <StickyNavigation navigationClass="venue-navigation" client:load>
-    <VenueNav venue={venue} venues={venues} />
+    <VenueNav venue={venue} venues={venues} keyboardEvents />
   </StickyNavigation>
 </PageLayout>

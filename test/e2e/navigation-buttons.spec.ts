@@ -202,4 +202,84 @@ test.describe("Navigation Buttons", () => {
       await expect(page.locator("h1")).toContainText("People");
     });
   });
+
+  test.describe("Venue Navigation", () => {
+    test("should navigate between venues using prev/next buttons", async ({ page }) => {
+      // Navigate directly to a known venue page
+      await page.goto("/venue/24213835-aiming-inc");
+      await page.waitForLoadState("networkidle");
+
+      // Get the current venue title
+      const firstVenueTitle = await page.locator("h1").textContent();
+      expect(page.url()).toContain("/venue/");
+
+      // Check if navigation buttons exist
+      const prevButton = page.getByTestId("nav-button-prev").first();
+      const nextButton = page.getByTestId("nav-button-next").first();
+
+      // Both buttons should exist for venues
+      await expect(prevButton).toBeVisible();
+      await expect(nextButton).toBeVisible();
+
+      // Try to navigate to next venue
+      await nextButton.click();
+      await page.waitForLoadState("networkidle");
+
+      // Verify we're on a venue page (might be the same if only one venue with hasPage)
+      expect(page.url()).toContain("/venue/");
+      const secondUrl = page.url();
+
+      // Navigate using prev button
+      await prevButton.click();
+      await page.waitForLoadState("networkidle");
+
+      // Verify we're still on a venue page
+      expect(page.url()).toContain("/venue/");
+
+      // If there are multiple venues, we should have navigated
+      // If there's only one venue, we stay on the same page
+      const finalUrl = page.url();
+      expect([firstVenueTitle, secondUrl]).toContain(finalUrl);
+    });
+
+    test("should navigate using keyboard arrows on venue pages", async ({ page }) => {
+      // Navigate directly to a known venue page
+      await page.goto("/venue/24213835-aiming-inc");
+      await page.waitForLoadState("networkidle");
+
+      // Wait for React components to hydrate
+      await page.waitForTimeout(2000);
+
+      // Get current URL and title
+      const initialUrl = page.url();
+      const initialTitle = await page.locator("h1").textContent();
+
+      // Verify navigation buttons exist
+      const prevButton = page.getByTestId("nav-button-prev").first();
+      const nextButton = page.getByTestId("nav-button-next").first();
+      await expect(prevButton).toBeVisible();
+      await expect(nextButton).toBeVisible();
+
+      // Press right arrow key
+      await page.keyboard.press("ArrowRight");
+      await page.waitForTimeout(1000);
+      await page.waitForLoadState("networkidle");
+
+      // Verify navigation happened
+      const afterRightUrl = page.url();
+      expect(afterRightUrl).toContain("/venue/");
+      expect(afterRightUrl).not.toBe(initialUrl);
+
+      // Press left arrow to go back
+      await page.keyboard.press("ArrowLeft");
+      await page.waitForTimeout(1000);
+      await page.waitForLoadState("networkidle");
+
+      // Should be back to original venue
+      const finalUrl = page.url();
+      expect(finalUrl).toBe(initialUrl);
+      const finalTitle = await page.locator("h1").textContent();
+      expect(finalTitle).toBe(initialTitle);
+    });
+  });
 });
