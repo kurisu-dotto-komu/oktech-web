@@ -1,5 +1,12 @@
 import type { ReactNode } from "react";
 import Button from "@/components/Common/Button";
+import ShaderRenderer from "./ShaderRenderer";
+import asanohaShader from "@/shaders/asanoha.frag?raw";
+import cyberShader from "@/shaders/cyber.frag?raw";
+import seascapeShader from "@/shaders/seascape.frag?raw";
+import hypnoticShader from "@/shaders/hypnotic.frag?raw";
+import mandelbrotShader from "@/shaders/mandelbrot.frag?raw";
+import clsx from "clsx";
 
 interface HeroProps {
   title?: string;
@@ -14,6 +21,7 @@ interface HeroProps {
   class?: string;
   className?: string;
   children?: ReactNode;
+  shader?: boolean;
 }
 
 export default function Hero({
@@ -21,19 +29,35 @@ export default function Hero({
   description,
   button,
   slim,
-  class: classFromAstro,
   className,
   children,
+  shader,
 }: HeroProps) {
-  const finalClassName = className || classFromAstro || "";
   return (
     <div
-      className={`hero ${slim ? "" : "min-h-[70vh]"} bg-primary-content text-primary px-12 py-20 ${finalClassName}`.trim()}
+      className={clsx(
+        "hero",
+        slim ? "" : "min-h-[70vh]",
+        "bg-primary-content text-primary",
+        shader && "relative",
+        className,
+      )}
     >
-      <div className="hero-content">
-        <div className="max-w-xl text-center text-pretty flex flex-col gap-16">
-          {title && <h1 className="text-5xl font-bold">{title}</h1>}
-          {description && <p className="text-2xl text-primary/70">{description}</p>}
+      {shader && (
+        <ShaderRenderer
+          fragmentShader={[
+            asanohaShader,
+            cyberShader,
+            seascapeShader,
+            hypnoticShader,
+            mandelbrotShader,
+          ]}
+        />
+      )}
+      <div className="hero-content px-12 py-20">
+        <div className="max-w-xl text-center text-pretty flex flex-col gap-16 bg-black/70 p-14 rounded-2xl">
+          {title && <h1 className="text-5xl font-bold ">{title}</h1>}
+          {description && <p className="text-2xl text-primary/70 ">{description}</p>}
           {button && <Button className="btn-xl" {...button} />}
           {children}
         </div>

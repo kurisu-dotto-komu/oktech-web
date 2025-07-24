@@ -9,7 +9,8 @@
       "extensions": [
         "astro-build.astro-vscode",
         "esbenp.prettier-vscode",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "antaalt.shader-validator"
       ]
     }
   }

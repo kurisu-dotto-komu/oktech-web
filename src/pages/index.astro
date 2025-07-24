@@ -20,10 +20,12 @@ const people = await getPeople();
 >
   <Banner />
   <Hero
+    shader
     title="Welcome to OKTech"
     description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+    client:load
   >
-    <Hologram client:load />
+    <!-- <Hologram client:load /> -->
   </Hero>
   <Section wide class="bg-secondary/20">
     <EventsUpcoming client:load events={events} />
