@@ -25,7 +25,7 @@ const { title, ...seoProps } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="oktech-light">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -40,18 +40,17 @@ const { title, ...seoProps } = Astro.props;
       href={resolveInternalHref(`/rss.xml`)}
     />
     <script is:inline>
-      // ☝️ This script prevents the FART effect.
-      const storedTheme = localStorage.getItem("theme");
-
-      if (storedTheme === "oktech-light" || storedTheme === "oktech-dark") {
-        document.documentElement.setAttribute("data-theme", storedTheme);
-      } else {
-        // Check system preference
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const defaultTheme = prefersDark ? "oktech-dark" : "oktech-light";
-        document.documentElement.setAttribute("data-theme", defaultTheme);
-        localStorage.setItem("theme", defaultTheme);
-      }
+      // TODO enable the theme switcher?
+      // const storedTheme = localStorage.getItem("theme");
+      // if (storedTheme === "oktech-light" || storedTheme === "oktech-dark") {
+      //   document.documentElement.setAttribute("data-theme", storedTheme);
+      // } else {
+      //   // Check system preference
+      //   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      //   const defaultTheme = prefersDark ? "oktech-dark" : "oktech-light";
+      //   document.documentElement.setAttribute("data-theme", defaultTheme);
+      //   localStorage.setItem("theme", defaultTheme);
+      // }
     </script>
     <ClientRouter />
   </head>
