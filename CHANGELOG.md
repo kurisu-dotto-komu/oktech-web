@@ -19,6 +19,29 @@ DO include:
 - Performance improvements users will notice
 -->
 
+### July 24, 2025
+
+Added interactive visual effects and enhanced event photo viewing.
+
+- Introduced animated shader backgrounds on the homepage with multiple visual themes including cyber, hypnotic, mandelbrot, and seascape effects
+- Added oktech-light theme as base for daisyui system
+- Implemented fullscreen gallery modal for viewing event photos with better zoom and navigation
+
+### July 23, 2025
+
+Enhanced navigation with keyboard shortcuts and improved page performance.
+
+- Added keyboard navigation support for browsing between events and people profiles (arrow keys for previous/next)
+- Improved page loading performance by optimizing JavaScript bundling and component loading
+- Enhanced event navigation with better previous/next event detection
+
+### July 22, 2025
+
+Fixed venue map display and refactored event filtering.
+
+- Fixed venue map markers that were getting cut off with proper text overflow handling
+- Improved event filtering performance with optimized React components
+
 ### June 26, 2025
 
 Improved code quality and testing infrastructure for better reliability and performance.
