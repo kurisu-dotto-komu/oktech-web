@@ -1,0 +1,53 @@
+/* Noto Sans JP - Regular */
+@font-face {
+  font-family: "Noto Sans JP";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/NotoSansJP-Regular.woff2") format("woff2");
+}
+
+/* Noto Sans JP - Medium */
+@font-face {
+  font-family: "Noto Sans JP";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/NotoSansJP-Medium.woff2") format("woff2");
+}
+
+/* Noto Sans JP - Bold */
+@font-face {
+  font-family: "Noto Sans JP";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/NotoSansJP-Bold.woff2") format("woff2");
+}
+
+/* Oxanium - Bold (700) */
+@font-face {
+  font-family: "Oxanium";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Oxanium-Bold.woff2") format("woff2");
+}
+
+/* Space Mono - Regular */
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/SpaceMono-Regular.woff2") format("woff2");
+}
+
+/* Space Mono - Bold */
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/SpaceMono-Bold.woff2") format("woff2");
+}

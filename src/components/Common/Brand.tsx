@@ -17,7 +17,7 @@ export default function Brand({ fullText = false, big = false }: BrandProps) {
       <div className="flex flex-col items-center gap-8 text-center relative">
         <div className="relative">
           <OKTechLogo className={logoSize} />
-          <SpinningText text={longText} radius={130} />
+          <SpinningText text={longText} radius={131} />
         </div>
         <OKTechLogoText className={textSize} />
       </div>
@@ -30,7 +30,7 @@ export default function Brand({ fullText = false, big = false }: BrandProps) {
         <OKTechLogo className={logoSize} />
         <OKTechLogoText className="w-28 h-auto " />
       </div>
-      {fullText && <span className="text-sm opacity-80">{longText}</span>}
+      {fullText && <span className="text-sm opacity-80 font-header">{longText}</span>}
     </div>
   );
 }

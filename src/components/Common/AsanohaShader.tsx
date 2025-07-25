@@ -41,13 +41,13 @@ const SHADER_CONFIG = {
     // Mouse spotlight settings for light mode
     mouseSpotlight: {
       intensity: 1.2, // Mouse spotlight brightness
-      radius: 5.0, // Size of spotlight (in UV space units)
+      radius: 7.0, // Size of spotlight (in UV space units)
       falloff: 4, // How quickly spotlight fades (higher = softer edge)
     },
     // Center spotlight settings for light mode
     centerSpotlight: {
       intensity: 0.6, // Center spotlight brightness
-      radius: 8.0, // Size of center spotlight (in UV space units)
+      radius: 9.0, // Size of center spotlight (in UV space units)
       falloff: 10, // How quickly spotlight fades (higher = softer edge)
     },
   },
