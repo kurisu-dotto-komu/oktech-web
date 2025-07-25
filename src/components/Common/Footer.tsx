@@ -42,8 +42,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">
-          <div>
-            <Brand fullText />
+          <div className="opacity-80">
+            <Brand fullText neutral />
           </div>
           <div className="text-xs">
             <a

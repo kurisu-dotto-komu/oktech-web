@@ -1,9 +1,6 @@
-<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 170">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 170">
   <defs>
-    <style scoped>
-      svg {
-        filter: drop-shadow(0 4px 12px rgb(0 0 0 / 0.25));
-      }
+    <style>
       :root {
         --accent-fallback: oklch(0.757 0.120 173.7)
         --base-fallback: oklch(23.574% 0.066 313.189)
@@ -14,14 +11,22 @@
           --base-fallback: oklch(84.955% 0 0)
         }
       }
+      svg { 
+        filter: drop-shadow(0 4px 12px rgb(0 0 0 / 0.25));
+        --accent-color: var(--color-primary, var(--accent-fallback));
+        --base-color: var(--color-base-content, var(--base-fallback));
+      }
+      svg.neutral {
+        --accent-color: var(--base-color);
+      }
       .accent-top {
-        stop-color: color-mix(in srgb, var(--color-primary, var(--accent-fallback)) 85%, white 30%); 
+        stop-color: color-mix(in srgb, var(--accent-color) 85%, white 30%); 
       }
       .accent-middle { 
-        stop-color: var(--color-primary, var(--accent-fallback)); 
+        stop-color: var(--accent-color); 
       }
       .accent-bottom { 
-        stop-color: color-mix(in srgb, var(--color-primary, var(--accent-fallback)) 85%, black 30%);
+        stop-color: color-mix(in srgb, var(--accent-color) 85%, black 30%);
       }
       .accent { fill: url(#accentGradient); }
 
@@ -34,17 +39,18 @@
       .base-bottom { 
         stop-color: color-mix(in srgb, var(--color-base-content, var(--base-fallback)) 85%, black 30%);
       }
+
       .base { fill: url(#baseGradient); }
     </style>
     <linearGradient id="accentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop class="accent-top" offset="0%" style="stop-opacity: 1;" />
-      <stop class="accent-middle" offset="50%" style="stop-opacity: 1;" />
-      <stop class="accent-bottom" offset="100%" style="stop-opacity: 1;" />
+      <stop class="accent-top" offset="0%"  />
+      <stop class="accent-middle" offset="50%"  />
+      <stop class="accent-bottom" offset="100%"  />
     </linearGradient>
     <linearGradient id="baseGradient" x1="0%" y1="0%" x2="0%" y2="100%" >
-      <stop class="base-top" offset="0%" style="stop-opacity: 1;" />
-      <stop class="base-middle" offset="50%" style="stop-opacity: 1;" />
-      <stop class="base-bottom" offset="100%" style="stop-opacity: 1;" />
+      <stop class="base-top" offset="0%"  />
+      <stop class="base-middle" offset="50%"  />
+      <stop class="base-bottom" offset="100%"  />
     </linearGradient>
   </defs>
   <g>

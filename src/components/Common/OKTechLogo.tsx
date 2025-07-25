@@ -1,14 +1,15 @@
-import logoRoundSvg from "@/assets/oktech-logo-round-optimized.svg?raw";
 import logoTextSvg from "@/assets/oktech-logo-text-optimized.svg?raw";
+import logoRoundSvg from "@/assets/oktech-logo-round-optimized.svg?raw";
+import ScopedSVG from "@/components/Common/ScopedSVG";
 
 interface OKTechLogoProps {
   className?: string;
+  svgClass?: string;
+}
+export function OKTechLogoRound({ className, svgClass }: OKTechLogoProps) {
+  return <ScopedSVG svg={logoRoundSvg} className={className} svgClass={svgClass} />;
 }
 
-export default function OKTechLogo({ className = "" }: OKTechLogoProps) {
-  return <div className={className} dangerouslySetInnerHTML={{ __html: logoRoundSvg }} />;
-}
-
-export function OKTechLogoText({ className = "" }: OKTechLogoProps) {
-  return <div className={className} dangerouslySetInnerHTML={{ __html: logoTextSvg }} />;
+export function OKTechLogoText({ className = "", svgClass }: OKTechLogoProps) {
+  return <ScopedSVG svg={logoTextSvg} className={className} svgClass={svgClass} />;
 }
