@@ -14,7 +14,7 @@ test.describe("Theme persistence", () => {
 
     // Verify dark theme is applied
     const html = page.locator("html");
-    await expect(html).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(html).toHaveAttribute("data-theme", "dark");
 
     // Navigate to another page (e.g., about page)
     await page.getByRole("link", { name: "About" }).first().click();
@@ -24,7 +24,7 @@ test.describe("Theme persistence", () => {
     await page.waitForLoadState("networkidle");
 
     // Verify dark theme persists after navigation
-    await expect(html).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(html).toHaveAttribute("data-theme", "dark");
 
     // Navigate to another page to double-check
     await page.getByRole("link", { name: "Events" }).first().click();
@@ -34,6 +34,6 @@ test.describe("Theme persistence", () => {
     await page.waitForLoadState("networkidle");
 
     // Verify dark theme still persists
-    await expect(html).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(html).toHaveAttribute("data-theme", "dark");
   });
 });

@@ -51,3 +51,87 @@
   font-display: swap;
   src: url("/fonts/SpaceMono-Bold.woff2") format("woff2");
 }
+
+/* Magistral - Medium (Default) */
+@font-face {
+  font-family: "Magistral";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Magistral-Medium.woff2") format("woff2");
+}
+
+/* Magistral - ExtraBold */
+@font-face {
+  font-family: "Magistral";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/Magistral-ExtraBold.woff2") format("woff2");
+}
+
+
+/* Font family custom properties */
+:root {
+  --font-body: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-header: "Magistral", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Space Mono", "Courier New", Courier, monospace;
+}
+
+
+/* Apply body font globally */
+body {
+  font-family: var(--font-body);
+}
+
+/* Apply header font to headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-header);
+  font-weight: 500; /* Default to Medium weight */
+}
+
+/* Apply ExtraBold weight when using bold class */
+h1.font-bold,
+h2.font-bold,
+h3.font-bold,
+h4.font-bold
+h5.font-bold,
+h6.font-bold,
+.font-header.font-bold {
+  font-weight: 800; /* ExtraBold weight */
+}
+
+/* Utility classes for font families */
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-header {
+  font-family: var(--font-header);
+  font-weight: 500; /* Default to Medium weight */
+}
+
+/* Apply monospace font to code elements */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+}
+
+/* Utility class for monospace font */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Apply header font to buttons */
+button,
+.btn {
+  font-family: var(--font-header);
+  font-weight: 800; /* ExtraBold weight for buttons */
+}

@@ -65,7 +65,7 @@ export default function AsanohaShader({ className, showComments }: AsanohaShader
     // Initial theme detection
     const checkTheme = () => {
       const theme = document.documentElement.getAttribute("data-theme");
-      setIsDarkMode(theme === "oktech-dark");
+      setIsDarkMode(theme === "dark");
     };
 
     checkTheme();
@@ -137,7 +137,7 @@ export default function AsanohaShader({ className, showComments }: AsanohaShader
     : SHADER_CONFIG.light.vignetteStrength;
 
   return (
-    <div className={clsx("absolute inset-0 overflow-hidden", isDarkMode ? "bg-black" : "bg-white")}>
+    <div className={clsx("absolute inset-0 overflow-hidden")}>
       {/* Shader layer */}
       <ShaderRenderer
         fragmentShader={asanohaThemedShader}

@@ -65,7 +65,7 @@ export default function PersonSummary({ person }: PersonSummaryProps) {
             </figure>
             <div className="flex flex-col gap-2">
               <div>
-                <h3 className="card-title text-xl">{person.name}</h3>
+                <h3 className="card-title text-xl font-bold">{person.name}</h3>
                 <p className="text-sm">{person.jobTitle}</p>
               </div>
               <div className="gap-1 flex flex-wrap">

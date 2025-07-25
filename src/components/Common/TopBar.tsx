@@ -18,16 +18,18 @@ export default function TopBar() {
             </LinkReact>
           </div>
           <div className="navbar-end -mr-4">
-            <div className="flex items-center">
-              {items.map((item) => (
-                <LinkReact
-                  key={item.label}
-                  href={item.href}
-                  className="btn btn-ghost gap-3 text-sm items-center justify-start"
-                >
-                  {item.label}
-                </LinkReact>
-              ))}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center">
+                {items.map((item) => (
+                  <LinkReact
+                    key={item.label}
+                    href={item.href}
+                    className="btn btn-ghost gap-3 text-lg items-center justify-start"
+                  >
+                    {item.label}
+                  </LinkReact>
+                ))}
+              </div>
               <ThemeToggle testId="theme-toggle-desktop" />
             </div>
           </div>
@@ -56,7 +58,7 @@ export default function TopBar() {
                   <li key={item.label}>
                     <LinkReact
                       href={item.href}
-                      className="btn btn-ghost gap-3 text-sm items-center justify-start"
+                      className="btn btn-ghost gap-3 text-lg items-center justify-start"
                     >
                       {item.label}
                     </LinkReact>
