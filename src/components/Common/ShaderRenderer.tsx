@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 
+export interface UniformValue {
+  type: "1f" | "2f" | "3f" | "1i" | "2i" | "3i";
+  value: number | number[];
+}
+
 interface ShaderRendererProps {
   fragmentShader: string | string[];
   className?: string;
   style?: React.CSSProperties;
+  showComments?: boolean;
+  uniforms?: Record<string, UniformValue>;
 }
 
 // Parse shader comments from the top of the file
@@ -116,6 +123,8 @@ export default function ShaderRenderer({
   fragmentShader,
   className = "absolute inset-0 w-full h-full",
   style = { touchAction: "none" },
+  showComments = false,
+  uniforms = {},
 }: ShaderRendererProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number>(0);
@@ -212,6 +221,12 @@ export default function ShaderRenderer({
     const timeLocation = gl.getUniformLocation(program, "u_time");
     const mouseLocation = gl.getUniformLocation(program, "u_mouse");
 
+    // Get custom uniform locations
+    const customUniformLocations: Record<string, WebGLUniformLocation | null> = {};
+    for (const uniformName in uniforms) {
+      customUniformLocations[uniformName] = gl.getUniformLocation(program, uniformName);
+    }
+
     // Resize canvas
     const resizeCanvas = () => {
       canvas.width = canvas.clientWidth;
@@ -253,6 +268,34 @@ export default function ShaderRenderer({
       gl.uniform1f(timeLocation, currentTime);
       gl.uniform2f(mouseLocation, mouseRef.current.x, mouseRef.current.y);
 
+      // Set custom uniforms
+      for (const [uniformName, uniformData] of Object.entries(uniforms)) {
+        const location = customUniformLocations[uniformName];
+        if (location) {
+          const { type, value } = uniformData;
+          switch (type) {
+            case "1f":
+              gl.uniform1f(location, value as number);
+              break;
+            case "2f":
+              gl.uniform2f(location, ...(value as [number, number]));
+              break;
+            case "3f":
+              gl.uniform3f(location, ...(value as [number, number, number]));
+              break;
+            case "1i":
+              gl.uniform1i(location, value as number);
+              break;
+            case "2i":
+              gl.uniform2i(location, ...(value as [number, number]));
+              break;
+            case "3i":
+              gl.uniform3i(location, ...(value as [number, number, number]));
+              break;
+          }
+        }
+      }
+
       // Set up attribute
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
       gl.enableVertexAttribArray(positionLocation);
@@ -274,12 +317,12 @@ export default function ShaderRenderer({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [activeShader]);
+  }, [activeShader, uniforms]);
 
   return (
     <div className="relative w-full h-full">
       <canvas ref={canvasRef} className={className} style={style} />
-      {shaderComment && (
+      {showComments && shaderComment && (
         <div className="absolute bottom-4 left-4 w-2/3 text-white/70 text-sm">
           {renderTextWithLinks(shaderComment)}
         </div>

@@ -1,11 +1,6 @@
 import type { ReactNode } from "react";
 import Button from "@/components/Common/Button";
-import ShaderRenderer from "./ShaderRenderer";
-import asanohaShader from "@/shaders/asanoha.frag?raw";
-import cyberShader from "@/shaders/cyber.frag?raw";
-import seascapeShader from "@/shaders/seascape.frag?raw";
-import hypnoticShader from "@/shaders/hypnotic.frag?raw";
-import mandelbrotShader from "@/shaders/mandelbrot.frag?raw";
+import AsanohaShader from "./AsanohaShader";
 import clsx from "clsx";
 
 interface HeroProps {
@@ -38,25 +33,15 @@ export default function Hero({
       data-testid="hero"
       className={clsx(
         "hero",
-        slim ? "" : "min-h-[70vh]",
+        slim ? "" : "min-h-[50vh]",
         "bg-primary-content text-primary",
         shader && "relative",
         className,
       )}
     >
-      {shader && (
-        <ShaderRenderer
-          fragmentShader={[
-            asanohaShader,
-            cyberShader,
-            seascapeShader,
-            hypnoticShader,
-            mandelbrotShader,
-          ]}
-        />
-      )}
+      {shader && <AsanohaShader />}
       <div className="hero-content px-12 py-20">
-        <div className="max-w-xl text-center text-pretty flex flex-col gap-16 bg-base-100/90  p-14 rounded-2xl">
+        <div className="text-center flex flex-col gap-16">
           {title && <h1 className="text-5xl font-bold ">{title}</h1>}
           {description && <p className="text-2xl text-primary/70 ">{description}</p>}
           {button && <Button className="btn-xl" {...button} />}
