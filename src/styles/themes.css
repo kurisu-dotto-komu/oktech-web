@@ -1,6 +1,7 @@
 @plugin "daisyui/theme" {
   name: "oktech-light";
   default: true;
+  prefersdark: false;
   color-scheme: "light";
   --color-base-100: oklch(97.788% 0.004 56.375);
   --color-base-200: oklch(93.982% 0.007 61.449);

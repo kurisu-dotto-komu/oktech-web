@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { LuSun, LuMoon } from "react-icons/lu";
 
 interface ThemeToggleProps {
@@ -8,33 +7,22 @@ interface ThemeToggleProps {
 }
 
 export default function ThemeToggle({ testId = "theme-toggle" }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<"oktech-light" | "oktech-dark">(() => {
-    // Initialize from current data-theme attribute (set by RootLayout)
-    if (typeof window !== "undefined") {
-      const currentTheme = document.documentElement.getAttribute("data-theme");
-      return currentTheme === "oktech-dark" ? "oktech-dark" : "oktech-light";
-    }
-    return "oktech-light";
-  });
-
-  useEffect(() => {
-    // Apply theme whenever it changes
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "oktech-light" ? "oktech-dark" : "oktech-light"));
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "oktech-dark" ? "oktech-light" : "oktech-dark";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
     <button
       onClick={toggleTheme}
       className="btn btn-ghost btn-circle"
-      aria-label={`Switch to ${theme === "oktech-light" ? "dark" : "light"} mode`}
+      aria-label="Toggle theme"
       data-testid={testId}
     >
-      {theme === "oktech-light" ? <LuMoon className="h-5 w-5" /> : <LuSun className="h-5 w-5" />}
+      <LuMoon className="hidden [[data-theme='oktech-light']_&]:block h-5 w-5" />
+      <LuSun className="hidden [[data-theme='oktech-dark']_&]:block h-5 w-5" />
     </button>
   );
 }

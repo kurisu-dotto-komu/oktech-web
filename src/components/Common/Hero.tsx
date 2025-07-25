@@ -35,6 +35,7 @@ export default function Hero({
 }: HeroProps) {
   return (
     <div
+      data-testid="hero"
       className={clsx(
         "hero",
         slim ? "" : "min-h-[70vh]",
