@@ -55,7 +55,7 @@ export default function Hero({
         />
       )}
       <div className="hero-content px-12 py-20">
-        <div className="max-w-xl text-center text-pretty flex flex-col gap-16 bg-black/70 p-14 rounded-2xl">
+        <div className="max-w-xl text-center text-pretty flex flex-col gap-16 bg-base-100/90  p-14 rounded-2xl">
           {title && <h1 className="text-5xl font-bold ">{title}</h1>}
           {description && <p className="text-2xl text-primary/70 ">{description}</p>}
           {button && <Button className="btn-xl" {...button} />}

@@ -38,7 +38,7 @@ export default function Footer() {
           </nav>
           <div className="flex gap-4 items-center">
             <Socials />
-            <ThemeToggle />
+            <ThemeToggle testId="theme-toggle-footer" />
           </div>
         </div>
         <div className="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">

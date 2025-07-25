@@ -41,16 +41,16 @@ const { title, ...seoProps } = Astro.props;
     />
     <script is:inline>
       // TODO enable the theme switcher?
-      // const storedTheme = localStorage.getItem("theme");
-      // if (storedTheme === "oktech-light" || storedTheme === "oktech-dark") {
-      //   document.documentElement.setAttribute("data-theme", storedTheme);
-      // } else {
-      //   // Check system preference
-      //   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      //   const defaultTheme = prefersDark ? "oktech-dark" : "oktech-light";
-      //   document.documentElement.setAttribute("data-theme", defaultTheme);
-      //   localStorage.setItem("theme", defaultTheme);
-      // }
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "oktech-light" || storedTheme === "oktech-dark") {
+        document.documentElement.setAttribute("data-theme", storedTheme);
+      } else {
+        // Check system preference
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const defaultTheme = prefersDark ? "oktech-dark" : "oktech-light";
+        document.documentElement.setAttribute("data-theme", defaultTheme);
+        localStorage.setItem("theme", defaultTheme);
+      }
     </script>
     <ClientRouter />
   </head>

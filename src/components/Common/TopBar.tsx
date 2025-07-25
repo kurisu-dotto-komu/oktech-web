@@ -2,6 +2,7 @@ import { MENU } from "@/constants";
 import Container from "@/components/Common/Container";
 import LinkReact from "@/components/Common/LinkReact";
 import Brand from "@/components/Common/Brand";
+import ThemeToggle from "@/components/Common/ThemeToggle";
 import { LuMenu } from "react-icons/lu";
 
 export default function TopBar() {
@@ -17,7 +18,7 @@ export default function TopBar() {
             </LinkReact>
           </div>
           <div className="navbar-end -mr-4">
-            <div className="flex">
+            <div className="flex items-center">
               {items.map((item) => (
                 <LinkReact
                   key={item.label}
@@ -27,6 +28,7 @@ export default function TopBar() {
                   {item.label}
                 </LinkReact>
               ))}
+              <ThemeToggle testId="theme-toggle-desktop" />
             </div>
           </div>
         </Container>
@@ -41,6 +43,7 @@ export default function TopBar() {
             </LinkReact>
           </div>
           <div className="navbar-end">
+            <ThemeToggle testId="theme-toggle-mobile" />
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost bg-base-100/10" aria-label="Open menu">
                 <LuMenu size={24} />
