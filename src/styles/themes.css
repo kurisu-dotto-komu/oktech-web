@@ -1,5 +1,7 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@plugin "daisyui";
+
 @plugin "daisyui/theme" {
   name: "dark";
   default: false;
@@ -26,7 +28,6 @@
   --color-error: oklch(65.72% 0.199 27.33);
   --color-error-content: oklch(13.144% 0.039 27.33);
 }
-
 
 @plugin "daisyui/theme" {
   name: "light";
@@ -62,5 +63,3 @@
   --depth: 0;
   --noise: 0;
 }
-
-

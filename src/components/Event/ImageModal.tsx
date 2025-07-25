@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { LuX, LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 interface Props {
   isOpen: boolean;
@@ -23,6 +24,7 @@ export default function ImageModal({
   hasNext,
 }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const transformComponentRef = useRef<any>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -47,6 +49,12 @@ export default function ImageModal({
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose, onPrevious, onNext, hasPrevious, hasNext]);
+
+  // Reset zoom when modal closes or image changes
+  useEffect(() => {
+    if (!isOpen || !transformComponentRef.current) return;
+    transformComponentRef.current.resetTransform();
+  }, [isOpen, imageSrc]);
 
   if (!isOpen) return null;
 
@@ -78,12 +86,29 @@ export default function ImageModal({
             </button>
           )}
 
-          <figure className="relative w-full">
-            <img
-              src={imageSrc}
-              alt={altText}
-              className="w-full h-auto max-h-[80vh] object-contain transition-opacity duration-300"
-            />
+          <figure className="relative w-full overflow-hidden">
+            <TransformWrapper
+              ref={transformComponentRef}
+              minScale={1}
+              maxScale={5}
+              initialScale={1}
+              centerOnInit={true}
+              limitToBounds={false}
+              doubleClick={{ mode: "reset" }}
+              panning={{ disabled: false }}
+              pinch={{ disabled: false }}
+              wheel={{ disabled: false }}
+            >
+              <TransformComponent>
+                <img
+                  src={imageSrc}
+                  alt={altText}
+                  className="max-w-full h-auto max-h-[80vh] object-contain"
+                  style={{ userSelect: "none" }}
+                  draggable={false}
+                />
+              </TransformComponent>
+            </TransformWrapper>
             {altText && (
               <figcaption className="p-4 bg-base-100">
                 <p className="text-sm text-base-content/70">{altText}</p>
@@ -102,7 +127,7 @@ export default function ImageModal({
           )}
         </div>
       </div>
-      <form method="dialog" className="modal-backdrop">
+      <form method="dialog" className="modal-backdrop bg-black/60 backdrop-blur-sm">
         <button onClick={onClose}>close</button>
       </form>
     </dialog>

@@ -16,7 +16,7 @@ export default function SpinningText({ text, radius = 100, className = "" }: Spi
 
   return (
     <svg
-      className={`absolute user-select-none inset-0 w-full h-full pointer-events-none ${className}`}
+      className={`absolute select-none inset-0 w-full h-full pointer-events-none ${className}`}
       viewBox="0 0 300 300"
     >
       <style>
