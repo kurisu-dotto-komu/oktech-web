@@ -1,0 +1,155 @@
+---
+import Container from "@/components/Common/Container";
+import PageLayout from "@/layouts/PageLayout.astro";
+import { getEvents } from "@/content";
+import EventEntryCard from "@/components/Event/EventEntryCard";
+
+// Get all events and select some random ones from the past
+const allEvents = await getEvents();
+const selectedIndices = [4, 8, 12, 16, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]; // 14 events for variety
+const events = selectedIndices.map((index) => allEvents[index]).filter(Boolean); // Filter out any undefined if index is out of bounds
+---
+
+<PageLayout>
+  <Container>
+    <div class="py-10 space-y-10">
+      <h2 class="text-2xl font-bold">Max Value Test Cases</h2>
+      <p class="text-sm text-base-content/70">
+        Testing extreme combinations to ensure cards stay within bounds
+      </p>
+
+      <div class="space-y-8">
+        <div class="border-2 border-error p-4 rounded">
+          <h3 class="font-bold mb-2">Max All Positive</h3>
+          <p class="text-xs mb-4">seam1: +20°, seam2: +15°, rotX: +8°, rotY: +15°, rotZ: +3°</p>
+          <div class="w-full mx-auto">
+            <EventEntryCard
+              event={events[0]}
+              client:load
+              forceAngles={{
+                seam1Angle: 20,
+                seam2Angle: 15,
+                totalRotation: { x: 8, y: 15, z: 3 },
+              }}
+            />
+          </div>
+        </div>
+
+        <div class="border-2 border-error p-4 rounded">
+          <h3 class="font-bold mb-2">Max All Negative</h3>
+          <p class="text-xs mb-4">seam1: -20°, seam2: -15°, rotX: -8°, rotY: -15°, rotZ: -3°</p>
+          <div class="w-full mx-auto">
+            <EventEntryCard
+              event={events[0]}
+              client:load
+              forceAngles={{
+                seam1Angle: -20,
+                seam2Angle: -15,
+                totalRotation: { x: -8, y: -15, z: -3 },
+              }}
+            />
+          </div>
+        </div>
+
+        <div class="border-2 border-warning p-4 rounded">
+          <h3 class="font-bold mb-2">Max Mixed 1</h3>
+          <p class="text-xs mb-4">seam1: +20°, seam2: -15°, rotX: +8°, rotY: -15°, rotZ: +3°</p>
+          <div class="w-full mx-auto">
+            <EventEntryCard
+              event={events[0]}
+              client:load
+              forceAngles={{
+                seam1Angle: 20,
+                seam2Angle: -15,
+                totalRotation: { x: 8, y: -15, z: 3 },
+              }}
+            />
+          </div>
+        </div>
+
+        <div class="border-2 border-warning p-4 rounded">
+          <h3 class="font-bold mb-2">Max Mixed 2</h3>
+          <p class="text-xs mb-4">seam1: -20°, seam2: +15°, rotX: -8°, rotY: +15°, rotZ: -3°</p>
+          <div class="w-full mx-auto">
+            <EventEntryCard
+              event={events[0]}
+              client:load
+              forceAngles={{
+                seam1Angle: -20,
+                seam2Angle: 15,
+                totalRotation: { x: -8, y: 15, z: -3 },
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-12 border-base-300" />
+
+      <h2 class="text-2xl font-bold">Configurable Bounds Test</h2>
+      <div class="space-y-8">
+        <div class="border-2 border-info p-4 rounded">
+          <h3 class="font-bold mb-2">Default Bounds</h3>
+          <p class="text-xs mb-4">fold: 15-25°, rotX: 10-20°, rotY: 10-25°, rotZ: -5 to 5°</p>
+          <div class="w-full mx-auto">
+            <EventEntryCard event={events[1]} client:load />
+          </div>
+        </div>
+
+        <div class="border-2 border-info p-4 rounded">
+          <h3 class="font-bold mb-2">Minimal Bounds</h3>
+          <p class="text-xs mb-4">fold: 5-10°, rotX: 2-5°, rotY: 2-5°, rotZ: -1 to 1°</p>
+          <div class="w-full mx-auto">
+            <EventEntryCard
+              event={events[2]}
+              client:load
+              foldAngleBounds={{ min: 5, max: 10 }}
+              rotationBounds={{ minX: 2, maxX: 5, minY: 2, maxY: 5, minZ: -1, maxZ: 1 }}
+            />
+          </div>
+        </div>
+
+        <div class="border-2 border-info p-4 rounded">
+          <h3 class="font-bold mb-2">Extreme Bounds (Positive)</h3>
+          <p class="text-xs mb-4">fold: 30-45°, rotX: 25-35°, rotY: 30-40°, rotZ: -10 to 10°</p>
+          <div class="w-full mx-auto">
+            <EventEntryCard
+              event={events[3]}
+              client:load
+              foldAngleBounds={{ min: 30, max: 45 }}
+              rotationBounds={{ minX: 25, maxX: 35, minY: 30, maxY: 40, minZ: -10, maxZ: 10 }}
+            />
+          </div>
+        </div>
+
+        <div class="border-2 border-info p-4 rounded">
+          <h3 class="font-bold mb-2">Extreme Bounds (Negative)</h3>
+          <p class="text-xs mb-4">
+            fold: 30-45°, rotX: -35 to -25°, rotY: -40 to -30°, rotZ: -10 to 10°
+          </p>
+          <div class="w-full mx-auto">
+            <EventEntryCard
+              event={events[4]}
+              client:load
+              foldAngleBounds={{ min: 30, max: 45 }}
+              rotationBounds={{ minX: -35, maxX: -25, minY: -40, maxY: -30, minZ: -10, maxZ: 10 }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-12 border-base-300" />
+
+      <h2 class="text-2xl font-bold">Event Entry Cards</h2>
+      <div class="space-y-12">
+        {
+          events.slice(5).map((event) => (
+            <div class="w-full  mx-auto">
+              <EventEntryCard event={event} client:load />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</PageLayout>
