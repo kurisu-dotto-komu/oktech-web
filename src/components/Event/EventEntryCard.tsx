@@ -34,7 +34,7 @@ function EntryCardInfo({ event }: { event: EventEnriched }) {
 
 function EntryCardFooter({ text }: FooterProps) {
   return (
-    <div className="flex gap-2 justify-between select-none">
+    <div className="flex gap-2 justify-between select-none opacity-50">
       <div className="text-xs text-red-400 border-l border-red-400 pl-3 pb-1">
         <div>官用欄</div>
         <div>Official Use Only</div>
@@ -51,15 +51,15 @@ interface HeaderProps {
 
 function EntryCardHeader({ text, description }: HeaderProps) {
   return (
-    <div className="flex flex-col select-none pl-6 px-2">
-      <div className="text-sm text-left">{description}</div>
+    <div className="flex flex-col select-none pl-10 pt-1 px-2 opacity-50">
+      <div className="text-xs text-left">{description}</div>
       <h3 className="text-lg text-right font-zen text-red-400 font-bold">{text}</h3>
     </div>
   );
 }
 
 function EntryContent({ children }: { children: React.ReactNode }) {
-  return <div className="h-full border-2 border-base-content">{children}</div>;
+  return <div className="h-full border-2 border-base-content/60">{children}</div>;
 }
 
 function EntryCardInner({
@@ -81,7 +81,10 @@ function EntryCardInner({
 }) {
   return (
     <div
-      className={clsx("bg-base-100 border-r border-dotted border-base-300 relative", className)}
+      className={clsx(
+        "bg-base-100 border-r border-dotted border-base-300 relative overflow-hidden",
+        className,
+      )}
       style={style}
     >
       {shade > 0 && (
@@ -183,11 +186,7 @@ function FoldedGrid({ children, seam1Angle, seam2Angle, shadow, totalRotation }:
 
         // Apply cut effect if the element has the cut prop
         const cutClasses = element.props.cut
-          ? [
-              "before:absolute before:top-0 before:left-0 before:w-0 before:h-0",
-              "before:border-t-[20px] before:border-r-[20px] before:border-r-transparent",
-              "before:z-10",
-            ].join(" ")
+          ? "after:absolute after:top-0 after:left-0 after:w-0 after:h-0 after:border-t-[30px] after:border-t-base-200 after:border-r-[30px] after:border-r-transparent after:z-10"
           : "";
 
         return React.cloneElement(element, {
