@@ -9,6 +9,8 @@ interface Props {
     seam2Angle: number;
     totalRotation: { x: number; y: number; z: number };
   };
+  presetIndex?: number; // Index to select from predefined presets
+  seedId?: string; // Seed for randomization
   foldAngleBounds?: {
     min: number;
     max: number;
@@ -67,7 +69,6 @@ function EntryCardInner({
   className,
   footer,
   header,
-  cut = false,
   shade = 0,
   style,
 }: {
@@ -80,13 +81,7 @@ function EntryCardInner({
   style?: React.CSSProperties;
 }) {
   return (
-    <div
-      className={clsx(
-        "bg-base-100 border-r border-dotted border-base-300 relative overflow-hidden",
-        className,
-      )}
-      style={style}
-    >
+    <div className={clsx("bg-base-100 relative overflow-hidden", className)} style={style}>
       {shade > 0 && (
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-500 ease-out-in group-hover:!opacity-0"
@@ -136,34 +131,72 @@ function FoldedGrid({ children, seam1Angle, seam2Angle, shadow, totalRotation }:
           transformOrigin = "0% 50%"; // left edge
         }
 
-        // Calculate shade based on light source from right
-        // Light vector pointing from right to left: [-1, 0, 0]
-        // Panel normal after rotation depends on fold angle
-        let shadeOpacity = 0.05; // Minimum shade for visibility
+        // Calculate natural shading based on surface orientation
+        // Light source from above-right-front for natural lighting
+        const lightVector = { x: 0.4, y: -0.7, z: 0.6 }; // Normalized vector
 
+        // Convert angles to radians
+        const panelRotY = (foldAngle * Math.PI) / 180;
+        const cardRotX = totalRotation ? (totalRotation.x * Math.PI) / 180 : 0;
+        const cardRotY = totalRotation ? (totalRotation.y * Math.PI) / 180 : 0;
+        // const cardRotZ = totalRotation ? (totalRotation.z * Math.PI) / 180 : 0; // Z rotation not used in simplified calculation
+
+        // Calculate panel normal after all rotations
+        // Start with forward-facing normal [0, 0, 1]
+        let normal = { x: 0, y: 0, z: 1 };
+
+        // Apply panel's individual Y rotation first
+        const cosPanel = Math.cos(panelRotY);
+        const sinPanel = Math.sin(panelRotY);
+        normal = {
+          x: sinPanel,
+          y: 0,
+          z: cosPanel,
+        };
+
+        // Apply card's overall rotations (simplified for key effects)
+        // Y rotation (horizontal turning)
+        const cosCardY = Math.cos(cardRotY);
+        const sinCardY = Math.sin(cardRotY);
+        const tempX = normal.x * cosCardY + normal.z * sinCardY;
+        const tempZ = -normal.x * sinCardY + normal.z * cosCardY;
+        normal.x = tempX;
+        normal.z = tempZ;
+
+        // X rotation (vertical tilting) - affects Y and Z
+        const cosCardX = Math.cos(cardRotX);
+        const sinCardX = Math.sin(cardRotX);
+        const tempY = normal.y * cosCardX - normal.z * sinCardX;
+        const tempZ2 = normal.y * sinCardX + normal.z * cosCardX;
+        normal.y = tempY;
+        normal.z = tempZ2;
+
+        // Calculate dot product with light vector
+        const dotProduct =
+          normal.x * lightVector.x + normal.y * lightVector.y + normal.z * lightVector.z;
+
+        // Map dot product to shade intensity
+        // Dot product ranges from -1 (facing away) to 1 (facing toward light)
+        // We want: facing light = less shade, facing away = more shade
+        const baseLightness = 0.65; // How much light hits even shadowed areas
+        const shadowStrength = 0.6; // Maximum shadow darkness
+        const lightness = baseLightness + (1 - baseLightness) * Math.max(0, dotProduct);
+        let shadeOpacity = (1 - lightness) * shadowStrength;
+
+        // Subtle adjustments for each panel position
         if (index === 0) {
-          // Left panel: starts facing forward [0, 0, 1], rotates around Y axis
-          // When folded right (positive angle), faces more toward light (less shade)
-          // When folded left (negative angle), faces away from light (more shade)
-          const normalX = Math.sin((foldAngle * Math.PI) / 180);
-          const dotProduct = normalX * -1; // dot product with light vector
-          shadeOpacity = Math.max(0.05, Math.min(0.3, 0.05 + dotProduct * 0.25));
+          // Left panel: slightly more susceptible to shadows
+          shadeOpacity *= 1.2;
         } else if (index === 1) {
-          // Middle panel: Add subtle shade based on overall rotation
-          if (totalRotation) {
-            const rotY = (totalRotation.y * Math.PI) / 180;
-            const normalX = Math.sin(rotY);
-            const dotProduct = normalX * -1;
-            shadeOpacity = Math.max(0.05, Math.min(0.15, 0.05 + Math.abs(dotProduct) * 0.1));
-          }
+          // Middle panel: less shadow variation since it doesn't fold
+          shadeOpacity *= 0.8;
         } else if (index === 2) {
-          // Right panel: starts facing forward [0, 0, 1], rotates around Y axis
-          // When folded right (positive angle), faces away from light (more shade)
-          // When folded left (negative angle), faces toward light (less shade)
-          const normalX = Math.sin((foldAngle * Math.PI) / 180);
-          const dotProduct = normalX * -1; // dot product with light vector
-          shadeOpacity = Math.max(0.05, Math.min(0.3, 0.05 - dotProduct * 0.25));
+          // Right panel: standard shading
+          shadeOpacity *= 1.0;
         }
+
+        // Ensure shade is within reasonable bounds
+        shadeOpacity = Math.max(0.05, Math.min(0.35, shadeOpacity));
 
         // Apply fold transforms based on position
         const foldStyle: React.CSSProperties = {
@@ -234,7 +267,7 @@ function FoldedCardLayout({
         }}
       >
         {/* Main content with fold transforms */}
-        <div className="relative z-10" style={{ transformStyle: "preserve-3d" }}>
+        <div className="relative z-20" style={{ transformStyle: "preserve-3d" }}>
           <FoldedGrid seam1Angle={seam1Angle} seam2Angle={seam2Angle} totalRotation={totalRotation}>
             {children}
           </FoldedGrid>
@@ -255,16 +288,70 @@ function FoldedCardLayout({
   );
 }
 
-// Simple seeded random number generator
+// Predefined presets for different visual styles
+const FOLD_PRESETS = [
+  {
+    name: "Classic Trifold",
+    seam1Angle: -22,
+    seam2Angle: -26,
+    rotation: { x: 10, y: -12, z: 1 },
+  },
+  {
+    name: "Dynamic Wave",
+    seam1Angle: 24,
+    seam2Angle: 28,
+    rotation: { x: 8, y: 11, z: -2 },
+  },
+  {
+    name: "Dramatic Fan",
+    seam1Angle: -28,
+    seam2Angle: -32,
+    rotation: { x: 12, y: -15, z: 2 },
+  },
+  {
+    name: "Subtle Twist",
+    seam1Angle: 20,
+    seam2Angle: 23,
+    rotation: { x: 6, y: 10, z: -1 },
+  },
+  {
+    name: "Bold Statement",
+    seam1Angle: -25,
+    seam2Angle: -30,
+    rotation: { x: 11, y: -13, z: 1 },
+  },
+  {
+    name: "Gentle Flow",
+    seam1Angle: 21,
+    seam2Angle: 25,
+    rotation: { x: 9, y: 8, z: 0 },
+  },
+];
+
+// Improved seeded random number generator with better distribution
 function seededRandom(seed: string) {
-  let hash = 0;
+  // Use a more complex hashing algorithm for better distribution
+  let hash1 = 0x811c9dc5; // FNV offset basis
+  let hash2 = 0;
+
+  // FNV-1a hash for first pass
   for (let i = 0; i < seed.length; i++) {
     const char = seed.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash; // Convert to 32-bit integer
+    hash1 ^= char;
+    hash1 = Math.imul(hash1, 0x01000193); // FNV prime
+    hash2 = hash2 * 31 + char; // Secondary hash
   }
-  const x = Math.sin(hash) * 10000;
-  return x - Math.floor(x);
+
+  // Combine hashes for better distribution
+  const combined = hash1 ^ hash2;
+
+  // Use both sin and modulo for better pseudo-randomness
+  const x = Math.sin(combined * 9.9) * 10000;
+  const y = (combined * 2654435761) % 2147483647; // Knuth's multiplicative method
+
+  // Combine both methods
+  const result = (x - Math.floor(x) + y / 2147483647) / 2;
+  return result - Math.floor(result);
 }
 
 // Generate random values within a range using seed
@@ -276,33 +363,43 @@ function randomInRange(seed: string, min: number, max: number, offset: number = 
 export default function EventEntryCard({
   event,
   forceAngles,
-  foldAngleBounds = { min: 15, max: 25 },
+  presetIndex,
+  seedId,
+  foldAngleBounds = { min: 20, max: 30 },
   rotationBounds = {
-    minX: 10,
-    maxX: 20,
-    minY: 10,
-    maxY: 25,
-    minZ: -5,
-    maxZ: 5,
+    minX: 5,
+    maxX: 12,
+    minY: 5,
+    maxY: 15,
+    minZ: -2,
+    maxZ: 2,
   },
 }: Props) {
   let seam1Angle, seam2Angle, rotationX, rotationY, rotationZ;
 
   if (forceAngles) {
-    // Use forced angles for testing
+    // Priority 1: Use forced angles for precise control
     seam1Angle = forceAngles.seam1Angle;
     seam2Angle = forceAngles.seam2Angle;
     rotationX = forceAngles.totalRotation.x;
     rotationY = forceAngles.totalRotation.y;
     rotationZ = forceAngles.totalRotation.z;
+  } else if (presetIndex !== undefined) {
+    // Priority 2: Use preset based on index
+    const preset = FOLD_PRESETS[presetIndex % FOLD_PRESETS.length];
+    seam1Angle = preset.seam1Angle;
+    seam2Angle = preset.seam2Angle;
+    rotationX = preset.rotation.x;
+    rotationY = preset.rotation.y;
+    rotationZ = preset.rotation.z;
   } else {
-    // Use event ID as seed for consistent randomization
-    const seed = event.id;
+    // Priority 3: Use seed for randomization (either provided seedId or event.id)
+    const seed = seedId || event.id;
 
-    // Ensure alternating fold pattern
-    const firstFoldUp = seededRandom(seed + "firstDir") > 0.5;
-    const seam1Direction = firstFoldUp ? 1 : -1;
-    const seam2Direction = firstFoldUp ? -1 : 1; // Always opposite of seam1
+    // Enforce corner-to-corner alternating pattern: up-down-up-down OR down-up-down-up
+    const startWithUp = seededRandom(seed + "pattern") > 0.5;
+    const seam1Direction = startWithUp ? -1 : 1; // Both seams same direction
+    const seam2Direction = startWithUp ? -1 : 1; // Creates the alternating corner pattern
 
     // Randomize fold angles with direction using bounds
     seam1Angle = seam1Direction * randomInRange(seed, foldAngleBounds.min, foldAngleBounds.max, 1);
@@ -321,12 +418,10 @@ export default function EventEntryCard({
       seam2Angle={seam2Angle}
       totalRotation={{ x: rotationX, y: rotationY, z: rotationZ }}
     >
-      <EntryCardInner className="col-span-1 flex items-center justify-center relative">
-        Test
-      </EntryCardInner>
+      <EntryCardInner className="col-span-1 flex items-center justify-center ">Test</EntryCardInner>
       <EntryCardInner
         cut
-        className="col-span-5 relative"
+        className="col-span-5 border-x-1 border-dashed border-base-300"
         header={{
           text: "【ＡＲＲＩＶＡＬ】",
           description: "再入国入国記録 DISEMBARKATION CARD FOR REENTRANT ②",
@@ -341,7 +436,7 @@ export default function EventEntryCard({
       </EntryCardInner>
       <EntryCardInner
         cut
-        className="col-span-6 border-none relative"
+        className="col-span-6 "
         header={{
           text: "【ＤＥＰＡＲＴＵＲＥ】",
           description: "再入国出国記録 EMBARKATION CARD FOR REENTRANT ①",
