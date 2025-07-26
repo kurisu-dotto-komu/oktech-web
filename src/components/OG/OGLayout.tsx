@@ -20,7 +20,7 @@ export default function OGLayout({
         display: "flex",
         background: gradient,
         position: "relative",
-        fontFamily: "Inter, Noto Sans JP, sans-serif",
+        fontFamily: "Inter, Nobile, sans-serif",
       }}
     >
       <div
