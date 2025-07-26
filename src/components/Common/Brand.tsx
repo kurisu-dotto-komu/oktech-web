@@ -30,7 +30,7 @@ export default function Brand({ fullText = false, big = false, neutral = false }
     <div className="flex gap-4 flex-col md:flex-row md:items-center">
       <div className="flex items-center gap-3">
         <OKTechLogoRound className={logoSize} svgClass={clsx(neutral && "neutral")} />
-        <OKTechLogoText className="w-28 h-auto " svgClass={clsx(neutral && "neutral")} />
+        <OKTechLogoText className="w-28 h-auto " svgClass={clsx((true || neutral) && "neutral")} />
       </div>
       {fullText && <span className="text-sm font-header">{longText}</span>}
     </div>
