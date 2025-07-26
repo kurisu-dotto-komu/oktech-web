@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { EventEnriched } from "@/content";
 import clsx from "clsx";
 
@@ -82,12 +82,13 @@ function EntryCardInner({
 }) {
   return (
     <div className={clsx("bg-base-100 relative overflow-hidden", className)} style={style}>
-      {shade > 0 && (
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-500 ease-out-in group-hover:!opacity-0"
-          style={{ backgroundColor: `rgba(0, 0, 0, ${shade})` }}
-        />
-      )}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-500 ease-out-in group-hover:!opacity-0"
+        style={{
+          backgroundColor: `rgba(0, 0, 0, ${shade})`,
+          opacity: shade > 0 ? 1 : 0,
+        }}
+      />
       <div className="flex flex-col  h-full relative">
         {header && <EntryCardHeader {...header} />}
         <div className="flex flex-grow flex-col gap-2 mx-2 mb-1.5">{children}</div>
@@ -103,9 +104,17 @@ interface FoldedGridProps {
   seam2Angle: number;
   shadow?: boolean;
   totalRotation?: { x: number; y: number; z: number };
+  isAutoHovered?: boolean;
 }
 
-function FoldedGrid({ children, seam1Angle, seam2Angle, shadow, totalRotation }: FoldedGridProps) {
+function FoldedGrid({
+  children,
+  seam1Angle,
+  seam2Angle,
+  shadow,
+  totalRotation,
+  isAutoHovered,
+}: FoldedGridProps) {
   const childArray = React.Children.toArray(children);
 
   return (
@@ -224,8 +233,8 @@ function FoldedGrid({ children, seam1Angle, seam2Angle, shadow, totalRotation }:
 
         return React.cloneElement(element, {
           style: { ...(element.props.style || {}), ...foldStyle },
-          className: `${newClassName} ${shadow ? "shadow-lg select-none" : ""} ${cutClasses} transition-all duration-500 ease-out-in group-hover:!transform-none`,
-          shade: shadow ? 0 : shadeOpacity,
+          className: `${newClassName} ${shadow ? "shadow-lg select-none" : ""} ${cutClasses} transition-all duration-500 ease-out-in group-hover:!transform-none ${isAutoHovered ? "!transform-none" : ""}`,
+          shade: shadow || isAutoHovered ? 0 : shadeOpacity,
         });
       })}
     </div>
@@ -242,6 +251,10 @@ interface FoldedCardLayoutProps {
     z: number;
   };
   perspectiveDistance?: number;
+  autoHoverRange?: {
+    start: number; // percentage (0-100)
+    end: number; // percentage (0-100)
+  };
 }
 
 function FoldedCardLayout({
@@ -250,36 +263,90 @@ function FoldedCardLayout({
   seam2Angle = 30,
   totalRotation = { x: 5, y: -10, z: 0 },
   perspectiveDistance = 800,
+  autoHoverRange = { start: 10, end: 30 },
 }: FoldedCardLayoutProps) {
+  const [isAutoHovered, setIsAutoHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!cardRef.current) return;
+
+      const rect = cardRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const cardCenter = rect.top + rect.height / 2;
+
+      // Check if card center is in the configured viewport range
+      const startPosition = viewportHeight * (autoHoverRange.start / 100);
+      const endPosition = viewportHeight * (autoHoverRange.end / 100);
+      const isInTargetZone = cardCenter >= startPosition && cardCenter <= endPosition;
+
+      setIsAutoHovered(isInTargetZone);
+    };
+
+    // Initial check
+    handleScroll();
+
+    // Add scroll listener
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [autoHoverRange]);
+
   return (
     <div
-      className="relative w-full group"
+      ref={cardRef}
+      className={clsx("relative w-full group", { "mobile-hover": isAutoHovered })}
       style={{
         perspective: `${perspectiveDistance}px`,
         perspectiveOrigin: "50% 50%",
       }}
     >
       <div
-        className="relative transition-transform duration-500 ease-out-in group-hover:!transform-none"
+        className={clsx(
+          "relative transition-transform duration-500 ease-out-in",
+          "group-hover:!transform-none",
+          isAutoHovered && "!transform-none",
+        )}
         style={{
           transformStyle: "preserve-3d",
-          transform: `rotateX(${totalRotation.x}deg) rotateY(${totalRotation.y}deg) rotateZ(${totalRotation.z}deg)`,
+          transform: isAutoHovered
+            ? "none"
+            : `rotateX(${totalRotation.x}deg) rotateY(${totalRotation.y}deg) rotateZ(${totalRotation.z}deg)`,
         }}
       >
         {/* Main content with fold transforms */}
         <div className="relative z-20" style={{ transformStyle: "preserve-3d" }}>
-          <FoldedGrid seam1Angle={seam1Angle} seam2Angle={seam2Angle} totalRotation={totalRotation}>
+          <FoldedGrid
+            seam1Angle={seam1Angle}
+            seam2Angle={seam2Angle}
+            totalRotation={totalRotation}
+            isAutoHovered={isAutoHovered}
+          >
             {children}
           </FoldedGrid>
         </div>
         {/* Shadow layer */}
         <div
-          className="absolute z-0 inset-0 transition-transform duration-500 ease-out-in group-hover:translate-y-0 group-hover:translate-x-0 "
+          className={clsx(
+            "absolute z-0 inset-0 transition-transform duration-500 ease-out-in",
+            "group-hover:translate-y-0 group-hover:translate-x-0",
+            isAutoHovered && "translate-y-0 translate-x-0",
+          )}
           style={{
             transformStyle: "preserve-3d",
           }}
         >
-          <FoldedGrid seam1Angle={seam1Angle} seam2Angle={seam2Angle} shadow>
+          <FoldedGrid
+            seam1Angle={seam1Angle}
+            seam2Angle={seam2Angle}
+            shadow
+            isAutoHovered={isAutoHovered}
+          >
             {children}
           </FoldedGrid>
         </div>
