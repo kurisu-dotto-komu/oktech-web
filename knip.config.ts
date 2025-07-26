@@ -6,7 +6,6 @@ const config: KnipConfig = {
     "src/pages/**/*.{astro,tsx,ts}",
     "src/layouts/**/*.{astro,tsx,ts}",
     "scripts/**/*.{ts,js}",
-    ".storybook/*.{ts,js}",
   ],
 
   // Project files to analyze
@@ -15,8 +14,6 @@ const config: KnipConfig = {
     "scripts/**/*.{ts,js}",
     "!src/**/*.test.{ts,tsx}",
     "!src/**/*.spec.{ts,tsx}",
-    "src/**/*.stories.{ts,tsx}",
-    ".storybook/**/*.{ts,js}",
   ],
 
   // Astro plugin configuration
@@ -54,8 +51,6 @@ const config: KnipConfig = {
     "daisyui",
     // Tailwind is used via Vite plugin
     "tailwindcss",
-    // @storybook/react types are provided by @storybook/react-vite
-    "@storybook/react",
   ],
 
   // Ignore specific exports (common false positives)
