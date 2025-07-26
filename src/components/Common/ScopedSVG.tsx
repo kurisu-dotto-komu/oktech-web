@@ -43,6 +43,10 @@ export default function ScopedSVG({ svg, className, svgClass }: ScopedSVGProps) 
             .split(",")
             .map((sel: string) => {
               const trimmedSel = sel.trim();
+              // dont trim keyframe definitions
+              if (["@keyframes", "from", "to"].some((prefix) => trimmedSel.startsWith(prefix))) {
+                return trimmedSel;
+              }
               // If selector is just "svg" or starts with "svg." or "svg[" or "svg:", replace with svg#scopedId
               if (/^svg(\.|:|#|\[|$)/.test(trimmedSel)) {
                 return trimmedSel.replace(/^svg/, `svg#${scopedId}`);
