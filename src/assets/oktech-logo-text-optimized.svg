@@ -2,31 +2,31 @@
   <defs>
     <style>
       :root {
-        --accent-fallback: oklch(0.757 0.120 173.7)
-        --base-fallback: oklch(23.574% 0.066 313.189)
+        --accent-fallback: oklch(0.757 0.120 173.7);
+        --base-fallback: oklch(23.574% 0.066 313.189);
       }
       @media (prefers-color-scheme: dark) {
         :root {
-          --accent-fallback: oklch(77.48% 0.204 60.62)
-          --base-fallback: oklch(84.955% 0 0)
+          --accent-fallback: oklch(77.48% 0.204 60.62);
+          --base-fallback: oklch(84.955% 0 0);
         }
       }
       svg { 
         filter: drop-shadow(0 4px 12px rgb(0 0 0 / 0.25));
-        --accent-color: var(--color-primary, var(--accent-fallback));
-        --base-color: var(--color-base-content, var(--base-fallback));
+        --accent-color: var(--color-primary);
+        --base-color: var(--color-base-content);
       }
       svg.neutral {
         --accent-color: var(--base-color);
       }
       .accent-top {
-        stop-color: color-mix(in srgb, var(--accent-color) 85%, white 30%); 
+        stop-color: color-mix(in srgb, var(--accent-color, var(--accent-fallback)) 85%, white 30%); 
       }
       .accent-middle { 
-        stop-color: var(--accent-color); 
+        stop-color: var(--accent-color, var(--accent-fallback)); 
       }
       .accent-bottom { 
-        stop-color: color-mix(in srgb, var(--accent-color) 85%, black 30%);
+        stop-color: color-mix(in srgb, var(--accent-color, var(--accent-fallback)) 85%, black 30%);
       }
       .accent { fill: url(#accentGradient); }
 
