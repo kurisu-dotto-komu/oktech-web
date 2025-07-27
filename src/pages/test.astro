@@ -74,7 +74,7 @@ const inProgressEvent = events[0]
       </div>
 
       <h2 class="text-2xl font-bold">Preset Combinations</h2>
-      <!-- <p class="text-sm text-base-content/70">
+      <p class="text-sm text-base-content/70">
         All {FOLD_PRESETS.length} predefined presets
       </p>
 
@@ -85,7 +85,7 @@ const inProgressEvent = events[0]
               <h3 class="font-bold mb-2">Preset {index}</h3>
               <p class="text-xs mb-4">
                 seam1: {preset[0]}°, seam2: {preset[1]}°, rotX: {preset[2]}°, rotY: {preset[3]}°,
-                rotZ: {preset[4]}°
+                rotZ: {preset[4]}°, zoom: {preset[5]}
               </p>
               <div class="w-full mx-auto">
                 <EventEntryCard event={events[0]} client:load presetIndex={index} />
@@ -93,7 +93,7 @@ const inProgressEvent = events[0]
             </div>
           ))
         }
-      </div> -->
+      </div>
 
       <!-- <h2 class="text-2xl font-bold">Random Seed Examples</h2>
       <p class="text-sm text-base-content/70">

@@ -7,7 +7,7 @@ interface UseScrollHotspotOptions {
 
 export function useScrollHotspot(options: UseScrollHotspotOptions = { start: 10, end: 30 }) {
   const [isInHotspot, setIsInHotspot] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const elementRef = useRef<HTMLDivElement | HTMLAnchorElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {

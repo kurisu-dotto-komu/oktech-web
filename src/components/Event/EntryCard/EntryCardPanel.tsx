@@ -14,11 +14,14 @@ export default function EntryCardPanel({
   style?: React.CSSProperties;
 }) {
   return (
-    <div className={clsx("bg-base-100 relative overflow-hidden", className)} style={style}>
+    <div
+      className={clsx("bg-base-200 group-hover:bg-base-100  relative overflow-hidden", className)}
+      style={style}
+    >
       <div className="flex flex-col w-full h-full relative">{children}</div>
       {/* Cut corner effect */}
       {cut && (
-        <div className="absolute top-0 left-0 w-0 h-0 border-t-[30px] border-t-base-200 border-r-[30px] border-r-transparent z-10" />
+        <div className="absolute top-0 left-0 w-0 h-0 border-t-[30px] border-t-base-300 border-r-[30px] border-r-transparent z-10" />
       )}
       {/* Shade overlay */}
       <div

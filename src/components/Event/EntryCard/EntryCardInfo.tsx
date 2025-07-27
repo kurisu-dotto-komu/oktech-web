@@ -40,9 +40,9 @@ export default function EntryCardInfo({ event }: { event: EventEnriched }) {
         text={"【INFORMATION】"}
       />
       <div className="h-full px-4 overflow-hidden pb-2">
-        <h3 className="font-bold text-xl my-3">{event.data.title}</h3>
+        <h3 className="font-bold text-xl xl:text-2xl my-3">{event.data.title}</h3>
 
-        <div className="space-y-2 text-sm">
+        <div className="flex flex-col gap-2 xl:gap-3 text-sm xl:text-base">
           {/* Date and Time */}
           <InfoItem icon={LuCalendar}>
             <span className="truncate">{formatDate(event.data.dateTime, "long")}</span>

@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useMemo, type Ref } from "react";
 import clsx from "clsx";
 import { seededRandom, randomInRange } from "@/utils/random";
 import { useScrollHotspot } from "@/utils/useScrollHotspot";
 import EntryCardFold from "./EntryCardFold";
+import LinkReact from "@/components/Common/LinkReact";
 
 interface FoldedGridProps {
   children: React.ReactNode;
@@ -41,14 +42,14 @@ function FoldedGrid({
   );
 }
 
-// Predefined presets: [seam1Angle, seam2Angle, rotationX, rotationY, rotationZ]
+// Predefined presets: [seam1Angle, seam2Angle, rotationX, rotationY, rotationZ, zoom]
+// zoom: 0 = normal, negative = push back, positive = pull forward
 export const FOLD_PRESETS = [
-  [-22, -26, 10, -12, 1],
-  [24, 28, 8, 11, -2],
-  [-28, -32, 12, -15, 2],
-  [20, 23, 6, 10, -1],
-  [-25, -30, 11, -13, 1],
-  [21, 25, 9, 8, 0],
+  [45, 35, -10, -15, -2, 0],
+  [-45, -35, 10, 25, 1, -1],
+  [-25, -25, -10, 10, -1, -1],
+  [-25, -25, -10, 10, 1, 0],
+  [25, 25, 10, -20, 1, 0],
 ];
 
 export interface AngleCalculationProps {
@@ -56,6 +57,7 @@ export interface AngleCalculationProps {
     seam1Angle: number;
     seam2Angle: number;
     totalRotation: { x: number; y: number; z: number };
+    zoom?: number;
   };
   presetIndex?: number;
   seedId?: string;
@@ -72,6 +74,10 @@ export interface AngleCalculationProps {
     minZ: number;
     maxZ: number;
   };
+  zoomBounds?: {
+    min: number;
+    max: number;
+  };
 }
 
 export interface CalculatedAngles {
@@ -82,6 +88,7 @@ export interface CalculatedAngles {
     y: number;
     z: number;
   };
+  zoom: number;
 }
 
 export function calculateAngles({
@@ -98,6 +105,7 @@ export function calculateAngles({
     minZ: -2,
     maxZ: 2,
   },
+  zoomBounds = { min: -0.3, max: 0.1 },
 }: AngleCalculationProps): CalculatedAngles {
   if (forceAngles) {
     // Priority 1: Use forced angles for precise control
@@ -105,6 +113,7 @@ export function calculateAngles({
       seam1Angle: forceAngles.seam1Angle,
       seam2Angle: forceAngles.seam2Angle,
       totalRotation: forceAngles.totalRotation,
+      zoom: forceAngles.zoom ?? 0,
     };
   } else if (presetIndex !== undefined) {
     // Priority 2: Use preset based on index
@@ -117,6 +126,7 @@ export function calculateAngles({
         y: preset[3],
         z: preset[4],
       },
+      zoom: preset[5],
     };
   } else {
     // Priority 3: Use seed for randomization (either provided seedId or event.id)
@@ -138,6 +148,9 @@ export function calculateAngles({
     const rotationY = randomInRange(seed, rotationBounds.minY, rotationBounds.maxY, 4);
     const rotationZ = randomInRange(seed, rotationBounds.minZ, rotationBounds.maxZ, 5);
 
+    // Randomize zoom using bounds
+    const zoom = randomInRange(seed, zoomBounds.min, zoomBounds.max, 6);
+
     return {
       seam1Angle,
       seam2Angle,
@@ -146,6 +159,7 @@ export function calculateAngles({
         y: rotationY,
         z: rotationZ,
       },
+      zoom,
     };
   }
 }
@@ -167,11 +181,12 @@ export default function EntryCardFolding({
   eventId,
   foldAngleBounds,
   rotationBounds,
+  zoomBounds,
   perspectiveDistance = 800,
   autoHoverRange = { start: 10, end: 30 },
 }: EntryCardFoldingProps) {
   // Memoize angle calculations
-  const { seam1Angle, seam2Angle, totalRotation } = useMemo(
+  const { seam1Angle, seam2Angle, totalRotation, zoom } = useMemo(
     () =>
       calculateAngles({
         forceAngles,
@@ -180,14 +195,16 @@ export default function EntryCardFolding({
         eventId,
         foldAngleBounds,
         rotationBounds,
+        zoomBounds,
       }),
-    [forceAngles, presetIndex, seedId, eventId, foldAngleBounds, rotationBounds],
+    [forceAngles, presetIndex, seedId, eventId, foldAngleBounds, rotationBounds, zoomBounds],
   );
   const { isInHotspot, elementRef: cardRef } = useScrollHotspot(autoHoverRange);
 
   return (
-    <div
-      ref={cardRef}
+    <LinkReact
+      href={`/event/${eventId}`}
+      ref={cardRef as Ref<HTMLAnchorElement>}
       className={clsx("relative w-full group", { "mobile-hover": isInHotspot })}
       style={{
         perspective: `${perspectiveDistance}px`,
@@ -204,7 +221,7 @@ export default function EntryCardFolding({
           transformStyle: "preserve-3d",
           transform: isInHotspot
             ? "none"
-            : `rotateX(${totalRotation.x}deg) rotateY(${totalRotation.y}deg) rotateZ(${totalRotation.z}deg)`,
+            : `translateZ(${zoom * 100}px) rotateX(${totalRotation.x}deg) rotateY(${totalRotation.y}deg) rotateZ(${totalRotation.z}deg)`,
         }}
       >
         {/* Main content with fold transforms */}
@@ -239,6 +256,6 @@ export default function EntryCardFolding({
           </FoldedGrid>
         </div>
       </div>
-    </div>
+    </LinkReact>
   );
 }

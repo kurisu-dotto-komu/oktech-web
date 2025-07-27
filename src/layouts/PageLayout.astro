@@ -6,12 +6,12 @@ import DevInfo from "@/components/Common/DevInfo.tsx";
 ---
 
 <RootLayout {...Astro.props}>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col max-w-screen overflow-x-hidden">
     <header>
       <TopBar client:load />
     </header>
     <!-- mt-16 for sticky header -->
-    <main class="flex-1 mt-16 bg-base-200">
+    <main class="flex-1 mt-16 bg-base-300">
       <slot />
     </main>
     <footer>
