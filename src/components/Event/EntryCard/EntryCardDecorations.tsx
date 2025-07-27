@@ -17,17 +17,17 @@ export function EntryCardFooter({
   bottom: string;
 }) {
   return (
-    <div className="flex gap-2 justify-between select-none">
+    <div className="flex gap-2 justify-between select-none opacity-50">
       <EntryCardOfficial top={top} bottom={bottom} />
-      <div className="text-xs pr-2 opacity-50">{text}</div>
+      <div className="text-xs pr-2">{text}</div>
     </div>
   );
 }
 
 export function EntryCardHeader({ text, description }: { text: string; description: string }) {
   return (
-    <div className="flex flex-col select-none pl-10 pt-1 px-2">
-      <div className="text-xs text-left opacity-50">{description}</div>
+    <div className="flex flex-col select-none pl-10 pt-1 px-2 opacity-50">
+      <div className="text-xs text-left ">{description}</div>
       <h3 className="text-lg text-right font-mono text-primary font-bold">{text}</h3>
     </div>
   );
