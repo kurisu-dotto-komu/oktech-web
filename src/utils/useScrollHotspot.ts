@@ -18,6 +18,12 @@ export function useScrollHotspot(
     const onlyMobile = options.onlyMobile ?? true;
     const isMobileDevice = isMobile();
 
+    // Skip if onlyMobile is true and we're not on mobile
+    if (onlyMobile && !isMobileDevice) {
+      setIsInHotspot(false);
+      return;
+    }
+
     const handleScroll = () => {
       if (!elementRef.current) return;
 
