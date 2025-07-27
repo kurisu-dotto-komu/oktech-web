@@ -2,83 +2,102 @@
 import Container from "@/components/Common/Container";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { getEvents } from "@/content";
-import EventEntryCard from "@/components/Event/EventEntryCard";
+import EventEntryCard from "@/components/Event/EntryCard/EntryCard";
+import { FOLD_PRESETS } from "@/components/Event/EntryCard/EntryCardFolding";
 
 // Get all events and select some random ones from the past
 const allEvents = await getEvents();
 const selectedIndices = [4, 8, 12, 16, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]; // 14 events for variety
 const events = selectedIndices.map((index) => allEvents[index]).filter(Boolean); // Filter out any undefined if index is out of bounds
+
+// Find the future test events by their meetupId
+const futureEvent1 = allEvents[1];
+
+// Create an in-progress event by modifying an existing event
+const inProgressEvent = events[0]
+  ? {
+      ...events[0],
+      data: {
+        ...events[0].data,
+        dateTime: new Date(Date.now() - 60 * 60 * 1000), // Started 1 hour ago
+        duration: 180, // 3 hour event
+      },
+    }
+  : null;
 ---
 
 <PageLayout>
   <Container>
     <div class="py-10 space-y-10">
-      <h2 class="text-2xl font-bold">Preset Combinations</h2>
+      <h2 class="text-2xl font-bold">Event Status Examples</h2>
       <p class="text-sm text-base-content/70">
-        All 6 predefined presets alternating between up-down and down-up patterns
+        Demonstrating countdown for upcoming events and count up for in-progress/completed events
       </p>
 
       <div class="space-y-6">
-        <div class="border-2 border-primary p-4 rounded">
-          <h3 class="font-bold mb-2">Preset 0: Classic Trifold</h3>
-          <p class="text-xs mb-4">Pattern: ↑↓↑↓</p>
-          <p class="text-xs mb-4">seam1: -22°, seam2: -26°, rotX: +10°, rotY: -12°, rotZ: +1°</p>
-          <div class="w-full mx-auto">
-            <EventEntryCard event={events[0]} client:load presetIndex={0} />
-          </div>
-        </div>
+        {
+          futureEvent1 && (
+            <div class="border-2 border-primary p-4 rounded">
+              <h3 class="font-bold mb-2">Future Test Event 1 (999999999)</h3>
+              <p class="text-xs mb-4">Event: {futureEvent1.data.title}</p>
+              <p class="text-xs mb-4">Event starts: {futureEvent1.data.dateTime}</p>
+              <p class="text-xs mb-4">
+                Status: Counting down days, hours, minutes and seconds to event start
+              </p>
+              <div class="w-full mx-auto">
+                <EventEntryCard event={futureEvent1} client:load />
+              </div>
+            </div>
+          )
+        }
 
+        {
+          inProgressEvent && (
+            <div class="border-2 border-primary p-4 rounded">
+              <h3 class="font-bold mb-2">In Progress Event (Count Up)</h3>
+              <p class="text-xs mb-4">Event started: 1 hour ago</p>
+              <p class="text-xs mb-4">Status: Counting up from start time (3 hour duration)</p>
+              <div class="w-full mx-auto">
+                <EventEntryCard event={inProgressEvent} client:load />
+              </div>
+            </div>
+          )
+        }
         <div class="border-2 border-primary p-4 rounded">
-          <h3 class="font-bold mb-2">Preset 1: Dynamic Wave</h3>
-          <p class="text-xs mb-4">Pattern: ↓↑↓↑</p>
-          <p class="text-xs mb-4">seam1: +24°, seam2: +28°, rotX: +8°, rotY: +11°, rotZ: -2°</p>
+          <h3 class="font-bold mb-2">Completed Event (Count Up)</h3>
+          <p class="text-xs mb-4">Event date: {events[5]?.data.dateTime || "Past event"}</p>
+          <p class="text-xs mb-4">Status: Counting up total time since event started</p>
           <div class="w-full mx-auto">
-            <EventEntryCard event={events[0]} client:load presetIndex={1} />
-          </div>
-        </div>
-
-        <div class="border-2 border-primary p-4 rounded">
-          <h3 class="font-bold mb-2">Preset 2: Dramatic Fan</h3>
-          <p class="text-xs mb-4">Pattern: ↑↓↑↓</p>
-          <p class="text-xs mb-4">seam1: -28°, seam2: -32°, rotX: +12°, rotY: -15°, rotZ: +2°</p>
-          <div class="w-full mx-auto">
-            <EventEntryCard event={events[0]} client:load presetIndex={2} />
-          </div>
-        </div>
-
-        <div class="border-2 border-primary p-4 rounded">
-          <h3 class="font-bold mb-2">Preset 3: Subtle Twist</h3>
-          <p class="text-xs mb-4">Pattern: ↓↑↓↑</p>
-          <p class="text-xs mb-4">seam1: +20°, seam2: +23°, rotX: +6°, rotY: +10°, rotZ: -1°</p>
-          <div class="w-full mx-auto">
-            <EventEntryCard event={events[0]} client:load presetIndex={3} />
-          </div>
-        </div>
-
-        <div class="border-2 border-primary p-4 rounded">
-          <h3 class="font-bold mb-2">Preset 4: Bold Statement</h3>
-          <p class="text-xs mb-4">Pattern: ↑↓↑↓</p>
-          <p class="text-xs mb-4">seam1: -25°, seam2: -30°, rotX: +11°, rotY: -13°, rotZ: +1°</p>
-          <div class="w-full mx-auto">
-            <EventEntryCard event={events[0]} client:load presetIndex={4} />
-          </div>
-        </div>
-
-        <div class="border-2 border-primary p-4 rounded">
-          <h3 class="font-bold mb-2">Preset 5: Gentle Flow</h3>
-          <p class="text-xs mb-4">Pattern: ↓↑↓↑</p>
-          <p class="text-xs mb-4">seam1: +21°, seam2: +25°, rotX: +9°, rotY: +8°, rotZ: 0°</p>
-          <div class="w-full mx-auto">
-            <EventEntryCard event={events[0]} client:load presetIndex={5} />
+            {events[5] && <EventEntryCard event={events[5]} client:load />}
           </div>
         </div>
       </div>
 
-      <hr class="my-12 border-base-300" />
+      <h2 class="text-2xl font-bold">Preset Combinations</h2>
+      <!-- <p class="text-sm text-base-content/70">
+        All {FOLD_PRESETS.length} predefined presets
+      </p>
 
-      <h2 class="text-2xl font-bold">Random Seed Examples</h2>
+      <div class="space-y-6">
+        {
+          FOLD_PRESETS.map((preset, index) => (
+            <div class="border-2 border-primary p-4 rounded">
+              <h3 class="font-bold mb-2">Preset {index}</h3>
+              <p class="text-xs mb-4">
+                seam1: {preset[0]}°, seam2: {preset[1]}°, rotX: {preset[2]}°, rotY: {preset[3]}°,
+                rotZ: {preset[4]}°
+              </p>
+              <div class="w-full mx-auto">
+                <EventEntryCard event={events[0]} client:load presetIndex={index} />
+              </div>
+            </div>
+          ))
+        }
+      </div> -->
+
+      <!-- <h2 class="text-2xl font-bold">Random Seed Examples</h2>
       <p class="text-sm text-base-content/70">
-        Different seeds showing both up-down-up-down and down-up-down-up patterns
+        Different seeds generating unique angle combinations
       </p>
       <div class="space-y-4">
         <div class="border-2 border-secondary p-4 rounded">
@@ -117,14 +136,12 @@ const events = selectedIndices.map((index) => allEvents[index]).filter(Boolean);
             <EventEntryCard event={events[1]} client:load seedId="hackathon!" />
           </div>
         </div>
-      </div>
-
-      <hr class="my-12 border-base-300" />
+      </div> -->
 
       <h2 class="text-2xl font-bold">Event Entry Cards</h2>
       <div class="space-y-12">
         {
-          events.slice(5).map((event, index) => (
+          events.map((event, index) => (
             <div class="w-full  mx-auto">
               <EventEntryCard event={event} client:load />
             </div>
