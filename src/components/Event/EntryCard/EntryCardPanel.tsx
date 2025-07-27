@@ -1,3 +1,4 @@
+import React from "react";
 import clsx from "clsx";
 
 export default function EntryCardPanel({
@@ -5,12 +6,14 @@ export default function EntryCardPanel({
   className,
   cut = false,
   shade = 0,
+  shadow = false,
   style,
 }: {
   children: React.ReactNode;
   className?: string;
   cut?: boolean;
   shade?: number;
+  shadow?: boolean;
   style?: React.CSSProperties;
 }) {
   return (
@@ -18,7 +21,16 @@ export default function EntryCardPanel({
       className={clsx("bg-base-200 group-hover:bg-base-100  relative overflow-hidden", className)}
       style={style}
     >
-      <div className="flex flex-col w-full h-full relative">{children}</div>
+      <div className="flex flex-col w-full h-full relative">
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child as React.ReactElement<{ shadow?: boolean }>, {
+              shadow,
+            });
+          }
+          return child;
+        })}
+      </div>
       {/* Cut corner effect */}
       {cut && (
         <div className="absolute top-0 left-0 w-0 h-0 border-t-[30px] border-t-base-300 border-r-[30px] border-r-transparent z-10" />

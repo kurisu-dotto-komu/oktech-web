@@ -1,7 +1,13 @@
 import type { EventEnriched } from "@/content";
 import { EntryCardFooter, EntryCardHeader } from "./EntryCardDecorations";
 
-export default function EntryCardImage({ event }: { event: EventEnriched }) {
+export default function EntryCardImage({
+  event,
+  shadow = false,
+}: {
+  event: EventEnriched;
+  shadow?: boolean;
+}) {
   return (
     <>
       <EntryCardHeader
@@ -15,6 +21,7 @@ export default function EntryCardImage({ event }: { event: EventEnriched }) {
           className="w-full h-full aspect-video object-cover rounded-md border border-dashed border-base-content/20"
           width={512}
           height={512}
+          style={shadow ? undefined : { viewTransitionName: `event-image-${event.id}` }}
         />
       </div>
       <EntryCardFooter

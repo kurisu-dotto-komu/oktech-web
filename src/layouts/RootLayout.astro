@@ -59,6 +59,51 @@ const { title, ...seoProps } = Astro.props;
 
       // Reapply theme after Astro page swaps
       document.addEventListener("astro:after-swap", applyTheme);
+
+      // TODO clean this up...
+      // Track navigation direction for view transitions
+      document.addEventListener("astro:before-preparation", (e) => {
+        const currentPath = window.location.pathname;
+        const newPath = e.to.pathname;
+
+        // Remove base path if it exists
+        const basePath = document.querySelector("base")?.getAttribute("href") || "";
+        const cleanCurrentPath = currentPath.replace(basePath, "").replace(/\/$/, "") || "/";
+        const cleanNewPath = newPath.replace(basePath, "").replace(/\/$/, "") || "/";
+
+        // Check if we're on an event detail page
+        const isOnEventPage = /^\/event\/[^\/]+$/.test(cleanCurrentPath);
+        const isGoingToEventPage = /^\/event\/[^\/]+$/.test(cleanNewPath);
+        const isGoingToHome = cleanNewPath === "/" || cleanNewPath === "";
+        const isGoingToEvents = cleanNewPath.includes("/events");
+
+        // Determine navigation direction
+        if (!isOnEventPage && isGoingToEventPage) {
+          // Going TO an event page from somewhere else - forward
+          document.documentElement.setAttribute("data-nav-direction", "forward");
+        } else if (isOnEventPage && (isGoingToHome || isGoingToEvents)) {
+          // Going FROM an event page to home or events - backward
+          document.documentElement.setAttribute("data-nav-direction", "backward");
+
+          // Also disable view-transition-name on all event images to prevent transition
+          document
+            .querySelectorAll('img[style*="view-transition-name: event-image"]')
+            .forEach((img) => {
+              img.style.viewTransitionName = "none";
+            });
+        } else {
+          // Any other navigation - no transition
+          document.documentElement.removeAttribute("data-nav-direction");
+        }
+      });
+
+      // Clean up after transition completes
+      document.addEventListener("astro:after-swap", () => {
+        // Small delay to ensure transition has completed
+        setTimeout(() => {
+          document.documentElement.removeAttribute("data-nav-direction");
+        }, 100);
+      });
     </script>
     <ClientRouter />
   </head>

@@ -118,6 +118,7 @@ export default function EntryCardFold({
     style?: React.CSSProperties;
     className?: string;
     shade?: number;
+    shadow?: boolean;
   }>;
 
   // Remove col-span classes since we're using flex
@@ -133,5 +134,6 @@ export default function EntryCardFold({
       isAutoHovered && "!transform-none auto-hover",
     ),
     shade: shadow ? 0 : shadeOpacity,
+    shadow: shadow,
   });
 }
