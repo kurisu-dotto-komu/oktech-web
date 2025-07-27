@@ -6,7 +6,7 @@ test.describe("Static Routes", () => {
   test("Homepage loads with correct title", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    await expect(page).toHaveTitle("OKTech - Osaka Kansai Tech Meetup Group");
+    await expect(page).toHaveTitle("OKTech - Osaka Kyoto Tech Meetup Group");
     await expect(page.locator("h1").first()).toContainText("Welcome to OKTech");
   });
 

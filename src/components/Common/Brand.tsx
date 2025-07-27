@@ -10,9 +10,9 @@ interface BrandProps {
 }
 
 export default function Brand({ fullText = false, big = false, neutral = false }: BrandProps) {
-  const logoSize = big ? "w-80 h-80" : "w-12 h-12";
-  const textSize = big ? "w-90" : "w-28 h-auto";
-  const longText = "Osaka Kansai Technology Meetup Group";
+  const logoSize = big ? "w-60 h-60 sm:w-80 sm:h-80" : "w-12 h-12";
+  const textSize = big ? "w-80 sm:w-90" : "w-28 h-auto";
+  const longText = "Osaka Kyoto Technology Meetup Group";
 
   if (big) {
     return (

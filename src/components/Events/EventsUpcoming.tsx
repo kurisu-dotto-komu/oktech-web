@@ -1,4 +1,3 @@
-import Countdown from "@/components/Common/Countdown";
 import EntryCard from "@/components/Event/EntryCard/EntryCard";
 import type { EventEnriched } from "@/content";
 
@@ -14,16 +13,12 @@ export default function EventsUpcoming({ events }: EventsUpcomingProps) {
     return null;
   }
 
-  const countdownDate = new Date(nextEvent.data.dateTime);
-
   return (
-    <div className="flex flex-col gap-12 xl:gap-24">
+    <div className="flex flex-col gap-24 xl:gap-32">
       <h2 className="text-center text-3xl">Upcoming Events</h2>
-      <div className="flex flex-col gap-24 xl:gap-32">
-        {futureEvents.map((event, index) => (
-          <EntryCard key={event.id} event={event} presetIndex={index} />
-        ))}
-      </div>
+      {futureEvents.map((event, index) => (
+        <EntryCard key={event.id} event={event} presetIndex={index} />
+      ))}
     </div>
   );
 }

@@ -2,7 +2,7 @@
 export const DEV_MODE = true;
 
 const shortName = "OKTech";
-const longName = "Osaka Kansai Tech Meetup Group";
+const longName = "Osaka Kyoto Tech Meetup Group";
 const name = `${shortName} - ${longName}`;
 
 export const SITE = {

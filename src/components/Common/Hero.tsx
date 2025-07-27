@@ -31,23 +31,10 @@ export default function Hero({
   return (
     <div
       data-testid="hero"
-      className={clsx(
-        "hero",
-        slim ? "" : "min-h-[50vh]",
-        "bg-primary-content text-primary",
-        shader && "relative",
-        className,
-      )}
+      className={clsx("py-20", slim ? "" : "min-h-[50vh]", shader && "relative", className)}
     >
       {shader && <AsanohaShader />}
-      <div className="hero-content px-12 py-20">
-        <div className="text-center flex flex-col gap-16">
-          {title && <h1 className="text-5xl font-bold ">{title}</h1>}
-          {description && <p className="text-2xl text-primary/70 ">{description}</p>}
-          {button && <Button className="btn-xl" {...button} />}
-          {children}
-        </div>
-      </div>
+      <div className="z-10 relative">{children}</div>
     </div>
   );
 }

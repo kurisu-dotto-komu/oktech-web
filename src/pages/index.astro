@@ -16,17 +16,40 @@ const people = await getPeople();
 ---
 
 <PageLayout
-  description="Join the Osaka Kansai Tech Meetup Group (OKTech) - A vibrant community for web developers, designers, and tech enthusiasts. Discover upcoming events, workshops, and networking opportunities in the Kansai region."
+  description="Join the Osaka Kyoto Tech Meetup Group (OKTech) - A vibrant community for web developers, designers, and tech enthusiasts. Discover upcoming events, workshops, and networking opportunities in the Kansai region."
 >
   <Banner />
   <Hero shader client:load>
-    <Brand big client:load />
+    <div class="flex flex-col gap-20">
+      <Brand big />
+      <div class="bg-base-100/50 w-full flex justify-center text-center p-14">
+        <div
+          class="text-base-content max-w-xl text-pretty flex flex-col gap-10 text-lg text-shadow-sm text-shadow-base-100/10"
+        >
+          <h2 class="text-2xl">
+            Welcome to the homepage of <br />Osaka Kyoto Technology Meetup Group
+          </h2>
+          <p>
+            We are a vibrant community of web developers, designers, and tech enthusiasts. We meet
+            regularly to share knowledge, learn new skills, and network with other professionals in
+            the Kansai region.
+          </p>
+          <p class="font-header text-2xl">Come and join us at our next event!</p>
+        </div>
+      </div>
+    </div>
   </Hero>
 
   <Section>
     <EventsUpcoming client:load events={events} />
   </Section>
-  <Section split title="About OKTech" lorem={1} button={{ text: "Learn More", href: "/about" }}>
+  <Section
+    left
+    split
+    title="About OKTech"
+    lorem={1}
+    button={{ text: "Learn More", href: "/about" }}
+  >
     <ImagePlaceholder />
   </Section>
 

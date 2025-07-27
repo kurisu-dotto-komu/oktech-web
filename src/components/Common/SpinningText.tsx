@@ -12,7 +12,7 @@ export default function SpinningText({ text, radius = 100, className = "" }: Spi
   const repeatedText = `${text} • ${text} • `;
 
   // Magic value for letter-spacing - adjust this for perfect fit
-  const letterSpacing = radius * 0.024; // Tweak this multiplier as needed
+  const letterSpacing = radius * 0.026; // Tweak this multiplier as needed
 
   return (
     <svg

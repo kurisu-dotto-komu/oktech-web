@@ -137,7 +137,7 @@ export default function AsanohaShader({ className, showComments }: AsanohaShader
     : SHADER_CONFIG.light.vignetteStrength;
 
   return (
-    <div className={clsx("absolute inset-0 overflow-hidden")}>
+    <div className={clsx("absolute inset-0 overflow-hidden z-0")}>
       {/* Shader layer */}
       <ShaderRenderer
         fragmentShader={asanohaThemedShader}

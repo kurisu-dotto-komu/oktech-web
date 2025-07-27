@@ -3,7 +3,7 @@ import { EntryCardHeader } from "./EntryCardDecorations";
 import { LuCalendar, LuClock, LuMapPin, LuTag, LuBuilding, LuMap } from "react-icons/lu";
 import type { IconType } from "react-icons";
 import type { ReactNode } from "react";
-import { formatDate, formatTime } from "@/utils/formatDate";
+import { formatDate, formatDuration, formatTime, getEndTime } from "@/utils/formatDate";
 
 interface InfoItemProps {
   icon: IconType;
@@ -20,19 +20,6 @@ function InfoItem({ icon: Icon, children }: InfoItemProps) {
 }
 
 export default function EntryCardInfo({ event }: { event: EventEnriched }) {
-  const formatDuration = (minutes?: number) => {
-    if (!minutes) return "N/A";
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
-  };
-
-  const getEndTime = (startDate: Date, durationMinutes?: number) => {
-    if (!durationMinutes) return null;
-    const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
-    return endDate;
-  };
-
   return (
     <>
       <EntryCardHeader
@@ -55,9 +42,8 @@ export default function EntryCardInfo({ event }: { event: EventEnriched }) {
                 <>
                   {" - "}
                   {formatTime(getEndTime(event.data.dateTime, event.data.duration)!)}
-                  <span className="text-base-content/50">
-                    {" "}
-                    ({formatDuration(event.data.duration)})
+                  <span className="text-base-content/50 pl-2">
+                    {formatDuration(event.data.duration)}
                   </span>
                 </>
               )}
