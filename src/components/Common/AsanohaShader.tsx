@@ -90,17 +90,8 @@ export default function AsanohaShader({ className, showComments }: AsanohaShader
 
       const rgb = parseOklchToRgb(primaryColorStr);
       if (rgb) {
-        // console.log("Theme:", isDarkMode ? "dark" : "light");
-        // console.log("Primary color string:", primaryColorStr);
-        // console.log("Calculated RGB:", rgb);
-        // console.log(
-        //   "RGB values:",
-        //   `rgb(${Math.round(rgb.r * 255)}, ${Math.round(rgb.g * 255)}, ${Math.round(rgb.b * 255)})`,
-        // );
         setPrimaryColor(rgb);
       } else {
-        // console.error("Failed to parse primary color:", primaryColorStr);
-        // Fallback color
         setPrimaryColor({ r: 0.3, g: 1.0, b: 0.4 });
       }
     };
