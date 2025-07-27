@@ -19,6 +19,15 @@ DO include:
 - Performance improvements users will notice
 -->
 
+### July 27, 2025
+
+Enhanced event browsing with animated entry cards and visual transitions.
+
+- Added interactive entry cards with 3D fold animations for featured events
+- Implemented smooth view transitions when navigating between event photos
+- Enhanced landing page with auto-focusing event cards
+- Fixed event animation issues with proper shadow handling
+
 ### July 24, 2025
 
 Added interactive visual effects and enhanced event photo viewing.
