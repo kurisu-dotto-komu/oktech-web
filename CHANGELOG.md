@@ -24,9 +24,8 @@ DO include:
 Enhanced event browsing with animated entry cards and visual transitions.
 
 - Added interactive entry cards with 3D fold animations for featured events
-- Implemented smooth view transitions when navigating between event photos
-- Enhanced landing page with auto-focusing event cards
-- Fixed event animation issues with proper shadow handling
+- Implemented view transitions when navigating from landing page to event (from a EntryCard)
+- Updated event filter UI with more compact design
 
 ### July 24, 2025
 
