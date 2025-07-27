@@ -1,34 +1,35 @@
 import { useEventsFilter } from "./EventsFilterProvider";
+import { LuArrowDownWideNarrow, LuArrowUpWideNarrow } from "react-icons/lu";
 
 interface Props {
   "data-testid"?: string;
 }
 
 export default function EventsSortSelector({ "data-testid": dataTestId }: Props = {}) {
-  const { currentFilters, updateFilter, sortOptions } = useEventsFilter();
+  const { currentFilters, updateFilter } = useEventsFilter();
 
-  const handleSortChange = (value: string) => {
-    updateFilter("sort", value as "date-desc" | "date-asc");
+  const toggleSort = () => {
+    const newSort = currentFilters.sort === "date-desc" ? "date-asc" : "date-desc";
+    updateFilter("sort", newSort);
   };
 
+  const isNewestFirst = currentFilters.sort === "date-desc";
+
   return (
-    <div className="form-control">
-      <select
-        className="select select-bordered select-sm"
-        value={currentFilters.sort}
-        onChange={(e) => handleSortChange(e.target.value)}
-        data-testid={dataTestId}
-      >
-        {sortOptions.map((option) => (
-          <option
-            key={option.value}
-            value={option.value}
-            data-testid={`sort-option-${option.value}`}
-          >
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <button
+      type="button"
+      className="btn btn-ghost"
+      onClick={toggleSort}
+      data-testid={dataTestId}
+      aria-label={`Sort by ${isNewestFirst ? "oldest" : "newest"} first`}
+      title={isNewestFirst ? "Newest First" : "Oldest First"}
+    >
+      <span className="hidden sm:inline">{isNewestFirst ? "Newest" : "Oldest"}</span>
+      {isNewestFirst ? (
+        <LuArrowDownWideNarrow className="w-4 h-4" />
+      ) : (
+        <LuArrowUpWideNarrow className="w-4 h-4" />
+      )}
+    </button>
   );
 }

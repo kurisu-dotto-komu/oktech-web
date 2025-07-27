@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import LinkReact from "@/components/Common/LinkReact";
 import { useEventsFilter } from "./EventsFilterProvider";
+import { LuGrid3X3, LuList, LuImage } from "react-icons/lu";
 
 interface EventsViewModeSelectorProps {
   currentView: string;
@@ -30,25 +31,30 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
     const query = queryString ? `?${queryString}` : "";
 
     return [
-      { value: "grid", label: "Grid", href: `/events${query}` },
-      { value: "compact", label: "Compact", href: `/events/compact${query}` },
-      { value: "gallery", label: "Gallery", href: `/events/gallery${query}` },
+      { value: "grid", label: "Grid", icon: LuGrid3X3, href: `/events${query}` },
+      { value: "compact", label: "Compact", icon: LuList, href: `/events/compact${query}` },
+      { value: "gallery", label: "Gallery", icon: LuImage, href: `/events/gallery${query}` },
     ];
   }, [currentFilters]);
 
   return (
-    <div className="flex gap-1">
-      {views.map((view) => (
-        <LinkReact
-          key={view.value}
-          href={view.href}
-          className={`btn btn-sm ${currentView === view.value ? "btn-primary" : "btn-ghost"}`}
-          data-view={view.value}
-          data-testid={`view-mode-${view.value}`}
-        >
-          {view.label}
-        </LinkReact>
-      ))}
+    <div className="join">
+      {views.map((view) => {
+        const Icon = view.icon;
+        return (
+          <LinkReact
+            key={view.value}
+            href={view.href}
+            className={`join-item btn ${currentView === view.value ? "btn-primary" : ""}`}
+            data-view={view.value}
+            data-testid={`view-mode-${view.value}`}
+            aria-label={view.label}
+            title={view.label}
+          >
+            <Icon className="w-4 h-4" />
+          </LinkReact>
+        );
+      })}
     </div>
   );
 }

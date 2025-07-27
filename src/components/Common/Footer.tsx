@@ -18,7 +18,7 @@ const iconMap = {
 
 export default function Footer() {
   return (
-    <footer className="bg-base-300 text-base-content">
+    <footer className="bg-base-200 text-base-content">
       <Container className="flex flex-col py-10 gap-8 sm:gap-4">
         <div className="flex justify-between items-center flex-col sm:flex-row gap-8">
           <nav className="flex gap-1 flex-wrap justify-center -mx-4">

@@ -1,6 +1,5 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
-import Section from "@/components/Common/Section";
 import EventsOrganizer from "@/components/Events/EventsOrganizer";
 import { getEvents } from "@/content";
 
@@ -25,12 +24,7 @@ export async function getStaticPaths() {
 ---
 
 <PageLayout title="Events">
-  <Section className="text-center mb-8">
-    <h1 class="text-4xl font-bold mb-4">Events</h1>
-    <p class="text-lg text-base-content/70">Discover and join our community events</p>
-  </Section>
-
-  <div class="container mx-auto px-4">
+  <div class="py-10">
     <EventsOrganizer events={events} view={view} client:load />
   </div>
 </PageLayout>

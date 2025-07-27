@@ -3,6 +3,7 @@ import { EventFilterProvider } from "@/components/Events/EventsFilterProvider";
 import { EventsFilter } from "@/components/Events/EventsFilter";
 import EventsContainer from "./EventsContainer";
 import { useEventsFilter } from "@/components/Events/EventsFilterProvider";
+import Container from "../Common/Container";
 
 export type EventsOrganizerViews = "grid" | "compact" | "gallery";
 
@@ -17,8 +18,12 @@ function EventsOrganizerInner({
 
   return (
     <>
-      <EventsFilter availableFilters={availableFilters} currentView={view} />
-      <EventsContainer events={events} view={view} />
+      <Container>
+        <EventsFilter availableFilters={availableFilters} currentView={view} />
+      </Container>
+      <Container wide>
+        <EventsContainer events={events} view={view} />
+      </Container>
     </>
   );
 }

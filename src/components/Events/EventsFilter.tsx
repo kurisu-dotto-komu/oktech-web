@@ -1,9 +1,9 @@
 import EventsSearchInput from "./EventsSearchInput";
 import EventsFilterDropdown from "./EventsFilterDropdown";
 import EventsSortSelector from "./EventsSortSelector";
-import EventsActiveFilters from "./EventsActiveFilters";
 import { EventsViewModeSelector } from "./EventsViewModeSelector";
 import type { EventsOrganizerViews } from "./EventsOrganizer";
+import { useEventsFilter } from "./EventsFilterProvider";
 
 interface EventsFilterProps {
   currentView: EventsOrganizerViews;
@@ -14,41 +14,56 @@ interface EventsFilterProps {
 }
 
 export function EventsFilter({ availableFilters, currentView }: EventsFilterProps) {
+  const { currentFilters, clearAllFilters } = useEventsFilter();
+
+  const hasActiveFilters =
+    currentFilters.search || currentFilters.topics.length > 0 || currentFilters.location;
+
   return (
-    <div className="sticky top-0 z-40 bg-base-100 border-b border-base-200 py-4 mb-6">
-      <div className="flex flex-wrap gap-4 items-center">
-        <div className="flex-1 min-w-[200px]">
+    <div>
+      <div className="flex flex-wrap gap-4 items-center justify-between">
+        <div className="flex gap-2 items-center">
           <EventsSearchInput />
+
+          <div className="join">
+            {availableFilters.locations.length > 0 && (
+              <EventsFilterDropdown
+                id="location"
+                label="Location"
+                options={availableFilters.locations}
+                multiple={false}
+                data-testid="location-filter-dropdown"
+              />
+            )}
+
+            {availableFilters.topics.length > 0 && (
+              <EventsFilterDropdown
+                id="topics"
+                label="Topics"
+                options={availableFilters.topics}
+                multiple={true}
+                data-testid="topics-filter-dropdown"
+              />
+            )}
+
+            {hasActiveFilters && (
+              <button
+                type="button"
+                className="btn btn-secondary join-item"
+                onClick={clearAllFilters}
+                data-testid="clear-all-filters"
+              >
+                Clear
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {availableFilters.topics.length > 0 && (
-            <EventsFilterDropdown
-              id="topics"
-              label="Topics"
-              options={availableFilters.topics}
-              multiple={true}
-              data-testid="topics-filter-dropdown"
-            />
-          )}
-
-          {availableFilters.locations.length > 0 && (
-            <EventsFilterDropdown
-              id="location"
-              label="Location"
-              options={availableFilters.locations}
-              multiple={false}
-              data-testid="location-filter-dropdown"
-            />
-          )}
+        <div className="flex gap-2 items-center">
+          <EventsSortSelector data-testid="sort-selector" />
+          <EventsViewModeSelector currentView={currentView} />
         </div>
-
-        <EventsSortSelector data-testid="sort-selector" />
-
-        <EventsViewModeSelector currentView={currentView} />
       </div>
-
-      <EventsActiveFilters />
     </div>
   );
 }

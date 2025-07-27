@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useEventsFilter } from "./EventsFilterProvider";
+import { LuChevronDown } from "react-icons/lu";
 
 interface EventsFilterDropdownProps {
   id: "topics" | "location";
@@ -57,31 +58,33 @@ export default function EventsFilterDropdown({
     clearFilter(id);
   };
 
+  const capitalizeFirst = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
+  const getButtonLabel = () => {
+    if (id === "location" && currentFilters.location) {
+      return capitalizeFirst(currentFilters.location);
+    }
+    if (id === "topics" && currentFilters.topics.length > 0) {
+      return `${label} (${currentFilters.topics.length})`;
+    }
+    return label;
+  };
+
   return (
     <details className="dropdown" ref={dropdownRef} data-testid={dataTestId}>
-      <summary className="btn btn-sm m-1">
-        {label}
-        {selected.length > 0 && (
-          <span className="badge badge-primary badge-sm">{selected.length}</span>
-        )}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-4 h-4"
-        >
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
+      <summary
+        className={`btn whitespace-nowrap join-item ${selected.length > 0 ? "btn-primary" : ""}`}
+      >
+        {getButtonLabel()}
+        <LuChevronDown className="w-4 h-4" />
       </summary>
       <ul className="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 overflow-y-auto">
         {options.map((option) => (
           <li key={option}>
             <label
-              className="label cursor-pointer justify-start gap-2"
+              className="label cursor-pointer justify-start gap-2 "
               data-testid={`${id === "topics" ? "topic" : id}-option`}
             >
               {multiple ? (
@@ -102,26 +105,12 @@ export default function EventsFilterDropdown({
                   onChange={(e) => handleOptionChange(option, e.target.checked)}
                 />
               )}
-              <span className="label-text capitalize">{option}</span>
+              <span className="label-text">
+                {id === "location" ? capitalizeFirst(option) : option}
+              </span>
             </label>
           </li>
         ))}
-        {selected.length > 0 && (
-          <>
-            <li>
-              <hr className="my-1" />
-            </li>
-            <li>
-              <button
-                type="button"
-                className="btn btn-ghost btn-xs btn-block"
-                onClick={handleClear}
-              >
-                Clear
-              </button>
-            </li>
-          </>
-        )}
       </ul>
     </details>
   );
