@@ -17,7 +17,7 @@ export function EntryCardFooter({
   bottom: string;
 }) {
   return (
-    <div className="flex gap-2 justify-between select-none opacity-50">
+    <div className="flex gap-2 justify-between select-none opacity-50 whitespace-nowrap">
       <EntryCardOfficial top={top} bottom={bottom} />
       <div className="text-xs pr-2">{text}</div>
     </div>
@@ -27,8 +27,8 @@ export function EntryCardFooter({
 export function EntryCardHeader({ text, description }: { text: string; description: string }) {
   return (
     <div className="flex flex-col select-none pl-10 pt-1 px-2 opacity-50">
-      <div className="text-xs text-left ">{description}</div>
-      <h3 className="text-lg text-right font-mono text-primary font-bold">{text}</h3>
+      <div className="text-xs text-left whitespace-nowrap">{description}</div>
+      <h3 className="text-lg text-right font-mono text-primary font-bold whitespace-nowrap">{text}</h3>
     </div>
   );
 }

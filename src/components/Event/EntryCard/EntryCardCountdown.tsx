@@ -62,9 +62,9 @@ interface CountdownRowProps {
 
 function CountdownRow({ value, label }: CountdownRowProps) {
   return (
-    <div className="flex flex-col ">
-      <div className="text-2xl  font-mono">{value.toString().padStart(2, "0")}</div>
-      <div className="text-xs text-base-content">{label}</div>
+    <div className="flex flex-col">
+      <div className="text-2xl font-mono">{value.toString().padStart(2, "0")}</div>
+      <div className="text-xs text-base-content whitespace-nowrap">{label}</div>
     </div>
   );
 }
@@ -130,18 +130,24 @@ export default function EntryCardCountdown({ event }: { event: EventEnriched }) 
   const displayTime = status === "upcoming" ? timeLeft : timeElapsed;
 
   return (
-    <div className={`flex flex-col h-full w-full flex-grow gap-2 ${statusInfo.bgStyle}`}>
+    <div
+      className={`flex p-2 md:p-0 md:flex-col h-full w-full flex-grow gap-2 justify-between md:justify-start ${statusInfo.bgStyle}`}
+    >
       <div className={`flex p-2 flex-col ${statusInfo.textStyle}`}>
-        <h3 className="text-md font-bold">{statusInfo.text.jp}</h3>
+        <h3 className="text-base font-bold whitespace-nowrap">{statusInfo.text.jp}</h3>
         <div className="text-xs">{statusInfo.text.en}</div>
       </div>
-      <div className="flex px-2 gap-2 flex-grow flex-col">
-        <CountdownRow value={displayTime.days} label="日 DAYS" />
-        <CountdownRow value={displayTime.hours} label="時 HOURS" />
-        <CountdownRow value={displayTime.minutes} label="分 MINS" />
-        <CountdownRow value={displayTime.seconds} label="秒 SECS" />
+      <div className="flex md:flex-col gap-6 flex-grow">
+        <div className="flex px-2 gap-4 flex-grow md:flex-col justify-end md:justify-start">
+          <CountdownRow value={displayTime.days} label="日 DAYS" />
+          <CountdownRow value={displayTime.hours} label="時 HOURS" />
+          <CountdownRow value={displayTime.minutes} label="分 MINS" />
+          <CountdownRow value={displayTime.seconds} label="秒 SECS" />
+        </div>
+        <div className="flex flex-col justify-center p-2 md:p-0">
+          <EntryCardOfficial top={statusInfo.footer.jp} bottom={statusInfo.footer.en} />
+        </div>
       </div>
-      <EntryCardOfficial top={statusInfo.footer.jp} bottom={statusInfo.footer.en} />
     </div>
   );
 }

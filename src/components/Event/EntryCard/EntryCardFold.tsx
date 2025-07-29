@@ -6,6 +6,8 @@ interface EntryCardFoldProps {
   index: number;
   seam1Angle: number;
   seam2Angle: number;
+  mobileSeam1Angle?: number;
+  mobileSeam2Angle?: number;
   shadow?: boolean;
   totalRotation?: { x: number; y: number; z: number };
   isAutoHovered?: boolean;
@@ -16,6 +18,8 @@ export default function EntryCardFold({
   index,
   seam1Angle,
   seam2Angle,
+  mobileSeam1Angle,
+  mobileSeam2Angle,
   shadow,
   totalRotation,
   isAutoHovered,
@@ -23,29 +27,38 @@ export default function EntryCardFold({
   if (!React.isValidElement(child)) return child;
 
   // Calculate widths based on grid spans
-  const childElement = child as React.ReactElement<{ className?: string }>;
+  const childElement = child as React.ReactElement<{
+    className?: string;
+  }>;
   const spanClass = childElement.props.className?.match(/col-span-(\d+)/)?.[1];
   const span = spanClass ? parseInt(spanClass) : 1;
   const width = `${(span / 12) * 100}%`;
+  const height = `${(span / 12) * 100}%`;
 
   // Determine fold angle for this panel
-  let foldAngle = 0;
-  let transformOrigin = "50% 50%";
+  let foldAngleDesktop = 0;
+  let foldAngleMobile = 0;
+  let transformOriginDesktop = "50% 50%";
+  let transformOriginMobile = "50% 50%";
 
   if (index === 0) {
-    foldAngle = seam1Angle;
-    transformOrigin = "100% 50%"; // right edge
+    foldAngleDesktop = seam1Angle;
+    foldAngleMobile = mobileSeam1Angle || seam1Angle;
+    transformOriginDesktop = "100% 50%"; // right edge for horizontal
+    transformOriginMobile = "50% 100%"; // bottom edge for vertical
   } else if (index === 2) {
-    foldAngle = seam2Angle;
-    transformOrigin = "0% 50%"; // left edge
+    foldAngleDesktop = seam2Angle;
+    foldAngleMobile = mobileSeam2Angle || seam2Angle;
+    transformOriginDesktop = "0% 50%"; // left edge for horizontal
+    transformOriginMobile = "50% 0%"; // top edge for vertical
   }
 
   // Calculate natural shading based on surface orientation
   // Light source from above-right-front for natural lighting
   const lightVector = { x: 0.4, y: -0.7, z: 0.6 }; // Normalized vector
 
-  // Convert angles to radians
-  const panelRotY = (foldAngle * Math.PI) / 180;
+  // Convert angles to radians (use desktop angle for shading calculation)
+  const panelRotY = (foldAngleDesktop * Math.PI) / 180;
   const cardRotX = totalRotation ? (totalRotation.x * Math.PI) / 180 : 0;
   const cardRotY = totalRotation ? (totalRotation.y * Math.PI) / 180 : 0;
 
@@ -106,13 +119,17 @@ export default function EntryCardFold({
   shadeOpacity = Math.max(0.05, Math.min(0.4, shadeOpacity));
 
   // Apply fold transforms based on position
+  // Use CSS custom properties for responsive transforms
   const foldStyle: React.CSSProperties = {
-    transform: `rotateY(${foldAngle}deg)`,
-    transformOrigin,
+    "--fold-angle-desktop": `${foldAngleDesktop}deg`,
+    "--fold-angle-mobile": `${foldAngleMobile}deg`,
+    "--transform-origin-desktop": transformOriginDesktop,
+    "--transform-origin-mobile": transformOriginMobile,
+    "--panel-width": width,
+    "--panel-height": height,
     transformStyle: "preserve-3d" as const,
-    width,
     position: "relative" as const,
-  };
+  } as React.CSSProperties;
 
   const element = child as React.ReactElement<{
     style?: React.CSSProperties;
@@ -128,6 +145,7 @@ export default function EntryCardFold({
     style: { ...(element.props.style || {}), ...foldStyle },
     className: clsx(
       newClassName,
+      "entry-card-panel",
       "transition-all duration-500 ease-out-in",
       "group-hover:!transform-none",
       shadow && "shadow-lg select-none",
