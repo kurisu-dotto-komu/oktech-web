@@ -196,13 +196,68 @@ export function calculateAngles({
   }
 }
 
+interface TransformedLayerProps {
+  children: React.ReactNode;
+  desktopAngles: CalculatedAngles;
+  mobileAngles: CalculatedAngles;
+  perspectiveDistance: number;
+  isHovered: boolean;
+  className?: string;
+  shadow?: boolean;
+}
+
+function TransformedLayer({
+  children,
+  desktopAngles,
+  mobileAngles,
+  perspectiveDistance,
+  isHovered,
+  className,
+  shadow = false,
+}: TransformedLayerProps) {
+  return (
+    <div
+      className={className}
+      style={{
+        perspective: `${perspectiveDistance}px`,
+        perspectiveOrigin: "50% 50%",
+      }}
+    >
+      <div
+        className={clsx(
+          "entry-card-wrapper",
+          "relative transition-transform duration-500 ease-out-in",
+          "group-hover:!transform-none",
+          isHovered && "!transform-none",
+        )}
+        style={
+          {
+            "--desktop-transform": `translateZ(${desktopAngles.zoom * 100}px) rotateX(${desktopAngles.totalRotation.x}deg) rotateY(${desktopAngles.totalRotation.y}deg) rotateZ(${desktopAngles.totalRotation.z}deg)`,
+            "--mobile-transform": `translateZ(${mobileAngles.zoom * 100}px) rotateX(${mobileAngles.totalRotation.x}deg) rotateY(${mobileAngles.totalRotation.y}deg) rotateZ(${mobileAngles.totalRotation.z}deg)`,
+            transformStyle: "preserve-3d",
+            transform: isHovered ? "none" : "var(--desktop-transform)",
+          } as React.CSSProperties
+        }
+      >
+        <FoldedGrid
+          seam1Angle={desktopAngles.seam1Angle}
+          seam2Angle={desktopAngles.seam2Angle}
+          mobileSeam1Angle={mobileAngles.seam1Angle}
+          mobileSeam2Angle={mobileAngles.seam2Angle}
+          shadow={shadow}
+          totalRotation={shadow ? undefined : desktopAngles.totalRotation}
+          isAutoHovered={isHovered}
+        >
+          {children}
+        </FoldedGrid>
+      </div>
+    </div>
+  );
+}
+
 interface EntryCardFoldingProps extends AngleCalculationProps {
   children: React.ReactNode;
   perspectiveDistance?: number;
-  autoHoverRange?: {
-    start: number; // percentage (0-100)
-    end: number; // percentage (0-100)
-  };
 }
 
 export default function EntryCardFolding({
@@ -215,7 +270,6 @@ export default function EntryCardFolding({
   rotationBounds,
   zoomBounds,
   perspectiveDistance = 800,
-  autoHoverRange = { start: 10, end: 30 },
 }: EntryCardFoldingProps) {
   // Calculate angles for both desktop and mobile
   const desktopAngles = useMemo(
@@ -248,70 +302,36 @@ export default function EntryCardFolding({
     [forceAngles, presetIndex, seedId, eventId, foldAngleBounds, rotationBounds, zoomBounds],
   );
 
-  const { isInHotspot, elementRef: cardRef } = useScrollHotspot(autoHoverRange);
+  const { isInHotspot, elementRef: cardRef } = useScrollHotspot();
 
   return (
     <LinkReact
       href={`/event/${eventId}`}
       ref={cardRef as Ref<HTMLAnchorElement>}
       className={clsx("relative w-full group", { "mobile-hover": isInHotspot })}
-      style={{
-        perspective: `${perspectiveDistance}px`,
-        perspectiveOrigin: "50% 50%",
-      }}
     >
-      <div
-        className={clsx(
-          "entry-card-wrapper",
-          "relative transition-transform duration-500 ease-out-in",
-          "group-hover:!transform-none",
-          isInHotspot && "!transform-none",
-        )}
-        style={
-          {
-            "--desktop-transform": `translateZ(${desktopAngles.zoom * 100}px) rotateX(${desktopAngles.totalRotation.x}deg) rotateY(${desktopAngles.totalRotation.y}deg) rotateZ(${desktopAngles.totalRotation.z}deg)`,
-            "--mobile-transform": `translateZ(${mobileAngles.zoom * 100}px) rotateX(${mobileAngles.totalRotation.x}deg) rotateY(${mobileAngles.totalRotation.y}deg) rotateZ(${mobileAngles.totalRotation.z}deg)`,
-            transformStyle: "preserve-3d",
-            transform: isInHotspot ? "none" : "var(--desktop-transform)",
-          } as React.CSSProperties
-        }
+      {/* Shadow layer - separate 3D context */}
+      <TransformedLayer
+        className="absolute inset-0 z-0"
+        desktopAngles={desktopAngles}
+        mobileAngles={mobileAngles}
+        perspectiveDistance={perspectiveDistance}
+        isHovered={isInHotspot}
+        shadow
       >
-        {/* Main content with fold transforms */}
-        <div className="relative z-20" style={{ transformStyle: "preserve-3d" }}>
-          <FoldedGrid
-            seam1Angle={desktopAngles.seam1Angle}
-            seam2Angle={desktopAngles.seam2Angle}
-            mobileSeam1Angle={mobileAngles.seam1Angle}
-            mobileSeam2Angle={mobileAngles.seam2Angle}
-            totalRotation={desktopAngles.totalRotation}
-            isAutoHovered={isInHotspot}
-          >
-            {children}
-          </FoldedGrid>
-        </div>
-        {/* Shadow layer */}
-        <div
-          className={clsx(
-            "absolute z-0 inset-0 transition-transform duration-500 ease-out-in",
-            "group-hover:translate-y-0 group-hover:translate-x-0",
-            isInHotspot && "translate-y-0 translate-x-0",
-          )}
-          style={{
-            transformStyle: "preserve-3d",
-          }}
-        >
-          <FoldedGrid
-            seam1Angle={desktopAngles.seam1Angle}
-            seam2Angle={desktopAngles.seam2Angle}
-            mobileSeam1Angle={mobileAngles.seam1Angle}
-            mobileSeam2Angle={mobileAngles.seam2Angle}
-            shadow
-            isAutoHovered={isInHotspot}
-          >
-            {children}
-          </FoldedGrid>
-        </div>
-      </div>
+        {children}
+      </TransformedLayer>
+
+      {/* Main content - separate 3D context */}
+      <TransformedLayer
+        className="relative z-20"
+        desktopAngles={desktopAngles}
+        mobileAngles={mobileAngles}
+        perspectiveDistance={perspectiveDistance}
+        isHovered={isInHotspot}
+      >
+        {children}
+      </TransformedLayer>
     </LinkReact>
   );
 }

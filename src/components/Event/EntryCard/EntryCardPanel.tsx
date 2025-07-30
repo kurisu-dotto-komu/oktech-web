@@ -18,10 +18,18 @@ export default function EntryCardPanel({
 }) {
   return (
     <div
-      className={clsx("bg-base-200 group-hover:bg-base-100  relative overflow-hidden", className)}
+      className={clsx(
+        "bg-base-200 group-hover:bg-base-100  relative ",
+        className,
+        className?.includes("auto-hover") && "!bg-base-100",
+      )}
       style={style}
     >
-      <div className="flex flex-col w-full h-full relative">
+      {/* Cut corner effect */}
+      {cut && (
+        <div className="absolute top-0 left-0 w-0 h-0 border-t-[40px] border-t-base-300 border-r-[40px] border-r-transparent z-10 -mt-0 md:-mt-2 -ml-2 md:ml-0" />
+      )}
+      <div className="flex flex-col w-full h-full relative overflow-hidden">
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child)) {
             return React.cloneElement(child as React.ReactElement<{ shadow?: boolean }>, {
@@ -31,10 +39,6 @@ export default function EntryCardPanel({
           return child;
         })}
       </div>
-      {/* Cut corner effect */}
-      {cut && (
-        <div className="absolute top-0 left-0 w-0 h-0 border-t-[30px] border-t-base-300 border-r-[30px] border-r-transparent z-10" />
-      )}
       {/* Shade overlay */}
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-500 ease-out-in group-hover:!opacity-0 [.auto-hover_&]:!opacity-0 z-[9]"
