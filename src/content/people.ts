@@ -117,6 +117,12 @@ export const peopleCollection = defineCollection({
 
 // Export memoized functions
 export const getPeople = memoize(async (): Promise<Person[]> => {
+  // Reason: Soft delete - returning empty array to disable people section
+  // while preserving all content and data structure for potential future use
+  return [];
+  
+  // Original implementation preserved below:
+  /*
   const people = await getCollection("people");
 
   return people.map(({ data }) => {
@@ -142,9 +148,15 @@ export const getPeople = memoize(async (): Promise<Person[]> => {
       links: {},
     } satisfies Person;
   });
+  */
 });
 
 export const getPerson = memoize(async (id: string | undefined) => {
+  // Reason: Soft delete - always throw to prevent individual person access
+  throw `People section is disabled`;
+  
+  // Original implementation preserved below:
+  /*
   if (!id) {
     throw "Person ID not defined";
   }
@@ -154,4 +166,5 @@ export const getPerson = memoize(async (id: string | undefined) => {
     throw `No person found for id ${id}`;
   }
   return person;
+  */
 });

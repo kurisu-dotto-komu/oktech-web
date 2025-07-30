@@ -27,11 +27,14 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
     href: "/events",
     icon: "lucide:calendar",
   },
+  // Reason: Soft delete - people section disabled
+  /*
   {
     label: "People",
     href: "/people",
     icon: "lucide:users",
   },
+  */
   {
     label: "About",
     href: "/about",
