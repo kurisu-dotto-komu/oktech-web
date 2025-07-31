@@ -29,14 +29,6 @@ export default function DevInfo() {
 
     // Run on mount
     updateDevInfo();
-
-    // Also update on navigation for SPA behavior
-    const handlePageLoad = () => updateDevInfo();
-    document.addEventListener("astro:page-load", handlePageLoad);
-
-    return () => {
-      document.removeEventListener("astro:page-load", handlePageLoad);
-    };
   }, []);
 
   // Only render if in dev mode

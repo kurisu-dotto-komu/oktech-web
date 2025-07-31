@@ -199,13 +199,13 @@ export function useEntryCardAngles(props: AngleCalculationProps) {
     // Simple shade calculation based on fold angles
     // Left panel: darker when folded back (positive angle)
     const leftShade = Math.max(0.05, Math.min(0.3, 0.15 + desktopAngles.seam1Angle * 0.003));
-    
+
     // Middle panel: always slightly shaded
     const midShade = 0.12;
-    
+
     // Right panel: darker when folded back (negative angle)
     const rightShade = Math.max(0.05, Math.min(0.3, 0.15 - desktopAngles.seam2Angle * 0.003));
-    
+
     return {
       panel0Shade: leftShade,
       panel1Shade: midShade,

@@ -109,22 +109,22 @@ export default function EntryCardContentCountdown({ event }: { event: EventEnric
       <div
         className={`flex p-2 md:p-0 md:flex-col h-full w-full flex-grow gap-2 justify-between md:justify-start ${statusInfo.bgStyle}`}
       >
-      <div className={`flex p-2 flex-col ${statusInfo.textStyle}`}>
-        <h3 className="text-base font-bold whitespace-nowrap">{statusInfo.text.jp}</h3>
-        <div className="text-xs">{statusInfo.text.en}</div>
-      </div>
-      <div className="flex md:flex-col gap-6 flex-grow">
-        <div className="flex px-2 gap-4 flex-grow md:flex-col justify-end md:justify-start">
-          <CountdownRow value={displayTime.days} label="日 DAYS" />
-          <CountdownRow value={displayTime.hours} label="時 HOURS" />
-          <CountdownRow value={displayTime.minutes} label="分 MINS" />
-          <CountdownRow value={displayTime.seconds} label="秒 SECS" />
+        <div className={`flex p-2 flex-col ${statusInfo.textStyle}`}>
+          <h3 className="text-base font-bold whitespace-nowrap">{statusInfo.text.jp}</h3>
+          <div className="text-xs">{statusInfo.text.en}</div>
         </div>
-        <div className="flex flex-col justify-center p-2 md:p-0">
-          <EntryCardOfficial top={statusInfo.footer.jp} bottom={statusInfo.footer.en} />
+        <div className="flex md:flex-col gap-6 flex-grow">
+          <div className="flex px-2 gap-4 flex-grow md:flex-col justify-end md:justify-start">
+            <CountdownRow value={displayTime.days} label="日 DAYS" />
+            <CountdownRow value={displayTime.hours} label="時 HOURS" />
+            <CountdownRow value={displayTime.minutes} label="分 MINS" />
+            <CountdownRow value={displayTime.seconds} label="秒 SECS" />
+          </div>
+          <div className="flex flex-col justify-center p-2 md:p-0">
+            <EntryCardOfficial top={statusInfo.footer.jp} bottom={statusInfo.footer.en} />
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

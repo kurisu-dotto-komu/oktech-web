@@ -15,7 +15,6 @@ export default function EntryCardContentImage({ event }: { event: EventEnriched 
           className="w-full h-full aspect-video object-cover rounded-md border border-dashed border-base-content/20"
           width={512}
           height={512}
-          style={{ viewTransitionName: `event-image-${event.id}` }}
         />
       </div>
       <EntryCardFooter

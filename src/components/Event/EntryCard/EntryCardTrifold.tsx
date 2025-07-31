@@ -70,13 +70,30 @@ export default function EntryCardTrifold({
             className="flex flex-col md:flex-row w-full"
             style={{ transformStyle: "preserve-3d" }}
           >
-            <EntryCardPanel {...panelProps} index={0} isHovered={isInHotspot} shadeOpacity={panelShades.panel0Shade}>
+            <EntryCardPanel
+              {...panelProps}
+              index={0}
+              isHovered={isInHotspot}
+              shadeOpacity={panelShades.panel0Shade}
+            >
               {leftPanel}
             </EntryCardPanel>
-            <EntryCardPanel {...panelProps} index={1} isHovered={isInHotspot} cut shadeOpacity={panelShades.panel1Shade}>
+            <EntryCardPanel
+              {...panelProps}
+              index={1}
+              isHovered={isInHotspot}
+              cut
+              shadeOpacity={panelShades.panel1Shade}
+            >
               {midPanel}
             </EntryCardPanel>
-            <EntryCardPanel {...panelProps} index={2} isHovered={isInHotspot} cut shadeOpacity={panelShades.panel2Shade}>
+            <EntryCardPanel
+              {...panelProps}
+              index={2}
+              isHovered={isInHotspot}
+              cut
+              shadeOpacity={panelShades.panel2Shade}
+            >
               {rightPanel}
             </EntryCardPanel>
           </div>
