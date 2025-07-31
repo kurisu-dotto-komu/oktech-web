@@ -1,10 +1,9 @@
 ---
-import { getEvents, getEvent, getPeople } from "@/content";
+import { getEvents, getEvent } from "@/content";
 import fs from "fs/promises";
 import path from "path";
 import yaml from "yaml";
 import EventNav from "@/components/Event/EventNav";
-import EventPeople from "@/components/Event/EventPeople";
 import EventLinks from "@/components/Event/EventLinks";
 import EventGallery from "@/components/Event/EventGallery";
 import type { EventLink } from "@/components/Event/EventLinks";
@@ -29,7 +28,6 @@ export async function getStaticPaths() {
 const { eventSlug } = Astro.params;
 const event = await getEvent(eventSlug);
 const events = await getEvents();
-const people = await getPeople();
 
 const markdownFile = await getEntry("eventsMarkdown", eventSlug);
 if (!markdownFile) {
@@ -102,7 +100,6 @@ const description = event.data.topics?.length
       </div>
     </div>
   </Section>
-  <EventPeople event={event} people={people} />
   <EventLinks links={links} />
   <EventGallery event={event} client:load />
   <Section>

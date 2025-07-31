@@ -1,6 +1,5 @@
 import { defineCollection } from "astro:content";
 import { eventsCollection, eventGalleryImageCollection } from "./content/events";
-import { peopleCollection } from "./content/people";
 import { venuesCollection } from "./content/venues";
 import { glob } from "astro/loaders";
 
@@ -20,14 +19,6 @@ const eventsMarkdown = defineCollection({
   }),
 });
 
-const peopleMarkdown = defineCollection({
-  loader: glob({
-    pattern: "**/person.md",
-    base: "./content/people",
-    generateId: getMarkdownId,
-  }),
-});
-
 const venuesMarkdown = defineCollection({
   loader: glob({
     pattern: "**/venue.md",
@@ -38,10 +29,8 @@ const venuesMarkdown = defineCollection({
 
 export const collections = {
   eventsMarkdown,
-  peopleMarkdown,
   venuesMarkdown,
   events: eventsCollection,
   eventGalleryImage: eventGalleryImageCollection,
-  people: peopleCollection,
   venues: venuesCollection,
 };

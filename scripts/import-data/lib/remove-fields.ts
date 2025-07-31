@@ -8,21 +8,18 @@ import { logger } from "./logger";
 const CONTENT_DIRS = {
   venues: "./content/venues",
   events: "./content/events",
-  people: "./content/people", // Note: people are stored in the people directory
 };
 
 // Default fields to remove for each content type
 const DEFAULT_FIELDS = {
   venues: ["country", "postalCode", "crossStreet"],
   events: [], // Add default fields for events if needed
-  people: [], // Add default fields for people if needed
 };
 
 // File patterns for each content type
 const FILE_PATTERNS = {
   venues: "**/venue.md",
   events: "**/event.md",
-  people: "**/person.md",
 };
 
 type ContentType = keyof typeof CONTENT_DIRS;
@@ -97,7 +94,7 @@ export async function handleRemoveFields(args: string[]) {
   // Validate content type
   if (!CONTENT_DIRS[contentType]) {
     logger.error(`Invalid content type: ${contentType}`);
-    logger.info("Valid types are: venues, events, people");
+    logger.info("Valid types are: venues, events");
     process.exit(1);
   }
 
@@ -137,7 +134,6 @@ export function showRemoveFieldsHelp(): void {
   logger.info("Content Types:");
   logger.info("  venues    Remove fields from venue files");
   logger.info("  events    Remove fields from event files");
-  logger.info("  people    Remove fields from people files");
   logger.info("");
   logger.info("Options:");
   logger.info("  --fields <field1,field2,...>  Comma-separated list of fields to remove");
@@ -152,12 +148,8 @@ export function showRemoveFieldsHelp(): void {
   logger.info(
     "  npm run import -- remove-fields events --fields meetupId    # Remove meetupId from events",
   );
-  logger.info(
-    "  npm run import -- remove-fields people --fields skills      # Remove skills from people",
-  );
   logger.info("");
   logger.info("Default fields:");
   logger.info(`  - venues: ${DEFAULT_FIELDS.venues.join(", ") || "none"}`);
   logger.info(`  - events: ${DEFAULT_FIELDS.events.join(", ") || "none"}`);
-  logger.info(`  - people: ${DEFAULT_FIELDS.people.join(", ") || "none"}`);
 }

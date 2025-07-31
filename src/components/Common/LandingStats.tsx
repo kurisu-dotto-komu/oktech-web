@@ -23,12 +23,6 @@ export default function LandingStats() {
           description: "Cities reached",
         },
         {
-          title: "People",
-          value: "85+",
-          icon: "lucide:mic",
-          description: "Expert voices shared",
-        },
-        {
           title: "Participants",
           value: "2000+",
           icon: "lucide:users-2",

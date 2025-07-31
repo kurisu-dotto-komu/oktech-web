@@ -5,14 +5,12 @@ import EventSummary from "@/components/Event/EventSummary";
 import LandingStats from "@/components/Common/LandingStats";
 import EventsUpcoming from "@/components/Events/EventsUpcoming";
 import ImagePlaceholder from "@/components/Common/ImagePlaceholder";
-import PersonAvatars from "@/components/Person/PersonAvatars";
 import Banner from "@/components/Common/Banner";
 import PageLayout from "@/layouts/PageLayout.astro";
-import { getEvents, getPeople } from "@/content";
+import { getEvents } from "@/content";
 import LandingHero from "@/components/Landing/LandingHero";
 
 const events = await getEvents();
-const people = await getPeople();
 ---
 
 <PageLayout
@@ -53,15 +51,6 @@ const people = await getPeople();
         ))
     }
   </Section>
-
-  <!-- Soft delete people for a later version -->
-  <!-- <Section
-    wide
-    title="Community"
-    description="Join our vibrant community of tech enthusiasts, professionals, and innovators. Connect with like-minded individuals, share knowledge, and grow together in the ever-evolving tech landscape."
-  >
-    <PersonAvatars people={people} />
-  </Section> -->
 
   <Hero
     slim

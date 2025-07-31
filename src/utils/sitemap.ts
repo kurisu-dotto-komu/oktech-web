@@ -1,5 +1,4 @@
 import { getEvents, getVenues } from "@/content";
-// Reason: Soft delete - getPeople import removed as people section is disabled
 import { resolveFullUrl } from "./urlResolver";
 
 export interface PageEntry {
@@ -44,24 +43,6 @@ export async function buildSitemapSections(): Promise<SectionEntry[]> {
       ...eventPages,
     ],
   });
-
-  // Reason: Soft delete - people section disabled
-  /*
-  // People section
-  const people = await getPeople();
-  const peoplePages: PageEntry[] = people
-    .map((p) => ({
-      href: `/person/${p.id}`,
-      title: p.name,
-    }))
-    .sort((a, b) => a.title.localeCompare(b.title));
-
-  sections.push({
-    title: "People",
-    href: "/people",
-    children: peoplePages,
-  });
-  */
 
   // Venues section
   const venues = await getVenues();

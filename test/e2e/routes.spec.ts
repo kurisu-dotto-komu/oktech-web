@@ -16,13 +16,6 @@ test.describe("Static Routes", () => {
     await expect(page).toHaveTitle(/About.*OKTech/);
   });
 
-  test("People page loads with correct title", async ({ page }) => {
-    await page.goto("/people");
-    await page.waitForLoadState("networkidle");
-    // People page might not have "People" in title
-    await expect(page).toHaveTitle(/OKTech/);
-  });
-
   test("Sitemap HTML page loads", async ({ page }) => {
     await page.goto("/sitemap");
     await page.waitForLoadState("networkidle");
@@ -43,12 +36,6 @@ test.describe("Dynamic Routes", () => {
     await page.waitForLoadState("networkidle");
     // Event pages typically have the event name in the title
     await expect(page).toHaveTitle(/Future Test Event 1.*OKTech/);
-  });
-
-  test("Individual person page loads with correct title", async ({ page }) => {
-    await page.goto("/person/martin-heidegger");
-    await page.waitForLoadState("networkidle");
-    await expect(page).toHaveTitle(/Martin Heidegger.*OKTech/);
   });
 
   test("Individual venue page loads with correct title", async ({ page }) => {
@@ -81,12 +68,6 @@ test.describe("Special Routes", () => {
 
   test("Event OG image is accessible", async ({ page }) => {
     const response = await page.goto(`/event/${TEST_EVENTS.PRIMARY}/og.png`);
-    expect(response?.status()).toBe(200);
-    expect(response?.headers()["content-type"]).toContain("image/png");
-  });
-
-  test("Person OG image is accessible", async ({ page }) => {
-    const response = await page.goto("/person/martin-heidegger/og.png");
     expect(response?.status()).toBe(200);
     expect(response?.headers()["content-type"]).toContain("image/png");
   });

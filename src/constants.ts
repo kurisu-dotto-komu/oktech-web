@@ -27,14 +27,6 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
     href: "/events",
     icon: "lucide:calendar",
   },
-  // Reason: Soft delete - people section disabled
-  /*
-  {
-    label: "People",
-    href: "/people",
-    icon: "lucide:users",
-  },
-  */
   {
     label: "About",
     href: "/about",
@@ -87,28 +79,3 @@ export const SOCIALS = [
     description: "Todo",
   },
 ] as const;
-
-// Role configurations from content.ts
-export const ROLE_CONFIGS = {
-  volunteer: {
-    label: "Volunteer",
-    plural: "Volunteers",
-    description: "Supporting events with hands-on help",
-    color: "badge-accent",
-    icon: "lucide:hand",
-  },
-  speaker: {
-    label: "Speaker",
-    plural: "Speakers",
-    description: "Sharing knowledge through engaging presentations",
-    color: "badge-error",
-    icon: "lucide:mic",
-  },
-  organizer: {
-    label: "Organizer",
-    plural: "Organizers",
-    description: "Leading and coordinating community initiatives",
-    color: "badge-warning",
-    icon: "lucide:users",
-  },
-} as const;
