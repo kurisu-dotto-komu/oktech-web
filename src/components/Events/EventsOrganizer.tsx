@@ -21,9 +21,7 @@ function EventsOrganizerInner({
       <Container>
         <EventsFilter availableFilters={availableFilters} currentView={view} />
       </Container>
-      <Container wide>
-        <EventsContainer events={events} view={view} />
-      </Container>
+      <EventsContainer events={events} view={view} />
     </>
   );
 }

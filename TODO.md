@@ -5,6 +5,7 @@
 - Add copy about real life.
 - Switch to a github pages workflow for deployment
 - Test the import script, convert to a package?
+- Add photos disclaimer
 
 # vNext
 

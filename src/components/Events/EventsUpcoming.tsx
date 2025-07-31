@@ -1,4 +1,4 @@
-import EntryCard from "@/components/Event/EntryCard/EntryCard";
+import EntryCard from "@/components/EntryCard/EntryCard";
 import type { EventEnriched } from "@/content";
 
 interface EventsUpcomingProps {
