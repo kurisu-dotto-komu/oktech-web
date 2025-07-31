@@ -32,7 +32,7 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
 
     return [
       { value: "grid", label: "Grid", icon: LuGrid3X3, href: `/events${query}` },
-      { value: "compact", label: "Compact", icon: LuList, href: `/events/compact${query}` },
+      { value: "compact", label: "List", icon: LuList, href: `/events/compact${query}` },
       { value: "gallery", label: "Gallery", icon: LuImage, href: `/events/gallery${query}` },
     ];
   }, [currentFilters]);
@@ -42,17 +42,17 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
       {views.map((view) => {
         const Icon = view.icon;
         return (
-          <LinkReact
-            key={view.value}
-            href={view.href}
-            className={`join-item btn ${currentView === view.value ? "btn-primary" : ""}`}
-            data-view={view.value}
-            data-testid={`view-mode-${view.value}`}
-            aria-label={view.label}
-            title={view.label}
-          >
-            <Icon className="w-4 h-4" />
-          </LinkReact>
+          <div key={view.value} className="tooltip" data-tip={view.label}>
+            <LinkReact
+              href={view.href}
+              className={`join-item btn ${currentView === view.value ? "btn-primary" : ""}`}
+              data-view={view.value}
+              data-testid={`view-mode-${view.value}`}
+              aria-label={view.label}
+            >
+              <Icon className="w-4 h-4" />
+            </LinkReact>
+          </div>
         );
       })}
     </div>

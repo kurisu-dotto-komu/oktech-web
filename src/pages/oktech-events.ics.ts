@@ -17,7 +17,7 @@ export async function GET() {
   return new Response(icsContent, {
     headers: {
       "Content-Type": "text/calendar; charset=utf-8",
-      "Content-Disposition": 'attachment; filename="events.ics"',
+      "Content-Disposition": 'attachment; filename="oktech-events.ics"',
     },
   });
 }

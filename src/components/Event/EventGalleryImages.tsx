@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { EventEnriched, GalleryImage } from "@/content";
-import ImageModal from "./ImageModal";
+import EventImageModal from "./EventImageModal";
 
 interface Props {
   event: EventEnriched;
@@ -82,7 +82,7 @@ export default function EventGalleryImages({ event }: Props) {
         </button>
       ))}
       {selectedImage && (
-        <ImageModal
+        <EventImageModal
           isOpen={isModalOpen}
           imageSrc={selectedImage.fullSrc}
           altText={selectedImage.data.caption ?? ""}

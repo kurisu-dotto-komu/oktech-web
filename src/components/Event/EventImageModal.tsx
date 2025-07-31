@@ -13,7 +13,7 @@ interface Props {
   hasNext?: boolean;
 }
 
-export default function ImageModal({
+export default function EventImageModal({
   isOpen,
   imageSrc,
   altText,

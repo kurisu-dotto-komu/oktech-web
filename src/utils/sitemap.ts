@@ -71,7 +71,7 @@ export async function buildSitemapSections(): Promise<SectionEntry[]> {
     children: [
       { href: "/sitemap.xml", title: "XML Sitemap" },
       { href: "/rss.xml", title: "RSS Feed" },
-      { href: "/events.ics", title: "ICS Calendar Feed" },
+      { href: "/oktech-events.ics", title: "ICS Calendar Feed" },
     ],
   });
 

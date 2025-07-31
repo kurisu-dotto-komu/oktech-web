@@ -46,7 +46,7 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
   },
   {
     label: "ICS",
-    href: "/events.ics",
+    href: "/oktech-events.ics",
     header: false,
     icon: "lucide:calendar",
   },
