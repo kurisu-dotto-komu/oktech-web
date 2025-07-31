@@ -1,30 +1,89 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { LuX, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import type { GalleryImage } from "@/content";
 
 interface Props {
   isOpen: boolean;
   imageSrc: string;
   altText: string;
+  eventTitle: string;
   onClose: () => void;
-  onPrevious?: () => void;
-  onNext?: () => void;
-  hasPrevious?: boolean;
-  hasNext?: boolean;
+  onPrevious: () => void;
+  onNext: () => void;
+  onDotClick: (index: number) => void;
+  currentIndex: number;
+  totalImages: number;
+  allImages: GalleryImage[];
 }
 
 export default function EventImageModal({
   isOpen,
   imageSrc,
   altText,
+  eventTitle,
   onClose,
   onPrevious,
   onNext,
-  hasPrevious,
-  hasNext,
+  onDotClick,
+  currentIndex,
+  totalImages,
+  allImages,
 }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const transformComponentRef = useRef<any>(null);
+
+  // Calculate previous and next image URLs for prefetching
+  const { prevImageUrl, nextImageUrl } = useMemo(() => {
+    const prevIndex = currentIndex === 0 ? totalImages - 1 : currentIndex - 1;
+    const nextIndex = currentIndex === totalImages - 1 ? 0 : currentIndex + 1;
+
+    return {
+      prevImageUrl: allImages[prevIndex]?.fullSrc,
+      nextImageUrl: allImages[nextIndex]?.fullSrc,
+    };
+  }, [currentIndex, totalImages, allImages]);
+
+  // Prefetch previous and next images
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const preloadImage = (src: string) => {
+      // Create image element for browser caching
+      const img = new Image();
+      img.src = src;
+
+      // Also add link preload for higher priority
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = src;
+      document.head.appendChild(link);
+
+      // Cleanup function to remove link
+      return () => {
+        if (document.head.contains(link)) {
+          document.head.removeChild(link);
+        }
+      };
+    };
+
+    const cleanups: (() => void)[] = [];
+
+    if (prevImageUrl) {
+      const cleanup = preloadImage(prevImageUrl);
+      if (cleanup) cleanups.push(cleanup);
+    }
+
+    if (nextImageUrl) {
+      const cleanup = preloadImage(nextImageUrl);
+      if (cleanup) cleanups.push(cleanup);
+    }
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  }, [isOpen, prevImageUrl, nextImageUrl]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -37,18 +96,18 @@ export default function EventImageModal({
           break;
         case "ArrowLeft":
           e.preventDefault();
-          if (hasPrevious && onPrevious) onPrevious();
+          onPrevious();
           break;
         case "ArrowRight":
           e.preventDefault();
-          if (hasNext && onNext) onNext();
+          onNext();
           break;
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose, onPrevious, onNext, hasPrevious, hasNext]);
+  }, [isOpen, onClose, onPrevious, onNext]);
 
   // Reset zoom when modal closes or image changes
   useEffect(() => {
@@ -64,71 +123,110 @@ export default function EventImageModal({
       className={`modal ${isOpen ? "modal-open" : ""} transition-opacity duration-300`}
       style={{ opacity: isOpen ? 1 : 0 }}
     >
-      <div className="modal-box max-w-5xl p-0 relative">
-        <div className="absolute top-2 right-2 z-10 flex gap-2">
-          <button
-            className="btn btn-sm btn-circle btn-ghost"
-            onClick={onClose}
-            aria-label="Close modal"
-          >
-            <LuX size={20} />
-          </button>
-        </div>
-
-        <div className="flex items-center">
-          {hasPrevious && onPrevious && (
+      <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-8 z-50">
+        <div className="flex flex-col items-center w-full max-w-[90vw] lg:max-w-[80vw] xl:max-w-[1200px]">
+          {/* Header with title and close button - aligned with modal box */}
+          <div className="w-full flex items-center justify-between mb-4 px-1">
+            <h3 className="text-lg font-semibold text-white drop-shadow-lg">{eventTitle}</h3>
             <button
-              className="absolute left-2 z-10 btn btn-circle btn-ghost"
+              className="p-2 text-white hover:text-white/80 transition-colors cursor-pointer"
+              onClick={onClose}
+              aria-label="Close modal"
+            >
+              <LuX size={24} />
+            </button>
+          </div>
+
+          {/* Container for modal box and navigation arrows */}
+          <div className="relative w-full flex items-center">
+            {/* Left navigation arrow - outside box */}
+            <button
+              className="absolute -left-12 sm:-left-16 p-2 text-white hover:text-white/80 transition-colors z-20 cursor-pointer"
               onClick={onPrevious}
               aria-label="Previous image"
             >
-              <LuChevronLeft size={24} />
+              <LuChevronLeft size={32} />
             </button>
-          )}
 
-          <figure className="relative w-full overflow-hidden">
-            <TransformWrapper
-              ref={transformComponentRef}
-              minScale={1}
-              maxScale={5}
-              initialScale={1}
-              centerOnInit={true}
-              limitToBounds={false}
-              doubleClick={{ mode: "reset" }}
-              panning={{ disabled: false }}
-              pinch={{ disabled: false }}
-              wheel={{ disabled: false }}
-            >
-              <TransformComponent>
-                <img
-                  src={imageSrc}
-                  alt={altText}
-                  className="max-w-full h-auto max-h-[80vh] object-contain"
-                  style={{ userSelect: "none" }}
-                  draggable={false}
-                />
-              </TransformComponent>
-            </TransformWrapper>
-            {altText && (
-              <figcaption className="p-4 bg-base-100">
-                <p className="text-sm text-base-content/70">{altText}</p>
-              </figcaption>
-            )}
-          </figure>
-
-          {hasNext && onNext && (
+            {/* Right navigation arrow - outside box */}
             <button
-              className="absolute right-2 z-10 btn btn-circle btn-ghost"
+              className="absolute -right-12 sm:-right-16 p-2 text-white hover:text-white/80 transition-colors z-20 cursor-pointer"
               onClick={onNext}
               aria-label="Next image"
             >
-              <LuChevronRight size={24} />
+              <LuChevronRight size={32} />
             </button>
-          )}
+
+            {/* Modal box with image */}
+            <div className="w-full max-w-[90vw] lg:max-w-[80vw] xl:max-w-[1200px] rounded-lg overflow-hidden">
+              {/* Image container */}
+              <div className="relative bg-black">
+                <TransformWrapper
+                  ref={transformComponentRef}
+                  minScale={1}
+                  maxScale={5}
+                  initialScale={1}
+                  centerOnInit={true}
+                  limitToBounds={true}
+                  doubleClick={{ mode: "reset" }}
+                  panning={{ disabled: false }}
+                  pinch={{ disabled: false }}
+                  wheel={{ disabled: false }}
+                  alignmentAnimation={{ sizeX: 0, sizeY: 0 }}
+                  centerZoomedOut={true}
+                >
+                  <TransformComponent
+                    wrapperStyle={{
+                      width: "100%",
+                      height: "auto",
+                    }}
+                    contentStyle={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <img
+                      src={imageSrc}
+                      alt={altText}
+                      className="w-full h-auto max-h-[75vh] object-contain"
+                      style={{ userSelect: "none" }}
+                      draggable={false}
+                    />
+                  </TransformComponent>
+                </TransformWrapper>
+              </div>
+
+              {/* Caption */}
+              {altText && (
+                <div className="p-4 bg-base-100">
+                  <p className="text-sm text-base-content/70">{altText}</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Navigation dots - outside modal box */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            {Array.from({ length: totalImages }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => onDotClick(index)}
+                className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                  index === currentIndex ? "bg-white w-8" : "bg-white/50 hover:bg-white/70"
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      <form method="dialog" className="modal-backdrop bg-black/60 backdrop-blur-sm">
-        <button onClick={onClose}>close</button>
+      <form method="dialog" className="modal-backdrop bg-black/80 backdrop-blur-sm fixed inset-0">
+        <button onClick={onClose} className="cursor-default w-full h-full">
+          close
+        </button>
       </form>
     </dialog>
   );

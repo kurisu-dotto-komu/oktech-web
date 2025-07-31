@@ -112,7 +112,7 @@ const processGalleryImages = memoize(async (eventId: string): Promise<GalleryIma
         }),
         safeGetImage({
           src: img.data.image,
-          width: 1024,
+          width: 1920,
           format: "webp",
         }),
       ]);

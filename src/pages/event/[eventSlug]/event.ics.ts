@@ -6,7 +6,7 @@ export const prerender = true;
 
 export async function getStaticPaths() {
   const events = await getEvents();
-  
+
   return events.map((event) => ({
     params: { eventSlug: event.id },
     props: { event },
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 export const GET: APIRoute = async ({ props }) => {
   const { event } = props;
-  
+
   const eventICS = generateEventICS(event);
   const icsContent = wrapICSCalendar(eventICS);
 

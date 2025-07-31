@@ -30,28 +30,28 @@ export default function EventsSubscribeDropdown() {
           <LuRss className="w-4 h-4" />
         </summary>
         <div className="dropdown-content z-50 p-2 shadow bg-base-100 rounded-box w-48 mt-1 flex flex-col gap-2">
-        <a
-          href="/oktech-events.ics"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost justify-start gap-3 w-full"
-          data-testid="subscribe-ics"
-        >
-          <LuCalendar className="w-4 h-4" />
-          Calendar
-        </a>
-        <a
-          href="/rss.xml"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost justify-start gap-3 w-full"
-          data-testid="subscribe-rss"
-        >
-          <LuRss className="w-4 h-4" />
-          RSS Feed
-        </a>
-      </div>
-    </details>
+          <a
+            href="/oktech-events.ics"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost justify-start gap-3 w-full"
+            data-testid="subscribe-ics"
+          >
+            <LuCalendar className="w-4 h-4" />
+            Calendar
+          </a>
+          <a
+            href="/rss.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost justify-start gap-3 w-full"
+            data-testid="subscribe-rss"
+          >
+            <LuRss className="w-4 h-4" />
+            RSS Feed
+          </a>
+        </div>
+      </details>
     </div>
   );
 }

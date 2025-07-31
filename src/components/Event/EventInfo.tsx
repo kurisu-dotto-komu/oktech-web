@@ -3,6 +3,7 @@ import type { EventEnriched } from "@/content";
 import { formatDate, formatTime } from "@/utils/formatDate";
 import VenueMap from "@/components/Venue/VenueMap";
 import Link from "@/components/Common/LinkReact";
+import BigTooltip from "@/components/Common/BigTooltip";
 import EventCity from "./EventCity";
 import HowToFindUs from "./EventHowToFindUs";
 
@@ -25,22 +26,8 @@ export default function EventInfo({ event }: Props) {
     timeRange = `${startTime} to ${endTime} JST`;
   }
 
-  return (
-    <div className="bg-base-100 rounded-lg relative group">
-      {/* Tooltip for How to Find Us */}
-      {event.data.howToFindUs && (
-        <div className="w-xl absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full -ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto z-50">
-          <div className="relative">
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-              <div className="w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[10px] border-l-base-200"></div>
-            </div>
-            <div className="justify-items-end">
-              <HowToFindUs howToFindUs={event.data.howToFindUs} />
-            </div>
-          </div>
-        </div>
-      )}
-
+  const eventContent = (
+    <div className="bg-base-100 rounded-lg">
       {/* Date and Time Section */}
       <div className="p-6 space-y-4" data-testid="event-info">
         <div className="flex items-start gap-4">
@@ -101,4 +88,14 @@ export default function EventInfo({ event }: Props) {
       )}
     </div>
   );
+
+  if (event.data.howToFindUs) {
+    return (
+      <BigTooltip position="left" content={<HowToFindUs howToFindUs={event.data.howToFindUs} />}>
+        {eventContent}
+      </BigTooltip>
+    );
+  }
+
+  return eventContent;
 }

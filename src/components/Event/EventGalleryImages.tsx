@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { EventEnriched, GalleryImage } from "@/content";
 import EventImageModal from "./EventImageModal";
+import { LuImage } from "react-icons/lu";
 
 interface Props {
   event: EventEnriched;
@@ -14,7 +15,14 @@ export default function EventGalleryImages({ event }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (galleryImages.length === 0) {
-    return null;
+    return (
+      <div className="flex items-center justify-center p-8 bg-base-200 rounded-xl">
+        <div className="flex items-center gap-3 text-base-content/60">
+          <LuImage className="w-6 h-6" />
+          <span>This event doesn't have any images yet</span>
+        </div>
+      </div>
+    );
   }
 
   const handleImageClick = (index: number) => {
@@ -28,15 +36,19 @@ export default function EventGalleryImages({ event }: Props) {
   };
 
   const handlePrevious = () => {
-    if (selectedIndex !== null && selectedIndex > 0) {
-      setSelectedIndex(selectedIndex - 1);
+    if (selectedIndex !== null) {
+      setSelectedIndex(selectedIndex === 0 ? reversedImages.length - 1 : selectedIndex - 1);
     }
   };
 
   const handleNext = () => {
-    if (selectedIndex !== null && selectedIndex < reversedImages.length - 1) {
-      setSelectedIndex(selectedIndex + 1);
+    if (selectedIndex !== null) {
+      setSelectedIndex(selectedIndex === reversedImages.length - 1 ? 0 : selectedIndex + 1);
     }
+  };
+
+  const handleDotClick = (index: number) => {
+    setSelectedIndex(index);
   };
 
   // Disable sticky nav keyboard shortcuts when modal is open
@@ -83,14 +95,17 @@ export default function EventGalleryImages({ event }: Props) {
       ))}
       {selectedImage && (
         <EventImageModal
+          allImages={galleryImages}
           isOpen={isModalOpen}
           imageSrc={selectedImage.fullSrc}
           altText={selectedImage.data.caption ?? ""}
+          eventTitle={event.data.title}
           onClose={handleCloseModal}
           onPrevious={handlePrevious}
           onNext={handleNext}
-          hasPrevious={selectedIndex !== null && selectedIndex > 0}
-          hasNext={selectedIndex !== null && selectedIndex < reversedImages.length - 1}
+          onDotClick={handleDotClick}
+          currentIndex={selectedIndex ?? 0}
+          totalImages={reversedImages.length}
         />
       )}
     </>

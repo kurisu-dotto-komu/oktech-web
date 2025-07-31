@@ -51,6 +51,8 @@ const config: KnipConfig = {
     "daisyui",
     // Tailwind is used via Vite plugin
     "tailwindcss",
+    // puppeteer is used for Map generation
+    "puppeteer",
   ],
 
   // Ignore specific exports (common false positives)

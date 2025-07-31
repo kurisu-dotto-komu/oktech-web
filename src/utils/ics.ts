@@ -37,7 +37,7 @@ export function generateEventICS(event: EventEnriched): string {
 
 export function wrapICSCalendar(events: string | string[], calName?: string): string {
   const eventsContent = Array.isArray(events) ? events.join("\r\n") : events;
-  
+
   return [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
