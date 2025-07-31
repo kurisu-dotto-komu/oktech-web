@@ -28,7 +28,9 @@ export function EntryCardHeader({ text, description }: { text: string; descripti
   return (
     <div className="flex flex-col select-none pl-10 pt-1 px-2 opacity-50">
       <div className="text-xs text-left whitespace-nowrap">{description}</div>
-      <h3 className="text-lg text-right font-mono text-primary font-bold whitespace-nowrap">{text}</h3>
+      <h3 className="text-lg text-right font-mono text-primary font-bold whitespace-nowrap">
+        {text}
+      </h3>
     </div>
   );
 }

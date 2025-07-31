@@ -1,5 +1,3 @@
-import { isFunctionDeclaration } from "typescript";
-
 export type DateFormat = "long" | "short" | "short-no-year";
 
 export function formatDate(date: Date | string, format: DateFormat = "short"): string {
@@ -59,4 +57,20 @@ export function getEndTime(startDate: Date, durationMinutes?: number): Date | nu
   if (!durationMinutes) return null;
   const endDate = new Date(startDate.getTime() + durationMinutes * 60 * 1000);
   return endDate;
+}
+
+export interface TimeParts {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export function calculateTimeParts(milliseconds: number): TimeParts {
+  const days = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((milliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
+  
+  return { days, hours, minutes, seconds };
 }

@@ -3,20 +3,7 @@
 import { useEffect, useState } from "react";
 import { EntryCardOfficial } from "./EntryCardDecorations";
 import type { EventEnriched } from "@/content";
-
-interface TimeLeft {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-interface TimeElapsed {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
+import { calculateTimeParts, type TimeParts } from "@/utils/formatDate";
 
 interface Props {
   targetDate: Date;
@@ -69,14 +56,14 @@ function CountdownRow({ value, label }: CountdownRowProps) {
   );
 }
 
-export default function EntryCardCountdown({ event }: { event: EventEnriched }) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+export default function EntryCardContentCountdown({ event }: { event: EventEnriched }) {
+  const [timeLeft, setTimeLeft] = useState<TimeParts>({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
-  const [timeElapsed, setTimeElapsed] = useState<TimeElapsed>({
+  const [timeElapsed, setTimeElapsed] = useState<TimeParts>({
     days: 0,
     hours: 0,
     minutes: 0,
@@ -94,29 +81,17 @@ export default function EntryCardCountdown({ event }: { event: EventEnriched }) 
         // Event hasn't started yet
         setStatus("upcoming");
         const difference = start - now;
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        setTimeLeft({ days, hours, minutes, seconds });
+        setTimeLeft(calculateTimeParts(difference));
       } else if (now >= start && now < end) {
         // Event is in progress - show elapsed time
         setStatus("inProgress");
         const elapsed = now - start;
-        const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
-        setTimeElapsed({ days, hours, minutes, seconds });
+        setTimeElapsed(calculateTimeParts(elapsed));
       } else {
         // Event has completed - show total elapsed time
         setStatus("completed");
         const elapsed = now - start;
-        const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
-        setTimeElapsed({ days, hours, minutes, seconds });
+        setTimeElapsed(calculateTimeParts(elapsed));
       }
     };
 
@@ -130,9 +105,10 @@ export default function EntryCardCountdown({ event }: { event: EventEnriched }) 
   const displayTime = status === "upcoming" ? timeLeft : timeElapsed;
 
   return (
-    <div
-      className={`flex p-2 md:p-0 md:flex-col h-full w-full flex-grow gap-2 justify-between md:justify-start ${statusInfo.bgStyle}`}
-    >
+    <div className="flex items-center h-full">
+      <div
+        className={`flex p-2 md:p-0 md:flex-col h-full w-full flex-grow gap-2 justify-between md:justify-start ${statusInfo.bgStyle}`}
+      >
       <div className={`flex p-2 flex-col ${statusInfo.textStyle}`}>
         <h3 className="text-base font-bold whitespace-nowrap">{statusInfo.text.jp}</h3>
         <div className="text-xs">{statusInfo.text.en}</div>
@@ -148,6 +124,7 @@ export default function EntryCardCountdown({ event }: { event: EventEnriched }) 
           <EntryCardOfficial top={statusInfo.footer.jp} bottom={statusInfo.footer.en} />
         </div>
       </div>
+    </div>
     </div>
   );
 }

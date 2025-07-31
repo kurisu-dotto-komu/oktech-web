@@ -19,9 +19,9 @@ function InfoItem({ icon: Icon, children }: InfoItemProps) {
   );
 }
 
-export default function EntryCardInfo({ event }: { event: EventEnriched }) {
+export default function EntryCardContentInfo({ event }: { event: EventEnriched }) {
   return (
-    <>
+    <div className="border-x-0 md:border-x-1 border-y-1 md:border-y-0 border-dashed border-base-300 h-full">
       <EntryCardHeader
         description={"会合団体行事詳細 MEETUP GROUP EVENT DETAILS ①"}
         text={"【INFORMATION】"}
@@ -85,6 +85,6 @@ export default function EntryCardInfo({ event }: { event: EventEnriched }) {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
