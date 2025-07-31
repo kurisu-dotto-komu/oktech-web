@@ -13,6 +13,7 @@ topics:
 meetupId: 999999998
 group: 15632202
 venue: 999999996
+howToFindUs: "Enter through the main entrance and follow the neon arrows to the Innovation Hub on the 7th floor. The venue is located right next to the coffee bar. Look for the OK Tech signs and friendly volunteers wearing bright orange t-shirts!"
 ---
 
 **This is a test event that only appears in development mode.**

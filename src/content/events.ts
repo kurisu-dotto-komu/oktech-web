@@ -48,6 +48,7 @@ export const eventsCollection = defineCollection({
         devOnly: devOnly ?? false,
         venue,
         topics: frontmatter.topics as string[] | undefined,
+        howToFindUs: frontmatter.howToFindUs as string | undefined,
       };
     });
   },
@@ -61,6 +62,7 @@ export const eventsCollection = defineCollection({
       devOnly: z.boolean().optional().default(false),
       venue: reference("venues").optional(),
       topics: z.array(z.string()).optional(),
+      howToFindUs: z.string().optional(),
     }),
 });
 

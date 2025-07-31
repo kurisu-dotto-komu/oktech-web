@@ -36,6 +36,7 @@ export type Event = {
   title: string;
   topics: string[];
   venue: string;
+  howToFindUs?: string;
 };
 
 export type EventJSON = {

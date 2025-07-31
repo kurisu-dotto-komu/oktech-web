@@ -60,6 +60,10 @@ export async function processEvent(
   newFrontmatter.group = parseInt(group);
   newFrontmatter.venue = parseInt(event.venue);
 
+  if (event.howToFindUs) {
+    newFrontmatter.howToFindUs = event.howToFindUs;
+  }
+
   if (existsSync(mdPath)) {
     const existing = matter.read(mdPath);
     const { description, ...existingWithoutDescription } = existing.data;
