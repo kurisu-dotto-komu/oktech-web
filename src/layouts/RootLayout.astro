@@ -38,6 +38,12 @@ const { title, ...seoProps } = Astro.props;
       title={`${SITE.name} - Events RSS Feed`}
       href={resolveInternalHref(`/rss.xml`)}
     />
+    <link
+      rel="alternate"
+      type="text/calendar"
+      title={`${SITE.name} - Events Calendar Feed`}
+      href={resolveInternalHref(`/events.ics`)}
+    />
     <script is:inline>
       // Apply theme from localStorage or system preference
       function applyTheme() {

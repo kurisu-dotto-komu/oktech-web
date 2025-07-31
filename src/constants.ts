@@ -44,6 +44,12 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: strin
     header: false,
     icon: "lucide:rss",
   },
+  {
+    label: "ICS",
+    href: "/events.ics",
+    header: false,
+    icon: "lucide:calendar",
+  },
 ];
 
 export const SOCIALS = [

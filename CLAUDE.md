@@ -68,9 +68,9 @@ oktech-web/
 
 ## Icons & Components
 
-- **Icon libraries**: Use `lucide:` for Astro and `lu` for React for general icons, and `cib` for brand icons
+- **Icon libraries**: Use `lucide:` for Astro and `lu` for React for general icons, and `fa6` for brand icons
 - **For Astro components**: use astro-icon - `import { Icon } from "astro-icon/components"` with `<Icon name="lucide:home" />`
-- **For React components**: use react-icons - `import { Home } from "react-icons/lu"`
+- **For React components**: use react-icons - `import { Home } from "react-icons/lu"` and `import { FaGoogle } from "react-icons/fa6"` for brands
 - **Use the `client:load` directive** when importing interactive React components in Astro files - add it only if the component needs client-side interactivity (e.g., `<MyComponent client:load />`)
 
 ## Internal Links

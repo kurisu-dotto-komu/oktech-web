@@ -2,6 +2,7 @@ import EventsSearchInput from "./EventsSearchInput";
 import EventsFilterDropdown from "./EventsFilterDropdown";
 import EventsSortSelector from "./EventsSortSelector";
 import { EventsViewModeSelector } from "./EventsViewModeSelector";
+import EventsSubscribeDropdown from "./EventsSubscribeDropdown";
 import type { EventsOrganizerViews } from "./EventsOrganizer";
 import { useEventsFilter } from "./EventsFilterProvider";
 
@@ -62,6 +63,7 @@ export function EventsFilter({ availableFilters, currentView }: EventsFilterProp
         <div className="flex gap-2 items-center">
           <EventsSortSelector data-testid="sort-selector" />
           <EventsViewModeSelector currentView={currentView} />
+          <EventsSubscribeDropdown />
         </div>
       </div>
     </div>

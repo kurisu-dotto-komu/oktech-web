@@ -49,6 +49,7 @@ export const eventsCollection = defineCollection({
         venue,
         topics: frontmatter.topics as string[] | undefined,
         howToFindUs: frontmatter.howToFindUs as string | undefined,
+        meetupId: frontmatter.meetupId as number | undefined,
       };
     });
   },
@@ -63,6 +64,7 @@ export const eventsCollection = defineCollection({
       venue: reference("venues").optional(),
       topics: z.array(z.string()).optional(),
       howToFindUs: z.string().optional(),
+      meetupId: z.number().optional(),
     }),
 });
 

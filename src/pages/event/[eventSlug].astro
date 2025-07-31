@@ -13,6 +13,7 @@ import Section from "@/components/Common/Section";
 import EventInfo from "@/components/Event/EventInfo";
 import EventJoinButton from "@/components/Event/EventJoinButton";
 import EventProjectorButton from "@/components/Event/EventProjectorButton";
+import AddToCalendarDropdown from "@/components/Event/AddToCalendarDropdown";
 import { getEntry, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -57,7 +58,8 @@ const description = event.data.topics?.length
       <div class="md:hidden flex flex-col gap-10">
         <h1 class="text-4xl font-bold pt-6">{event.data.title}</h1>
         <EventInfo event={event} />
-        <EventJoinButton />
+        <EventJoinButton event={event} client:load />
+        <AddToCalendarDropdown event={event} client:load />
       </div>
 
       <div class="flex flex-col md:flex-row gap-12">

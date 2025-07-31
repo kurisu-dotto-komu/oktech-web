@@ -71,6 +71,7 @@ export async function buildSitemapSections(): Promise<SectionEntry[]> {
     children: [
       { href: "/sitemap.xml", title: "XML Sitemap" },
       { href: "/rss.xml", title: "RSS Feed" },
+      { href: "/events.ics", title: "ICS Calendar Feed" },
     ],
   });
 
@@ -105,8 +106,8 @@ export async function generateSitemapURLs(): Promise<string[]> {
   const sections = await buildSitemapSections();
   const paths = extractUrlsFromSections(sections);
 
-  // Filter out non-HTML paths (XML, RSS)
-  const htmlPaths = paths.filter((path) => !path.endsWith(".xml"));
+  // Filter out non-HTML paths (XML, RSS, ICS)
+  const htmlPaths = paths.filter((path) => !path.endsWith(".xml") && !path.endsWith(".ics"));
 
   // Convert to absolute URLs
   return htmlPaths.map((path) => resolveFullUrl(path));
