@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 233957080
 group: 15632202
 venue: 24213835
+howToFindUs: Aiming Inc., Grand Front North tower. Use this entrance http://bit.ly/2aQrWR8 or walk through the south building from Osaka Station, take the elevator up to the 9th floor (sky lobby), disembark, then take another elevator to the 18th floor.
 ---
 
 Welcome back, dear Web enthusiasts!

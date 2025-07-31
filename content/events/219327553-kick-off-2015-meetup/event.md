@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 219327553
 group: 15632202
 venue: 22577042
+howToFindUs: http://kc-i.jp/en/facilities/salon/
 ---
 
 2015 starts and the web prevails and we continue on our journeys! So: Let's Meetup for nice discussions with peers, new opinions and interesting dissections about all things trending and/or crazy in our daily challenges to survive the rapid progress.

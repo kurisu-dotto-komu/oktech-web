@@ -6,6 +6,7 @@ cover: ./712718.webp
 meetupId: 260877986
 group: 15632202
 venue: 26262059
+howToFindUs: Please follow the map in the featured picture
 ---
 
 Finally, Spring is here and the warm days are starting! Before the long golden week holiday, we would like to invite you to our April Meetup for two nice talks and optionally some drinks afterward in a nearby Izakaya.

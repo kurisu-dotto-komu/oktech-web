@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 245227060
 group: 15632202
 venue: 25620385
+howToFindUs: "From GrandFront/Hankyu: Beside the Grandfront North tower: take the underground passage direction Sky Building and follow the big road south; direction Fukushima (we are in the first floor)"
 ---
 
 This year is ending, and as always this means we're having our end-of-year party. Be prepared to spend an evening talking with people about tech, business & design and other topics in english over pizza in Umeda!

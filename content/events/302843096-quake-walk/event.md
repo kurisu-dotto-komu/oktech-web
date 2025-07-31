@@ -9,6 +9,7 @@ topics:
 meetupId: 302843096
 group: 15632202
 venue: 27868919
+howToFindUs: In front of Exit 8 at Awaza Station
 ---
 
 Hello friends,

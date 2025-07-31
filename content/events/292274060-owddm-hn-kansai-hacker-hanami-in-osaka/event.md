@@ -12,6 +12,7 @@ topics:
 meetupId: 292274060
 group: 15632202
 venue: 27394125
+howToFindUs: We secured a spot under a nice tree, see the photos for a a more detailed location.
 ---
 
 Happy Spring!👋

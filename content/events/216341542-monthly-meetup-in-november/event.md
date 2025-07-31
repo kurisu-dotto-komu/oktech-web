@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 216341542
 group: 15632202
 venue: 22577042
+howToFindUs: Take the elevator 北3 (no other!) to the 7th floor of the GrandFront north tower next to JR Osaka Station! Tell the lady at the entrance of the Knowledge Salon that you are a Web-designers/developers attendee! We will be in the C-D presentation room.
 ---
 
 The cold winds creep closer but they will not be able to stop our passion for the web!

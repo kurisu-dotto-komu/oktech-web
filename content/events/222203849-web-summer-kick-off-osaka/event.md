@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 222203849
 group: 15632202
 venue: 22577042
+howToFindUs: 7th Floor, North Building  Grand Front Umeda (Take the North 北 3 elevator!)
 ---
 
 Summer is coming!

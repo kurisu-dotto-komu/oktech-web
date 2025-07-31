@@ -12,6 +12,7 @@ topics:
 meetupId: 293291174
 group: 36450361
 venue: 27573606
+howToFindUs: The No8 Hase Building is located in the same building as the drug store "Welcia". To reach the event venue, please go upstairs to the 2nd floor. Once you arrive at the second floor, you'll find the entrance to the event venue right in front of the elevator.
 ---
 
 Hello everyone! 👋

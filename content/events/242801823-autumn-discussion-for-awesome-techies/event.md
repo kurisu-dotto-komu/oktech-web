@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 242801823
 group: 15632202
 venue: 25511520
+howToFindUs: Please come to the 8th Floor (Rakuten Office)
 ---
 
 Location: https://global.rakuten.com/corp/about/map/index__p6.html

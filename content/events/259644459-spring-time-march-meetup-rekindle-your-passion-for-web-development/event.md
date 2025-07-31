@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 259644459
 group: 15632202
 venue: 26262059
+howToFindUs: Firstserver is on the 3rd floor
 ---
 
 We have managed to invite Google Product Manager of Firebase Michael McDonald to give us a talk at our meetup. Unfortunately he has to leave on the 25th, so we decide to reschedule our Meetup to this weekend on the 23rd March at FirstServer.

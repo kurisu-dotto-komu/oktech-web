@@ -11,6 +11,7 @@ topics:
 meetupId: 288755079
 group: 36450361
 venue: 27423406
+howToFindUs: "More about the place here: https://business-park-618.business.site/"
 ---
 
 Dear web enthusiasts, we're in a busy autumn! 🔥

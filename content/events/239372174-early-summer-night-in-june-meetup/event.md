@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 239372174
 group: 15632202
 venue: 24529555
+howToFindUs: In the first floor of the Hankyu Department Building take the business elevator, in the business section, to the 15th floor (Sky Lounge) and from there take the elevator to the 35th floor.
 ---
 
 Summer is upon us soon and we have a cool early summer night meetup event for all of you aspiring web designers and developers this month.

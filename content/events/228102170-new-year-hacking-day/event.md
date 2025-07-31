@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 228102170
 group: 15632202
 venue: 24213835
+howToFindUs: Take the Tower B (タワー B!) elevator of the Grandfront North building to the 9th floor and take the elevator up to the 18th floor
 ---
 
 Happy New Year Websters!

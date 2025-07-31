@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 237998866
 group: 15632202
 venue: 25085262
+howToFindUs: http://juso-coworking.com/contact/access.html
 ---
 
 Hello Osaka Web Developers & Designers,

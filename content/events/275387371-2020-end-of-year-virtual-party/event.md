@@ -6,6 +6,7 @@ cover: ./121224.webp
 meetupId: 275387371
 group: 15632202
 venue: 26906060
+howToFindUs: https://spatial.chat/s/owddm?sp=0wddm
 ---
 
 Season's greetings

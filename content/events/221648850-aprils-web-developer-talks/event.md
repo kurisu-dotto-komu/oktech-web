@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 221648850
 group: 15632202
 venue: 22577042
+howToFindUs: 7th Floor, North Building  Grand Front Umeda (Take the North 北 3 elevator!)
 ---
 
 Spring is here, the cherry blossom is about to finish blooming and we shall meet again!

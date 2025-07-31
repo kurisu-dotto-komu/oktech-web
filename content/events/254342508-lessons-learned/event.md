@@ -6,6 +6,7 @@ cover: ./280682.webp
 meetupId: 254342508
 group: 15632202
 venue: 25928725
+howToFindUs: Directly beside the JR Station, Sakura Internet is in the Grandfront South Tower (A) - not the same as Aiming! Take the business elevator in 1F/2F to the SkyLobby and take the Elevator to 35F!
 ---
 
 Wow, this summer was hot! We plan to keep it chilled at this months OWDDM by breaking a bit out of our usual format.

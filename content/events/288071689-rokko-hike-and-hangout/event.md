@@ -12,6 +12,9 @@ topics:
 meetupId: 288071689
 group: 15632202
 venue: 27024215
+howToFindUs: |
+  We'll start our hike at Rokko Ropeway Ground station at 8:00 AM.
+  To get to the ropeway using public transportation, you can take a bus  (１６系統, 神戸市) from Rokko Station (Hankyu) at 7:44 AM.
 ---
 
 **RSVP Closed**

@@ -11,6 +11,7 @@ topics:
 meetupId: 295693488
 group: 15632202
 venue: 27553394
+howToFindUs: 1. Go to Grand Front NORTH Tower in the 1F(!). In the big space, behind Tully's go to Tower C (business area) and enter the Elevator to 16F. From there, go towards the end of the hall.
 ---
 
 September shenanigans up ahead 🚄

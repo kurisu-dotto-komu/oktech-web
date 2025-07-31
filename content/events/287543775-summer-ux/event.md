@@ -12,6 +12,7 @@ topics:
 meetupId: 287543775
 group: 36450361
 venue: 27382018
+howToFindUs: The entrance should be easily visible! The 67 Diner will open just for us!
 ---
 
 Welcome Friends in hot, hot Kyoto. This summer we have the awesome opportunity to meet in the 67 diner that will open just for us. 🤩

@@ -12,6 +12,7 @@ topics:
 meetupId: 299335103
 group: 36450361
 venue: 27764496
+howToFindUs: We will share the GPS location on the day.
 ---
 
 **IN CASE OF RAIN** 🌧️

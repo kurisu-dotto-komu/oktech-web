@@ -12,6 +12,7 @@ topics:
 meetupId: 293731584
 group: 36450361
 venue: 27585838
+howToFindUs: In the 5F of above the Coco Ichibanya - Hard to miss.
 ---
 
 Hi Friends, 👋

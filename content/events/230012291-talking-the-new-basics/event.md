@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 230012291
 group: 15632202
 venue: 24213835
+howToFindUs: "From JR Station: pass through the GrandFront South Tower and take elevator next to the bridge to the 9th floor. Then take the elevator in the sky lobby to the 18th floor."
 ---
 
 Welcome back, dear Web enthusiasts!

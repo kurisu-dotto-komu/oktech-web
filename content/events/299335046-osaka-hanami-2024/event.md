@@ -12,6 +12,7 @@ topics:
 meetupId: 299335046
 group: 15632202
 venue: 27394125
+howToFindUs: We will share photos and GPS of our spot on the day.
 ---
 
 Another event in Osaka? Yes! 👽

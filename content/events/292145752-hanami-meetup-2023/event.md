@@ -12,6 +12,7 @@ topics:
 meetupId: 292145752
 group: 36450361
 venue: 25472037
+howToFindUs: We found a place at the kamogawa, under a big Sakura tree near here https://maps.apple.com/?ll=35.029979,135.770996&q=%E7%8F%BE%E5%9C%A8%E5%9C%B0&t=m
 ---
 
 Happy Spring everyone! 👋

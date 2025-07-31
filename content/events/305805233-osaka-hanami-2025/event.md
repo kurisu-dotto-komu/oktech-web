@@ -12,6 +12,7 @@ topics:
 meetupId: 305805233
 group: 15632202
 venue: 27964003
+howToFindUs: We will share photos and GPS of our spot on the day.
 ---
 
 Let's enjoy spring together!

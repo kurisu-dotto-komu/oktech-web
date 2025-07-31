@@ -11,6 +11,7 @@ topics:
 meetupId: 286728584
 group: 15632202
 venue: 27310813
+howToFindUs: 子供の遊び場 親子カフェ Laugh Rough Laugh (ラフラフラフ) Cafe
 ---
 
 Hello there, You may be confused seeing this event. 😅

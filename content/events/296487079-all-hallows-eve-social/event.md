@@ -12,6 +12,7 @@ topics:
 meetupId: 296487079
 group: 36450361
 venue: 27585838
+howToFindUs: In the 5F of above the Coco Ichibanya - Hard to miss.
 ---
 
 *Have you heard?* Judging from the weather, its a bit hard to to guess, but we already have the end of October! 🍁

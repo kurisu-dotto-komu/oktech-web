@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 223691814
 group: 15632202
 venue: 22577042
+howToFindUs: Go to GrandFront North tower (north of the south tower which is north of JR Osaka station) get into the 北3 elevator and get to the 7th floor.
 ---
 
 It is July and Osaka is hot! Both literally and figuratively. So many events and opportunities pop up that it almost feels startup-y here. Come to join us to talk about web development and design!

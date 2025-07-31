@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 229405636
 group: 15632202
 venue: 24213835
+howToFindUs: Take the elevators at the North building and go up to the 9th floor. After that you need to take another elevator to go to the 18th floor.
 ---
 
 Hello Osaka (and Kansai) web designers and developers, spring is arriving and we have some exciting speakers for the next Meetup on 19th March. We welcome new-comers, experienced developers and designers.

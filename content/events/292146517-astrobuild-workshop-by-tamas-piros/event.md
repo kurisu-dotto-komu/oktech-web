@@ -12,6 +12,7 @@ topics:
 meetupId: 292146517
 group: 15632202
 venue: 27553394
+howToFindUs: In the Grandfront North Tower, behind the Tully's on the 1F, take the Business Entrance to Tower C. Use the elevator to the 16F. We are in the R³ Institute Community Room at the very end of the north corridor.
 ---
 
 Hello Everyone! 👋

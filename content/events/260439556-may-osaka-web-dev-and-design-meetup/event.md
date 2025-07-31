@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 260439556
 group: 15632202
 venue: 26378946
+howToFindUs: The meetup is on the 3rd floor. Enter the building from the parking entrance at the North side. If you arrive at the West entrance and see the map printed on the shuttered door, you'll need to head North and turn right.
 ---
 
 Golden Week is behind us, and the weather is heating up, so why not chill out with some cool web talks and meet designers and developers from around the Osaka area?

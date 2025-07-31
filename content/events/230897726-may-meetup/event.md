@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 230897726
 group: 15632202
 venue: 24529555
+howToFindUs: Take the Business Elevator (beside  in the Hanky Building in Umeda
 ---
 
 Dear all developers, designers and enthusiasts, welcome back for our May’s meetup, the first one after the Golden Week.

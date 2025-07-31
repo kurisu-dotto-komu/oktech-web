@@ -6,6 +6,7 @@ cover: ./901481.webp
 meetupId: 271369535
 group: 15632202
 venue: 26936190
+howToFindUs: 🚉 Accessible from the Tsurumi-ryokuchi Station on the Nagahori Tsurumi-ryokuchi line of the Osaka Metro.
 ---
 
 Welcome back web developers and designers!

@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 240569750
 group: 15632202
 venue: 24213835
+howToFindUs: From JR Osaka station walk north past the Grand Front South Tower. In the Grand Front North Tower take the business elevator or the elevator 4 to the Sky Lobby (9th floor) and from there take the elevator to the 18th floor.
 ---
 
 Hello Developers and Designers!

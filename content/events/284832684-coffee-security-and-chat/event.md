@@ -10,6 +10,14 @@ topics:
 meetupId: 284832684
 group: 15632202
 venue: 26459185
+howToFindUs: |
+  For clarity regarding the location, here is the:
+
+  Google Map URL: https://goo.gl/maps/a56CZYdMTkX9Ub158 
+
+  and YouTube URL: https://youtu.be/5s9GsrtG7KA
+
+  If you need direction or need help locating the place, please reach out to Kimmy,  the Event Manager.
 ---
 
 We will be very happy to see you at the next Meetup, our first meeting of the year.

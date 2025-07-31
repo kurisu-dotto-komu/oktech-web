@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 224252563
 group: 15632202
 venue: 23994174
+howToFindUs: Right below the DropInn Osaka is the C7coworking space. The door will be opened with a OWDDM sign next to the street!
 ---
 
 The cicada's chirp, the typhoons whirl and web developers meet up and talk.

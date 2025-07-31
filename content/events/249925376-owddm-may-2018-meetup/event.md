@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 249925376
 group: 15632202
 venue: 24870768
+howToFindUs: 530-0003 Dojima-Avanza 21F, 1-6-20 Dojima, Kita-ku, Osaka | Follow this URL http://tinyurl.com/grh6try for directions to this month’s venue
 ---
 
 Dear Developers and Designers, May the Web be with you.

@@ -12,6 +12,7 @@ topics:
 meetupId: 294488629
 group: 36450361
 venue: 27621042
+howToFindUs: "South of Goichi Pizza on Takatsuji. Here is a visual guide: https://kyososha.jp/access/index.html"
 ---
 
 For this month's gathering of webdevs and designers in Kyoto we have 3 short talks and plenty of discussion. Come out to meet fellow professionals and practitioners, and share your experiences.

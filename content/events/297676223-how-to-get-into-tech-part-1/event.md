@@ -12,6 +12,7 @@ topics:
 meetupId: 297676223
 group: 15632202
 venue: 24529555
+howToFindUs: In the Hankyu main building take the (huge) business elevator to the 15th floor Skylobby. Then take the far-back elevator to the 35th floor to join us in the Cybozu Office.
 ---
 
 Are you thinking about getting into tech? Here is your chance to learn from those who have gone before! OWDDM is kicking off a new series where members of our tech community share their path in tech. Each story is unique, and could inspire you to your own journey.

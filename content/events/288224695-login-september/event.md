@@ -11,6 +11,7 @@ topics:
 meetupId: 288224695
 group: 36450361
 venue: 27382018
+howToFindUs: The restaurant is closed but will open for us. 😉
 ---
 
 Welcome to September, Friends! 👋

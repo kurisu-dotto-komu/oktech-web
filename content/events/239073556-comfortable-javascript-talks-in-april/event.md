@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 239073556
 group: 15632202
 venue: 24213835
+howToFindUs: In the GrandFront north tower take the Business elevator to the 9th floor (sky lobby) and continue to the Aiming Office in the 18th floor
 ---
 
 The cold days are over, and before we rush into Golden Week we have another nice Meetup in April while the last Cherry trees bloom. I would like to invite you to meet like-minded Web Designers and Developers and join us for two nice presentations and optionally some drinks afterwards.

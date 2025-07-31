@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 220314026
 group: 15632202
 venue: 22577042
+howToFindUs: http://kc-i.jp/en/facilities/salon/
 ---
 
 Charging right into 2015 we will have our next month web-bashing. We are not sure who will catch next times big

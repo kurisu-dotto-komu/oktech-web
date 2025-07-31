@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 225647457
 group: 15632202
 venue: 22577042
+howToFindUs: Take the North 3(北3!) elevator of the Grandfront North building to the 7th floor and tell the entrance lady of Knowledge Salon that you registered here.
 ---
 
 Hello Webweavers,

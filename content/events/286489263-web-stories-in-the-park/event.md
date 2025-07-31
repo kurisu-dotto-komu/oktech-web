@@ -12,6 +12,7 @@ topics:
 meetupId: 286489263
 group: 15632202
 venue: 26936190
+howToFindUs: 🚉 Accessible from the Tsurumi-ryokuchi Station on the Nagahori Tsurumi-ryokuchi line of the Osaka Metro.
 ---
 
 **Important Note**: The Weather forecast looks like it should hold with a light chance for rain. We will still be at the meeting point but maybe we need to divert the meetup later on.

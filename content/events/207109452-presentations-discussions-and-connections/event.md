@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 207109452
 group: 15632202
 venue: 22372122
+howToFindUs: Namba Station exit 14 at 5:30pm
 ---
 
 Here is the map to this location:

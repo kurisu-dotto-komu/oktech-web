@@ -11,6 +11,7 @@ topics:
 meetupId: 305361716
 group: 15632202
 venue: 24529555
+howToFindUs: In the Hankyu main building take the (huge) business elevator to the 15th floor Skylobby. Then take the far-back elevator to the 35th floor to join us in the Cybozu Office.
 ---
 
 Happy new year!

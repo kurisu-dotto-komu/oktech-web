@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 225330671
 group: 15632202
 venue: 23994174
+howToFindUs: We are on the 2nd floor above Tenkaippin (1st floor) and below DropInn Osaka (3rd floor), there is a dedicated floor stating "c7 coworking" right next on the street that will be lit and open (with an OWDDM sign)
 ---
 
 The first cool nights have arrived, and typhoons seem to be a distant memory. Kaki-fruits are about to be in season again and we find ourselves in the tempered japanese autumn.

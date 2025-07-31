@@ -12,6 +12,7 @@ topics:
 meetupId: 298753297
 group: 15632202
 venue: 27553394
+howToFindUs: 1. Go to Grand Front NORTH Tower in the 1F(!). In the big space, behind Tully's go to Tower C (business area) and enter the Elevator to 16F. From there, go towards the end of the hall.
 ---
 
 We want to thank everyone for coming to hang out with us at our [last event](https://www.meetup.com/osaka-web-designers-and-developers-meetup/events/297676223). It was a hit! This month, join us again for part 2.

@@ -8,3 +8,4 @@ coordinates:
   lng: 135.76
 meetupId: 27544400
 ---
+

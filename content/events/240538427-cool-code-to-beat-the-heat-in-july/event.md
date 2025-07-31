@@ -5,6 +5,7 @@ cover: ./506739.webp
 meetupId: 240538427
 group: 15632202
 venue: 24213835
+howToFindUs: To get to Aiming Inc.'s Osaka Studio, go to the Grand Front North building, take the elevator to the 9th floor, follow the signs to Office Tower B, and take another elevator to the 18th floor.
 ---
 
 Join us at air-conditioned Aiming Inc. to have a refreshing time of learning from each other.

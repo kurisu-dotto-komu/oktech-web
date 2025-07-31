@@ -6,6 +6,7 @@ cover: ./506739.webp
 meetupId: 263532260
 group: 15632202
 venue: 26539881
+howToFindUs: The nearest station is Honmachi on the Yotsubashi line,  from Exit 28, you will find the Family Mart on 1F. Please wait outside of FamilyMart. We shall pick you up and enter via the back entrance. If in doubt, please send us a mesg on Meetup.com.
 ---
 
 Don't you have enough of the hot summer? Now you can join us to discuss hot topics on web design and development at a new cool place.
