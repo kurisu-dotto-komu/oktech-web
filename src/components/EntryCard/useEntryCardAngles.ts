@@ -196,20 +196,89 @@ export function useEntryCardAngles(props: AngleCalculationProps) {
   );
 
   const panelShades: PanelShadeProps = useMemo(() => {
-    // Simple shade calculation based on fold angles
-    // Left panel: darker when folded back (positive angle)
-    const leftShade = Math.max(0.05, Math.min(0.3, 0.15 + desktopAngles.seam1Angle * 0.003));
+    // Calculate panel normals based on fold angles and card rotation
+    // Light source from the right: (1, 0.1, 0.2) - slightly elevated for realism
+    const lightDir = { x: 1, y: 0.1, z: 0.2 };
+    const lightMagnitude = Math.sqrt(lightDir.x ** 2 + lightDir.y ** 2 + lightDir.z ** 2);
+    const normalizedLight = {
+      x: lightDir.x / lightMagnitude,
+      y: lightDir.y / lightMagnitude,
+      z: lightDir.z / lightMagnitude,
+    };
 
-    // Middle panel: always slightly shaded
-    const midShade = 0.12;
+    // Convert angles to radians
+    const toRad = (deg: number) => (deg * Math.PI) / 180;
+    const seam1Rad = toRad(desktopAngles.seam1Angle);
+    const seam2Rad = toRad(desktopAngles.seam2Angle);
+    const rotXRad = toRad(desktopAngles.totalRotation.x);
+    const rotYRad = toRad(desktopAngles.totalRotation.y);
+    const rotZRad = toRad(desktopAngles.totalRotation.z);
 
-    // Right panel: darker when folded back (negative angle)
-    const rightShade = Math.max(0.05, Math.min(0.3, 0.15 - desktopAngles.seam2Angle * 0.003));
+    // Calculate normal vectors for each panel (before card rotation)
+    // Panel 0 (left): rotated by seam1Angle around Y-axis
+    const panel0Normal = {
+      x: Math.sin(seam1Rad),
+      y: 0,
+      z: Math.cos(seam1Rad),
+    };
+
+    // Panel 1 (middle): no fold rotation
+    const panel1Normal = { x: 0, y: 0, z: 1 };
+
+    // Panel 2 (right): rotated by -seam2Angle around Y-axis
+    const panel2Normal = {
+      x: Math.sin(-seam2Rad),
+      y: 0,
+      z: Math.cos(-seam2Rad),
+    };
+
+    // Apply card's total rotation to each panel normal
+    const rotateVector = (v: { x: number; y: number; z: number }) => {
+      // Apply rotations in order: Z, Y, X (matching CSS transform order)
+      // Rotate around Z
+      let x1 = v.x * Math.cos(rotZRad) - v.y * Math.sin(rotZRad);
+      let y1 = v.x * Math.sin(rotZRad) + v.y * Math.cos(rotZRad);
+      let z1 = v.z;
+
+      // Rotate around Y
+      let x2 = x1 * Math.cos(rotYRad) + z1 * Math.sin(rotYRad);
+      let y2 = y1;
+      let z2 = -x1 * Math.sin(rotYRad) + z1 * Math.cos(rotYRad);
+
+      // Rotate around X
+      let x3 = x2;
+      let y3 = y2 * Math.cos(rotXRad) - z2 * Math.sin(rotXRad);
+      let z3 = y2 * Math.sin(rotXRad) + z2 * Math.cos(rotXRad);
+
+      return { x: x3, y: y3, z: z3 };
+    };
+
+    const rotatedPanel0Normal = rotateVector(panel0Normal);
+    const rotatedPanel1Normal = rotateVector(panel1Normal);
+    const rotatedPanel2Normal = rotateVector(panel2Normal);
+
+    // Calculate dot product with light direction (higher = brighter)
+    const dotProduct = (
+      v1: { x: number; y: number; z: number },
+      v2: { x: number; y: number; z: number },
+    ) => v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+
+    const panel0Dot = dotProduct(rotatedPanel0Normal, normalizedLight);
+    const panel1Dot = dotProduct(rotatedPanel1Normal, normalizedLight);
+    const panel2Dot = dotProduct(rotatedPanel2Normal, normalizedLight);
+
+    // Convert dot products to shade values
+    // Dot product ranges from -1 (facing away) to 1 (facing towards)
+    // We want shade from 0.05 (brightest) to 0.3 (darkest)
+    const dotToShade = (dot: number) => {
+      // Remap from [-1, 1] to [0.3, 0.05]
+      return 0.175 - dot * 0.125;
+    };
 
     return {
-      panel0Shade: leftShade,
-      panel1Shade: midShade,
-      panel2Shade: rightShade,
+      panel0Shade: Math.max(0.05, Math.min(0.3, dotToShade(panel0Dot))),
+      panel1Shade: Math.max(0.05, Math.min(0.3, dotToShade(panel1Dot))),
+      panel2Shade: Math.max(0.05, Math.min(0.3, dotToShade(panel2Dot))),
     };
   }, [desktopAngles]);
 
