@@ -9,7 +9,7 @@ test.describe("Theme persistence", () => {
     await page.waitForLoadState("networkidle");
 
     // Click the theme toggle to switch to dark mode
-    const themeToggle = page.getByTestId("theme-toggle-desktop");
+    const themeToggle = page.getByTestId("theme-switcher").first();
     await themeToggle.click();
 
     // Verify dark theme is applied

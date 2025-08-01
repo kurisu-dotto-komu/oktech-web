@@ -1,13 +1,14 @@
 import { LuCode } from "react-icons/lu";
+import type { IconType } from "react-icons";
 
 interface IconCardProps {
-  icon?: string;
+  icon?: IconType;
   label: string;
   description: string;
   href: string;
 }
 
-export default function IconCard({ label, description, href }: IconCardProps) {
+export default function IconCard({ icon: IconComponent, label, description, href }: IconCardProps) {
   return (
     <a
       className="w-50 cursor-pointer transition-all card card-border rounded-2xl bg-base-100 text-center hover:bg-primary/10 hover:text-primary"
@@ -17,7 +18,11 @@ export default function IconCard({ label, description, href }: IconCardProps) {
     >
       <div className="p-6 flex flex-col gap-10 items-center">
         <div className="bg-primary/20 text-primary rounded-full w-24 p-2">
-          <LuCode className="w-full h-full" />
+          {IconComponent ? (
+            <IconComponent className="w-full h-full" />
+          ) : (
+            <LuCode className="w-full h-full" />
+          )}
         </div>
 
         <div className="text-pretty">

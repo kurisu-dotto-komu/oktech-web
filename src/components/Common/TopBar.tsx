@@ -12,12 +12,12 @@ export default function TopBar() {
     <>
       <div className="fixed top-0 z-50 shadow-sm soft-glass navbar" data-testid="navbar">
         <Container className="hidden md:flex justify-between">
-          <div className="navbar-start -ml-4">
+          <div className="navbar-start">
             <LinkReact href="/" className="btn btn-ghost p-1">
               <Brand />
             </LinkReact>
           </div>
-          <div className="navbar-end -mr-4">
+          <div className="navbar-end">
             <div className="flex items-center gap-2">
               <div className="flex items-center">
                 {items.map((item) => (
@@ -30,7 +30,7 @@ export default function TopBar() {
                   </LinkReact>
                 ))}
               </div>
-              <ThemeToggle testId="theme-toggle-desktop" />
+              <ThemeToggle testId="theme-switcher" />
             </div>
           </div>
         </Container>
@@ -45,7 +45,7 @@ export default function TopBar() {
             </LinkReact>
           </div>
           <div className="navbar-end">
-            <ThemeToggle testId="theme-toggle-mobile" />
+            <ThemeToggle testId="theme-switcher" />
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost bg-base-100/10" aria-label="Open menu">
                 <LuMenu size={24} />

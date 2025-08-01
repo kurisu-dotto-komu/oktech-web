@@ -6,7 +6,7 @@ interface ThemeToggleProps {
   testId?: string;
 }
 
-export default function ThemeToggle({ testId = "theme-toggle" }: ThemeToggleProps) {
+export default function ThemeToggle({ testId = "theme-switcher" }: ThemeToggleProps) {
   const toggleTheme = () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");
     const newTheme = currentTheme === "dark" ? "light" : "dark";

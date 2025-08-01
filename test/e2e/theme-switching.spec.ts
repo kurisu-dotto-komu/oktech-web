@@ -8,12 +8,8 @@ test.describe("Theme Switching", () => {
     // Wait for the page to load
     await page.waitForLoadState("networkidle");
 
-    // Scroll to footer where theme toggle is located
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(500);
-
-    // Find and click the theme toggle button in the footer
-    const themeToggle = page.getByTestId("theme-toggle-footer");
+    // Find and click the theme toggle button (works regardless of location)
+    const themeToggle = page.getByTestId("theme-switcher").first();
     await expect(themeToggle).toBeVisible();
 
     // Verify initial state (light theme)
@@ -42,12 +38,8 @@ test.describe("Theme Switching", () => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
-    // Scroll to footer where theme toggle is located
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await page.waitForTimeout(500);
-
     // Switch to dark theme
-    const themeToggle = page.getByTestId("theme-toggle-footer");
+    const themeToggle = page.getByTestId("theme-switcher").first();
     await themeToggle.click();
 
     // Wait for theme to be applied
