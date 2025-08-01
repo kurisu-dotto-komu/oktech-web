@@ -129,13 +129,16 @@ export default function EventImageModal({
         }
       }}
     >
-      <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-8 z-50" onClick={(e) => {
-        // Also handle clicks on the container
-        if (e.target === e.currentTarget) {
-          onClose();
-        }
-      }}>
-        <div className="flex flex-col items-center w-full max-w-[90vw] lg:max-w-[80vw] xl:max-w-[1200px]">
+      <div
+        className="fixed inset-0 flex items-center justify-center p-4 sm:p-8 z-50"
+        onClick={(e) => {
+          // Also handle clicks on the container
+          if (e.target === e.currentTarget) {
+            onClose();
+          }
+        }}
+      >
+        <div className="flex flex-col items-center w-full max-w-[80vw] lg:max-w-[80vw] xl:max-w-[1200px]">
           {/* Header with title and close button - aligned with modal box */}
           <div className="w-full flex items-center justify-between mb-4 px-1">
             <h3 className="text-lg font-semibold text-white drop-shadow-lg">{eventTitle}</h3>
@@ -171,12 +174,11 @@ export default function EventImageModal({
             {/* Modal box with image */}
             <div className="w-full max-w-[90vw] lg:max-w-[80vw] xl:max-w-[1200px] rounded-lg overflow-hidden">
               {/* Image container */}
-              <div className="relative bg-black">
+              <div className="relative bg-black aspect-[3/4] sm:aspect-square md:aspect-[4/3]">
                 <TransformWrapper
                   ref={transformComponentRef}
                   minScale={1}
-                  maxScale={5}
-                  initialScale={1}
+                  maxScale={6}
                   centerOnInit={true}
                   limitToBounds={true}
                   doubleClick={{ mode: "reset" }}
@@ -189,7 +191,7 @@ export default function EventImageModal({
                   <TransformComponent
                     wrapperStyle={{
                       width: "100%",
-                      height: "auto",
+                      height: "100%",
                     }}
                     contentStyle={{
                       width: "100%",
@@ -202,7 +204,7 @@ export default function EventImageModal({
                     <img
                       src={imageSrc}
                       alt={altText}
-                      className="w-full h-auto max-h-[75vh] object-contain"
+                      className="w-full h-full object-contain"
                       style={{ userSelect: "none" }}
                       draggable={false}
                     />
@@ -235,7 +237,12 @@ export default function EventImageModal({
         </div>
       </div>
       <form method="dialog" className="modal-backdrop bg-black/80 backdrop-blur-sm fixed inset-0">
-        <button type="button" onClick={onClose} className="cursor-pointer w-full h-full" aria-label="Close modal">
+        <button
+          type="button"
+          onClick={onClose}
+          className="cursor-pointer w-full h-full"
+          aria-label="Close modal"
+        >
           <span className="sr-only">close</span>
         </button>
       </form>
