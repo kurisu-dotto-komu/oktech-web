@@ -35,7 +35,7 @@ export default function EventSummary({ event, className, class: classFromAstro }
           {event.data.title}
         </h3>
         <div className="relative">
-          <EventIconList event={event} stats={["date", "time", "venue"]} />
+          <EventIconList event={event} stats={["date", "time", "venue"]} showCountdown />
           {event.venue?.city && (
             <div className="absolute top-0 right-0">
               <EventCity city={event.venue.city} />

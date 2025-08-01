@@ -3,6 +3,7 @@ import { LuCalendar, LuClock, LuMapPin, LuTag, LuBuilding, LuMap } from "react-i
 import type { IconType } from "react-icons";
 import type { ReactNode } from "react";
 import { formatDate, formatDuration, formatTime, getEndTime } from "@/utils/formatDate";
+import EventCountdown from "./EventCountdown";
 
 interface InfoItemProps {
   icon: IconType;
@@ -23,11 +24,17 @@ export type EventStatKey = "date" | "time" | "city" | "venue" | "address" | "top
 interface EventIconListProps {
   event: EventEnriched;
   stats?: EventStatKey[];
+  showCountdown?: boolean;
 }
 
 const defaultStats: EventStatKey[] = ["date", "time", "city", "venue", "address", "topics"];
 
-export default function EventIconList({ event, stats = defaultStats }: EventIconListProps) {
+export default function EventIconList({
+  event,
+  stats = defaultStats,
+  showCountdown = false,
+}: EventIconListProps) {
+  const isUpcoming = new Date(event.data.dateTime) > new Date();
   const statRenderers: Record<EventStatKey, () => ReactNode> = {
     date: () => (
       <InfoItem icon={LuCalendar}>
@@ -86,6 +93,11 @@ export default function EventIconList({ event, stats = defaultStats }: EventIcon
 
   return (
     <div className="flex flex-col gap-2 text-sm">
+      {showCountdown && isUpcoming && (
+        <div key="countdown">
+          <EventCountdown eventDateTime={event.data.dateTime} />
+        </div>
+      )}
       {stats.map((stat) => {
         const renderer = statRenderers[stat];
         return renderer ? <div key={stat}>{renderer()}</div> : null;

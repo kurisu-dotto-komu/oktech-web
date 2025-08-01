@@ -1,19 +1,28 @@
 import type { EventEnriched } from "@/content";
 import EventSummary from "@/components/Event/EventSummary";
 import Section from "@/components/Common/Section";
+import { groupEventsByYearAndUpcoming } from "@/utils/eventGrouping";
+import { useEventsFilter } from "./EventsFilterProvider";
 
 interface Props {
   events: EventEnriched[];
 }
 
 export default function EventsGridView({ events }: Props) {
+  const { currentFilters } = useEventsFilter();
+  const eventGroups = groupEventsByYearAndUpcoming(events, currentFilters.sort);
+
   return (
-    <Section grid wide data-testid="events-grid-view">
-      {events.map((event) => (
-        <div key={event.id} data-testid="event-card">
-          <EventSummary event={event} />
-        </div>
+    <div data-testid="events-grid-view">
+      {eventGroups.map((group) => (
+        <Section key={group.label} grid wide title={group.label} className="mb-12 last:mb-0">
+          {group.events.map((event) => (
+            <div key={event.id} data-testid="event-card">
+              <EventSummary event={event} />
+            </div>
+          ))}
+        </Section>
       ))}
-    </Section>
+    </div>
   );
 }

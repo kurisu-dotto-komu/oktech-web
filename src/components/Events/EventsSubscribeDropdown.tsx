@@ -26,7 +26,7 @@ export default function EventsSubscribeDropdown() {
         ref={dropdownRef}
         data-testid="events-subscribe-dropdown"
       >
-        <summary className="btn" aria-label="Subscribe">
+        <summary className="btn btn-warning btn-outline" aria-label="Subscribe">
           <LuRss className="w-4 h-4" />
         </summary>
         <div className="dropdown-content z-50 p-2 shadow bg-base-100 rounded-box w-48 mt-1 flex flex-col gap-2">

@@ -16,6 +16,7 @@ export default function EventsRecent({ events, limit = 6 }: EventsRecentProps) {
       {recentEvents.map((event, index) => (
         <div
           key={event.id}
+          data-testid="event-card"
           className={clsx([
             index === 3 && "hidden sm:block",
             index === 4 && "hidden lg:block xl:hidden",
