@@ -15,8 +15,10 @@ export default function EventsUpcoming({ events }: EventsUpcomingProps) {
   }
 
   return (
-    <div className="flex flex-col gap-24 xl:gap-32">
-      <h2 className="text-center text-3xl">Upcoming Events</h2>
+    <div className="flex flex-col gap-24 xl:gap-32" data-testid="upcoming-events-section">
+      <h2 className="text-center text-3xl" data-testid="upcoming-events-title">
+        Upcoming Events
+      </h2>
       {futureEvents.map((event, index) => (
         <EntryCard key={event.id} event={event} presetIndex={index} />
       ))}

@@ -321,7 +321,7 @@ export default function ShaderRenderer({
 
   return (
     <div className="relative w-full h-full">
-      <canvas ref={canvasRef} className={className} style={style} />
+      <canvas ref={canvasRef} className={className} style={style} data-testid="shader-canvas" />
       {showComments && shaderComment && (
         <div className="absolute bottom-4 left-4 w-2/3 text-white/70 text-sm">
           {renderTextWithLinks(shaderComment)}

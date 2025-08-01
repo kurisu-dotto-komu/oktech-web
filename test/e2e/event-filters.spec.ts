@@ -70,7 +70,8 @@ test.describe("Event Filters", () => {
       await page.getByTestId("topic-option").nth(1).click();
 
       // Click outside to close dropdown
-      await page.locator("body").click({ position: { x: 0, y: 0 } });
+      // Click outside to close dropdown
+      await page.mouse.click(0, 0);
       await page.waitForTimeout(300); // Wait for dropdown to close and URL to update
 
       // Check URL contains topics parameter

@@ -10,13 +10,13 @@ test.describe("Venue Rendering on Event Pages", () => {
     await page.waitForLoadState("networkidle");
 
     // Check that venue title exists on the page
-    // Use locator that finds visible element (desktop view)
-    const venueTitle = page.getByTestId("venue-title").locator("visible=true");
+    // Use :visible pseudo-selector to get only visible elements
+    const venueTitle = page.locator('[data-testid="venue-title"]:visible');
     await expect(venueTitle).toBeVisible();
     await expect(venueTitle).toHaveText("Test Venue 1");
 
     // Check that venue map container exists (venue loaded successfully)
-    const venueMap = page.getByTestId("venue-map").locator("visible=true");
+    const venueMap = page.locator('[data-testid="venue-map"]:visible');
     await expect(venueMap).toBeVisible();
   });
 
@@ -26,12 +26,12 @@ test.describe("Venue Rendering on Event Pages", () => {
 
     // Check that venue title link exists on the page (Test Venue 2 has hasPage=true)
     // Use locator that finds visible element (desktop view)
-    const venueTitleLink = page.getByTestId("venue-title-link").locator("visible=true");
+    const venueTitleLink = page.locator('[data-testid="venue-title-link"]:visible');
     await expect(venueTitleLink).toBeVisible();
     await expect(venueTitleLink).toHaveText("Test Venue 2 (Outdoor)");
 
     // Check that venue map container exists
-    const venueMap = page.getByTestId("venue-map").locator("visible=true");
+    const venueMap = page.locator('[data-testid="venue-map"]:visible');
     await expect(venueMap).toBeVisible();
   });
 
@@ -41,7 +41,7 @@ test.describe("Venue Rendering on Event Pages", () => {
 
     // Check for venue address
     // Use locator that finds visible element (desktop view)
-    const venueAddress = page.getByTestId("venue-address").locator("visible=true");
+    const venueAddress = page.locator('[data-testid="venue-address"]:visible');
     await expect(venueAddress).toBeVisible();
     await expect(venueAddress).toHaveText("Test Address 1, Test District, Osaka");
 
@@ -56,11 +56,11 @@ test.describe("Venue Rendering on Event Pages", () => {
 
     // Check that event info section exists
     // Use locator that finds visible element (desktop view)
-    const eventInfo = page.getByTestId("event-info").locator("visible=true");
+    const eventInfo = page.locator('[data-testid="event-info"]:visible');
     await expect(eventInfo).toBeVisible();
 
     // Verify venue title exists
-    const venueTitle = page.getByTestId("venue-title").locator("visible=true");
+    const venueTitle = page.locator('[data-testid="venue-title"]:visible');
     await expect(venueTitle).toBeVisible();
     await expect(venueTitle).toHaveText("Test Venue 1");
   });
@@ -72,7 +72,7 @@ test.describe("Venue Rendering on Event Pages", () => {
 
     // Venue 1 should show as text, not link
     // Use locator that finds visible element (desktop view)
-    const venueTitle = page.getByTestId("venue-title").locator("visible=true");
+    const venueTitle = page.locator('[data-testid="venue-title"]:visible');
     await expect(venueTitle).toBeVisible();
     await expect(venueTitle).toHaveText("Test Venue 1");
 
@@ -85,7 +85,7 @@ test.describe("Venue Rendering on Event Pages", () => {
     await page.waitForLoadState("networkidle");
 
     // Venue 2 should show as link
-    const venueTitleLink = page.getByTestId("venue-title-link").locator("visible=true");
+    const venueTitleLink = page.locator('[data-testid="venue-title-link"]:visible');
     await expect(venueTitleLink).toBeVisible();
     await expect(venueTitleLink).toHaveText("Test Venue 2 (Outdoor)");
     await expect(venueTitleLink).toHaveAttribute("href", `/venue/${TEST_VENUES.TEST_VENUE_2}`);
@@ -98,7 +98,7 @@ test.describe("Venue Rendering on Event Pages", () => {
 
     // Check for venue map link using data-testid
     // Use locator that finds visible element (desktop view)
-    const mapLink = page.getByTestId("venue-map-link").locator("visible=true");
+    const mapLink = page.locator('[data-testid="venue-map-link"]:visible');
     await expect(mapLink).toBeVisible();
     await expect(mapLink).toHaveAttribute("href", "https://maps.app.goo.gl/test1");
     await expect(mapLink).toHaveAttribute("target", "_blank");
@@ -107,7 +107,7 @@ test.describe("Venue Rendering on Event Pages", () => {
     await page.goto(`/event/${TEST_EVENTS.SECONDARY}`);
     await page.waitForLoadState("networkidle");
 
-    const mapLink2 = page.getByTestId("venue-map-link").locator("visible=true");
+    const mapLink2 = page.locator('[data-testid="venue-map-link"]:visible');
     await expect(mapLink2).toBeVisible();
     await expect(mapLink2).toHaveAttribute("href", "https://maps.app.goo.gl/test2");
   });

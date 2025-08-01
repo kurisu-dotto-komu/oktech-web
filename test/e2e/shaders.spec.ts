@@ -9,11 +9,11 @@ test.describe("Shader Components", () => {
     await page.waitForLoadState("networkidle");
 
     // Check if canvas elements exist (shaders render to canvas)
-    const canvases = await page.locator("canvas").all();
+    const canvases = await page.getByTestId("shader-canvas").all();
     expect(canvases.length).toBeGreaterThan(0);
 
     // Get the first canvas
-    const canvas = page.locator("canvas").first();
+    const canvas = page.getByTestId("shader-canvas").first();
     await expect(canvas).toBeVisible();
 
     // Test mouse interaction by moving mouse over canvas
@@ -35,7 +35,7 @@ test.describe("Shader Components", () => {
     await page.waitForLoadState("networkidle");
 
     // Check if canvas elements exist
-    const canvases = await page.locator("canvas").all();
+    const canvases = await page.getByTestId("shader-canvas").all();
 
     // Test mouse interaction on each canvas
     for (const canvas of canvases) {

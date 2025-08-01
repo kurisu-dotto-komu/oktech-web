@@ -57,7 +57,7 @@ const description = event.data.topics?.length
   <Section>
     <div class="w-full flex flex-col gap-8">
       <div class="md:hidden flex flex-col gap-10">
-        <h1 class="text-4xl font-bold pt-6">{event.data.title}</h1>
+        <h1 class="text-4xl font-bold pt-6" data-testid="event-title">{event.data.title}</h1>
         <EventInfo event={event} />
         <EventJoinButton event={event} client:load />
         <AddToCalendarDropdown event={event} client:load />
@@ -85,7 +85,9 @@ const description = event.data.topics?.length
               }
             </figure>
           </div>
-          <h1 class="hidden md:block text-4xl font-bold pt-6">{event.data.title}</h1>
+          <h1 class="hidden md:block text-4xl font-bold pt-6" data-testid="event-title-desktop">
+            {event.data.title}
+          </h1>
           <div class="max-w-none prose prose-lg">
             <Content />
           </div>

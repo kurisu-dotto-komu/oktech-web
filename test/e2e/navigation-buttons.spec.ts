@@ -9,7 +9,7 @@ test.describe("Navigation Buttons", () => {
 
       // Click on the second event to ensure we have prev/next navigation
       const eventCards = page.getByTestId("event-card");
-      await eventCards.nth(1).locator("a").first().click();
+      await eventCards.nth(1).click();
 
       // Wait for navigation to complete
       await page.waitForLoadState("networkidle");
@@ -34,7 +34,7 @@ test.describe("Navigation Buttons", () => {
       // Navigate to an event page
       await page.goto("/events");
       const eventCards = page.getByTestId("event-card");
-      await eventCards.nth(1).locator("a").first().click();
+      await eventCards.nth(1).click();
       await page.waitForLoadState("networkidle");
 
       // Wait for React components to hydrate
@@ -66,7 +66,7 @@ test.describe("Navigation Buttons", () => {
       // Navigate to an event page
       await page.goto("/events");
       const eventCards = page.getByTestId("event-card");
-      await eventCards.first().locator("a").first().click();
+      await eventCards.first().click();
       await page.waitForLoadState("networkidle");
 
       // Verify we're on an event page
@@ -97,7 +97,7 @@ test.describe("Navigation Buttons", () => {
       await page.waitForLoadState("networkidle");
 
       // Get the current venue title
-      const firstVenueTitle = await page.locator("h1").textContent();
+      const firstVenueTitle = await page.getByTestId("venue-title-page").textContent();
       expect(page.url()).toContain("/venue/");
 
       // Check if navigation buttons exist
@@ -138,7 +138,7 @@ test.describe("Navigation Buttons", () => {
 
       // Get current URL and title
       const initialUrl = page.url();
-      const initialTitle = await page.locator("h1").textContent();
+      const initialTitle = await page.getByTestId("venue-title-page").textContent();
 
       // Verify navigation buttons exist
       const prevButton = page.getByTestId("nav-button-prev").first();
@@ -164,7 +164,7 @@ test.describe("Navigation Buttons", () => {
       // Should be back to original venue
       const finalUrl = page.url();
       expect(finalUrl).toBe(initialUrl);
-      const finalTitle = await page.locator("h1").textContent();
+      const finalTitle = await page.getByTestId("venue-title-page").textContent();
       expect(finalTitle).toBe(initialTitle);
     });
   });

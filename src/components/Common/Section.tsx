@@ -44,7 +44,11 @@ export default function Section({
   const firstContainer = !secondContainer || generatedContent;
 
   return (
-    <section className={`py-18 flex flex-col gap-12 ${finalClassName}`} id={anchor}>
+    <section
+      className={`py-18 flex flex-col gap-12 ${finalClassName}`}
+      id={anchor}
+      data-testid="section"
+    >
       {firstContainer && (
         <Container
           className={`${split ? "grid md:grid-cols-2 gap-12 lg:gap-24 items-center" : ""} ${
@@ -59,7 +63,9 @@ export default function Section({
             >
               {title && (
                 <div className={`flex items-center justify-between gap-2 ${!inline ? "mb-4" : ""}`}>
-                  <h2 className="text-3xl font-bold">{title}</h2>
+                  <h2 className="text-3xl font-bold" data-testid="section-title">
+                    {title}
+                  </h2>
                   {element}
                 </div>
               )}

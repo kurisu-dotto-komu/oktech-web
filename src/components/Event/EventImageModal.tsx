@@ -121,6 +121,7 @@ export default function EventImageModal({
       ref={dialogRef}
       className={`modal ${isOpen ? "modal-open" : ""} transition-opacity duration-300`}
       style={{ opacity: isOpen ? 1 : 0 }}
+      data-testid="image-modal"
       onClick={(e) => {
         // Close modal if clicked outside content
         if (e.target === e.currentTarget || e.target === dialogRef.current) {

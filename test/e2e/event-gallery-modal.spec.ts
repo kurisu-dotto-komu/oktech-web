@@ -8,7 +8,7 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForLoadState("networkidle");
 
     // Find gallery images
-    const galleryImages = page.locator('[data-testid^="gallery-image-"]');
+    const galleryImages = page.getByTestId(/^gallery-image-/);
     const imageCount = await galleryImages.count();
     expect(imageCount).toBeGreaterThan(0);
 
@@ -16,7 +16,7 @@ test.describe("Event Gallery Modal", () => {
     await galleryImages.first().click();
 
     // Wait for modal to open
-    const modal = page.locator("dialog.modal");
+    const modal = page.getByTestId("image-modal");
     await expect(modal).toBeVisible();
 
     // Check modal contains image
@@ -37,11 +37,11 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForLoadState("networkidle");
 
     // Open modal
-    const galleryImages = page.locator('[data-testid^="gallery-image-"]');
+    const galleryImages = page.getByTestId(/^gallery-image-/);
     await galleryImages.first().click();
 
     // Verify modal is open
-    const modal = page.locator("dialog.modal");
+    const modal = page.getByTestId("image-modal");
     await expect(modal).toBeVisible();
 
     // Click backdrop by clicking outside the modal content
@@ -57,14 +57,14 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForLoadState("networkidle");
 
     // Get gallery images count
-    const galleryImages = page.locator('[data-testid^="gallery-image-"]');
+    const galleryImages = page.getByTestId(/^gallery-image-/);
     const imageCount = await galleryImages.count();
     expect(imageCount).toBeGreaterThan(1); // Need at least 2 images for navigation
 
     // Click first image
     await galleryImages.first().click();
 
-    const modal = page.locator("dialog.modal");
+    const modal = page.getByTestId("image-modal");
     await expect(modal).toBeVisible();
 
     // Get initial image src
@@ -97,14 +97,14 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForLoadState("networkidle");
 
     // Get gallery images
-    const galleryImages = page.locator('[data-testid^="gallery-image-"]');
+    const galleryImages = page.getByTestId(/^gallery-image-/);
     const imageCount = await galleryImages.count();
     expect(imageCount).toBeGreaterThan(1);
 
     // Click first image
     await galleryImages.first().click();
 
-    const modal = page.locator("dialog.modal");
+    const modal = page.getByTestId("image-modal");
     await expect(modal).toBeVisible();
 
     // Navigate to last image by clicking next repeatedly
@@ -131,10 +131,10 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForLoadState("networkidle");
 
     // Click first image
-    const galleryImages = page.locator('[data-testid^="gallery-image-"]');
+    const galleryImages = page.getByTestId(/^gallery-image-/);
     await galleryImages.first().click();
 
-    const modal = page.locator("dialog.modal");
+    const modal = page.getByTestId("image-modal");
     await expect(modal).toBeVisible();
 
     // Get initial image src to track changes
@@ -167,10 +167,10 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForLoadState("networkidle");
 
     // Open modal
-    const galleryImages = page.locator('[data-testid^="gallery-image-"]');
+    const galleryImages = page.getByTestId(/^gallery-image-/);
     await galleryImages.first().click();
 
-    const modal = page.locator("dialog.modal");
+    const modal = page.getByTestId("image-modal");
     await expect(modal).toBeVisible();
 
     // Check caption exists in the modal
@@ -186,7 +186,7 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForLoadState("networkidle");
 
     // Open modal
-    const galleryImages = page.locator('[data-testid^="gallery-image-"]');
+    const galleryImages = page.getByTestId(/^gallery-image-/);
     const imageCount = await galleryImages.count();
 
     // Skip test if less than 3 images
@@ -197,7 +197,7 @@ test.describe("Event Gallery Modal", () => {
 
     await galleryImages.first().click();
 
-    const modal = page.locator("dialog.modal");
+    const modal = page.getByTestId("image-modal");
     await expect(modal).toBeVisible();
 
     // Get initial image
