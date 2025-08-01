@@ -28,7 +28,6 @@ export default function Section({
   description,
   left,
   className,
-  class: classFromAstro,
   split,
   wide,
   markdown,
@@ -38,7 +37,7 @@ export default function Section({
   children,
   element,
 }: Props) {
-  const finalClassName = className || classFromAstro || "";
+  const finalClassName = className || "";
 
   const generatedContent = title || description || markdown || button || lorem;
   const secondContainer = wide || grid;

@@ -1,9 +1,9 @@
 ---
 import Section from "@/components/Common/Section";
 import Hero from "@/components/Common/Hero";
-import EventSummary from "@/components/Event/EventSummary";
 import LandingStats from "@/components/Common/LandingStats";
 import EventsUpcoming from "@/components/Events/EventsUpcoming";
+import EventsRecent from "@/components/Events/EventsRecent";
 import ImagePlaceholder from "@/components/Common/ImagePlaceholder";
 import Banner from "@/components/Common/Banner";
 import PageLayout from "@/layouts/PageLayout.astro";
@@ -13,12 +13,9 @@ import LandingHero from "@/components/Landing/LandingHero";
 const events = await getEvents();
 ---
 
-<PageLayout
-  description="Join the Osaka Kyoto Tech Meetup Group (OKTech) - A vibrant community for web developers, designers, and tech enthusiasts. Discover upcoming events, workshops, and networking opportunities in the Kansai region."
->
+<PageLayout>
   <Banner />
   <LandingHero client:load />
-
   <Section>
     <EventsUpcoming client:load events={events} />
   </Section>
@@ -35,21 +32,8 @@ const events = await getEvents();
   <Section>
     <LandingStats />
   </Section>
-  <Section
-    inline
-    wide
-    grid
-    class="bg-primary/20"
-    title="Recent Events"
-    button={{ text: "More Events", href: "/events" }}
-  >
-    {
-      events
-        .slice(5, 9)
-        .map((event, i) => (
-          <EventSummary class={i > 2 ? "lg:hidden xl:block" : undefined} event={event} />
-        ))
-    }
+  <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
+    <EventsRecent events={events} />
   </Section>
 
   <Hero

@@ -1,12 +1,13 @@
 import EntryCard from "@/components/EntryCard/EntryCard";
 import type { EventEnriched } from "@/content";
+import { filterUpcomingEvents } from "@/utils/eventFilters";
 
 interface EventsUpcomingProps {
   events: EventEnriched[];
 }
 
 export default function EventsUpcoming({ events }: EventsUpcomingProps) {
-  const futureEvents = events.filter((event) => event.data.dateTime > new Date()).reverse();
+  const futureEvents = filterUpcomingEvents(events).reverse();
   const [nextEvent] = futureEvents;
 
   if (!nextEvent) {

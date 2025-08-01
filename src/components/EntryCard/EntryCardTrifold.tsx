@@ -40,6 +40,7 @@ export default function EntryCardTrifold({
     <LinkReact
       href={`/event/${eventId}`}
       ref={cardRef as Ref<HTMLAnchorElement>}
+      data-testid={`event-card-${eventId}`}
       className={clsx("relative w-full group drop-shadow-xl", {
         "mobile-hover": isInHotspot,
       })}
