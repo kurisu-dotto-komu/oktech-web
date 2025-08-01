@@ -2,22 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
-<!--
-IMPORTANT FOR AI ASSISTANTS:
-This changelog should focus on USER-FACING features and improvements.
-Do NOT include technical details like:
-- Refactoring
-- Code organization changes
-- Internal naming changes
-- Technical implementation details
+### August 1, 2025
 
-DO include:
-- New features users can see/use
-- UI/UX improvements
-- Visual changes
-- New functionality
-- Performance improvements users will notice
--->
+Improved gallery modal interaction and user experience.
+
+- Improved modal backdrop interaction for better usability
+- Enhanced gallery view
+- Add informative disclaimer about event photos
+
+### July 31, 2025
+
+Major gallery improvements and new calendar integration features.
+
+- Added calendar subscription options with RSS or ICS file for all events
+- Implemented "Add to Calendar" dropdown with support for Google Calendar, Outlook, and iCal
+- Added helpful tooltips throughout the interface for better user guidance
+- Introduced "How to Find Us" section on event pages with venue-specific directions
+- Improved event styling and layout for better readability
+
+### July 29, 2025
+
+Refreshed homepage layout with improved visual hierarchy.
+
+- Redesigned hero section positioning for better visual impact
+- Enhanced entry card layout for upcoming events
 
 ### July 27, 2025
 
