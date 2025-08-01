@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { EventEnriched, GalleryImage } from "@/content";
+import type { EventEnriched } from "@/content";
 import EventImageModal from "./EventImageModal";
 import { LuImage } from "react-icons/lu";
 
@@ -93,21 +93,18 @@ export default function EventGalleryImages({ event }: Props) {
           />
         </button>
       ))}
-      {selectedImage && (
-        <EventImageModal
-          allImages={galleryImages}
-          isOpen={isModalOpen}
-          imageSrc={selectedImage.fullSrc}
-          altText={selectedImage.data.caption ?? ""}
-          eventTitle={event.data.title}
-          onClose={handleCloseModal}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onDotClick={handleDotClick}
-          currentIndex={selectedIndex ?? 0}
-          totalImages={reversedImages.length}
-        />
-      )}
+      <EventImageModal
+        allImages={galleryImages}
+        isOpen={isModalOpen}
+        selectedImage={selectedImage}
+        event={event}
+        onClose={handleCloseModal}
+        onPrevious={handlePrevious}
+        onNext={handleNext}
+        onDotClick={handleDotClick}
+        currentIndex={selectedIndex ?? 0}
+        totalImages={reversedImages.length}
+      />
     </>
   );
 }

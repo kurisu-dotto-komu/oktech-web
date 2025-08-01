@@ -86,7 +86,7 @@ test.describe("Event Filters", () => {
       // Check that the dropdown button shows active filter count
       const dropdown = page.getByTestId("topics-filter-dropdown");
       await expect(dropdown).toContainText("Topics (1)");
-      
+
       // Verify Clear button appears when filters are active
       const clearButton = page.getByTestId("clear-all-filters");
       await expect(clearButton).toBeVisible();

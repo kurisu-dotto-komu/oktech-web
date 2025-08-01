@@ -1,13 +1,13 @@
 import { useEffect, useRef, useMemo } from "react";
 import { LuX, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { GalleryImage } from "@/content";
+import type { GalleryImage, EventEnriched } from "@/content";
+import { formatDate } from "@/utils/formatDate";
 
 interface Props {
   isOpen: boolean;
-  imageSrc: string;
-  altText: string;
-  eventTitle: string;
+  selectedImage: GalleryImage | null;
+  event: EventEnriched;
   onClose: () => void;
   onPrevious: () => void;
   onNext: () => void;
@@ -19,9 +19,8 @@ interface Props {
 
 export default function EventImageModal({
   isOpen,
-  imageSrc,
-  altText,
-  eventTitle,
+  selectedImage,
+  event,
   onClose,
   onPrevious,
   onNext,
@@ -113,9 +112,9 @@ export default function EventImageModal({
   useEffect(() => {
     if (!isOpen || !transformComponentRef.current) return;
     transformComponentRef.current.resetTransform();
-  }, [isOpen, imageSrc]);
+  }, [isOpen, selectedImage]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !selectedImage) return null;
 
   return (
     <dialog
@@ -138,10 +137,15 @@ export default function EventImageModal({
           }
         }}
       >
-        <div className="flex flex-col items-center w-full max-w-[80vw] lg:max-w-[80vw] xl:max-w-[1200px]">
+        <div className="flex flex-col items-center w-full max-w-[80vw] lg:max-w-[80vw] xl:max-w-[1200px]  text-white">
           {/* Header with title and close button - aligned with modal box */}
-          <div className="w-full flex items-center justify-between mb-4 px-1">
-            <h3 className="text-lg font-semibold text-white drop-shadow-lg">{eventTitle}</h3>
+          <div className="w-full flex items-end justify-between mb-4 px-1">
+            <div className="flex gap-4 items-baseline flex-wrap-reverse">
+              <h3 className="text-lg font-semibold drop-shadow-lg">{event.data.title} </h3>
+              <span className="font-normal text-base">
+                {formatDate(event.data.dateTime, "long")}
+              </span>
+            </div>
             <button
               className="p-2 text-white hover:text-white/80 transition-colors cursor-pointer"
               onClick={onClose}
@@ -202,22 +206,24 @@ export default function EventImageModal({
                     }}
                   >
                     <img
-                      src={imageSrc}
-                      alt={altText}
+                      src={selectedImage.fullSrc}
+                      alt={selectedImage.data.caption ?? ""}
                       className="w-full h-full object-contain"
                       style={{ userSelect: "none" }}
                       draggable={false}
                     />
                   </TransformComponent>
                 </TransformWrapper>
-              </div>
 
-              {/* Caption */}
-              {altText && (
-                <div className="p-4 bg-base-100">
-                  <p className="text-sm text-base-content/70">{altText}</p>
-                </div>
-              )}
+                {/* Caption overlay */}
+                {selectedImage.data.caption && (
+                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-sm px-4 py-2 rounded-lg max-w-[90%]">
+                    <p data-testid="modal-image-caption" className="text-sm text-white text-center">
+                      {selectedImage.data.caption}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
