@@ -17,7 +17,7 @@ test.describe("Theme Switching", () => {
     await expect(themeToggle).toBeVisible();
 
     // Verify initial state (light theme)
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "oktech-light");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
     // Click to switch to dark theme
     await themeToggle.click();
@@ -26,7 +26,7 @@ test.describe("Theme Switching", () => {
     await page.waitForTimeout(300);
 
     // Verify dark theme is applied
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     // Click to switch back to light theme
     await themeToggle.click();
@@ -35,7 +35,7 @@ test.describe("Theme Switching", () => {
     await page.waitForTimeout(300);
 
     // Verify light theme is applied again
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "oktech-light");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   });
 
   test("should persist theme selection across page reloads", async ({ page }) => {
@@ -52,13 +52,13 @@ test.describe("Theme Switching", () => {
 
     // Wait for theme to be applied
     await page.waitForTimeout(300);
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     // Reload the page
     await page.reload();
 
     // Verify dark theme persists after reload
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   });
 
   test("should respect system preference on first visit", async ({ browser }) => {
@@ -69,7 +69,7 @@ test.describe("Theme Switching", () => {
     const darkPage = await darkContext.newPage();
 
     await darkPage.goto("/");
-    await expect(darkPage.locator("html")).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(darkPage.locator("html")).toHaveAttribute("data-theme", "dark");
 
     await darkContext.close();
 
@@ -80,7 +80,7 @@ test.describe("Theme Switching", () => {
     const lightPage = await lightContext.newPage();
 
     await lightPage.goto("/");
-    await expect(lightPage.locator("html")).toHaveAttribute("data-theme", "oktech-light");
+    await expect(lightPage.locator("html")).toHaveAttribute("data-theme", "light");
 
     await lightContext.close();
   });

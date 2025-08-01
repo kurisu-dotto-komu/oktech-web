@@ -122,8 +122,19 @@ export default function EventImageModal({
       ref={dialogRef}
       className={`modal ${isOpen ? "modal-open" : ""} transition-opacity duration-300`}
       style={{ opacity: isOpen ? 1 : 0 }}
+      onClick={(e) => {
+        // Close modal if clicked outside content
+        if (e.target === e.currentTarget || e.target === dialogRef.current) {
+          onClose();
+        }
+      }}
     >
-      <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-8 z-50">
+      <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-8 z-50" onClick={(e) => {
+        // Also handle clicks on the container
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}>
         <div className="flex flex-col items-center w-full max-w-[90vw] lg:max-w-[80vw] xl:max-w-[1200px]">
           {/* Header with title and close button - aligned with modal box */}
           <div className="w-full flex items-center justify-between mb-4 px-1">
@@ -224,8 +235,8 @@ export default function EventImageModal({
         </div>
       </div>
       <form method="dialog" className="modal-backdrop bg-black/80 backdrop-blur-sm fixed inset-0">
-        <button onClick={onClose} className="cursor-default w-full h-full">
-          close
+        <button type="button" onClick={onClose} className="cursor-pointer w-full h-full" aria-label="Close modal">
+          <span className="sr-only">close</span>
         </button>
       </form>
     </dialog>

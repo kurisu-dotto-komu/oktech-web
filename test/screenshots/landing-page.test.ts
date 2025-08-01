@@ -7,18 +7,18 @@ test.describe("Landing Page Visual Tests", () => {
     await page.waitForLoadState("networkidle");
 
     // Check light theme data-attribute (default)
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "oktech-light");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 
     // Take light theme screenshot
     await takeScreenshot(page, "landing-page-light", true);
 
     // Switch to dark theme
     await page.evaluate(() => {
-      document.documentElement.setAttribute("data-theme", "oktech-dark");
+      document.documentElement.setAttribute("data-theme", "dark");
     });
 
     // Check dark theme data-attribute
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "oktech-dark");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 
     // Take dark theme screenshot
     await takeScreenshot(page, "landing-page-dark", true);
