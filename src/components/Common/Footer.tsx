@@ -4,6 +4,7 @@ import MainMenu from "@/components/Common/MainMenu";
 import { formatDate } from "@/utils/formatDate";
 import Brand from "@/components/Common/Brand";
 import ThemeToggle from "@/components/Common/ThemeToggle";
+import { meta } from "@/utils/meta";
 
 export default function Footer() {
   return (
@@ -22,12 +23,13 @@ export default function Footer() {
           </div>
           <div className="text-xs">
             <a
-              href="https://github.com/owddm/owddm.github.io/commit/e83f4545b44cd939e4f8ea390afbd83697e4c885"
+              href={`${meta.repository}/commit/${meta.commitHash}`}
               target="_blank"
               className="link link-hover"
             >
               Built with <code className="badge badge-xs">{`<3`}</code> on{" "}
-              {formatDate(new Date(), "long")}
+              <code className="badge badge-xs">{meta.commitHash.substring(0, 7)}</code> at{" "}
+              <code className="badge badge-xs">{formatDate(new Date(), "datetime")} UTC</code>
             </a>
           </div>
         </div>

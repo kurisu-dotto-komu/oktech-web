@@ -1,10 +1,14 @@
 import path from "node:path";
 
-// TODO use the repo and fetch hash etc.
+export const GITHUB_REPO = "owddm/public";
+export const GITHUB_API_BASE = `https://api.github.com/repos/${GITHUB_REPO}`;
 
-export const PUBLIC_BASE = "https://owddm.com/public/";
-export const EVENTS_URL = `${PUBLIC_BASE}events.json`;
-export const PHOTOS_URL = `${PUBLIC_BASE}photos.json`;
+export function getGithubRawUrl(commitHash: string, file: string): string {
+  return `https://raw.githubusercontent.com/${GITHUB_REPO}/${commitHash}/${file}`;
+}
+
+// Temporary - will be replaced with commit-specific URL
+export const GITHUB_RAW_BASE = `https://raw.githubusercontent.com/${GITHUB_REPO}/refs/heads/main/`;
 export const CONTENT_DIR = path.join("content");
 export const EVENTS_BASE_DIR = path.join(CONTENT_DIR, "events");
 export const VENUES_BASE_DIR = path.join(CONTENT_DIR, "venues");

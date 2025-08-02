@@ -1,10 +1,13 @@
+import fs from "node:fs/promises";
+import path from "node:path";
 import type { EventsWithVenuesJSON, PhotoJSON } from "./types";
 import { logger } from "./logger";
-import { EVENTS_URL, PHOTOS_URL } from "./constants";
+import { CONTENT_DIR, getGithubRawUrl } from "./constants";
 import { createStatistics } from "./statistics";
 import { assignPhotosToEvents } from "./photos";
 import { processEvent } from "./events";
 import { processVenue, unmatchedCities } from "./venues";
+import { fetchLatestCommitInfo } from "./utils";
 
 export async function handleImport(args: string[]) {
   const overwriteMaps = args.includes("--overwrite-maps");
@@ -16,11 +19,21 @@ export async function handleImport(args: string[]) {
   // Initialize statistics
   const stats = createStatistics();
 
+  // Fetch commit info
+  logger.section("Fetching Repository Info");
+  const commitInfo = await fetchLatestCommitInfo();
+  logger.info(`Latest commit: ${commitInfo.sha}`);
+  logger.info(`Commit date: ${commitInfo.date}`);
+
+  // Build URLs using the specific commit hash
+  const eventsUrl = getGithubRawUrl(commitInfo.sha, "events.json");
+  const photosUrl = getGithubRawUrl(commitInfo.sha, "photos.json");
+
   // Fetch data
   logger.section("Fetching Data");
   const [eventsWithVenuesJSON, photosJSON] = await Promise.all([
-    fetch(EVENTS_URL).then((r) => r.json()) as Promise<EventsWithVenuesJSON>,
-    fetch(PHOTOS_URL).then((r) => r.json()) as Promise<PhotoJSON>,
+    fetch(eventsUrl).then((r) => r.json()) as Promise<EventsWithVenuesJSON>,
+    fetch(photosUrl).then((r) => r.json()) as Promise<PhotoJSON>,
   ]);
 
   // Process photos
@@ -164,4 +177,17 @@ export async function handleImport(args: string[]) {
   } else {
     logger.success("All cities were successfully mapped!");
   }
+
+  // Create meta.json
+  logger.section("Creating Metadata");
+  const metaData = {
+    commitDate: commitInfo.date,
+    commitHash: commitInfo.sha,
+    repository: "https://github.com/owddm/public",
+  };
+
+  const metaPath = path.join(CONTENT_DIR, "meta.json");
+  await fs.mkdir(CONTENT_DIR, { recursive: true });
+  await fs.writeFile(metaPath, JSON.stringify(metaData, null, 2));
+  logger.success(`Created ${metaPath}`);
 }

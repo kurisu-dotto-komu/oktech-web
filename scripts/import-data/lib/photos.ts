@@ -249,14 +249,27 @@ export async function processGallery(
     await fs.mkdir(galleryDir, { recursive: true });
 
     for (const photo of photos) {
-      const galleryImageFileName = path.basename(photo.file);
+      if (!photo.location) {
+        logger.warn(`Photo without location property found, skipping`);
+        continue;
+      }
+      if (photo.removed) {
+        continue; // Skip removed images silently
+      }
+      const galleryImageFileName = path.basename(photo.location);
       const galleryImageLocalPath = path.join(galleryDir, galleryImageFileName);
-      const wasDownloaded = await downloadImage(photo.file, galleryImageLocalPath);
-
-      if (wasDownloaded) {
-        stats.galleryImagesDownloaded++;
-      } else {
-        stats.galleryImagesUnchanged++;
+      
+      try {
+        const wasDownloaded = await downloadImage(photo.location, galleryImageLocalPath);
+        if (wasDownloaded) {
+          stats.galleryImagesDownloaded++;
+          logger.success(`Downloaded → ${galleryImageLocalPath}`);
+        } else {
+          stats.galleryImagesUnchanged++;
+        }
+      } catch (err) {
+        logger.warn(`Failed to download image ${photo.location}: ${err.message}`);
+        // Don't count this as a failure, just skip it
       }
 
       if (photo.caption) {
@@ -288,7 +301,8 @@ export async function processGallery(
   if (existsSync(galleryDir)) {
     const expectedFiles = new Set<string>();
     for (const photo of photos) {
-      const base = path.basename(photo.file);
+      if (!photo.location || photo.removed) continue;
+      const base = path.basename(photo.location);
       expectedFiles.add(base);
       if (photo.caption) {
         expectedFiles.add(`${base}.yaml`);

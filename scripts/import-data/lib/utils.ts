@@ -1,14 +1,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { existsSync } from "node:fs";
-import { PUBLIC_BASE } from "./constants";
+import { GITHUB_RAW_BASE, GITHUB_API_BASE } from "./constants";
 import { logger } from "./logger";
 import type { ImportStatistics } from "./statistics";
 
 const IMAGE_CACHE = new Map<string, Buffer>();
 
 export async function downloadImage(url: string, localPath: string): Promise<boolean> {
-  const fullUrl = url.startsWith("http") ? url : `${PUBLIC_BASE}${url}`;
+  const fullUrl = url.startsWith("http") ? url : `${GITHUB_RAW_BASE}${url}`;
 
   try {
     // Check if image already exists locally
@@ -42,7 +42,7 @@ export async function downloadImage(url: string, localPath: string): Promise<boo
     await fs.writeFile(localPath, imageBuffer);
     return true; // Image was downloaded
   } catch (err) {
-    logger.error(`Failed to download image ${fullUrl} to ${localPath}:`, err);
+    // Don't log here - let the caller handle logging
     throw err;
   }
 }
@@ -57,5 +57,22 @@ export function calculateImageStats(
   }
   if (downloadedCount > 0) {
     stats.galleryImagesDownloaded += downloadedCount;
+  }
+}
+
+export async function fetchLatestCommitInfo(): Promise<{ sha: string; date: string }> {
+  try {
+    const response = await fetch(`${GITHUB_API_BASE}/commits/main`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch commit info: ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+    return {
+      sha: data.sha,
+      date: data.commit.committer.date
+    };
+  } catch (err) {
+    logger.error("Failed to fetch latest commit info:", err);
+    throw err;
   }
 }

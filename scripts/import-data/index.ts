@@ -70,5 +70,8 @@ async function main() {
 
 main().catch((err) => {
   logger.error("Operation failed:", err);
+  if (err.stack) {
+    console.error(err.stack);
+  }
   process.exit(1);
 });
