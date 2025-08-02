@@ -14,16 +14,17 @@ export default function Socials({ variant = "default", className = "" }: Socials
         {SOCIALS.map((social) => {
           const IconComponent = social.icon;
           return (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.label}
-              className="hover:text-primary transition-colors"
-            >
-              <IconComponent size={18} />
-            </a>
+            <div key={social.label} className="tooltip tooltip-top" data-tip={social.label}>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="hover:text-primary transition-colors"
+              >
+                <IconComponent size={18} />
+              </a>
+            </div>
           );
         })}
       </div>
