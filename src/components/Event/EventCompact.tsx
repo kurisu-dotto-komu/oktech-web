@@ -14,21 +14,7 @@ export default function EventCompact({ event, className, class: classFromAstro }
 
   return (
     <Link href={`/event/${event.id}`} className={`flex h-24 transition-colors ${finalClassName}`}>
-      <div className="flex-shrink-0 p-2">
-        <figure className="bg-base-300 aspect-video h-full overflow-hidden rounded-lg">
-          {event.data.cover ? (
-            <img
-              src={event.data.cover.src}
-              alt={event.data.title}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="bg-base-300 h-full w-full" />
-          )}
-        </figure>
-      </div>
-
-      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1 p-3">
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1 px-6 py-2">
         <h3 className="truncate text-base font-semibold" data-testid="event-title">
           {event.data.title}
         </h3>
@@ -41,6 +27,20 @@ export default function EventCompact({ event, className, class: classFromAstro }
             inline={true}
           />
         </div>
+      </div>
+
+      <div className="flex-shrink-0 p-2">
+        <figure className="bg-base-300 aspect-video h-full overflow-hidden rounded-lg">
+          {event.data.cover ? (
+            <img
+              src={event.data.cover.src}
+              alt={event.data.title}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="bg-base-300 h-full w-full" />
+          )}
+        </figure>
       </div>
     </Link>
   );

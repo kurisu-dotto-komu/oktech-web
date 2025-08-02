@@ -23,7 +23,7 @@ export default function EventsCompactView({ events }: Props) {
           title={group.label}
           className="flex flex-col overflow-hidden rounded-lg pb-6"
         >
-          <div className="border-base-100 overflow-hidden rounded-lg border">
+          <div className="border-base-100 -mx-2 overflow-hidden rounded-lg border lg:-mx-4">
             {group.events.map((event, index) => (
               <div key={event.id} data-testid="event-card">
                 <EventCompact
