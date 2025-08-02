@@ -16,7 +16,8 @@ function showHelp() {
   );
   logger.info("");
   logger.info("Import Options:");
-  logger.info("  --overwrite-maps    Regenerate existing venue maps");
+  logger.info("  --overwrite-maps                  Regenerate all existing venue maps");
+  logger.info("  --overwrite-maps-theme <theme>    Regenerate only light or dark maps (theme: light|dark)");
   logger.info("");
   logger.info("Clear Types:");
   logger.info("  markdown         Clear all markdown files (events and venues)");

@@ -12,9 +12,24 @@ import { processVenue, unmatchedCities } from "./venues";
 
 export async function handleImport(args: string[]) {
   const overwriteMaps = args.includes("--overwrite-maps");
+  
+  // Check for --overwrite-maps-theme parameter
+  let overwriteMapsTheme: "light" | "dark" | "both" | null = null;
+  const themeIndex = args.findIndex(arg => arg === "--overwrite-maps-theme");
+  if (themeIndex !== -1 && args[themeIndex + 1]) {
+    const theme = args[themeIndex + 1];
+    if (theme === "light" || theme === "dark") {
+      overwriteMapsTheme = theme;
+    } else {
+      logger.error(`Invalid theme for --overwrite-maps-theme: ${theme}. Use 'light' or 'dark'.`);
+      process.exit(1);
+    }
+  }
 
   if (overwriteMaps) {
     logger.info("Map overwrite mode enabled - existing maps will be regenerated");
+  } else if (overwriteMapsTheme) {
+    logger.info(`Map overwrite mode enabled for ${overwriteMapsTheme} theme only`);
   }
 
   // Initialize statistics
@@ -55,7 +70,7 @@ export async function handleImport(args: string[]) {
   if (eventsWithVenuesJSON.venues) {
     for (const venue of eventsWithVenuesJSON.venues) {
       stats.totalVenues++;
-      await processVenue(venue, overwriteMaps, stats);
+      await processVenue(venue, overwriteMaps || !!overwriteMapsTheme, stats, overwriteMapsTheme);
     }
   }
 

@@ -2,6 +2,7 @@ import { LuMapPin } from "react-icons/lu";
 
 interface Props {
   mapImage?: { default: { src: string } } | null;
+  mapDarkImage?: { default: { src: string } } | null;
   marker?: boolean | string;
   className?: string;
   class?: string;
@@ -9,6 +10,7 @@ interface Props {
 
 export default function VenueMapImage({
   mapImage,
+  mapDarkImage,
   marker,
   className,
   class: classFromAstro,
@@ -17,14 +19,29 @@ export default function VenueMapImage({
 
   return (
     <figure className={`relative h-full w-full ${finalClassName}`}>
-      {mapImage ? (
-        <img
-          src={mapImage.default.src}
-          alt="Venue location map"
-          className="h-full w-full object-cover"
-          width={1024}
-          height={1024}
-        />
+      {mapImage || mapDarkImage ? (
+        <>
+          {/* Light mode map */}
+          {mapImage && (
+            <img
+              src={mapImage.default.src}
+              alt="Venue location map"
+              className="h-full w-full scale-105 object-cover transition-transform duration-300 group-hover:scale-110 dark:hidden"
+              width={1024}
+              height={1024}
+            />
+          )}
+          {/* Dark mode map */}
+          {mapDarkImage && (
+            <img
+              src={mapDarkImage.default.src}
+              alt="Venue location map"
+              className="hidden h-full w-full scale-105 object-cover transition-transform duration-300 group-hover:scale-110 dark:block"
+              width={1024}
+              height={1024}
+            />
+          )}
+        </>
       ) : (
         <div className="from-primary/20 to-secondary/20 flex h-full min-h-[200px] w-full items-center justify-center bg-gradient-to-br">
           <LuMapPin className="text-base-content/20 h-16 w-16" />

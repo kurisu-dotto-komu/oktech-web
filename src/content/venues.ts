@@ -6,9 +6,10 @@ import { safeGetImage } from "@/utils/imageOptimization";
 // Type definitions
 export type Venue = InferEntrySchema<"venues">;
 
-// Enhanced venue type with processed map image
+// Enhanced venue type with processed map images
 export type ProcessedVenue = Venue & {
   mapImageSrc?: string;
+  mapDarkImageSrc?: string;
 };
 
 // Enriched venue type that combines CollectionEntry with processed data
@@ -27,6 +28,10 @@ export const venuesCollection = defineCollection({
       eager: true,
     });
 
+    const mapDarkImages = import.meta.glob("/content/venues/**/map-dark.jpg", {
+      eager: true,
+    });
+
     return Object.entries(imports).map(([fileName, module]) => {
       const basePath = fileName.replace("/venue.md", "");
       const slug = basePath.split("/").pop() as string;
@@ -40,6 +45,9 @@ export const venuesCollection = defineCollection({
 
       const mapImagePath = path.join(basePath, "map.jpg");
       const mapImage = mapImages[mapImagePath] ? mapImagePath : undefined;
+      
+      const mapDarkImagePath = path.join(basePath, "map-dark.jpg");
+      const mapDarkImage = mapDarkImages[mapDarkImagePath] ? mapDarkImagePath : undefined;
 
       return {
         id: slug,
@@ -57,6 +65,7 @@ export const venuesCollection = defineCollection({
         description: frontmatter.description as string | undefined,
         cover,
         mapImage,
+        mapDarkImage,
       };
     });
   },
@@ -82,6 +91,7 @@ export const venuesCollection = defineCollection({
       description: z.string().optional(),
       cover: image().optional(),
       mapImage: image().optional(),
+      mapDarkImage: image().optional(),
     }),
 });
 
@@ -90,6 +100,7 @@ const processVenue = memoize(async function processVenue(
   venue: CollectionEntry<"venues">,
 ): Promise<ProcessedVenue> {
   let mapImageSrc: string | undefined;
+  let mapDarkImageSrc: string | undefined;
 
   if (venue.data.mapImage) {
     const mapImage = await safeGetImage({
@@ -100,9 +111,19 @@ const processVenue = memoize(async function processVenue(
     mapImageSrc = mapImage.src;
   }
 
+  if (venue.data.mapDarkImage) {
+    const mapDarkImage = await safeGetImage({
+      src: venue.data.mapDarkImage,
+      format: "webp",
+      width: 512,
+    });
+    mapDarkImageSrc = mapDarkImage.src;
+  }
+
     return {
       ...venue.data,
       mapImageSrc,
+      mapDarkImageSrc,
     };
   },
 );

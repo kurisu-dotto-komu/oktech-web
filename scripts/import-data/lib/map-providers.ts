@@ -85,6 +85,10 @@ const providers = {
     url: `https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png?api_key=${STADIA_API_KEY}`,
     attribution: ", © Stadia Maps",
   },
+  stadiaAlidadeSmoothDark: {
+    url: `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=${STADIA_API_KEY}`,
+    attribution: ", © Stadia Maps",
+  },
 
   // CyclOSM
   cyclOSM: {

@@ -48,6 +48,7 @@ export async function processVenue(
   venue: Venue,
   overwriteMaps: boolean,
   stats: ImportStatistics,
+  overwriteMapsTheme?: "light" | "dark" | null,
 ): Promise<void> {
   // IMPORTANT: This function preserves existing markdown body content in venue files
   // Only the frontmatter is updated during import - any manually written descriptions
@@ -136,27 +137,62 @@ export async function processVenue(
   // Handle map generation
   if (venue.lat && venue.lng) {
     const mapFileName = "map.jpg";
+    const mapDarkFileName = "map-dark.jpg";
     const mapPath = path.join(venueDir, mapFileName);
+    const mapDarkPath = path.join(venueDir, mapDarkFileName);
 
-    // Check if map already exists first to avoid unnecessary API calls
-    if (existsSync(mapPath) && !overwriteMaps) {
-      logger.debug(`Map already exists for venue ${venue.id} (${venue.name})`);
-      stats.mapsUnchanged++;
+    // Check if both maps already exist first to avoid unnecessary API calls
+    const lightMapExists = existsSync(mapPath);
+    const darkMapExists = existsSync(mapDarkPath);
+
+    // Determine which maps to generate based on theme parameter
+    const shouldGenerateLight = overwriteMapsTheme === null || overwriteMapsTheme === undefined || overwriteMapsTheme === "light";
+    const shouldGenerateDark = overwriteMapsTheme === null || overwriteMapsTheme === undefined || overwriteMapsTheme === "dark";
+    
+    if (lightMapExists && darkMapExists && !overwriteMaps) {
+      logger.debug(`Maps already exist for venue ${venue.id} (${venue.name})`);
+      stats.mapsUnchanged += 2;
     } else {
-      // Only attempt to generate if map doesn't exist or overwrite is enabled
-      const mapGenerated = await generateStaticMap(mapPath, {
-        lat: venue.lat,
-        lng: venue.lng,
-      });
-      if (mapGenerated) {
-        stats.mapsGenerated++;
+      // Generate light mode map if needed
+      if (shouldGenerateLight && (!lightMapExists || overwriteMaps)) {
+        const mapGenerated = await generateStaticMap(
+          mapPath,
+          {
+            lat: venue.lat,
+            lng: venue.lng,
+          },
+          false,
+        );
+        if (mapGenerated) {
+          stats.mapsGenerated++;
+        } else {
+          stats.mapsFailed++;
+        }
       } else {
-        // Error is already logged in generateStaticMap with detailed message
-        stats.mapsFailed++;
+        stats.mapsUnchanged++;
+      }
+
+      // Generate dark mode map if needed
+      if (shouldGenerateDark && (!darkMapExists || overwriteMaps)) {
+        const darkMapGenerated = await generateStaticMap(
+          mapDarkPath,
+          {
+            lat: venue.lat,
+            lng: venue.lng,
+          },
+          true,
+        );
+        if (darkMapGenerated) {
+          stats.mapsGenerated++;
+        } else {
+          stats.mapsFailed++;
+        }
+      } else {
+        stats.mapsUnchanged++;
       }
     }
   } else {
     logger.debug(`No coordinates for venue ${venue.id} (${venue.name}), skipping map generation`);
-    stats.mapsFailed++;
+    stats.mapsFailed += 2; // Count both light and dark as failed
   }
 }

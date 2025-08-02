@@ -10,6 +10,7 @@ import { type ProviderKey, getMapProviderConfig } from "./map-providers";
 // Free providers: "openstreetmap", "carto", "cartoPositron", "cartoDarkMatter"
 // Paid providers (require API key): "stadiaWaterColor", "stadiaBright", etc.
 const CHOSEN_PROVIDER: ProviderKey = "stadiaWaterColor";
+const DARK_MODE_PROVIDER: ProviderKey = "stadiaAlidadeSmoothDark";
 
 export interface MapOptions {
   lat: number;
@@ -19,12 +20,16 @@ export interface MapOptions {
   zoom?: number;
 }
 
-export async function generateStaticMap(outputPath: string, options: MapOptions): Promise<boolean> {
+export async function generateStaticMap(
+  outputPath: string,
+  options: MapOptions,
+  isDarkMode = false,
+): Promise<boolean> {
   const { lat, lng, width = 1024, height = 1024, zoom = 15 } = options;
 
   try {
     // Get provider configuration with validation
-    const provider = getMapProviderConfig(CHOSEN_PROVIDER);
+    const provider = getMapProviderConfig(isDarkMode ? DARK_MODE_PROVIDER : CHOSEN_PROVIDER);
 
     // Create map options for osm-static-maps
     const mapOptions = {
@@ -49,7 +54,7 @@ export async function generateStaticMap(outputPath: string, options: MapOptions)
     // Write the image
     await fs.writeFile(outputPath, imageBuffer);
 
-    logger.success(`Generated map → ${outputPath}`);
+    logger.success(`Generated ${isDarkMode ? "dark mode" : "light mode"} map → ${outputPath}`);
     return true;
   } catch (error) {
     // Provide more detailed error messages

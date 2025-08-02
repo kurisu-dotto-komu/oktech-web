@@ -39,10 +39,16 @@ export default function VenueMap({
 
   const mapUrl = getMapUrl();
 
-  // Get processed map image from venue data
+  // Get processed map images from venue data
   const mapImage = venue.mapImageSrc
     ? {
         default: { src: venue.mapImageSrc },
+      }
+    : null;
+
+  const mapDarkImage = venue.mapDarkImageSrc
+    ? {
+        default: { src: venue.mapDarkImageSrc },
       }
     : null;
 
@@ -56,7 +62,7 @@ export default function VenueMap({
           className={`block h-full w-full cursor-pointer transition-opacity hover:opacity-90 ${finalClassName}`}
           data-testid="venue-map-link"
         >
-          <VenueMapImage mapImage={mapImage} marker={marker} />
+          <VenueMapImage mapImage={mapImage} mapDarkImage={mapDarkImage} marker={marker} />
         </a>
       </div>
     );
@@ -64,7 +70,12 @@ export default function VenueMap({
 
   return (
     <div data-testid="venue-map">
-      <VenueMapImage mapImage={mapImage} marker={marker} className={finalClassName} />
+      <VenueMapImage
+        mapImage={mapImage}
+        mapDarkImage={mapDarkImage}
+        marker={marker}
+        className={finalClassName}
+      />
     </div>
   );
 }
