@@ -1,4 +1,5 @@
-import { SOCIALS } from "@/components/Common/Socials";
+import { SOCIALS } from "@/constants";
+
 import IconCard from "./IconCard";
 
 export default function SocialsBig() {

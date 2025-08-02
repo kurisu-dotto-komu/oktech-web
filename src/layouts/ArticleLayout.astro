@@ -17,15 +17,17 @@ interface Props {
 }
 
 const { title, pageTitle, buttons, active, class: className } = Astro.props;
+const hasHeaderSlot = Astro.slots.has("header");
 ---
 
 <PageLayout title={pageTitle || title}>
   <section class={`py-18 ${className || ""}`}>
     <div class="mx-auto w-full max-w-6xl px-4 md:px-6 lg:px-8">
       <div class="flex items-center justify-between mb-8">
-        <h2 class="text-3xl font-bold">{title}</h2>
+        <h1 class="text-5xl font-bold">{title}</h1>
+        {hasHeaderSlot && <slot name="header" />}
         {
-          buttons && active && (
+          !hasHeaderSlot && buttons && active && (
             <div class="join">
               {buttons.map((button) => (
                 <Link

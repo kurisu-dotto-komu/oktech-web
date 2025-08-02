@@ -1,10 +1,11 @@
-import Socials from "@/components/Common/Socials";
+import SocialsFooter from "@/components/Common/SocialsFooter";
 import Container from "@/components/Common/Container";
 import MainMenu from "@/components/Common/MainMenu";
 import { formatDate } from "@/utils/formatDate";
 import Brand from "@/components/Common/Brand";
-import ThemeToggle from "@/components/Common/ThemeToggle";
+import LinkReact from "./LinkReact";
 import { meta } from "@/utils/meta";
+import { SITE } from "@/constants";
 
 export default function Footer() {
   return (
@@ -13,8 +14,7 @@ export default function Footer() {
         <div className="flex justify-between items-center flex-col sm:flex-row gap-8">
           <MainMenu variant="footer" />
           <div className="flex gap-4 items-center">
-            <Socials variant="footer" />
-            {/* <ThemeToggle testId="theme-toggle-footer" /> */}
+            <SocialsFooter />
           </div>
         </div>
         <div className="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">
@@ -32,6 +32,14 @@ export default function Footer() {
               <code className="badge badge-xs">{formatDate(new Date(), "datetime")} UTC</code>
             </a>
           </div>
+        </div>
+        <div className="text-xs">
+          Copyright © {new Date().getFullYear()} {SITE.longName}
+        </div>
+        <div className="text-xs">
+          <LinkReact href="/code-of-conduct" className="link link-hover">
+            Code of Conduct
+          </LinkReact>
         </div>
       </Container>
     </footer>
