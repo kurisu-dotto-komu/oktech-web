@@ -1,4 +1,4 @@
-import Socials from "@/components/Common/Socials";
+import SocialsFooter from "@/components/Common/SocialsFooter";
 import Container from "@/components/Common/Container";
 import MainMenu from "@/components/Common/MainMenu";
 import { formatDate } from "@/utils/formatDate";
@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="flex justify-between items-center flex-col sm:flex-row gap-8">
           <MainMenu variant="footer" />
           <div className="flex gap-4 items-center">
-            <Socials variant="footer" />
+            <SocialsFooter />
           </div>
         </div>
         <div className="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">
