@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import Section from "@/components/Common/Section";
 import EventCompact from "@/components/Event/EventCompact";
 import type { EventEnriched } from "@/content";
@@ -18,15 +20,23 @@ export default function EventsCompactView({ events }: Props) {
       {eventGroups.map((group) => (
         <Section
           key={group.label}
-          wide
           title={group.label}
-          className="mb-12 flex flex-col last:mb-0"
+          className="flex flex-col overflow-hidden rounded-lg pb-6"
         >
-          {group.events.map((event) => (
-            <div key={event.id} data-testid="event-card">
-              <EventCompact event={event} className="border-base-300 border-b last:border-0" />
-            </div>
-          ))}
+          <div className="border-base-100 overflow-hidden rounded-lg border">
+            {group.events.map((event, index) => (
+              <div key={event.id} data-testid="event-card">
+                <EventCompact
+                  event={event}
+                  className={clsx(
+                    "hover:bg-base-100",
+                    index % 2 === 0 && "bg-base-100/30",
+                    index % 2 === 1 && "bg-base-100/60",
+                  )}
+                />
+              </div>
+            ))}
+          </div>
         </Section>
       ))}
     </div>

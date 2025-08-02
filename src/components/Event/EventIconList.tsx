@@ -28,6 +28,7 @@ interface EventIconListProps {
   event: EventEnriched;
   stats?: EventStatKey[];
   showCountdown?: boolean;
+  inline?: boolean;
 }
 
 const defaultStats: EventStatKey[] = ["date", "time", "city", "venue", "address", "topics"];
@@ -36,6 +37,7 @@ export default function EventIconList({
   event,
   stats = defaultStats,
   showCountdown = false,
+  inline = false,
 }: EventIconListProps) {
   const isUpcoming = new Date(event.data.dateTime) > new Date();
   const statRenderers: Record<EventStatKey, () => ReactNode> = {
@@ -77,7 +79,7 @@ export default function EventIconList({
     address: () =>
       event.venue?.address ? (
         <InfoItem icon={LuMapPin}>
-          <span>{event.venue.address}</span>
+          <span className="truncate">{event.venue.address}</span>
         </InfoItem>
       ) : null,
     topics: () =>
@@ -94,16 +96,32 @@ export default function EventIconList({
       ) : null,
   };
 
+  const containerClass = inline
+    ? "flex items-center gap-4 text-sm overflow-hidden"
+    : "flex flex-col gap-2 text-sm";
+
+  const inlineStyle = inline
+    ? {
+        maskImage: "linear-gradient(to right, black 80%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to right, black 80%, transparent 100%)",
+      }
+    : {};
+
+  const statClass = inline ? "whitespace-nowrap flex-shrink-0" : "";
   return (
-    <div className="flex flex-col gap-2 text-sm">
+    <div className={containerClass} style={inlineStyle}>
       {showCountdown && isUpcoming && (
-        <div key="countdown">
+        <div key="countdown" className={statClass}>
           <EventCountdown eventDateTime={event.data.dateTime} />
         </div>
       )}
       {stats.map((stat) => {
         const renderer = statRenderers[stat];
-        return renderer ? <div key={stat}>{renderer()}</div> : null;
+        return renderer ? (
+          <div key={stat} className={statClass}>
+            {renderer()}
+          </div>
+        ) : null;
       })}
     </div>
   );

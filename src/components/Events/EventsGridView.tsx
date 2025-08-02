@@ -16,7 +16,7 @@ export default function EventsGridView({ events }: Props) {
   return (
     <div data-testid="events-grid-view">
       {eventGroups.map((group) => (
-        <Section key={group.label} grid wide title={group.label} className="mb-12 last:mb-0">
+        <Section key={group.label} grid wide title={group.label} className="pb-6">
           {group.events.map((event) => (
             <div key={event.id} data-testid="event-card">
               <EventSummary event={event} />
