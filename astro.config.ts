@@ -1,9 +1,9 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
-import icon from "astro-icon";
 import yaml from "@rollup/plugin-yaml";
+import tailwindcss from "@tailwindcss/vite";
+import icon from "astro-icon";
+import { defineConfig } from "astro/config";
 
 // Determine the site URL and base path
 const isVercel = !!process.env.VERCEL_PROJECT_PRODUCTION_URL;

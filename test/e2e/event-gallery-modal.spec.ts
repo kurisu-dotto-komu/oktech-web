@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Event Gallery Modal", () => {
   const eventUrl = `/event/194472502-lets-meet-soon`; // Event with gallery images and captions

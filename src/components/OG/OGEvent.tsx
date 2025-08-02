@@ -1,4 +1,4 @@
-import OGLayout, { CalendarIcon, LocationIcon, IconWrapper } from "./OGLayout";
+import OGLayout, { CalendarIcon, IconWrapper, LocationIcon } from "./OGLayout";
 
 interface EventData {
   data: {

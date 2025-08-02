@@ -74,7 +74,7 @@ export type EventJSON = {
 */
 
 export type Photo = {
-  location: string;  // Changed from 'file' to 'location'
+  location: string; // Changed from 'file' to 'location'
   caption?: string;
   date?: number;
   res?: [number, number][];

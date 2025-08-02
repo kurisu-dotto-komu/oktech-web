@@ -2,8 +2,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 // @ts-ignore
 import osmStaticMaps from "osm-static-maps";
-import { getMapProviderConfig, type ProviderKey } from "./map-providers";
+
 import { logger } from "./logger";
+import { type ProviderKey, getMapProviderConfig } from "./map-providers";
 
 // Set the chosen provider here
 // Free providers: "openstreetmap", "carto", "cartoPositron", "cartoDarkMatter"

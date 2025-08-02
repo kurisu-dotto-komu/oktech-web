@@ -1,13 +1,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { EventsWithVenuesJSON, PhotoJSON } from "./types";
-import { logger } from "./logger";
+
 import { CONTENT_DIR, getGithubRawUrl } from "./constants";
-import { createStatistics } from "./statistics";
-import { assignPhotosToEvents } from "./photos";
 import { processEvent } from "./events";
-import { processVenue, unmatchedCities } from "./venues";
+import { logger } from "./logger";
+import { assignPhotosToEvents } from "./photos";
+import { createStatistics } from "./statistics";
+import type { EventsWithVenuesJSON, PhotoJSON } from "./types";
 import { fetchLatestCommitInfo } from "./utils";
+import { processVenue, unmatchedCities } from "./venues";
 
 export async function handleImport(args: string[]) {
   const overwriteMaps = args.includes("--overwrite-maps");

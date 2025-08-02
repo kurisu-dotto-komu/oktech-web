@@ -1,12 +1,13 @@
+import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { existsSync } from "node:fs";
 import { stringify as yamlStringify } from "yaml";
-import type { Event, EventsWithVenuesJSON, Photo, PhotoJSON } from "./types";
-import { logger } from "./logger";
+
 import { INFER_EVENTS } from "./constants";
-import { downloadImage } from "./utils";
+import { logger } from "./logger";
 import type { ImportStatistics } from "./statistics";
+import type { Event, EventsWithVenuesJSON, Photo, PhotoJSON } from "./types";
+import { downloadImage } from "./utils";
 
 interface PhotoBatch {
   timestamp: number;
@@ -258,7 +259,7 @@ export async function processGallery(
       }
       const galleryImageFileName = path.basename(photo.location);
       const galleryImageLocalPath = path.join(galleryDir, galleryImageFileName);
-      
+
       try {
         const wasDownloaded = await downloadImage(photo.location, galleryImageLocalPath);
         if (wasDownloaded) {

@@ -1,6 +1,7 @@
-import type { EventEnriched } from "@/content";
 import Link from "@/components/Common/LinkReact";
 import EventIconList from "@/components/Event/EventIconList";
+import type { EventEnriched } from "@/content";
+
 import EventCity from "./EventCity";
 
 interface Props {
@@ -17,20 +18,20 @@ export default function EventSummary({ event, className, class: classFromAstro }
       href={`/event/${event.id}`}
       className={`card card-border bg-base-100 hover-zoom ${finalClassName}`}
     >
-      <figure className="aspect-video w-full bg-base-300">
+      <figure className="bg-base-300 aspect-video w-full">
         {event.data.cover ? (
           <img
             src={event.data.cover.src}
             alt={event.data.title}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
             width={512}
             height={512}
           />
         ) : (
-          <div className="w-full h-full bg-base-300" />
+          <div className="bg-base-300 h-full w-full" />
         )}
       </figure>
-      <div className="card-body p-4 gap-4 flex flex-col">
+      <div className="card-body flex flex-col gap-4 p-4">
         <h3 className="card-title text-lg" data-testid="event-title">
           {event.data.title}
         </h3>

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Theme persistence", () => {
   test("dark theme should persist when navigating between pages", async ({ page }) => {

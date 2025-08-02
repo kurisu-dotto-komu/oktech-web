@@ -1,5 +1,6 @@
-import type { EventEnriched } from "@/content";
 import { SITE } from "@/constants";
+import type { EventEnriched } from "@/content";
+
 import { resolveFullUrl } from "./urlResolver";
 
 export function formatICSDate(date: Date): string {

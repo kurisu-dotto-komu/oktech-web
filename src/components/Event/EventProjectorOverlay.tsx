@@ -1,8 +1,10 @@
 import { useEffect } from "react";
+
 import { LuCalendar } from "react-icons/lu";
+
+import Brand from "@/components/Common/Brand";
 import type { EventEnriched } from "@/content";
 import { formatDate, formatTime } from "@/utils/formatDate";
-import Brand from "@/components/Common/Brand";
 
 interface EventProjectorOverlayProps {
   event: EventEnriched;
@@ -60,12 +62,12 @@ export default function EventProjectorOverlay({
   return (
     <div
       id="projector-overlay"
-      className="fixed inset-0 z-50 w-screen h-screen flex items-center justify-center bg-black"
+      className="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-black"
       data-theme="night"
       data-testid="projector-overlay"
     >
       <div
-        className="relative bg-gradient-to-br from-primary to-secondary text-base-100 flex"
+        className="from-primary to-secondary text-base-100 relative flex bg-gradient-to-br"
         style={{
           width: "100vw",
           height: "calc(100vw * 9 / 16)",
@@ -76,11 +78,11 @@ export default function EventProjectorOverlay({
         }}
       >
         {/* Left Column */}
-        <div className="flex-1 flex flex-col justify-between" style={{ paddingRight: "2vw" }}>
+        <div className="flex flex-1 flex-col justify-between" style={{ paddingRight: "2vw" }}>
           {/* Top: Title and Description */}
           <div className="flex flex-col" style={{ gap: "2vw" }}>
             <h1
-              className="font-bold leading-tight line-clamp-3"
+              className="line-clamp-3 leading-tight font-bold"
               style={{ fontSize: "5vw" }}
               data-testid="projector-title"
             >
@@ -89,7 +91,7 @@ export default function EventProjectorOverlay({
 
             {event.data.topics && event.data.topics.length > 0 && (
               <p
-                className="opacity-80 line-clamp-2"
+                className="line-clamp-2 opacity-80"
                 style={{ fontSize: "2vw" }}
                 data-testid="projector-topics"
               >
@@ -101,13 +103,13 @@ export default function EventProjectorOverlay({
           {/* Bottom: Date/Time */}
           <div className="flex items-center" style={{ gap: "1.5vw" }}>
             <div
-              className="bg-base-100/20 rounded-box flex items-center justify-center flex-shrink-0"
+              className="bg-base-100/20 rounded-box flex flex-shrink-0 items-center justify-center"
               style={{ padding: "1vw" }}
             >
               <LuCalendar className="text-base-100" style={{ width: "2vw", height: "2vw" }} />
             </div>
             <span
-              className="font-medium whitespace-nowrap overflow-hidden text-ellipsis"
+              className="overflow-hidden font-medium text-ellipsis whitespace-nowrap"
               style={{ fontSize: "2vw" }}
               data-testid="projector-datetime"
             >
@@ -123,7 +125,7 @@ export default function EventProjectorOverlay({
         </div>
 
         {/* Right Column */}
-        <div className="flex-shrink-0 flex flex-col justify-between" style={{ width: "25vw" }}>
+        <div className="flex flex-shrink-0 flex-col justify-between" style={{ width: "25vw" }}>
           {/* Top: Branding */}
           <div className="flex justify-end">
             <div className="transform" style={{ scale: "calc(3vw / 48)" }}>

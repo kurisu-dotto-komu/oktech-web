@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Event Countdown", () => {
   test("should display countdown for upcoming events in EventSummary", async ({ page }) => {

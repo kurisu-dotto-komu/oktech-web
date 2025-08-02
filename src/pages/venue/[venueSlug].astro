@@ -49,15 +49,15 @@ const description =
 
 <PageLayout title={`${venue.data.title} - Venues`} description={description}>
   <Section>
-    <div class="flex flex-col lg:flex-row gap-12">
-      <div class="flex flex-col gap-10 flex-1">
+    <div class="flex flex-col gap-12 lg:flex-row">
+      <div class="flex flex-1 flex-col gap-10">
         {
           venue.data.cover && (
-            <figure class="rounded-xl aspect-video w-full bg-white shadow-xl overflow-hidden">
+            <figure class="aspect-video w-full overflow-hidden rounded-xl bg-white shadow-xl">
               <img
                 src={venue.data.cover.src}
                 alt={`${venue.data.title} cover`}
-                class="w-full h-full object-contain p-8"
+                class="h-full w-full object-contain p-8"
                 width={512}
                 height={512}
               />
@@ -65,11 +65,11 @@ const description =
           )
         }
 
-        <h1 class="text-4xl font-bold pt-6" data-testid="venue-title-page">{venue.data.title}</h1>
+        <h1 class="pt-6 text-4xl font-bold" data-testid="venue-title-page">{venue.data.title}</h1>
 
         {
           Content && (
-            <div class="max-w-none prose prose-lg">
+            <div class="prose prose-lg max-w-none">
               <Content />
             </div>
           )
@@ -78,7 +78,7 @@ const description =
 
       <div class="lg:w-80">
         <div class="lg:sticky lg:top-20">
-          <div class="card bg-base-100 shadow-lg rounded-lg overflow-hidden">
+          <div class="card bg-base-100 overflow-hidden rounded-lg shadow-lg">
             <div class="card-body p-0">
               <VenueInfo venue={venue} />
             </div>
@@ -91,7 +91,7 @@ const description =
   {
     venueEvents.length > 0 && (
       <Section>
-        <h2 class="text-2xl font-bold mb-8">Events Hosted at {venue.data.title}</h2>
+        <h2 class="mb-8 text-2xl font-bold">Events Hosted at {venue.data.title}</h2>
         <div class="flex flex-col gap-8">
           {venueEvents.map((event) => (
             <EventFeatured event={event} hideMap={true} />

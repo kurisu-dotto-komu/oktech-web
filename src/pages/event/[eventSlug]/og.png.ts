@@ -1,7 +1,8 @@
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getEvents } from "@/content";
 import path from "path";
+
 import OGEvent from "@/components/OG/OGEvent";
+import { getEvents } from "@/content";
 import { createOGImageHandler, loadImageAsBase64 } from "@/utils/og";
 
 export const GET: APIRoute = async ({ params }) => {

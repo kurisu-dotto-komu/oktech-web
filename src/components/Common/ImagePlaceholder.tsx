@@ -1,6 +1,6 @@
 export default function ImagePlaceholder() {
   return (
-    <div className="flex flex-col items-center justify-center bg-neutral w-full aspect-video md:aspect-square rounded-xl shadow-xl text-3xl text-neutral-400">
+    <div className="bg-neutral flex aspect-video w-full flex-col items-center justify-center rounded-xl text-3xl text-neutral-400 shadow-xl md:aspect-square">
       <div>Image Goes Here</div>
     </div>
   );

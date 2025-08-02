@@ -1,8 +1,9 @@
-import type { EventEnriched } from "@/content";
 import { useEventsFilter } from "@/components/Events/EventsFilterProvider";
-import EventsGridView from "./EventsGridView";
+import type { EventEnriched } from "@/content";
+
 import EventsCompactView from "./EventsCompactView";
 import EventsGalleryView from "./EventsGalleryView";
+import EventsGridView from "./EventsGridView";
 
 interface Props {
   events: EventEnriched[];

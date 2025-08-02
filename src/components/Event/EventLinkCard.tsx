@@ -15,7 +15,7 @@ export default function EventLinkCard({ link }: EventLinkCardProps) {
       href={link.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow"
+      className="card bg-base-100 shadow-xl transition-shadow hover:shadow-2xl"
     >
       <div className="card-body">
         <div className="flex items-start gap-4">

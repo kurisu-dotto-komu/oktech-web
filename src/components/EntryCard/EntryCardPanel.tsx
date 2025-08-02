@@ -1,4 +1,5 @@
 import React, { type ReactNode } from "react";
+
 import clsx from "clsx";
 
 interface EntryCardPanelProps {
@@ -69,14 +70,14 @@ export default function EntryCardPanel({
       style={{ ...panelStyle, ...maskStyle }}
       className={clsx(
         "entry-card-panel bg-base-200 group-hover:bg-base-100 relative",
-        "transition-all duration-500 ease-out-in",
+        "ease-out-in transition-all duration-500",
         "group-hover:!transform-none",
-        isHovered && "!transform-none auto-hover !bg-base-100",
+        isHovered && "auto-hover !bg-base-100 !transform-none",
       )}
     >
-      <div className="flex flex-col w-full h-full relative overflow-hidden">{children}</div>
+      <div className="relative flex h-full w-full flex-col overflow-hidden">{children}</div>
       <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-500 ease-out-in group-hover:!opacity-0 [.auto-hover_&]:!opacity-0 z-[9]"
+        className="ease-out-in pointer-events-none absolute inset-0 z-[9] transition-opacity duration-500 group-hover:!opacity-0 [.auto-hover_&]:!opacity-0"
         style={{
           backgroundColor: `rgba(0, 0, 0, ${shadeOpacity})`,
           opacity: shadeOpacity > 0 ? 1 : 0,

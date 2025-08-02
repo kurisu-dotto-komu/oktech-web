@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test.describe("Event Time Filters", () => {
   test("should show events as upcoming until 30 minutes after completion", async ({ page }) => {

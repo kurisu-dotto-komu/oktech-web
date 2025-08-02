@@ -1,6 +1,9 @@
-import React from "react"; // required here
-import satori from "satori";
+import React from "react";
+
 import { Resvg } from "@resvg/resvg-js";
+// required here
+import satori from "satori";
+
 import { OGImageCache } from "./ogCache";
 
 export interface OGHandlerOptions {

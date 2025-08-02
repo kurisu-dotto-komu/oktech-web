@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
+
 import Container from "@/components/Common/Container";
 
 interface Props {
@@ -70,7 +71,7 @@ export default function StickyNavigation({ navigationClass, children, className 
   return (
     <div
       ref={stickyNavRef}
-      className={`fixed bottom-0 left-0 right-0 z-40 soft-glass transition-opacity duration-300 ${className}`}
+      className={`soft-glass fixed right-0 bottom-0 left-0 z-40 transition-opacity duration-300 ${className}`}
     >
       <Container className="py-2">{children}</Container>
     </div>

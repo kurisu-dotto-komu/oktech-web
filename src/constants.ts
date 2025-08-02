@@ -1,6 +1,6 @@
-import { LuHouse, LuCalendar, LuInfo, LuMap, LuRss } from "react-icons/lu";
-import { FaXTwitter, FaGithub, FaDiscord, FaMeetup, FaLinkedin } from "react-icons/fa6";
 import type { IconType } from "react-icons";
+import { FaDiscord, FaGithub, FaLinkedin, FaMeetup, FaXTwitter } from "react-icons/fa6";
+import { LuCalendar, LuHouse, LuInfo, LuMap, LuRss } from "react-icons/lu";
 
 // Development mode flag - change this to false for production
 export const DEV_MODE = true;

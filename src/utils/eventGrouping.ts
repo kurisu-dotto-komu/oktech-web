@@ -1,4 +1,5 @@
 import type { EventEnriched } from "@/content";
+
 import { isEventUpcoming } from "./eventFilters";
 
 export interface EventGroup {

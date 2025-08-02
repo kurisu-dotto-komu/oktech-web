@@ -1,8 +1,8 @@
-import type { EventEnriched } from "@/content";
+import Container from "@/components/Common/Container";
+import Grid from "@/components/Common/Grid";
 import EventFeatured from "@/components/Event/EventFeatured";
 import EventGalleryImages from "@/components/Event/EventGalleryImages";
-import Grid from "@/components/Common/Grid";
-import Container from "@/components/Common/Container";
+import type { EventEnriched } from "@/content";
 
 interface Props {
   events: EventEnriched[];

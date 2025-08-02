@@ -1,7 +1,8 @@
-import type { EventEnriched } from "@/content";
-import EventCompact from "@/components/Event/EventCompact";
 import Section from "@/components/Common/Section";
+import EventCompact from "@/components/Event/EventCompact";
+import type { EventEnriched } from "@/content";
 import { groupEventsByYearAndUpcoming } from "@/utils/eventGrouping";
+
 import { useEventsFilter } from "./EventsFilterProvider";
 
 interface Props {
@@ -19,11 +20,11 @@ export default function EventsCompactView({ events }: Props) {
           key={group.label}
           wide
           title={group.label}
-          className="flex flex-col mb-12 last:mb-0"
+          className="mb-12 flex flex-col last:mb-0"
         >
           {group.events.map((event) => (
             <div key={event.id} data-testid="event-card">
-              <EventCompact event={event} className="border-b border-base-300 last:border-0" />
+              <EventCompact event={event} className="border-base-300 border-b last:border-0" />
             </div>
           ))}
         </Section>

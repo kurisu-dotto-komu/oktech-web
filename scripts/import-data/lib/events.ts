@@ -1,14 +1,15 @@
+import matter from "gray-matter";
+import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { existsSync } from "node:fs";
 import slugify from "slugify";
-import matter from "gray-matter";
-import type { Event, Photo } from "./types";
-import { logger } from "./logger";
+
 import { EVENTS_BASE_DIR } from "./constants";
-import { downloadImage } from "./utils";
+import { logger } from "./logger";
 import { processGallery } from "./photos";
 import type { ImportStatistics } from "./statistics";
+import type { Event, Photo } from "./types";
+import { downloadImage } from "./utils";
 import { doubleQuoteYamlEngine } from "./yaml-engine";
 
 export async function processEvent(

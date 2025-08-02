@@ -1,5 +1,5 @@
-import logoTextSvg from "@/assets/oktech-logo-text-optimized.svg?raw";
 import logoRoundSvg from "@/assets/oktech-logo-round-optimized.svg?raw";
+import logoTextSvg from "@/assets/oktech-logo-text-optimized.svg?raw";
 import ScopedSVG from "@/components/Common/ScopedSVG";
 
 interface OKTechLogoProps {

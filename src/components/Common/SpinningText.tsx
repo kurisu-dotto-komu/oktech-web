@@ -16,7 +16,7 @@ export default function SpinningText({ text, radius = 100, className = "" }: Spi
 
   return (
     <svg
-      className={`absolute select-none inset-0 w-full h-full pointer-events-none ${className}`}
+      className={`pointer-events-none absolute inset-0 h-full w-full select-none ${className}`}
       viewBox="0 0 300 300"
     >
       <style>
@@ -43,7 +43,7 @@ export default function SpinningText({ text, radius = 100, className = "" }: Spi
       </defs>
       <g className="rotating-text">
         <text
-          className="fill-current text-base-300 opacity-50"
+          className="text-base-300 fill-current opacity-50"
           fontSize={fontSize}
           fontFamily="Space Mono, monospace"
           letterSpacing={letterSpacing}

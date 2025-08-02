@@ -15,7 +15,6 @@ Common alternatives:
 3. react-inlinesvg or SVGR - Popular libraries that handle this automatically
 
 */
-
 import { useId, useMemo } from "react";
 
 interface ScopedSVGProps {

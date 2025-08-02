@@ -1,7 +1,8 @@
-import type { EventEnriched } from "@/content";
-import EventSummary from "@/components/Event/EventSummary";
 import Section from "@/components/Common/Section";
+import EventSummary from "@/components/Event/EventSummary";
+import type { EventEnriched } from "@/content";
 import { groupEventsByYearAndUpcoming } from "@/utils/eventGrouping";
+
 import { useEventsFilter } from "./EventsFilterProvider";
 
 interface Props {

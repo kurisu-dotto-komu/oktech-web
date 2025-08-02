@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+
 import { resolveInternalHref } from "@/utils/urlResolver";
 
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {

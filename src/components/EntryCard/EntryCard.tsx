@@ -1,10 +1,12 @@
+import "./EntryCard.css";
+
 import type { EventEnriched } from "@/content";
-import EntryCardTrifold from "./EntryCardTrifold";
-import type { AngleCalculationProps } from "./useEntryCardAngles";
+
 import EntryCardContentCountdown from "./EntryCardContentCountdown";
 import EntryCardContentImage from "./EntryCardContentImage";
 import EntryCardContentInfo from "./EntryCardContentInfo";
-import "./EntryCard.css";
+import EntryCardTrifold from "./EntryCardTrifold";
+import type { AngleCalculationProps } from "./useEntryCardAngles";
 
 interface Props extends Omit<AngleCalculationProps, "eventId"> {
   event: EventEnriched;

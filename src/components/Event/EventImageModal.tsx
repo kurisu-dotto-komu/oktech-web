@@ -1,7 +1,9 @@
-import { useEffect, useRef, useMemo } from "react";
-import { LuX, LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import type { GalleryImage, EventEnriched } from "@/content";
+import { useEffect, useMemo, useRef } from "react";
+
+import { LuChevronLeft, LuChevronRight, LuX } from "react-icons/lu";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+
+import type { EventEnriched, GalleryImage } from "@/content";
 import { formatDate } from "@/utils/formatDate";
 
 interface Props {
@@ -130,7 +132,7 @@ export default function EventImageModal({
       }}
     >
       <div
-        className="fixed inset-0 flex items-center justify-center p-4 sm:p-8 z-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
         onClick={(e) => {
           // Also handle clicks on the container
           if (e.target === e.currentTarget) {
@@ -138,17 +140,17 @@ export default function EventImageModal({
           }
         }}
       >
-        <div className="flex flex-col items-center w-full max-w-[80vw] lg:max-w-[80vw] xl:max-w-[1200px]  text-white">
+        <div className="flex w-full max-w-[80vw] flex-col items-center text-white lg:max-w-[80vw] xl:max-w-[1200px]">
           {/* Header with title and close button - aligned with modal box */}
-          <div className="w-full flex items-end justify-between mb-4 px-1">
-            <div className="flex gap-4 items-baseline flex-wrap-reverse">
+          <div className="mb-4 flex w-full items-end justify-between px-1">
+            <div className="flex flex-wrap-reverse items-baseline gap-4">
               <h3 className="text-lg font-semibold drop-shadow-lg">{event.data.title} </h3>
-              <span className="font-normal text-base">
+              <span className="text-base font-normal">
                 {formatDate(event.data.dateTime, "long")}
               </span>
             </div>
             <button
-              className="p-2 text-white hover:text-white/80 transition-colors cursor-pointer"
+              className="cursor-pointer p-2 text-white transition-colors hover:text-white/80"
               onClick={onClose}
               aria-label="Close modal"
             >
@@ -157,10 +159,10 @@ export default function EventImageModal({
           </div>
 
           {/* Container for modal box and navigation arrows */}
-          <div className="relative w-full flex items-center">
+          <div className="relative flex w-full items-center">
             {/* Left navigation arrow - outside box */}
             <button
-              className="absolute -left-12 sm:-left-16 p-2 text-white hover:text-white/80 transition-colors z-20 cursor-pointer"
+              className="absolute -left-12 z-20 cursor-pointer p-2 text-white transition-colors hover:text-white/80 sm:-left-16"
               onClick={onPrevious}
               aria-label="Previous image"
             >
@@ -169,7 +171,7 @@ export default function EventImageModal({
 
             {/* Right navigation arrow - outside box */}
             <button
-              className="absolute -right-12 sm:-right-16 p-2 text-white hover:text-white/80 transition-colors z-20 cursor-pointer"
+              className="absolute -right-12 z-20 cursor-pointer p-2 text-white transition-colors hover:text-white/80 sm:-right-16"
               onClick={onNext}
               aria-label="Next image"
             >
@@ -177,9 +179,9 @@ export default function EventImageModal({
             </button>
 
             {/* Modal box with image */}
-            <div className="w-full max-w-[90vw] lg:max-w-[80vw] xl:max-w-[1200px] rounded-lg overflow-hidden">
+            <div className="w-full max-w-[90vw] overflow-hidden rounded-lg lg:max-w-[80vw] xl:max-w-[1200px]">
               {/* Image container */}
-              <div className="relative bg-black aspect-[3/4] sm:aspect-square md:aspect-[4/3]">
+              <div className="relative aspect-[3/4] bg-black sm:aspect-square md:aspect-[4/3]">
                 <TransformWrapper
                   ref={transformComponentRef}
                   minScale={1}
@@ -209,7 +211,7 @@ export default function EventImageModal({
                     <img
                       src={selectedImage.fullSrc}
                       alt={selectedImage.data.caption ?? ""}
-                      className="w-full h-full object-contain"
+                      className="h-full w-full object-contain"
                       style={{ userSelect: "none" }}
                       draggable={false}
                     />
@@ -218,8 +220,8 @@ export default function EventImageModal({
 
                 {/* Caption overlay */}
                 {selectedImage.data.caption && (
-                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-sm px-4 py-2 rounded-lg max-w-[90%]">
-                    <p data-testid="modal-image-caption" className="text-sm text-white text-center">
+                  <div className="absolute bottom-2 left-1/2 max-w-[90%] -translate-x-1/2 transform rounded-lg bg-black/80 px-4 py-2 backdrop-blur-sm">
+                    <p data-testid="modal-image-caption" className="text-center text-sm text-white">
                       {selectedImage.data.caption}
                     </p>
                   </div>
@@ -229,13 +231,13 @@ export default function EventImageModal({
           </div>
 
           {/* Navigation dots - outside modal box */}
-          <div className="flex items-center justify-center gap-2 mt-4">
+          <div className="mt-4 flex items-center justify-center gap-2">
             {Array.from({ length: totalImages }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => onDotClick(index)}
-                className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
-                  index === currentIndex ? "bg-white w-8" : "bg-white/50 hover:bg-white/70"
+                className={`h-2 w-2 cursor-pointer rounded-full transition-all ${
+                  index === currentIndex ? "w-8 bg-white" : "bg-white/50 hover:bg-white/70"
                 }`}
                 aria-label={`Go to image ${index + 1}`}
               />
@@ -243,11 +245,11 @@ export default function EventImageModal({
           </div>
         </div>
       </div>
-      <form method="dialog" className="modal-backdrop bg-black/80 backdrop-blur-sm fixed inset-0">
+      <form method="dialog" className="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-sm">
         <button
           type="button"
           onClick={onClose}
-          className="cursor-pointer w-full h-full"
+          className="h-full w-full cursor-pointer"
           aria-label="Close modal"
         >
           <span className="sr-only">close</span>

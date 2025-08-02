@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+
 import OGDefault from "../components/OG/OGDefault";
 import { createOGImageHandler } from "../utils/og";
 

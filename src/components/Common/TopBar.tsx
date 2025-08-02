@@ -1,17 +1,18 @@
-import { MENU } from "@/constants";
+import { LuMenu } from "react-icons/lu";
+
+import Brand from "@/components/Common/Brand";
 import Container from "@/components/Common/Container";
 import LinkReact from "@/components/Common/LinkReact";
-import Brand from "@/components/Common/Brand";
 import ThemeToggle from "@/components/Common/ThemeToggle";
-import { LuMenu } from "react-icons/lu";
+import { MENU } from "@/constants";
 
 export default function TopBar() {
   const items = MENU.filter((item) => item.header !== false);
 
   return (
     <>
-      <div className="fixed top-0 z-50 shadow-sm soft-glass navbar" data-testid="navbar">
-        <Container className="hidden md:flex justify-between">
+      <div className="soft-glass navbar fixed top-0 z-50 shadow-sm" data-testid="navbar">
+        <Container className="hidden justify-between md:flex">
           <div className="navbar-start">
             <LinkReact href="/" className="btn btn-ghost p-1">
               <Brand />
@@ -24,7 +25,7 @@ export default function TopBar() {
                   <LinkReact
                     key={item.label}
                     href={item.href}
-                    className="btn btn-ghost gap-3 text-lg items-center justify-start"
+                    className="btn btn-ghost items-center justify-start gap-3 text-lg"
                   >
                     {item.label}
                   </LinkReact>
@@ -37,7 +38,7 @@ export default function TopBar() {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="fixed top-0 navbar z-60 md:hidden" data-testid="navbar-mobile">
+      <div className="navbar fixed top-0 z-60 md:hidden" data-testid="navbar-mobile">
         <Container className="flex justify-between">
           <div className="navbar-start">
             <LinkReact href="/" className="btn btn-ghost p-1">
@@ -52,13 +53,13 @@ export default function TopBar() {
               </label>
               <ul
                 tabIndex={0}
-                className="menu menu-lg dropdown-content mt-5 p-2 soft-glass shadow-sm w-42 block rounded-lg"
+                className="menu menu-lg dropdown-content soft-glass mt-5 block w-42 rounded-lg p-2 shadow-sm"
               >
                 {items.map((item) => (
                   <li key={item.label}>
                     <LinkReact
                       href={item.href}
-                      className="btn btn-ghost gap-3 text-lg items-center justify-start"
+                      className="btn btn-ghost items-center justify-start gap-3 text-lg"
                     >
                       {item.label}
                     </LinkReact>

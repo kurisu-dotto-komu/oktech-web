@@ -1,8 +1,11 @@
 import { useState } from "react";
+
 import { LuProjector } from "react-icons/lu";
-import type { EventEnriched } from "@/content";
-import EventProjectorOverlay from "./EventProjectorOverlay";
+
 import TooltipButton from "@/components/Common/TooltipButton";
+import type { EventEnriched } from "@/content";
+
+import EventProjectorOverlay from "./EventProjectorOverlay";
 
 interface EventProjectorButtonProps {
   event: EventEnriched;
@@ -15,13 +18,13 @@ export default function EventProjectorButton({ event }: EventProjectorButtonProp
     <>
       <TooltipButton
         onClick={() => setIsOpen(true)}
-        className="btn btn-ghost opacity-0 group-hover:opacity-100 transition-opacity"
+        className="btn btn-ghost opacity-0 transition-opacity group-hover:opacity-100"
         aria-label="Open projector view"
         tooltip="Projector view"
         tooltipPosition="top"
         data-testid="projector-view-button"
       >
-        <LuProjector className="w-5 h-5" />
+        <LuProjector className="h-5 w-5" />
       </TooltipButton>
       <EventProjectorOverlay event={event} isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>

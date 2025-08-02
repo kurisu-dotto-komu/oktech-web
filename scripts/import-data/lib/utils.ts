@@ -1,7 +1,8 @@
+import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { existsSync } from "node:fs";
-import { GITHUB_RAW_BASE, GITHUB_API_BASE } from "./constants";
+
+import { GITHUB_API_BASE, GITHUB_RAW_BASE } from "./constants";
 import { logger } from "./logger";
 import type { ImportStatistics } from "./statistics";
 
@@ -69,7 +70,7 @@ export async function fetchLatestCommitInfo(): Promise<{ sha: string; date: stri
     const data = await response.json();
     return {
       sha: data.sha,
-      date: data.commit.committer.date
+      date: data.commit.committer.date,
     };
   } catch (err) {
     logger.error("Failed to fetch latest commit info:", err);

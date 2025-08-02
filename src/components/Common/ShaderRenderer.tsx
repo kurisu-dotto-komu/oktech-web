@@ -320,26 +320,26 @@ export default function ShaderRenderer({
   }, [activeShader, uniforms]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative h-full w-full">
       <canvas ref={canvasRef} className={className} style={style} data-testid="shader-canvas" />
       {showComments && shaderComment && (
-        <div className="absolute bottom-4 left-4 w-2/3 text-white/70 text-sm">
+        <div className="absolute bottom-4 left-4 w-2/3 text-sm text-white/70">
           {renderTextWithLinks(shaderComment)}
         </div>
       )}
       {shaders.length > 1 && (
-        <div className="absolute bottom-4 right-4 flex items-center gap-3">
+        <div className="absolute right-4 bottom-4 flex items-center gap-3">
           <button
             onClick={() => setIsPaused(!isPaused)}
-            className="text-white/70 hover:text-white transition-colors"
+            className="text-white/70 transition-colors hover:text-white"
             aria-label={isPaused ? "Resume auto-progression" : "Pause auto-progression"}
           >
             {isPaused ? (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M5 4v12l10-6z" />
               </svg>
             ) : (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z" />
               </svg>
             )}
@@ -352,9 +352,9 @@ export default function ShaderRenderer({
                   setActiveShaderIndex(index);
                   setIsPaused(true);
                 }}
-                className={`w-4 h-4 rounded-full transition-all ${
+                className={`h-4 w-4 rounded-full transition-all ${
                   index === activeShaderIndex
-                    ? "bg-white scale-110"
+                    ? "scale-110 bg-white"
                     : "bg-white/50 hover:bg-white/70"
                 }`}
                 aria-label={`Switch to shader ${index + 1}`}

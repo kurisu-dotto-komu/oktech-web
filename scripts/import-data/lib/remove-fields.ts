@@ -1,7 +1,8 @@
+import matter from "gray-matter";
 import fs from "node:fs/promises";
 import { glob } from "node:fs/promises";
 import path from "node:path";
-import matter from "gray-matter";
+
 import { logger } from "./logger";
 
 // Base directories for different content types

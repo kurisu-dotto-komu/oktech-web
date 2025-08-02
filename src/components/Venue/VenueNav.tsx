@@ -1,5 +1,6 @@
-import StickyBottomNavButtons from "@/components/Common/StickyBottomNavButtons";
 import type { CollectionEntry } from "astro:content";
+
+import StickyBottomNavButtons from "@/components/Common/StickyBottomNavButtons";
 
 interface Props {
   venue: CollectionEntry<"venues">;

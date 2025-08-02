@@ -1,5 +1,6 @@
-import LinkReact from "./LinkReact";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+
+import LinkReact from "./LinkReact";
 
 interface ButtonProps {
   href: string;

@@ -1,5 +1,6 @@
-import { useEventsFilter } from "./EventsFilterProvider";
 import { LuArrowDownWideNarrow, LuArrowUpWideNarrow } from "react-icons/lu";
+
+import { useEventsFilter } from "./EventsFilterProvider";
 
 interface Props {
   "data-testid"?: string;
@@ -26,9 +27,9 @@ export default function EventsSortSelector({ "data-testid": dataTestId }: Props 
     >
       <span className="hidden sm:inline">{isNewestFirst ? "Newest" : "Oldest"}</span>
       {isNewestFirst ? (
-        <LuArrowDownWideNarrow className="w-4 h-4" />
+        <LuArrowDownWideNarrow className="h-4 w-4" />
       ) : (
-        <LuArrowUpWideNarrow className="w-4 h-4" />
+        <LuArrowUpWideNarrow className="h-4 w-4" />
       )}
     </button>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { DEV_MODE } from "@/constants";
 
 export default function DevInfo() {
@@ -35,12 +36,12 @@ export default function DevInfo() {
   if (!DEV_MODE) return null;
 
   return (
-    <div className="bg-base-300 border-t-4 border-warning">
+    <div className="bg-base-300 border-warning border-t-4">
       <div className="container mx-auto px-4 py-8">
         <div className="alert alert-warning mb-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current shrink-0 h-6 w-6"
+            className="h-6 w-6 shrink-0 stroke-current"
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -57,7 +58,7 @@ export default function DevInfo() {
         <div className="space-y-8">
           {/* Meta Tags Section */}
           <div>
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            <h3 className="mb-4 flex items-center gap-2 text-2xl font-bold">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -75,7 +76,7 @@ export default function DevInfo() {
               Meta Tags
             </h3>
             <div className="mockup-code">
-              <pre className="text-xs text-success">
+              <pre className="text-success text-xs">
                 <code>
                   {metaTags.split("<meta").map((tag, i) =>
                     i === 0 ? (
@@ -93,7 +94,7 @@ export default function DevInfo() {
 
           {/* OG Image Preview Section */}
           <div>
-            <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            <h3 className="mb-4 flex items-center gap-2 text-2xl font-bold">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -119,17 +120,17 @@ export default function DevInfo() {
                       <img
                         src={ogImageUrl}
                         alt="OG Image Preview"
-                        className="rounded-lg shadow-lg max-w-full"
+                        className="max-w-full rounded-lg shadow-lg"
                         onError={() => setOgImageError(true)}
                       />
                     ) : ogImageError ? (
                       <div className="alert alert-error">Failed to load OG image</div>
                     ) : (
-                      <div className="skeleton h-[315px] w-full max-w-[600px] mx-auto"></div>
+                      <div className="skeleton mx-auto h-[315px] w-full max-w-[600px]"></div>
                     )}
                   </div>
                   <div className="mt-4">
-                    <p className="text-sm opacity-70 mb-2">Image URL:</p>
+                    <p className="mb-2 text-sm opacity-70">Image URL:</p>
                     <div className="mockup-code">
                       <pre className="text-xs">
                         <code>{ogImageUrl || "No OG image specified"}</code>

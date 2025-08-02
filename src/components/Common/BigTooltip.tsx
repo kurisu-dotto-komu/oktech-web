@@ -47,16 +47,16 @@ export default function BigTooltip({ children, content, position = "left" }: Pro
   const positionClasses = getPositionClasses();
 
   return (
-    <div className="relative group">
+    <div className="group relative">
       {children}
       <div
-        className={`w-xl absolute ${positionClasses.wrapper} opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto z-50`}
+        className={`absolute w-xl ${positionClasses.wrapper} pointer-events-none z-50 opacity-0 transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100`}
       >
         <div className="relative">
           {/* Invisible bridge to maintain hover state */}
           <div className={positionClasses.bridge}></div>
           <div className={`absolute ${positionClasses.arrow}`}>
-            <div className={`w-0 h-0 ${positionClasses.arrowBorder}`}></div>
+            <div className={`h-0 w-0 ${positionClasses.arrowBorder}`}></div>
           </div>
           <div className="justify-items-end">{content}</div>
         </div>

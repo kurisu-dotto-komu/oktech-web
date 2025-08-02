@@ -13,7 +13,7 @@ interface StatsGridProps {
 
 export default function StatsGrid({ stats }: StatsGridProps) {
   return (
-    <div className="stats bg-base-100 stats-vertical md:stats-horizontal shadow-lg w-full">
+    <div className="stats bg-base-100 stats-vertical md:stats-horizontal w-full shadow-lg">
       {stats.map((stat: Stat) => (
         <div key={stat.title} className="stat">
           <div className="stat-figure text-primary">

@@ -1,4 +1,5 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+
 import { TEST_EVENTS, TEST_VENUES } from "../helpers/url";
 
 // Static routes tests

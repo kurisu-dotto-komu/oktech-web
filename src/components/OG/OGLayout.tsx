@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+
 import { SITE } from "@/constants";
 
 interface OGLayoutProps {

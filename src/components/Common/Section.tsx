@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
+
+import Button from "./Button";
 import Container from "./Container";
 import Lorem from "./Lorem";
-import Button from "./Button";
 
 interface Props {
   anchor?: string;
@@ -45,21 +46,21 @@ export default function Section({
 
   return (
     <section
-      className={`py-18 flex flex-col gap-12 ${finalClassName}`}
+      className={`flex flex-col gap-12 py-18 ${finalClassName}`}
       id={anchor}
       data-testid="section"
     >
       {firstContainer && (
         <Container
-          className={`${split ? "grid md:grid-cols-2 gap-12 lg:gap-24 items-center" : ""} ${
+          className={`${split ? "grid items-center gap-12 md:grid-cols-2 lg:gap-24" : ""} ${
             left ? "md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1" : ""
           }`}
         >
           {generatedContent && (
             <div
               className={`mx-6 lg:mx-0 ${
-                split ? "max-w-xl m-auto text-lg flex flex-col gap-6" : ""
-              } ${inline ? "flex flex-row gap-4 lg:gap-12 justify-between items-center" : ""}`}
+                split ? "m-auto flex max-w-xl flex-col gap-6 text-lg" : ""
+              } ${inline ? "flex flex-row items-center justify-between gap-4 lg:gap-12" : ""}`}
             >
               {title && (
                 <div className={`flex items-center justify-between gap-2 ${!inline ? "mb-4" : ""}`}>

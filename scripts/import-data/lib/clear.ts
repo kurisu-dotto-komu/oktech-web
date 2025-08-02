@@ -1,9 +1,9 @@
+import { existsSync } from "node:fs";
+import { glob, readdir, rm, rmdir } from "node:fs/promises";
 import path from "node:path";
+
 import { EVENTS_BASE_DIR, VENUES_BASE_DIR } from "./constants";
 import { logger } from "./logger";
-
-import { glob, rm, readdir, rmdir } from "node:fs/promises";
-import { existsSync } from "node:fs";
 
 async function removeEmptyDirectories(dir: string): Promise<void> {
   if (!existsSync(dir)) return;

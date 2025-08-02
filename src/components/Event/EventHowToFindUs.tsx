@@ -4,8 +4,8 @@ interface Props {
 
 export default function HowToFindUs({ howToFindUs }: Props) {
   return (
-    <div className="p-6 bg-base-100 rounded-lg shadow-lg">
-      <h3 className="text-lg font-semibold mb-2">How to find us</h3>
+    <div className="bg-base-100 rounded-lg p-6 shadow-lg">
+      <h3 className="mb-2 text-lg font-semibold">How to find us</h3>
       <p className="text-base">{howToFindUs}</p>
     </div>
   );

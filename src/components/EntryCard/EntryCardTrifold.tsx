@@ -1,9 +1,12 @@
 import React, { type ReactNode, type Ref } from "react";
+
 import clsx from "clsx";
-import { useScrollHotspot } from "@/utils/useScrollHotspot";
+
 import LinkReact from "@/components/Common/LinkReact";
-import { useEntryCardAngles, type AngleCalculationProps } from "./useEntryCardAngles";
+import { useScrollHotspot } from "@/utils/useScrollHotspot";
+
 import EntryCardPanel from "./EntryCardPanel";
+import { type AngleCalculationProps, useEntryCardAngles } from "./useEntryCardAngles";
 
 interface EntryCardTrifoldProps extends AngleCalculationProps {
   leftPanel: ReactNode;
@@ -41,7 +44,7 @@ export default function EntryCardTrifold({
       href={`/event/${eventId}`}
       ref={cardRef as Ref<HTMLAnchorElement>}
       data-testid={`event-card-${eventId}`}
-      className={clsx("relative w-full group drop-shadow-xl", {
+      className={clsx("group relative w-full drop-shadow-xl", {
         "mobile-hover": isInHotspot,
       })}
     >
@@ -55,7 +58,7 @@ export default function EntryCardTrifold({
         <div
           className={clsx(
             "entry-card-wrapper",
-            "relative transition-transform duration-500 ease-out-in",
+            "ease-out-in relative transition-transform duration-500",
             "group-hover:!transform-none",
             isInHotspot && "!transform-none",
           )}
@@ -68,7 +71,7 @@ export default function EntryCardTrifold({
           }
         >
           <div
-            className="flex flex-col md:flex-row w-full"
+            className="flex w-full flex-col md:flex-row"
             style={{ transformStyle: "preserve-3d" }}
           >
             <EntryCardPanel

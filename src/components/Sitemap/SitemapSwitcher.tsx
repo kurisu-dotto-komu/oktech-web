@@ -1,5 +1,6 @@
+import { LuImage, LuList } from "react-icons/lu";
+
 import TooltipButton from "@/components/Common/TooltipButton";
-import { LuList, LuImage } from "react-icons/lu";
 
 interface SitemapSwitcherProps {
   currentView: "list" | "og";
@@ -23,7 +24,7 @@ export default function SitemapSwitcher({ currentView }: SitemapSwitcherProps) {
             tooltip={view.label}
             className={`btn join-item ${currentView === view.value ? "btn-active" : ""}`}
           >
-            <Icon className="w-5 h-5" />
+            <Icon className="h-5 w-5" />
           </TooltipButton>
         );
       })}

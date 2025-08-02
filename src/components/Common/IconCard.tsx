@@ -1,5 +1,5 @@
-import { LuCode } from "react-icons/lu";
 import type { IconType } from "react-icons";
+import { LuCode } from "react-icons/lu";
 
 interface IconCardProps {
   icon?: IconType;
@@ -11,17 +11,17 @@ interface IconCardProps {
 export default function IconCard({ icon: IconComponent, label, description, href }: IconCardProps) {
   return (
     <a
-      className="w-50 cursor-pointer transition-all card card-border rounded-2xl bg-base-100 text-center hover:bg-primary/10 hover:text-primary"
+      className="card card-border bg-base-100 hover:bg-primary/10 hover:text-primary w-50 cursor-pointer rounded-2xl text-center transition-all"
       href={href}
       rel="noopener noreferrer"
       aria-label={label}
     >
-      <div className="p-6 flex flex-col gap-10 items-center">
-        <div className="bg-primary/20 text-primary rounded-full w-24 p-2">
+      <div className="flex flex-col items-center gap-10 p-6">
+        <div className="bg-primary/20 text-primary w-24 rounded-full p-2">
           {IconComponent ? (
-            <IconComponent className="w-full h-full" />
+            <IconComponent className="h-full w-full" />
           ) : (
-            <LuCode className="w-full h-full" />
+            <LuCode className="h-full w-full" />
           )}
         </div>
 

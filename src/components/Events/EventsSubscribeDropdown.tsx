@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
+
 import { LuCalendar, LuRss } from "react-icons/lu";
 
 export default function EventsSubscribeDropdown() {
@@ -27,27 +28,27 @@ export default function EventsSubscribeDropdown() {
         data-testid="events-subscribe-dropdown"
       >
         <summary className="btn btn-warning btn-outline" aria-label="Subscribe">
-          <LuRss className="w-4 h-4" />
+          <LuRss className="h-4 w-4" />
         </summary>
-        <div className="dropdown-content z-50 p-2 shadow bg-base-100 rounded-box w-48 mt-1 flex flex-col gap-2">
+        <div className="dropdown-content bg-base-100 rounded-box z-50 mt-1 flex w-48 flex-col gap-2 p-2 shadow">
           <a
             href="/oktech-events.ics"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost justify-start gap-3 w-full"
+            className="btn btn-ghost w-full justify-start gap-3"
             data-testid="subscribe-ics"
           >
-            <LuCalendar className="w-4 h-4" />
+            <LuCalendar className="h-4 w-4" />
             Calendar
           </a>
           <a
             href="/rss.xml"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost justify-start gap-3 w-full"
+            className="btn btn-ghost w-full justify-start gap-3"
             data-testid="subscribe-rss"
           >
-            <LuRss className="w-4 h-4" />
+            <LuRss className="h-4 w-4" />
             RSS Feed
           </a>
         </div>

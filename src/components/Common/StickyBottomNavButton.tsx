@@ -1,5 +1,6 @@
-import LinkReact from "@/components/Common/LinkReact";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+
+import LinkReact from "@/components/Common/LinkReact";
 
 interface Props {
   href?: string;
@@ -28,33 +29,33 @@ export default function StickyBottomNavButton({
   return (
     <LinkReact
       href={href}
-      className={`btn h-12 btn-soft p-0 px-1 max-w-full ${isNext ? "flex-row-reverse" : ""} ${finalClassName}`}
+      className={`btn btn-soft h-12 max-w-full p-0 px-1 ${isNext ? "flex-row-reverse" : ""} ${finalClassName}`}
       title={title}
       data-testid={isNext ? "nav-button-next" : "nav-button-prev"}
     >
       {isNext ? (
-        <LuChevronRight size={20} className="mx-1 md:mx-2 flex-shrink-0" />
+        <LuChevronRight size={20} className="mx-1 flex-shrink-0 md:mx-2" />
       ) : (
-        <LuChevronLeft size={20} className="mx-1 md:mx-2 flex-shrink-0" />
+        <LuChevronLeft size={20} className="mx-1 flex-shrink-0 md:mx-2" />
       )}
 
       {image && (
-        <figure className="aspect-video h-full flex-shrink-0 overflow-hidden rounded bg-base-300">
+        <figure className="bg-base-300 aspect-video h-full flex-shrink-0 overflow-hidden rounded">
           <img
             src={image.src}
             alt={title || ""}
             width={80}
             height={80}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
           />
         </figure>
       )}
 
       <div
-        className={`flex flex-col px-2 py-3 min-w-0 max-w-60 ${isNext ? "text-right" : "text-left"}`}
+        className={`flex max-w-60 min-w-0 flex-col px-2 py-3 ${isNext ? "text-right" : "text-left"}`}
       >
-        {title && <div className="text-xs md:text-sm font-semibold truncate">{title}</div>}
-        {subtitle && <div className="text-xs opacity-70 truncate">{subtitle}</div>}
+        {title && <div className="truncate text-xs font-semibold md:text-sm">{title}</div>}
+        {subtitle && <div className="truncate text-xs opacity-70">{subtitle}</div>}
       </div>
     </LinkReact>
   );

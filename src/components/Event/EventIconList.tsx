@@ -1,8 +1,11 @@
-import type { EventEnriched } from "@/content";
-import { LuCalendar, LuClock, LuMapPin, LuTag, LuBuilding, LuMap } from "react-icons/lu";
-import type { IconType } from "react-icons";
 import type { ReactNode } from "react";
+
+import type { IconType } from "react-icons";
+import { LuBuilding, LuCalendar, LuClock, LuMap, LuMapPin, LuTag } from "react-icons/lu";
+
+import type { EventEnriched } from "@/content";
 import { formatDate, formatDuration, formatTime, getEndTime } from "@/utils/formatDate";
+
 import EventCountdown from "./EventCountdown";
 
 interface InfoItemProps {
@@ -13,7 +16,7 @@ interface InfoItemProps {
 function InfoItem({ icon: Icon, children }: InfoItemProps) {
   return (
     <div className="flex items-start gap-2">
-      <Icon className="w-4 h-4 flex-shrink-0 text-primary mt-0.5" />
+      <Icon className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
       <div className="min-w-0 break-words">{children}</div>
     </div>
   );
@@ -82,7 +85,7 @@ export default function EventIconList({
         <InfoItem icon={LuTag}>
           <div className="flex flex-wrap gap-1">
             {event.data.topics.map((topic, index) => (
-              <span key={index} className="px-2 py-0.5 bg-primary/10 rounded-full">
+              <span key={index} className="bg-primary/10 rounded-full px-2 py-0.5">
                 {topic}
               </span>
             ))}

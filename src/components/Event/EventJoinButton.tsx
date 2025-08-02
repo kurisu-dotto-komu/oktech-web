@@ -1,4 +1,5 @@
 import { LuTicket } from "react-icons/lu";
+
 import type { EventEnriched } from "@/content/events";
 
 const MEETUP_BASE_URL = "https://www.meetup.com/osaka-web-designers-and-developers-meetup";

@@ -1,6 +1,8 @@
-import { useRef, useEffect } from "react";
-import { LuCalendarPlus, LuChevronDown, LuCalendar } from "react-icons/lu";
+import { useEffect, useRef } from "react";
+
 import { FaGoogle, FaYahoo } from "react-icons/fa6";
+import { LuCalendar, LuCalendarPlus, LuChevronDown } from "react-icons/lu";
+
 import type { EventEnriched } from "@/content/events";
 import { resolveBaseUrl } from "@/utils/urlResolver";
 
@@ -68,37 +70,37 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
       <summary className="btn btn-lg w-full gap-4">
         Add to Calendar
         <LuCalendarPlus />
-        <LuChevronDown className="w-4 h-4" />
+        <LuChevronDown className="h-4 w-4" />
       </summary>
-      <div className="dropdown-content z-50 p-2 shadow bg-base-100 rounded-box w-full max-w-full mt-1 flex flex-col gap-2">
+      <div className="dropdown-content bg-base-100 rounded-box z-50 mt-1 flex w-full max-w-full flex-col gap-2 p-2 shadow">
         <a
           href={`/event/${event.id}/event.ics`}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-ghost justify-start gap-3 w-full"
+          className="btn btn-ghost w-full justify-start gap-3"
           data-testid="calendar-ical"
         >
-          <LuCalendar className="w-4 h-4" />
+          <LuCalendar className="h-4 w-4" />
           Outlook / iCal
         </a>
         <a
           href={googleUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-ghost justify-start gap-3 w-full"
+          className="btn btn-ghost w-full justify-start gap-3"
           data-testid="calendar-google"
         >
-          <FaGoogle className="w-4 h-4" />
+          <FaGoogle className="h-4 w-4" />
           Google Calendar
         </a>
         <a
           href={yahooUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-ghost justify-start gap-3 w-full"
+          className="btn btn-ghost w-full justify-start gap-3"
           data-testid="calendar-yahoo"
         >
-          <FaYahoo className="w-4 h-4" />
+          <FaYahoo className="h-4 w-4" />
           Yahoo Calendar
         </a>
       </div>

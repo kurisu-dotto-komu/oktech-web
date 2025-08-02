@@ -1,6 +1,6 @@
 export function EntryCardOfficial({ top, bottom }: { top: string; bottom: string }) {
   return (
-    <div className="text-xs text-primary border-l border-primary pl-3 flex flex-col whitespace-nowrap">
+    <div className="text-primary border-primary flex flex-col border-l pl-3 text-xs whitespace-nowrap">
       <div>{top}</div>
       <div>{bottom}</div>
     </div>
@@ -17,18 +17,18 @@ export function EntryCardFooter({
   bottom: string;
 }) {
   return (
-    <div className="flex gap-2 justify-between select-none opacity-50 whitespace-nowrap">
+    <div className="flex justify-between gap-2 whitespace-nowrap opacity-50 select-none">
       <EntryCardOfficial top={top} bottom={bottom} />
-      <div className="text-xs pr-2">{text}</div>
+      <div className="pr-2 text-xs">{text}</div>
     </div>
   );
 }
 
 export function EntryCardHeader({ text, description }: { text: string; description: string }) {
   return (
-    <div className="flex flex-col select-none pl-10 pt-1 px-2 opacity-50">
-      <div className="text-xs text-left whitespace-nowrap">{description}</div>
-      <h3 className="text-lg text-right font-mono text-primary font-bold whitespace-nowrap">
+    <div className="flex flex-col px-2 pt-1 pl-10 opacity-50 select-none">
+      <div className="text-left text-xs whitespace-nowrap">{description}</div>
+      <h3 className="text-primary text-right font-mono text-lg font-bold whitespace-nowrap">
         {text}
       </h3>
     </div>

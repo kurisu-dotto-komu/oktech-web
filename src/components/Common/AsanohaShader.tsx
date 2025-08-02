@@ -1,9 +1,12 @@
-import { useEffect, useState, useMemo } from "react";
-import { parseOklchToRgb } from "@/utils/colorConversion";
-import ShaderRenderer from "./ShaderRenderer";
-import asanohaThemedShader from "@/shaders/asanoha-themed.frag?raw";
-import type { UniformValue } from "./ShaderRenderer";
+import { useEffect, useMemo, useState } from "react";
+
 import clsx from "clsx";
+
+import asanohaThemedShader from "@/shaders/asanoha-themed.frag?raw";
+import { parseOklchToRgb } from "@/utils/colorConversion";
+
+import ShaderRenderer from "./ShaderRenderer";
+import type { UniformValue } from "./ShaderRenderer";
 
 interface AsanohaShaderProps {
   className?: string;
@@ -128,7 +131,7 @@ export default function AsanohaShader({ className, showComments }: AsanohaShader
     : SHADER_CONFIG.light.vignetteStrength;
 
   return (
-    <div className={clsx("absolute inset-0 overflow-hidden z-0")}>
+    <div className={clsx("absolute inset-0 z-0 overflow-hidden")}>
       {/* Shader layer */}
       <ShaderRenderer
         fragmentShader={asanohaThemedShader}
@@ -139,7 +142,7 @@ export default function AsanohaShader({ className, showComments }: AsanohaShader
         uniforms={shaderUniforms}
       />
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
           boxShadow: isDarkMode
             ? `inset 0 0 150px rgba(0,0,0,${0.8 * vignetteStrength}), inset 0 0 300px rgba(0,0,0,${0.5 * vignetteStrength})`
@@ -147,7 +150,7 @@ export default function AsanohaShader({ className, showComments }: AsanohaShader
         }}
       />
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
           background: isDarkMode
             ? `radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(0,0,0,${0.4 * vignetteStrength}) 100%)`

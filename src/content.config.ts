@@ -1,7 +1,8 @@
-import { defineCollection } from "astro:content";
-import { eventsCollection, eventGalleryImageCollection } from "./content/events";
-import { venuesCollection } from "./content/venues";
 import { glob } from "astro/loaders";
+import { defineCollection } from "astro:content";
+
+import { eventGalleryImageCollection, eventsCollection } from "./content/events";
+import { venuesCollection } from "./content/venues";
 
 // we fetch markdown separately from the main collections
 

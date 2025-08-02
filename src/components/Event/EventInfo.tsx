@@ -1,9 +1,11 @@
 import { LuClock, LuMapPin } from "react-icons/lu";
+
+import BigTooltip from "@/components/Common/BigTooltip";
+import Link from "@/components/Common/LinkReact";
+import VenueMap from "@/components/Venue/VenueMap";
 import type { EventEnriched } from "@/content";
 import { formatDate, formatTime } from "@/utils/formatDate";
-import VenueMap from "@/components/Venue/VenueMap";
-import Link from "@/components/Common/LinkReact";
-import BigTooltip from "@/components/Common/BigTooltip";
+
 import EventCity from "./EventCity";
 import HowToFindUs from "./EventHowToFindUs";
 
@@ -29,33 +31,33 @@ export default function EventInfo({ event }: Props) {
   const eventContent = (
     <div className="bg-base-100 rounded-lg">
       {/* Date and Time Section */}
-      <div className="p-6 space-y-4" data-testid="event-info">
+      <div className="space-y-4 p-6" data-testid="event-info">
         <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 mt-1">
-            <LuClock className="w-6 h-6 text-primary" />
+          <div className="mt-1 flex-shrink-0">
+            <LuClock className="text-primary h-6 w-6" />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-semibold text-base-content">{fullDate}</span>
+            <span className="text-base-content text-lg font-semibold">{fullDate}</span>
             <span className="text-base-content/70 mt-1">{timeRange}</span>
           </div>
         </div>
 
         {event.venue && (
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 mt-1">
-              <LuMapPin className="w-6 h-6 text-primary" />
+            <div className="mt-1 flex-shrink-0">
+              <LuMapPin className="text-primary h-6 w-6" />
             </div>
             <div className="flex flex-col">
               {event.venue.hasPage ? (
                 <Link
                   href={`/venue/${event.venueSlug}`}
-                  className="text-lg underline font-semibold text-base-content hover:text-primary transition-colors"
+                  className="text-base-content hover:text-primary text-lg font-semibold underline transition-colors"
                   data-testid="venue-title-link"
                 >
                   {event.venue.title}
                 </Link>
               ) : (
-                <span className="text-lg font-semibold text-base-content" data-testid="venue-title">
+                <span className="text-base-content text-lg font-semibold" data-testid="venue-title">
                   {event.venue.title}
                 </span>
               )}
@@ -71,10 +73,10 @@ export default function EventInfo({ event }: Props) {
 
       {/* Map Section */}
       {event.venue && event.venueSlug && (
-        <div className="w-full aspect-video relative">
+        <div className="relative aspect-video w-full">
           <VenueMap venue={event.venue} marker={event.venue.title} link={true} />
           {event.venue.city && (
-            <div className="absolute bottom-2 right-2">
+            <div className="absolute right-2 bottom-2">
               <EventCity city={event.venue.city} />
             </div>
           )}

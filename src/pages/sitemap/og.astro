@@ -7,7 +7,7 @@ import ArticleLayout from "@/layouts/ArticleLayout.astro";
 
 <ArticleLayout title="Sitemap" pageTitle="Sitemap - OG Images">
   <SitemapSwitcher slot="header" currentView="og" client:load />
-  <div class="prose max-w-none mb-4">
+  <div class="prose mb-4 max-w-none">
     This page displays all OG (Open Graph) images for every route on the website.
     <Link href="/sitemap.xml">Download XML sitemap</Link>.
     <SiteMapTree showOGImages={true} />

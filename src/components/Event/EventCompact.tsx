@@ -1,7 +1,9 @@
 import { LuCalendar, LuMapPin } from "react-icons/lu";
-import type { EventEnriched } from "@/content";
+
 import Link from "@/components/Common/LinkReact";
+import type { EventEnriched } from "@/content";
 import { formatDate, formatTime } from "@/utils/formatDate";
+
 import EventCity from "./EventCity";
 
 interface Props {
@@ -19,29 +21,29 @@ export default function EventCompact({ event, className, class: classFromAstro }
   return (
     <Link
       href={`/event/${event.id}`}
-      className={`flex items-center gap-4 p-3 rounded-lg hover:bg-base-200 transition-colors ${finalClassName}`}
+      className={`hover:bg-base-200 flex items-center gap-4 rounded-lg p-3 transition-colors ${finalClassName}`}
     >
-      <figure className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-base-300">
+      <figure className="bg-base-300 h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg">
         {event.data.cover ? (
           <img
             src={event.data.cover.src}
             alt={event.data.title}
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
             width={64}
             height={64}
           />
         ) : (
-          <div className="w-full h-full bg-base-300" />
+          <div className="bg-base-300 h-full w-full" />
         )}
       </figure>
 
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-base truncate" data-testid="event-title">
+      <div className="min-w-0 flex-1">
+        <h3 className="truncate text-base font-semibold" data-testid="event-title">
           {event.data.title}
         </h3>
       </div>
 
-      <div className="flex items-center gap-6 text-sm text-base-content/70 flex-shrink-0">
+      <div className="text-base-content/70 flex flex-shrink-0 items-center gap-6 text-sm">
         <div className="flex items-center gap-2">
           <LuCalendar size={16} />
           <span

@@ -1,5 +1,6 @@
-import VenueMapImage from "./VenueMapImage";
 import type { ProcessedVenue } from "@/content";
+
+import VenueMapImage from "./VenueMapImage";
 
 interface Props {
   venue: ProcessedVenue;
@@ -52,7 +53,7 @@ export default function VenueMap({
           href={mapUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className={`block w-full h-full hover:opacity-90 transition-opacity cursor-pointer ${finalClassName}`}
+          className={`block h-full w-full cursor-pointer transition-opacity hover:opacity-90 ${finalClassName}`}
           data-testid="venue-map-link"
         >
           <VenueMapImage mapImage={mapImage} marker={marker} />

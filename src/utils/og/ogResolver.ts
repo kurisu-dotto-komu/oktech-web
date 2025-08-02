@@ -1,4 +1,4 @@
-import { resolveInternalHref, resolveFullUrl } from "../urlResolver";
+import { resolveFullUrl, resolveInternalHref } from "../urlResolver";
 
 /**
  * Check if a given route has a specific OG image handler

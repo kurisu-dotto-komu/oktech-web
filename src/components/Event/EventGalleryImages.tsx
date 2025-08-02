@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
-import type { EventEnriched } from "@/content";
-import EventImageModal from "./EventImageModal";
+import { useEffect, useState } from "react";
+
 import { LuImage } from "react-icons/lu";
+
+import type { EventEnriched } from "@/content";
+
+import EventImageModal from "./EventImageModal";
 
 interface Props {
   event: EventEnriched;
@@ -16,9 +19,9 @@ export default function EventGalleryImages({ event }: Props) {
 
   if (galleryImages.length === 0) {
     return (
-      <div className="flex items-center justify-center p-8 bg-base-200 rounded-xl">
-        <div className="flex items-center gap-3 text-base-content/60">
-          <LuImage className="w-6 h-6" />
+      <div className="bg-base-200 flex items-center justify-center rounded-xl p-8">
+        <div className="text-base-content/60 flex items-center gap-3">
+          <LuImage className="h-6 w-6" />
           <span>This event doesn't have any images yet</span>
         </div>
       </div>
@@ -78,7 +81,7 @@ export default function EventGalleryImages({ event }: Props) {
         <button
           key={img.id}
           onClick={() => handleImageClick(index)}
-          className="w-full focus:outline-none focus:ring-2 focus:ring-primary rounded-lg"
+          className="focus:ring-primary w-full rounded-lg focus:ring-2 focus:outline-none"
           type="button"
           aria-label={`View larger image: ${img.data.caption ?? ""}`}
           data-testid={`gallery-image-${index}`}
@@ -86,7 +89,7 @@ export default function EventGalleryImages({ event }: Props) {
           <img
             src={img.thumbnailSrc}
             alt={img.data.caption ?? ""}
-            className="w-full aspect-[4/3] object-cover rounded-lg hover:opacity-90 transition-opacity bg-base-300 cursor-pointer"
+            className="bg-base-300 aspect-[4/3] w-full cursor-pointer rounded-lg object-cover transition-opacity hover:opacity-90"
             loading="lazy"
             width={320}
             height={240}

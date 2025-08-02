@@ -1,4 +1,5 @@
 import Section from "@/components/Common/Section";
+
 import EventLinkCard from "./EventLinkCard";
 
 export interface EventLink {

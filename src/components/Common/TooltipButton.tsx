@@ -1,4 +1,5 @@
-import type { ReactNode, ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+
 import LinkReact from "@/components/Common/LinkReact";
 
 type TooltipButtonProps = {

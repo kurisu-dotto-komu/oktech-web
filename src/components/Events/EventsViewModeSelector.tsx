@@ -1,7 +1,10 @@
 import { useMemo } from "react";
+
+import { LuGrid3X3, LuImage, LuList } from "react-icons/lu";
+
 import TooltipButton from "@/components/Common/TooltipButton";
+
 import { useEventsFilter } from "./EventsFilterProvider";
-import { LuGrid3X3, LuList, LuImage } from "react-icons/lu";
 
 interface EventsViewModeSelectorProps {
   currentView: string;
@@ -52,7 +55,7 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
             data-testid={`view-mode-${view.value}`}
             aria-label={view.label}
           >
-            <Icon className="w-4 h-4" />
+            <Icon className="h-4 w-4" />
           </TooltipButton>
         );
       })}

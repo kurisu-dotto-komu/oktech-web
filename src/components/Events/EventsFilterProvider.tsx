@@ -1,16 +1,18 @@
 import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useMemo,
   type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from "react";
-import type Fuse from "fuse.js";
-import type { EventEnriched, Venue } from "@/content";
+
 import type { ImageMetadata } from "astro";
+import type Fuse from "fuse.js";
+
+import type { EventEnriched, Venue } from "@/content";
 
 export interface EventItem {
   id: string;

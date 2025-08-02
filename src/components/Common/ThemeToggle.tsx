@@ -1,6 +1,6 @@
 "use client";
 
-import { LuSun, LuMoon } from "react-icons/lu";
+import { LuMoon, LuSun } from "react-icons/lu";
 
 interface ThemeToggleProps {
   testId?: string;
@@ -21,8 +21,8 @@ export default function ThemeToggle({ testId = "theme-switcher" }: ThemeTogglePr
       aria-label="Toggle theme"
       data-testid={testId}
     >
-      <LuMoon className="hidden dark:block h-5 w-5" />
-      <LuSun className="block dark:hidden h-5 w-5" />
+      <LuMoon className="hidden h-5 w-5 dark:block" />
+      <LuSun className="block h-5 w-5 dark:hidden" />
     </button>
   );
 }

@@ -1,4 +1,5 @@
 import type { EventEnriched } from "@/content";
+
 import { EntryCardFooter, EntryCardHeader } from "./EntryCardDecorations";
 
 export default function EntryCardContentImage({ event }: { event: EventEnriched }) {
@@ -12,7 +13,7 @@ export default function EntryCardContentImage({ event }: { event: EventEnriched 
         <img
           src={event.data.cover.src}
           alt="Event cover"
-          className="w-full h-full aspect-video object-cover rounded-md border border-dashed border-base-content/20"
+          className="border-base-content/20 aspect-video h-full w-full rounded-md border border-dashed object-cover"
           width={512}
           height={512}
         />

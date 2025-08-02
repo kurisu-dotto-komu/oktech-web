@@ -1,6 +1,8 @@
-import { useRef, useEffect } from "react";
-import { useEventsFilter } from "./EventsFilterProvider";
+import { useEffect, useRef } from "react";
+
 import { LuChevronDown } from "react-icons/lu";
+
+import { useEventsFilter } from "./EventsFilterProvider";
 
 interface EventsFilterDropdownProps {
   id: "topics" | "location";
@@ -75,16 +77,16 @@ export default function EventsFilterDropdown({
   return (
     <details className="dropdown" ref={dropdownRef} data-testid={dataTestId}>
       <summary
-        className={`btn whitespace-nowrap join-item ${selected.length > 0 ? "btn-primary" : ""}`}
+        className={`btn join-item whitespace-nowrap ${selected.length > 0 ? "btn-primary" : ""}`}
       >
         {getButtonLabel()}
-        <LuChevronDown className="w-4 h-4" />
+        <LuChevronDown className="h-4 w-4" />
       </summary>
-      <ul className="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 overflow-y-auto">
+      <ul className="dropdown-content menu bg-base-100 rounded-box z-50 max-h-80 w-52 overflow-y-auto p-2 shadow">
         {options.map((option) => (
           <li key={option}>
             <label
-              className="label cursor-pointer justify-start gap-2 "
+              className="label cursor-pointer justify-start gap-2"
               data-testid={`${id === "topics" ? "topic" : id}-option`}
             >
               {multiple ? (

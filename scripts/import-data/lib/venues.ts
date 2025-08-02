@@ -1,13 +1,14 @@
+import matter from "gray-matter";
+import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { existsSync } from "node:fs";
 import slugify from "slugify";
-import matter from "gray-matter";
-import type { Venue } from "./types";
-import { logger } from "./logger";
+
 import { VENUES_BASE_DIR } from "./constants";
+import { logger } from "./logger";
 import { generateStaticMap } from "./maps";
 import type { ImportStatistics } from "./statistics";
+import type { Venue } from "./types";
 import { doubleQuoteYamlEngine } from "./yaml-engine";
 
 interface UnmatchedCity {

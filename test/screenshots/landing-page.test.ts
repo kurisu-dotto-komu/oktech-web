@@ -1,4 +1,5 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+
 import { takeScreenshot } from "../helpers/screenshot";
 
 test.describe("Landing Page Visual Tests", () => {

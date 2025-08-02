@@ -1,4 +1,5 @@
 import { getEvents, getVenues } from "@/content";
+
 import { resolveFullUrl } from "./urlResolver";
 
 export interface PageEntry {

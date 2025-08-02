@@ -1,6 +1,6 @@
 import Link from "@/components/Common/LinkReact";
 import { getOGImageWithFallback } from "@/utils/og";
-import { buildSitemapSections, type PageEntry, type SectionEntry } from "@/utils/sitemap";
+import { type PageEntry, type SectionEntry, buildSitemapSections } from "@/utils/sitemap";
 
 // The sections promise will resolve once and remain cached for subsequent renders.
 const sectionsPromise = buildSitemapSections();
@@ -23,13 +23,13 @@ function Section({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="text-lg font-semibold mb-2">
+      <h3 className="mb-2 text-lg font-semibold">
         {section.href ? (
           <>
             <Link href={section.href} className="link link-hover">
               {section.title}
             </Link>
-            <span className="text-sm text-base-content/50 ml-2">{section.href}</span>
+            <span className="text-base-content/50 ml-2 text-sm">{section.href}</span>
           </>
         ) : (
           <span className="text-base-content/70">{section.title}</span>
@@ -40,7 +40,7 @@ function Section({
           <img
             src={getOGImageWithFallback(section.href)}
             alt={`OG image for ${section.title}`}
-            className="w-full h-auto object-cover rounded-lg shadow-md"
+            className="h-auto w-full rounded-lg object-cover shadow-md"
             loading="lazy"
           />
         </div>
@@ -49,7 +49,7 @@ function Section({
         <div
           className={
             showOGImages
-              ? "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4"
+              ? "grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5"
               : "list-none space-y-1 md:ml-4"
           }
         >
@@ -60,16 +60,16 @@ function Section({
                   <img
                     src={getOGImageWithFallback(child.href)}
                     alt={`OG image for ${child.title}`}
-                    className="w-full h-auto object-cover rounded-lg shadow-md aspect-[1200/630]"
+                    className="aspect-[1200/630] h-auto w-full rounded-lg object-cover shadow-md"
                     loading="lazy"
                   />
                 </div>
               )}
               <div>
-                <Link href={child.href} className="link link-hover text-sm block">
+                <Link href={child.href} className="link link-hover block text-sm">
                   {child.title}
                 </Link>
-                <span className="text-xs text-base-content/50 break-all">{child.href}</span>
+                <span className="text-base-content/50 text-xs break-all">{child.href}</span>
               </div>
             </div>
           ))}

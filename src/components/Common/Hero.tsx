@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
-import Button from "@/components/Common/Button";
-import AsanohaShader from "./AsanohaShader";
+
 import clsx from "clsx";
+
+import Button from "@/components/Common/Button";
+
+import AsanohaShader from "./AsanohaShader";
 
 interface HeroProps {
   title?: string;
@@ -34,7 +37,7 @@ export default function Hero({
       className={clsx("py-20", slim ? "" : "min-h-[50vh]", shader && "relative", className)}
     >
       {shader && <AsanohaShader />}
-      <div className="z-10 relative">{children}</div>
+      <div className="relative z-10">{children}</div>
     </div>
   );
 }

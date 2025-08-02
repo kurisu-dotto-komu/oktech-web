@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EntryCardOfficial } from "./EntryCardDecorations";
+
 import type { EventEnriched } from "@/content";
-import { calculateTimeParts, type TimeParts } from "@/utils/formatDate";
+import { type TimeParts, calculateTimeParts } from "@/utils/formatDate";
+
+import { EntryCardOfficial } from "./EntryCardDecorations";
 
 interface Props {
   targetDate: Date;
@@ -50,8 +52,8 @@ interface CountdownRowProps {
 function CountdownRow({ value, label }: CountdownRowProps) {
   return (
     <div className="flex flex-col">
-      <div className="text-2xl font-mono">{value.toString().padStart(2, "0")}</div>
-      <div className="text-xs text-base-content whitespace-nowrap">{label}</div>
+      <div className="font-mono text-2xl">{value.toString().padStart(2, "0")}</div>
+      <div className="text-base-content text-xs whitespace-nowrap">{label}</div>
     </div>
   );
 }
@@ -105,16 +107,16 @@ export default function EntryCardContentCountdown({ event }: { event: EventEnric
   const displayTime = status === "upcoming" ? timeLeft : timeElapsed;
 
   return (
-    <div className="flex items-center h-full">
+    <div className="flex h-full items-center">
       <div
-        className={`flex p-2 md:p-0 md:flex-col h-full w-full flex-grow gap-2 justify-between md:justify-start ${statusInfo.bgStyle}`}
+        className={`flex h-full w-full flex-grow justify-between gap-2 p-2 md:flex-col md:justify-start md:p-0 ${statusInfo.bgStyle}`}
       >
-        <div className={`flex p-2 flex-col ${statusInfo.textStyle}`}>
+        <div className={`flex flex-col p-2 ${statusInfo.textStyle}`}>
           <h3 className="text-base font-bold whitespace-nowrap">{statusInfo.text.jp}</h3>
           <div className="text-xs">{statusInfo.text.en}</div>
         </div>
-        <div className="flex md:flex-col gap-6 flex-grow">
-          <div className="flex px-2 gap-4 flex-grow md:flex-col justify-end md:justify-start">
+        <div className="flex flex-grow gap-6 md:flex-col">
+          <div className="flex flex-grow justify-end gap-4 px-2 md:flex-col md:justify-start">
             <CountdownRow value={displayTime.days} label="日 DAYS" />
             <CountdownRow value={displayTime.hours} label="時 HOURS" />
             <CountdownRow value={displayTime.minutes} label="分 MINS" />

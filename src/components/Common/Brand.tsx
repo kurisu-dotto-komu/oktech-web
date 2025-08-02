@@ -1,6 +1,7 @@
+import clsx from "clsx";
+
 import { OKTechLogoRound, OKTechLogoText } from "@/components/Common/OKTechLogo";
 import SpinningText from "@/components/Common/SpinningText";
-import clsx from "clsx";
 
 interface BrandProps {
   fullText?: boolean;
@@ -16,7 +17,7 @@ export default function Brand({ fullText = false, big = false, neutral = false }
 
   if (big) {
     return (
-      <div className="flex flex-col items-center gap-8 text-center relative">
+      <div className="relative flex flex-col items-center gap-8 text-center">
         <div className="relative">
           <OKTechLogoRound className={logoSize} />
           <SpinningText text={longText} radius={131} />
@@ -27,12 +28,12 @@ export default function Brand({ fullText = false, big = false, neutral = false }
   }
 
   return (
-    <div className="flex gap-4 flex-col md:flex-row md:items-center">
+    <div className="flex flex-col gap-4 md:flex-row md:items-center">
       <div className="flex items-center gap-3">
         <OKTechLogoRound className={logoSize} svgClass={clsx(neutral && "neutral")} />
-        <OKTechLogoText className="w-28 h-auto " svgClass={clsx((true || neutral) && "neutral")} />
+        <OKTechLogoText className="h-auto w-28" svgClass={clsx((true || neutral) && "neutral")} />
       </div>
-      {fullText && <span className="text-sm font-header">{longText}</span>}
+      {fullText && <span className="font-header text-sm">{longText}</span>}
     </div>
   );
 }

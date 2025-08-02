@@ -1,23 +1,24 @@
-import SocialsFooter from "@/components/Common/SocialsFooter";
+import Brand from "@/components/Common/Brand";
 import Container from "@/components/Common/Container";
 import MainMenu from "@/components/Common/MainMenu";
-import { formatDate } from "@/utils/formatDate";
-import Brand from "@/components/Common/Brand";
-import LinkReact from "./LinkReact";
-import { meta } from "@/utils/meta";
+import SocialsFooter from "@/components/Common/SocialsFooter";
 import { SITE } from "@/constants";
+import { formatDate } from "@/utils/formatDate";
+import { meta } from "@/utils/meta";
+
+import LinkReact from "./LinkReact";
 
 export default function Footer() {
   return (
     <footer className="bg-base-200 text-base-content">
-      <Container className="flex flex-col py-10 gap-8 sm:gap-4">
-        <div className="flex justify-between items-center flex-col sm:flex-row gap-8">
+      <Container className="flex flex-col gap-8 py-10 sm:gap-4">
+        <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
           <MainMenu variant="footer" />
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <SocialsFooter />
           </div>
         </div>
-        <div className="flex justify-between items-center sm:items-baseline flex-col sm:flex-row gap-8">
+        <div className="flex flex-col items-center justify-between gap-8 sm:flex-row sm:items-baseline">
           <div className="opacity-80">
             <Brand fullText neutral />
           </div>

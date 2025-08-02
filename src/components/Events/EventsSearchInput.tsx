@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useRef, type ChangeEvent } from "react";
+import { type ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+
 import { useEventsFilter } from "./EventsFilterProvider";
 
 export default function EventsSearchInput() {
@@ -49,7 +50,7 @@ export default function EventsSearchInput() {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="w-4 h-4 opacity-70"
+        className="h-4 w-4 opacity-70"
       >
         <circle cx="11" cy="11" r="8"></circle>
         <path d="m21 21-4.35-4.35"></path>
@@ -77,7 +78,7 @@ export default function EventsSearchInput() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-4 h-4"
+            className="h-4 w-4"
           >
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>

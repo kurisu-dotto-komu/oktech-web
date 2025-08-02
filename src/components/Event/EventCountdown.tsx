@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+
 import { LuTimer } from "react-icons/lu";
-import { calculateTimeParts, type TimeParts } from "@/utils/formatDate";
+
+import { type TimeParts, calculateTimeParts } from "@/utils/formatDate";
 
 interface Props {
   eventDateTime: Date;
@@ -56,7 +58,7 @@ export default function EventCountdown({ eventDateTime }: Props) {
 
   return (
     <div className="flex items-start gap-2">
-      <LuTimer className="w-4 h-4 flex-shrink-0 text-primary mt-0.5" />
+      <LuTimer className="text-primary mt-0.5 h-4 w-4 flex-shrink-0" />
       <div className="min-w-0 break-words" data-testid="event-countdown">
         {displayText}
       </div>

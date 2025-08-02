@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+
 import { getEvents } from "@/content";
 import { generateEventICS, wrapICSCalendar } from "@/utils/ics";
 

@@ -4,7 +4,7 @@ import IconCard from "./IconCard";
 
 export default function SocialsBig() {
   return (
-    <div className="flex flex-wrap gap-4 items-start justify-center">
+    <div className="flex flex-wrap items-start justify-center gap-4">
       {SOCIALS.map((social) => (
         <IconCard key={social.label} {...social} />
       ))}

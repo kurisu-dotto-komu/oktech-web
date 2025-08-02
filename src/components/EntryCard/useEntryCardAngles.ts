@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { seededRandom, randomInRange } from "@/utils/random";
+
+import { randomInRange, seededRandom } from "@/utils/random";
 
 export const FOLD_PRESETS = [
   [45, 35, -10, -15, -2, 0],

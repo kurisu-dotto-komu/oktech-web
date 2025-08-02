@@ -1,6 +1,6 @@
-import { logger } from "./lib/logger";
 import { handleClear } from "./lib/clear";
 import { handleImport } from "./lib/import";
+import { logger } from "./lib/logger";
 import { handleRemoveFields, showRemoveFieldsHelp } from "./lib/remove-fields";
 
 function showHelp() {

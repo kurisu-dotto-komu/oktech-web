@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import StickyBottomNavButton from "./StickyBottomNavButton";
+
+import { LuArrowLeft, LuCalendarDays, LuChevronLeft, LuList, LuUsers } from "react-icons/lu";
+
 import LinkReact from "@/components/Common/LinkReact";
-import { LuChevronLeft, LuArrowLeft, LuList, LuUsers, LuCalendarDays } from "react-icons/lu";
+
+import StickyBottomNavButton from "./StickyBottomNavButton";
 
 interface NavigationItem {
   href: string;
@@ -92,13 +95,13 @@ export default function StickyBottomNavButtons({
 
   return (
     <div
-      className={`w-full py-2 px-2 min-h-[3rem] ${finalClassName}`}
+      className={`min-h-[3rem] w-full px-2 py-2 ${finalClassName}`}
       data-testid="sticky-nav-buttons"
       data-keyboard-events={keyboardEvents ? "true" : "false"}
     >
       <div className="grid grid-cols-5 items-center gap-2">
         {/* Prev button - left column */}
-        <div className=" col-span-2" ref={prevButtonRef}>
+        <div className="col-span-2" ref={prevButtonRef}>
           {prevItem && <StickyBottomNavButton {...prevItem} />}
         </div>
 
@@ -120,7 +123,7 @@ export default function StickyBottomNavButtons({
         </div>
 
         {/* Next button - right column */}
-        <div className="flex justify-end min-w-0  col-span-2" ref={nextButtonRef}>
+        <div className="col-span-2 flex min-w-0 justify-end" ref={nextButtonRef}>
           {nextItem && <StickyBottomNavButton {...nextItem} next />}
         </div>
       </div>

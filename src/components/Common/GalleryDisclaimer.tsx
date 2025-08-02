@@ -1,13 +1,14 @@
-import BigTooltip from "@/components/Common/BigTooltip";
 import { LuInfo } from "react-icons/lu";
+
+import BigTooltip from "@/components/Common/BigTooltip";
 
 export default function GalleryDisclaimer() {
   return (
     <BigTooltip
       position="left"
       content={
-        <div className="bg-base-200 p-6 rounded-lg shadow-lg max-w-md">
-          <ul className="list-disc list-inside space-y-3 text-sm text-base-content">
+        <div className="bg-base-200 max-w-md rounded-lg p-6 shadow-lg">
+          <ul className="text-base-content list-inside list-disc space-y-3 text-sm">
             <li>
               All photos here have been taken by community members and sent in either through our{" "}
               <a
@@ -54,7 +55,7 @@ export default function GalleryDisclaimer() {
       }
     >
       <button className="btn btn-circle btn-sm btn-ghost" aria-label="Gallery information">
-        <LuInfo className="w-4 h-4" />
+        <LuInfo className="h-4 w-4" />
       </button>
     </BigTooltip>
   );

@@ -1,5 +1,5 @@
-import { MENU } from "@/constants";
 import LinkReact from "@/components/Common/LinkReact";
+import { MENU } from "@/constants";
 
 interface MainMenuProps {
   variant?: "footer" | "default";
@@ -9,14 +9,14 @@ interface MainMenuProps {
 export default function MainMenu({ variant = "default", className = "" }: MainMenuProps) {
   if (variant === "footer") {
     return (
-      <nav className={`flex gap-1 flex-wrap justify-center -mx-4 ${className}`}>
+      <nav className={`-mx-4 flex flex-wrap justify-center gap-1 ${className}`}>
         {MENU.map((item) => {
           const IconComponent = item.icon;
           return (
             <LinkReact
               key={item.href}
               href={item.href}
-              className="btn btn-ghost gap-2 text-sm items-center justify-start"
+              className="btn btn-ghost items-center justify-start gap-2 text-sm"
             >
               {IconComponent && <IconComponent />}
               {item.label}
@@ -35,7 +35,7 @@ export default function MainMenu({ variant = "default", className = "" }: MainMe
         <LinkReact
           key={item.label}
           href={item.href}
-          className="btn btn-ghost gap-3 text-lg items-center justify-start"
+          className="btn btn-ghost items-center justify-start gap-3 text-lg"
         >
           {item.label}
         </LinkReact>
