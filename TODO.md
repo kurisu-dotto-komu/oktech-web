@@ -1,8 +1,7 @@
 # vNow
 
-- Reuse event details inside the EntryCartd and other locs
+- Set up redirects
 - Nicer events page styling
-- Copy the copy from the old site, add copy about real life.
 - Adjust hotspot box, and make it more responsive?
 - Event page fade if filter selected.
 
