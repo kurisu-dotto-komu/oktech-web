@@ -58,10 +58,16 @@ export const MENU: { label: string; href: string; header?: boolean; icon?: IconT
 
 export const SOCIALS = [
   {
-    icon: FaXTwitter,
-    href: "https://x.com/owddm",
-    label: "X (Twitter)",
-    description: "Follow us on X (formally Twitter)",
+    icon: FaDiscord,
+    href: "/discord",
+    label: "Discord",
+    description: "Chat with us on our Discord Server",
+  },
+  {
+    icon: FaMeetup,
+    href: "https://www.meetup.com/osaka-web-designers-and-developers-meetup/",
+    label: "Meetup",
+    description: "RSVP our next event on Meetup.com",
   },
   {
     icon: FaGithub,
@@ -70,21 +76,14 @@ export const SOCIALS = [
     description: "Developers can watch us on Github",
   },
   {
-    icon: FaDiscord,
-    href: "/discord",
-    label: "Discord",
-    description: "Chat with us on our Discord Server",
+    icon: FaXTwitter,
+    href: "https://x.com/owddm",
+    label: "X (Twitter)",
+    description: "Follow us on X (formally Twitter)",
   },
-  {
-    icon: FaMeetup,
-    href: "https://www.meetup.com/ja-JP/osaka-web-designers-and-developers-meetup/",
-    label: "Meetup",
-    description: "RSVP our next event on Meetup.com",
-  },
-
   {
     icon: FaLinkedin,
-    href: "#",
+    href: "https://www.linkedin.com/company/owddm-kwddm",
     label: "LinkedIn",
     description: "Todo",
   },

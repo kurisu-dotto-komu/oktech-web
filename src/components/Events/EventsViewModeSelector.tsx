@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import LinkReact from "@/components/Common/LinkReact";
+import TooltipButton from "@/components/Common/TooltipButton";
 import { useEventsFilter } from "./EventsFilterProvider";
 import { LuGrid3X3, LuList, LuImage } from "react-icons/lu";
 
@@ -42,17 +42,18 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
       {views.map((view) => {
         const Icon = view.icon;
         return (
-          <div key={view.value} className="tooltip" data-tip={view.label}>
-            <LinkReact
-              href={view.href}
-              className={`join-item btn ${currentView === view.value ? "btn-primary" : ""}`}
-              data-view={view.value}
-              data-testid={`view-mode-${view.value}`}
-              aria-label={view.label}
-            >
-              <Icon className="w-4 h-4" />
-            </LinkReact>
-          </div>
+          <TooltipButton
+            key={view.value}
+            as="link"
+            href={view.href}
+            tooltip={view.label}
+            className={`join-item btn ${currentView === view.value ? "btn-primary" : ""}`}
+            data-view={view.value}
+            data-testid={`view-mode-${view.value}`}
+            aria-label={view.label}
+          >
+            <Icon className="w-4 h-4" />
+          </TooltipButton>
         );
       })}
     </div>

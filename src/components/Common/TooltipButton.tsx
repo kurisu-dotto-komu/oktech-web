@@ -1,25 +1,44 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ReactNode, ButtonHTMLAttributes } from "react";
+import LinkReact from "@/components/Common/LinkReact";
 
-interface TooltipButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type TooltipButtonProps = {
   tooltip: string;
-  children: ReactNode;
   tooltipPosition?: "top" | "bottom" | "left" | "right";
-}
+  children: ReactNode;
+  className?: string;
+} & (
+  | ({
+      as?: "button";
+      href?: never;
+    } & ButtonHTMLAttributes<HTMLButtonElement>)
+  | {
+      as: "link";
+      href: string;
+      [key: string]: any;
+    }
+);
 
-export default function TooltipButton({
-  tooltip,
-  children,
-  tooltipPosition = "top",
-  className = "",
-  ...props
-}: TooltipButtonProps) {
+export default function TooltipButton(props: TooltipButtonProps) {
+  const { tooltip, tooltipPosition = "top", children, className = "", as = "button" } = props;
   const tooltipClass = tooltipPosition === "top" ? "tooltip-top" : `tooltip-${tooltipPosition}`;
 
   return (
     <div className={`tooltip ${tooltipClass}`} data-tip={tooltip}>
-      <button className={className} {...props}>
-        {children}
-      </button>
+      {as === "link" ? (
+        <LinkReact
+          className={className}
+          {...(props as Extract<TooltipButtonProps, { as: "link" }>)}
+        >
+          {children}
+        </LinkReact>
+      ) : (
+        <button
+          className={className}
+          {...(props as Extract<TooltipButtonProps, { as?: "button" }>)}
+        >
+          {children}
+        </button>
+      )}
     </div>
   );
 }

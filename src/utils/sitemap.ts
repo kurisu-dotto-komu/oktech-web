@@ -66,13 +66,27 @@ export async function buildSitemapSections(): Promise<SectionEntry[]> {
   });
 
   sections.push({
+    title: "Code of Conduct",
+    href: "/code-of-conduct",
+    children: [],
+  });
+
+  sections.push({
+    title: "RSS Feed",
+    href: "/rss.xml",
+    children: [],
+  });
+
+  sections.push({
+    title: "ICS Calendar Feed",
+    href: "/oktech-events.ics",
+    children: [],
+  });
+
+  sections.push({
     title: "Sitemap",
     href: "/sitemap",
-    children: [
-      { href: "/sitemap.xml", title: "XML Sitemap" },
-      { href: "/rss.xml", title: "RSS Feed" },
-      { href: "/oktech-events.ics", title: "ICS Calendar Feed" },
-    ],
+    children: [{ href: "/sitemap.xml", title: "XML Sitemap" }],
   });
 
   return sections;

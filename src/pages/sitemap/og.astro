@@ -1,14 +1,15 @@
 ---
 import SiteMapTree from "@/components/Common/SiteMapTree";
+import SitemapSwitcher from "@/components/Sitemap/SitemapSwitcher";
 import Link from "@/components/Common/LinkAstro.astro";
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
-import sitemapNav from "./sitemapNav";
 ---
 
-<ArticleLayout title="Sitemap" pageTitle="Sitemap - OG Images" buttons={sitemapNav} active="og">
-  <p class="mb-4">
+<ArticleLayout title="Sitemap" pageTitle="Sitemap - OG Images">
+  <SitemapSwitcher slot="header" currentView="og" client:load />
+  <div class="prose max-w-none mb-4">
     This page displays all OG (Open Graph) images for every route on the website.
     <Link href="/sitemap.xml">Download XML sitemap</Link>.
-  </p>
-  <SiteMapTree showOGImages={true} />
+    <SiteMapTree showOGImages={true} />
+  </div>
 </ArticleLayout>
