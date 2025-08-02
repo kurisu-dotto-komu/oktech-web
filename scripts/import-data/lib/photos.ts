@@ -269,7 +269,9 @@ export async function processGallery(
           stats.galleryImagesUnchanged++;
         }
       } catch (err) {
-        logger.warn(`Failed to download image ${photo.location}: ${err.message}`);
+        logger.warn(
+          `Failed to download image ${photo.location}: ${err instanceof Error ? err.message : String(err)}`,
+        );
         // Don't count this as a failure, just skip it
       }
 
