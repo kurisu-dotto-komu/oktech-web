@@ -24,6 +24,9 @@ pnpm-debug.log*
 .idea/
 .env.local
 
+# worktrees
+.worktrees/
+
 # OG Image Cache
 .cache/
 
