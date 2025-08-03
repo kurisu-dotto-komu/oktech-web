@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import clsx from "clsx";
 import type { IconType } from "react-icons";
 import { LuBuilding, LuCalendar, LuClock, LuMap, LuMapPin, LuTag } from "react-icons/lu";
 
@@ -64,12 +65,26 @@ export default function EventIconList({
         </span>
       </InfoItem>
     ),
-    city: () =>
-      event.venue?.city ? (
+    city: () => {
+      if (!event.venue?.city) return null;
+
+      const cityLower = event.venue.city.toLowerCase();
+      let badgeClass = "badge";
+
+      if (cityLower === "osaka") {
+        badgeClass = "badge badge-primary";
+      } else if (cityLower === "kyoto") {
+        badgeClass = "badge badge-secondary";
+      } else if (cityLower === "kobe") {
+        badgeClass = "badge badge-accent";
+      }
+
+      return (
         <InfoItem icon={LuMap}>
-          <span className="capitalize">{event.venue.city}</span>
+          <span className={clsx(badgeClass, "capitalize")}>{event.venue.city}</span>
         </InfoItem>
-      ) : null,
+      );
+    },
     venue: () =>
       event.venue ? (
         <InfoItem icon={LuBuilding}>
@@ -79,7 +94,7 @@ export default function EventIconList({
     address: () =>
       event.venue?.address ? (
         <InfoItem icon={LuMapPin}>
-          <span className="truncate">{event.venue.address}</span>
+          <span className="">{event.venue.address}</span>
         </InfoItem>
       ) : null,
     topics: () =>

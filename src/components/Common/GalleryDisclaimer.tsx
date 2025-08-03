@@ -5,9 +5,9 @@ import BigTooltip from "@/components/Common/BigTooltip";
 export default function GalleryDisclaimer() {
   return (
     <BigTooltip
-      position="left"
+      position="top"
       content={
-        <div className="bg-base-200 max-w-md rounded-lg p-6 shadow-lg">
+        <div className="bg-base-200 max-w-md rounded-lg p-6 text-left shadow-lg">
           <ul className="text-base-content list-inside list-disc space-y-3 text-sm">
             <li>
               All photos here have been taken by community members and sent in either through our{" "}

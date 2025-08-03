@@ -32,17 +32,10 @@ export default function EventSummary({ event, className, class: classFromAstro }
         )}
       </figure>
       <div className="card-body flex flex-col gap-4 p-4">
-        <h3 className="card-title text-lg" data-testid="event-title">
+        <h3 className="card-title line-clamp-2 text-lg" data-testid="event-title">
           {event.data.title}
         </h3>
-        <div className="relative">
-          <EventIconList event={event} stats={["date", "time", "venue"]} showCountdown />
-          {event.venue?.city && (
-            <div className="absolute top-0 right-0">
-              <EventCity city={event.venue.city} />
-            </div>
-          )}
-        </div>
+        <EventIconList event={event} stats={["date", "time", "venue", "city"]} showCountdown />
       </div>
     </Link>
   );

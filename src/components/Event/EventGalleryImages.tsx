@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { LuImage } from "react-icons/lu";
+import { LuImage, LuImageOff } from "react-icons/lu";
 
+import Container from "@/components/Common/Container";
 import type { EventEnriched } from "@/content";
+import { isEventUpcoming } from "@/utils/eventFilters";
 
 import EventImageModal from "./EventImageModal";
 
@@ -17,13 +19,18 @@ export default function EventGalleryImages({ event }: Props) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (galleryImages.length === 0) {
+  // Check if event is upcoming (using the 30-minute buffer logic)
+  const isUpcoming = isEventUpcoming(event);
+
+  if (isUpcoming || galleryImages.length === 0) {
     return (
-      <div className="bg-base-200 flex items-center justify-center rounded-xl p-8">
-        <div className="text-base-content/60 flex items-center gap-3">
-          <LuImage className="h-6 w-6" />
-          <span>This event doesn't have any images yet</span>
-        </div>
+      <div className="text-base-content/60 m-auto flex items-center gap-3">
+        <LuImageOff className="h-6 w-6" />
+        <span>
+          {isUpcoming 
+            ? "Gallery will be available after the event" 
+            : "This event doesn't have a gallery yet"}
+        </span>
       </div>
     );
   }
