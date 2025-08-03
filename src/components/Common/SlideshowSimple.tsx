@@ -13,6 +13,14 @@ export default function ImageSlideshow({
 }: ImageSlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Preload all images
+  useEffect(() => {
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, [images]);
+
   useEffect(() => {
     if (images.length <= 1) return;
 

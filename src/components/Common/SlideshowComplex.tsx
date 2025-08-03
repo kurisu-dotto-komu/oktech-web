@@ -16,10 +16,12 @@ export type SlidePosition =
 export type AnimationDirection = "up" | "down" | "left" | "right" | "fade";
 
 export interface SlideConfig {
-  image: string;
-  title: string;
-  description: string;
-  position: SlidePosition;
+  image?: string;
+  title?: string;
+  description?: string;
+  position?: SlidePosition;
+  customComponent?: React.ReactNode;
+  delay?: number; // Additional delay in milliseconds for this slide
 }
 
 interface SlideshowComplexProps {
@@ -141,15 +143,29 @@ export default function SlideshowComplex({
 }: SlideshowComplexProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Preload all images
+  useEffect(() => {
+    slides.forEach((slide) => {
+      if (slide.image) {
+        const img = new Image();
+        img.src = slide.image;
+      }
+    });
+  }, [slides]);
+
   useEffect(() => {
     if (slides.length <= 1) return;
 
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
-    }, interval);
+    // Calculate the total duration for the current slide
+    const currentSlide = slides[currentIndex];
+    const slideDuration = interval + (currentSlide.delay || 0);
 
-    return () => clearInterval(timer);
-  }, [slides.length, interval]);
+    const timer = setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, slideDuration);
+
+    return () => clearTimeout(timer);
+  }, [slides, currentIndex, interval]);
 
   if (slides.length === 0) return null;
 
@@ -166,51 +182,61 @@ export default function SlideshowComplex({
           transition={{ duration: 1.5, ease: "easeInOut" }}
           className="absolute inset-0"
         >
-          <img src={slide.image} alt="Slideshow image" className="h-full w-full object-cover" />
-          {/* Vignette overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
+          {slide.customComponent ? (
+            <>{slide.customComponent}</>
+          ) : (
+            <>
+              <img src={slide.image} alt="Slideshow image" className="h-full w-full object-cover" />
+              {/* Vignette overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
+            </>
+          )}
         </motion.div>
       ))}
 
       {/* Corner gradient overlay */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`gradient-${currentIndex}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: 0.5,
-            ease: "easeInOut",
-          }}
-          className={`absolute inset-0 ${getGradientClasses(currentSlide.position)}`}
-        />
-      </AnimatePresence>
-
-      {/* Overlay content with animations */}
-      <AnimatePresence mode="wait">
-        <div
-          key={`overlay-container-${currentIndex}`}
-          className={`absolute inset-0 flex p-12 pb-20 md:p-20 md:pb-24 ${getPositionClasses(
-            currentSlide.position,
-          )} ${overlayClassName}`}
-        >
+      {!currentSlide.customComponent && (
+        <AnimatePresence mode="wait">
           <motion.div
-            {...getAnimationVariants(getAnimationFromPosition(currentSlide.position))}
+            key={`gradient-${currentIndex}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{
-              duration: 0.8,
+              duration: 0.5,
               ease: "easeInOut",
             }}
+            className={`absolute inset-0 ${getGradientClasses(currentSlide.position)}`}
+          />
+        </AnimatePresence>
+      )}
+
+      {/* Overlay content with animations */}
+      {!currentSlide.customComponent && currentSlide.title && (
+        <AnimatePresence mode="wait">
+          <div
+            key={`overlay-container-${currentIndex}`}
+            className={`absolute inset-0 flex p-12 pb-20 md:p-20 md:pb-24 ${getPositionClasses(
+              currentSlide.position,
+            )} ${overlayClassName}`}
           >
-            <SlideshowText
-              title={currentSlide.title}
-              description={currentSlide.description}
-              textAlign={getTextAlignFromPosition(currentSlide.position)}
-            />
-          </motion.div>
-        </div>
-      </AnimatePresence>
+            <motion.div
+              {...getAnimationVariants(getAnimationFromPosition(currentSlide.position))}
+              transition={{
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+            >
+              <SlideshowText
+                title={currentSlide.title}
+                description={currentSlide.description || ""}
+                textAlign={getTextAlignFromPosition(currentSlide.position)}
+              />
+            </motion.div>
+          </div>
+        </AnimatePresence>
+      )}
 
       <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
         {slides.map((_, index) => (
