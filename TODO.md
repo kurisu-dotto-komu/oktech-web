@@ -1,6 +1,6 @@
 # vNow
 
-- Set up redirects
+- Make sure images are optimized everywhere.
 - Nicer events page styling
 - Adjust hotspot box, and make it more responsive?
 - Event page fade if filter selected.

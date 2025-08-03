@@ -12,10 +12,10 @@ import { processVenue, unmatchedCities } from "./venues";
 
 export async function handleImport(args: string[]) {
   const overwriteMaps = args.includes("--overwrite-maps");
-  
+
   // Check for --overwrite-maps-theme parameter
   let overwriteMapsTheme: "light" | "dark" | "both" | null = null;
-  const themeIndex = args.findIndex(arg => arg === "--overwrite-maps-theme");
+  const themeIndex = args.findIndex((arg) => arg === "--overwrite-maps-theme");
   if (themeIndex !== -1 && args[themeIndex + 1]) {
     const theme = args[themeIndex + 1];
     if (theme === "light" || theme === "dark") {

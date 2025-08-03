@@ -146,9 +146,15 @@ export async function processVenue(
     const darkMapExists = existsSync(mapDarkPath);
 
     // Determine which maps to generate based on theme parameter
-    const shouldGenerateLight = overwriteMapsTheme === null || overwriteMapsTheme === undefined || overwriteMapsTheme === "light";
-    const shouldGenerateDark = overwriteMapsTheme === null || overwriteMapsTheme === undefined || overwriteMapsTheme === "dark";
-    
+    const shouldGenerateLight =
+      overwriteMapsTheme === null ||
+      overwriteMapsTheme === undefined ||
+      overwriteMapsTheme === "light";
+    const shouldGenerateDark =
+      overwriteMapsTheme === null ||
+      overwriteMapsTheme === undefined ||
+      overwriteMapsTheme === "dark";
+
     if (lightMapExists && darkMapExists && !overwriteMaps) {
       logger.debug(`Maps already exist for venue ${venue.id} (${venue.name})`);
       stats.mapsUnchanged += 2;
