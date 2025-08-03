@@ -19,7 +19,7 @@ export default function EventsFilterDropdown({
   multiple = false,
   "data-testid": dataTestId,
 }: EventsFilterDropdownProps) {
-  const { currentFilters, updateFilter, clearFilter } = useEventsFilter();
+  const { currentFilters, updateFilter } = useEventsFilter();
   const dropdownRef = useRef<HTMLDetailsElement>(null);
 
   const selected =
@@ -54,10 +54,6 @@ export default function EventsFilterDropdown({
         dropdownRef.current.open = false;
       }
     }
-  };
-
-  const handleClear = () => {
-    clearFilter(id);
   };
 
   const capitalizeFirst = (str: string) => {

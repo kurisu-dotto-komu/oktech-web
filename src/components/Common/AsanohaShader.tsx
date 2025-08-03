@@ -61,7 +61,7 @@ const SHADER_CONFIG = {
   },
 };
 
-export default function AsanohaShader({ className, showComments }: AsanohaShaderProps) {
+export default function AsanohaShader({ showComments }: AsanohaShaderProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {

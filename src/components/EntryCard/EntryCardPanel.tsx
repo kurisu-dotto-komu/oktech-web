@@ -22,7 +22,6 @@ export default function EntryCardPanel({
   seam2Angle,
   mobileSeam1Angle,
   mobileSeam2Angle,
-  totalRotation,
   isHovered,
   shadeOpacity,
   cut,

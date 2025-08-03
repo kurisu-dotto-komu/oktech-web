@@ -1,6 +1,6 @@
 import Link from "@/components/Common/LinkReact";
 import { getOGImageWithFallback } from "@/utils/og";
-import { type PageEntry, type SectionEntry, buildSitemapSections } from "@/utils/sitemap";
+import { type SectionEntry, buildSitemapSections } from "@/utils/sitemap";
 
 // The sections promise will resolve once and remain cached for subsequent renders.
 const sectionsPromise = buildSitemapSections();

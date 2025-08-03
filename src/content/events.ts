@@ -26,9 +26,8 @@ export const eventsCollection = defineCollection({
     return Object.entries(imports).map(([fileName, module]) => {
       const basePath = fileName.replace("/event.md", "");
       const slug = basePath.split("/").pop() as string;
-      const { frontmatter, rawContent } = module as {
+      const { frontmatter } = module as {
         frontmatter: Record<string, unknown>;
-        rawContent: () => string;
       };
       const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);
       const [date, time] = (frontmatter.dateTime as string).split(" ");

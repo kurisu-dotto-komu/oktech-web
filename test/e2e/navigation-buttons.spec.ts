@@ -98,7 +98,6 @@ test.describe("Navigation Buttons", () => {
       await page.waitForLoadState("networkidle");
 
       // Get the current venue title
-      const firstVenueTitle = await page.getByTestId("venue-title-page").textContent();
       expect(page.url()).toContain("/venue/");
 
       // Check if navigation buttons exist
@@ -115,7 +114,6 @@ test.describe("Navigation Buttons", () => {
 
       // Verify we're on a venue page (might be the same if only one venue with hasPage)
       expect(page.url()).toContain("/venue/");
-      const secondUrl = page.url();
 
       // Navigate using prev button
       await prevButton.click();

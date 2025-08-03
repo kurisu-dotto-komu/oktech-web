@@ -101,7 +101,6 @@ test.describe("Event Filters", () => {
 
       // Select a location
       const firstLocation = page.getByTestId("location-option").first();
-      const locationText = await firstLocation.textContent();
       await firstLocation.click();
 
       // Verify filtered results

@@ -36,9 +36,8 @@ export const venuesCollection = defineCollection({
       const basePath = fileName.replace("/venue.md", "");
       const slug = basePath.split("/").pop() as string;
 
-      const { frontmatter, rawContent } = module as {
+      const { frontmatter } = module as {
         frontmatter: Record<string, unknown>;
-        rawContent: () => string;
       };
 
       const cover = frontmatter.cover && path.join(basePath, frontmatter.cover as string);

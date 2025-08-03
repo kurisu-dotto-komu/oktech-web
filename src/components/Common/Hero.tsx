@@ -2,8 +2,6 @@ import type { ReactNode } from "react";
 
 import clsx from "clsx";
 
-import Button from "@/components/Common/Button";
-
 import AsanohaShader from "./AsanohaShader";
 
 interface HeroProps {
@@ -22,15 +20,7 @@ interface HeroProps {
   shader?: boolean;
 }
 
-export default function Hero({
-  title,
-  description,
-  button,
-  slim,
-  className,
-  children,
-  shader,
-}: HeroProps) {
+export default function Hero({ slim, className, children, shader }: HeroProps) {
   return (
     <div
       data-testid="hero"

@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 import Button from "./Button";
 import Container from "./Container";
-import Lorem from "./Lorem";
 
 function StripedBackground() {
   const patternStyles = {
@@ -45,7 +44,6 @@ interface Props {
 export default function Section({
   anchor,
   button,
-  buttonClass,
   title,
   description,
   left,

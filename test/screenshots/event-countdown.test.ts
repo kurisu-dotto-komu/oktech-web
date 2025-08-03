@@ -13,11 +13,10 @@ test.describe("Event Countdown Visual", () => {
       await page.waitForSelector('[data-testid="event-card"]');
 
       // Find the first event card with a countdown
-      const countdownElement = await page.locator('[data-testid="event-countdown"]').first();
+      const countdownElement = page.locator('[data-testid="event-countdown"]').first();
 
       if (await countdownElement.isVisible()) {
         // Take a screenshot of the event card with countdown
-        const eventCard = await page.locator('[data-testid="event-card"]').first();
         await takeScreenshot(page, `event-countdown-${viewport.name}`);
 
         // Verify the countdown element exists

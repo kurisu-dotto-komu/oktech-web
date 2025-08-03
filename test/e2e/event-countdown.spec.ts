@@ -8,7 +8,7 @@ test.describe("Event Countdown", () => {
     await page.waitForSelector('[data-testid="event-card"]');
 
     // Find the first event card with a countdown
-    const countdownElement = await page.locator('[data-testid="event-countdown"]').first();
+    const countdownElement = page.locator('[data-testid="event-countdown"]').first();
 
     if (await countdownElement.isVisible()) {
       // Check that countdown text is properly formatted
@@ -23,7 +23,7 @@ test.describe("Event Countdown", () => {
     // Wait for the events to load
     await page.waitForSelector('[data-testid="event-card"]');
 
-    const countdownElement = await page.locator('[data-testid="event-countdown"]').first();
+    const countdownElement = page.locator('[data-testid="event-countdown"]').first();
 
     if (await countdownElement.isVisible()) {
       const countdownText = await countdownElement.textContent();
@@ -49,12 +49,12 @@ test.describe("Event Countdown", () => {
     if (eventCards.length > 0) {
       // Look for events that have past dates
       for (const card of eventCards) {
-        const dateElement = await card.locator('[data-testid="event-date"]');
+        const dateElement = card.locator('[data-testid="event-date"]');
         const dateAttr = await dateElement.getAttribute("data-date");
 
         if (dateAttr && new Date(dateAttr) < new Date()) {
           // For past events, there should be no countdown
-          const countdown = await card.locator('[data-testid="event-countdown"]');
+          const countdown = card.locator('[data-testid="event-countdown"]');
           expect(await countdown.isVisible()).toBe(false);
         }
       }

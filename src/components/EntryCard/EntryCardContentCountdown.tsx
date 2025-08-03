@@ -7,11 +7,6 @@ import { type TimeParts, calculateTimeParts } from "@/utils/formatDate";
 
 import { EntryCardOfficial } from "./EntryCardDecorations";
 
-interface Props {
-  targetDate: Date;
-  duration: number; // Duration in hours
-}
-
 type EventStatus = "upcoming" | "inProgress" | "completed";
 
 interface StatusInfo {
