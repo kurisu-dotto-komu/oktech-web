@@ -243,6 +243,7 @@ export default function EventImageModal({
               />
             ))}
           </div>
+          <div className="m-4">{selectedImage.id}</div>
         </div>
       </div>
       <form method="dialog" className="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-sm">
