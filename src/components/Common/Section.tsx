@@ -73,8 +73,11 @@ export default function Section({
 
   return (
     <section
-      className={`flex flex-col gap-12 ${variant === "striped" ? "py-24" : "py-18"} ${variantClasses[variant]} ${finalClassName}`}
-      style={variant === "striped" ? { clipPath: "polygon(0 15%, 100% 0, 100% 85%, 0 100%)" } : {}}
+      className={`flex flex-col gap-12 ${variant === "striped" ? "py-32" : "py-18"} ${variantClasses[variant]} ${finalClassName} ${
+        variant === "striped"
+          ? "[clip-path:polygon(0_5%,100%_0,100%_95%,0_100%)] sm:[clip-path:polygon(0_10%,100%_0,100%_90%,0_100%)] md:[clip-path:polygon(0_15%,100%_0,100%_85%,0_100%)]"
+          : ""
+      }`}
       id={anchor}
       data-testid="section"
     >

@@ -3,24 +3,14 @@ import PageLayout from "@/layouts/PageLayout.astro";
 import ImagePlaceholder from "@/components/Common/ImagePlaceholder";
 import Section from "@/components/Common/Section";
 import SocialsBig from "@/components/Common/SocialsBig";
+import LandingHero from "@/components/Landing/LandingHero";
 ---
 
 <PageLayout
   title="About"
   description="Learn about OKTech - Osaka Kyoto Tech Meetup Group. Our mission is to build a thriving tech community through events, workshops, and networking opportunities. Discover our history and how to get involved."
 >
-  <div class="bg-primary/20 flex min-h-[50vh] items-center justify-center p-20 text-center">
-    <div class="max-w-4xl">
-      <h1 class="mb-8 text-5xl font-bold">About OKTech</h1>
-      <p class="mb-6 text-xl">Where Osaka and Kyoto's Tech Communities Connect</p>
-      <p class="text-lg">
-        We're a vibrant community of developers, designers, and tech enthusiasts who believe the
-        best ideas emerge when diverse minds meet. From cutting-edge frameworks to timeless design
-        principles, we explore it all – with a side of great conversation and maybe some okonomiyaki
-        afterward.
-      </p>
-    </div>
-  </div>
+  <LandingHero client:load />
   <Section
     split
     title="Our Mission"

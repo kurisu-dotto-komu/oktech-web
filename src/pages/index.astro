@@ -7,16 +7,40 @@ import EventsRecent from "@/components/Events/EventsRecent";
 import Banner from "@/components/Common/Banner";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { getEvents } from "@/content";
-import LandingHero from "@/components/Landing/LandingHero";
 import FancyBorder from "@/components/Common/FancyBorder";
-import ImageSlideshow from "@/components/Common/ImageSlideshow";
+import SlideshowSimple from "@/components/Common/SlideshowSimple";
+import HeroSlideshow from "@/components/Home/HeroSlideshow";
+import { getImage } from "astro:assets";
 
 const events = await getEvents();
+
+const images = await Promise.all(
+  [
+    "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp",
+    "/content/events/299455127-wasm-airplanes-and-llm/gallery/IMG_9659.webp",
+    "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp",
+    "/content/events/292890108-colorful-web-meetup/gallery/IMG_20230617_1731252.webp",
+    "/content/events/300388533-cross-cultural-teams/gallery/IMG_20240518_2030412.webp",
+    // "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9863.webp",
+    // "/content/events/301574205-the-state-of-js/gallery/IMG_0349.webp",
+    // "/content/events/293291174-with-no-code-to-business/gallery/IMG_20230520_1723082.webp",
+    "/content/events/264574361-osaka-web-developer-and-designer-meetup-september/gallery/276278.webp",
+  ].map(async (src) => {
+    const img = await getImage({
+      src,
+      width: 320,
+      height: 320,
+      format: "webp",
+    });
+    // console.log({ img });
+    return img.src;
+  }),
+);
 ---
 
 <PageLayout>
   <Banner />
-  <LandingHero client:load />
+  <HeroSlideshow client:load />
   <Section>
     <EventsUpcoming client:load events={events} />
   </Section>
@@ -29,17 +53,7 @@ const events = await getEvents();
     button={{ text: "Learn More", href: "/about", className: "btn-secondary" }}
   >
     <FancyBorder>
-      <ImageSlideshow
-        client:load
-        images={[
-          "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp",
-          "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp",
-          "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9863.webp",
-          "/content/events/301574205-the-state-of-js/gallery/IMG_0349.webp",
-          "/content/events/293291174-with-no-code-to-business/gallery/IMG_20230520_1723082.webp",
-          "/content/events/264574361-osaka-web-developer-and-designer-meetup-september/gallery/276278.webp",
-        ]}
-      />
+      <SlideshowSimple client:load images={images} />
     </FancyBorder>
   </Section>
 
