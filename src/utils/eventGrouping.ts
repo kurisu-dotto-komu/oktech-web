@@ -35,6 +35,9 @@ export function groupEventsByYearAndUpcoming(
     }
   });
 
+  // reverse upcoming events
+  upcomingEvents.reverse();
+
   // Sort years based on sortOrder
   const years = Array.from(eventsByYear.keys()).sort((a, b) => {
     return sortOrder === "date-desc" ? b - a : a - b;
