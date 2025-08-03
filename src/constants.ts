@@ -6,7 +6,7 @@ import { LuCalendar, LuHouse, LuInfo, LuMap, LuRss } from "react-icons/lu";
 export const DEV_MODE = true;
 
 const shortName = "OKTech";
-const longName = "Osaka Kyoto Tech Meetup Group";
+const longName = "Technology Meetup Group in Kansai - Osaka, Kyoto, Kobe, Hyogo";
 const name = `${shortName} - ${longName}`;
 
 export const SITE = {

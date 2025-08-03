@@ -6,7 +6,7 @@ This isn't an exhaustive list of things that you can't do. Rather, take it in th
 
 This code of conduct applies to all spaces (real or digital) managed by the OKTech group. This includes but is not limited to the our physical events, Discord Chat, Github, LinkedIn, and any other system created or maintained by the group. In addition, violations of this code outside these spaces may affect a person's ability to participate within them.
 
-If you believe someone is violating the code of conduct, we ask that you report it to [owddm@proton.me](mailto:owddm@proton.me) and follow the [Reporting Guide](/coc-report).
+If you believe someone is violating the code of conduct, we ask that you report it to [oktechjp@proton.me](mailto:oktechjp@proton.me) and follow the [Reporting Guide](/coc-report).
 
 ## Be friendly and patient.
 
