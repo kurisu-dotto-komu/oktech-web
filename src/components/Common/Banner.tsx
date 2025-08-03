@@ -12,8 +12,7 @@ export default function Banner() {
           </div>
           <div>
             <strong>Work in Progress!</strong> This site is under active development and the design
-            is currently garbage slop. Do not fear, as the human hand will be applied to it soon.
-            Please excuse the rough edges as we build something awesome together.
+            is currently a work in progress.
           </div>
         </div>
       </Container>

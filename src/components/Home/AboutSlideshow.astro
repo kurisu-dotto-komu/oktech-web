@@ -17,7 +17,7 @@ const images = await Promise.all(
   rawImages.map(async (imgRaw) => {
     const optimized = await getImage({ src: imgRaw, width: 420, format: "webp" });
     return optimized.src;
-  })
+  }),
 );
 ---
 

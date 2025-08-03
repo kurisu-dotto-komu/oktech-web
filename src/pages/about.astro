@@ -3,35 +3,196 @@ import PageLayout from "@/layouts/PageLayout.astro";
 import ImagePlaceholder from "@/components/Common/ImagePlaceholder";
 import Section from "@/components/Common/Section";
 import SocialsBig from "@/components/Common/SocialsBig";
-import LandingHero from "@/components/Landing/LandingHero";
+import Link from "@/components/Common/LinkAstro.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <PageLayout
   title="About"
   description="Learn about OKTech - Osaka Kyoto Tech Meetup Group. Our mission is to build a thriving tech community through events, workshops, and networking opportunities. Discover our history and how to get involved."
 >
-  <LandingHero client:load />
+  <div class="hero min-h-[60vh] bg-base-200">
+    <div class="hero-content text-center">
+      <div class="max-w-3xl">
+        <h1 class="text-5xl font-bold mb-8">Osaka Kyoto Tech Meetup</h1>
+        <p class="text-xl mb-6">
+          Yes, that's quite a mouthful! 👆 That's why we go by <span class="font-bold">OKTech</span> for short.
+        </p>
+        <p class="text-lg">
+          The "O" stands for <em>Osaka</em>, the vibrant tech hub where our journey began. The "K" represents <em>Kyoto</em>, 
+          where tradition meets innovation. But really, we like to think of ourselves as <em>OK</em>Tech – 
+          because we're OK with all skill levels, OK with making mistakes, and definitely OK with having fun while coding! 😊
+        </p>
+      </div>
+    </div>
+  </div>
+
   <Section
     split
-    title="Our Mission"
-    description="OKTech brings together the best of both worlds – the innovation of Osaka and the tradition of Kyoto – in one dynamic tech community. We believe great code and great friendships go hand in hand. Whether you're debugging React hooks or exploring the latest in AI, you'll find kindred spirits here. Our events mix technical deep-dives with genuine human connection, because we know the best solutions come from diverse perspectives shared over good conversation."
+    title="What We're All About"
+    description="OKTech is a volunteer-driven, non-profit community organizing tech meetups across Kansai. We typically host one meetup per month in each city, featuring presentations from community members on topics they're passionate about. Our events are in English and cover everything from frontend and backend development to design, cloud architecture, AI, and even game development. No prior skills required – if you're interested in tech, you belong here!"
   >
     <ImagePlaceholder />
   </Section>
+
   <Section
     split
-    title="Our Story"
-    description="What started as casual coffee chats between developers has grown into Kansai's most welcoming tech community. The 'OK' in OKTech isn't just our cities – it's our philosophy. We're OK with all skill levels, OK with making mistakes, and definitely OK with staying late to help debug that one weird issue. Our volunteer-driven community thrives on the energy of members who step up to share, teach, and learn together. From cherry blossom coding sessions to hiking brainstorms, we blend tech with the unique culture of our region."
     left
-    ><ImagePlaceholder />
+    title="Join Our Events"
+    description="Ready to dive in? No need to be shy! We welcome everyone from curious beginners to seasoned pros. Each meetup features 1-2 community presentations followed by optional dinner outings where the real magic happens – debugging life's problems over good food and drinks. Whether you're into React hooks, machine learning, or just want to meet fellow tech enthusiasts, there's a place for you at OKTech."
+  >
+    <div class="space-y-4">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title">
+            <Icon name="lucide:calendar" class="w-6 h-6" />
+            RSVP to Our Next Event
+          </h3>
+          <p>Check out our upcoming meetups and workshops. New events added monthly!</p>
+          <div class="card-actions justify-end">
+            <Link href="/events" class="btn btn-primary">View Events</Link>
+          </div>
+        </div>
+      </div>
+      <ImagePlaceholder />
+    </div>
   </Section>
+
+  <Section
+    split
+    title="Present Your Ideas"
+    description="Got something cool to share? We're always excited to welcome new presenters! Whether it's a deep dive into a framework you love, a design pattern that changed your workflow, or lessons learned from that project that almost broke you – if it's web-related, we want to hear it. Don't worry about being perfect; we're all here to learn together."
+  >
+    <div class="card bg-primary text-primary-content">
+      <div class="card-body">
+        <h3 class="card-title">
+          <Icon name="lucide:presentation" class="w-6 h-6" />
+          Submit a Talk Proposal
+        </h3>
+        <p>Share your knowledge, gain experience presenting, and contribute to our community.</p>
+        <div class="card-actions justify-end">
+          <a href="https://forms.gle/KifJzLSmcXUPxSFk7" target="_blank" class="btn btn-secondary">
+            Propose a Talk
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section
+    split
+    left
+    title="Become a Volunteer"
+    description="OKTech has always been volunteer-driven, and that's what makes us special. There's always something to improve, whether it's helping with event organization, managing our online presence, moderating Discord, or brainstorming new ways to connect our community. Volunteers shape the future of OKTech – bringing fresh ideas and making things happen."
+  >
+    <div class="space-y-4">
+      <div class="alert alert-info">
+        <Icon name="lucide:users" class="w-6 h-6" />
+        <div>
+          <h4 class="font-bold">How to Get Involved</h4>
+          <p>Join our Discord and introduce yourself! Look for the Volunteer role or chat with us at any meetup.</p>
+        </div>
+      </div>
+      <ImagePlaceholder />
+    </div>
+  </Section>
+
+  <Section
+    title="Stay Connected"
+    description="The best part of OKTech happens between events. Join our Discord to discuss projects, share resources, find collaborators, or just chat about the latest tech trends. We've built a supportive online space where questions are welcomed and wins are celebrated."
+    wide
+    class="text-center"
+  >
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title justify-center">
+            <Icon name="lucide:message-circle" class="w-8 h-8" />
+            Join Our Discord
+          </h3>
+          <p>Connect with fellow developers, get help with your projects, and stay updated on events.</p>
+          <div class="card-actions justify-center">
+            <Link href="/discord" class="btn btn-primary">Join Discord</Link>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h3 class="card-title justify-center">
+            <Icon name="lucide:share-2" class="w-8 h-8" />
+            Follow Our Journey
+          </h3>
+          <p>Stay up to date with announcements, event photos, and community highlights.</p>
+          <div class="card-actions justify-center">
+            <a href="https://www.meetup.com/osaka-kyoto-tech-meetup/" target="_blank" class="btn btn-primary">
+              Follow on Meetup
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section
+    split
+    title="How We Work"
+    description="OKTech operates as a transparent, community-driven organization. While we have organizers who handle the logistics and final decisions, every volunteer has a voice in shaping our direction. We discuss ideas openly, work collaboratively, and believe the best communities are built by the people who show up. Want to help organize an event, suggest a workshop theme, or bring OKTech to your company? Let's talk!"
+  >
+    <div class="stats stats-vertical lg:stats-horizontal shadow">
+      <div class="stat">
+        <div class="stat-figure text-primary">
+          <Icon name="lucide:calendar-days" class="w-8 h-8" />
+        </div>
+        <div class="stat-title">Monthly Events</div>
+        <div class="stat-value text-primary">2+</div>
+        <div class="stat-desc">Osaka & Kyoto</div>
+      </div>
+      
+      <div class="stat">
+        <div class="stat-figure text-secondary">
+          <Icon name="lucide:users" class="w-8 h-8" />
+        </div>
+        <div class="stat-title">Community</div>
+        <div class="stat-value text-secondary">Growing</div>
+        <div class="stat-desc">All skill levels welcome</div>
+      </div>
+      
+      <div class="stat">
+        <div class="stat-figure text-accent">
+          <Icon name="lucide:heart" class="w-8 h-8" />
+        </div>
+        <div class="stat-title">Volunteer Run</div>
+        <div class="stat-value text-accent">100%</div>
+        <div class="stat-desc">Community driven</div>
+      </div>
+    </div>
+  </Section>
+
   <Section
     anchor="contact"
-    title="Get Involved"
-    description="Whether you are looking to become a speaker, sponsor or just want to get involved, we are always looking for new people to join our community!"
+    title="Ready to Join?"
+    description="Whether you want to attend your first meetup, share your expertise as a speaker, volunteer to help organize, or just connect with fellow tech enthusiasts – we're excited to meet you!"
     class="text-center"
     wide
   >
-    <SocialsBig />
+    <div class="flex flex-col items-center gap-8">
+      <div class="flex flex-wrap gap-4 justify-center">
+        <Link href="/events" class="btn btn-primary btn-lg">
+          <Icon name="lucide:calendar" class="w-5 h-5" />
+          See Upcoming Events
+        </Link>
+        <Link href="/discord" class="btn btn-secondary btn-lg">
+          <Icon name="lucide:message-circle" class="w-5 h-5" />
+          Join Discord
+        </Link>
+        <a href="https://forms.gle/KifJzLSmcXUPxSFk7" target="_blank" class="btn btn-accent btn-lg">
+          <Icon name="lucide:mic" class="w-5 h-5" />
+          Propose a Talk
+        </a>
+      </div>
+      <div class="divider">Connect With Us</div>
+      <SocialsBig />
+    </div>
   </Section>
 </PageLayout>
