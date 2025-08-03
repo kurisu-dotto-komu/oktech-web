@@ -166,11 +166,7 @@ export default function SlideshowComplex({
           transition={{ duration: 1.5, ease: "easeInOut" }}
           className="absolute inset-0"
         >
-          <img
-            src={`/@fs${slide.image}`}
-            alt="Slideshow image"
-            className="h-full w-full object-cover"
-          />
+          <img src={slide.image} alt="Slideshow image" className="h-full w-full object-cover" />
           {/* Vignette overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
