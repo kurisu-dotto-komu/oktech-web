@@ -4,6 +4,7 @@ import type { SlideConfig } from "@/components/Common/SlideshowComplex";
 import { getImage } from "astro:assets";
 
 // Import images directly
+import inspireImgRaw from "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp";
 import innovateImgRaw from "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0839.webp";
 import collabImgRaw from "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9847.webp";
 import connectImgRaw from "/content/events/299335046-osaka-hanami-2024/gallery/IMG_9924.webp";
@@ -13,6 +14,12 @@ import enjoyImgRaw from "/content/events/297594896-end-of-2023-dinner/gallery/IM
 
 // Define slide data with raw images
 const slideData = [
+  {
+    imageRaw: inspireImgRaw,
+    title: "Inspire",
+    description: "Share your passion and ignite curiosity",
+    position: "bottom-left" as const,
+  },
   {
     imageRaw: innovateImgRaw,
     title: "Innovate",
