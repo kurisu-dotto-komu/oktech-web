@@ -82,7 +82,7 @@ export default function Section({
       {variant === "striped" && <StripedBackground />}
       {firstContainer && (
         <Container
-          className={`relative z-10 ${split ? "grid items-center gap-12 md:grid-cols-2 lg:gap-24" : ""} ${
+          className={`relative ${split ? "grid items-center gap-12 md:grid-cols-2 lg:gap-24" : ""} ${
             left ? "md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1" : ""
           }`}
         >
@@ -91,13 +91,13 @@ export default function Section({
               className={`mx-6 lg:mx-0 ${
                 split ? "m-auto flex max-w-xl flex-col gap-6 text-lg" : ""
               } ${inline ? "flex flex-row items-center justify-between gap-4 lg:gap-12" : ""} ${
-                !split && !inline ? "mx-auto max-w-4xl text-center" : ""
-              }`}
+                !split && !inline && !(wide && grid) ? "mx-auto max-w-4xl text-center" : ""
+              } ${wide && grid ? "col-span-full text-center" : ""}`}
             >
               {title && (
                 <div
-                  className={`flex items-center justify-between gap-2 ${!inline ? "mb-4" : ""} ${
-                    !inline && !element ? "justify-center" : ""
+                  className={`flex items-center gap-2 ${!inline ? "mb-4" : ""} ${
+                    element && (split || inline) ? "justify-between" : "justify-center"
                   }`}
                 >
                   <h2 className="text-3xl font-bold" data-testid="section-title">
@@ -127,7 +127,7 @@ export default function Section({
         </Container>
       )}
       {secondContainer && (
-        <Container wide={wide} grid={grid} className="relative z-10">
+        <Container wide={wide} grid={grid} className="relative">
           {children}
         </Container>
       )}

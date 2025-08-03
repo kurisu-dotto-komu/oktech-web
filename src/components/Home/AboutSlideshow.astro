@@ -15,7 +15,7 @@ const rawImages = [img1Raw, img2Raw, img3Raw, img4Raw, img5Raw, img6Raw];
 // Process all images through getImage for optimization (smaller size for about section)
 const images = await Promise.all(
   rawImages.map(async (imgRaw) => {
-    const optimized = await getImage({ src: imgRaw, width: 420, format: "webp" });
+    const optimized = await getImage({ src: imgRaw, width: 512, height: 512, format: "webp" });
     return optimized.src;
   }),
 );

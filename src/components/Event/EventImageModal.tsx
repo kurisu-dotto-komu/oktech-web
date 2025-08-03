@@ -132,7 +132,7 @@ export default function EventImageModal({
       }}
     >
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+        className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8"
         onClick={(e) => {
           // Also handle clicks on the container
           if (e.target === e.currentTarget) {
@@ -243,10 +243,9 @@ export default function EventImageModal({
               />
             ))}
           </div>
-          <div className="m-4">{selectedImage.id}</div>
         </div>
       </div>
-      <form method="dialog" className="modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-sm">
+      <form method="dialog" className="modal-backdrop fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm">
         <button
           type="button"
           onClick={onClose}
