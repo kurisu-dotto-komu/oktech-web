@@ -1,0 +1,35 @@
+/* Floating animation */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px);
+    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.25));
+  }
+  50% { 
+    transform: translateY(-15px);
+    filter: drop-shadow(0 35px 45px rgba(0, 0, 0, 0.15));
+  }
+}
+
+.animate-floating {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* Hexagon mask and rotation animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.animate-hexagon-mask {
+  clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+  animation: spin 60s linear infinite;
+}
+
+.animate-hexagon-mask > * {
+  animation: spin-reverse 60s linear infinite;
+}

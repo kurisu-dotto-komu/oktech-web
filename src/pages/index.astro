@@ -4,11 +4,12 @@ import Hero from "@/components/Common/Hero";
 import LandingStats from "@/components/Common/LandingStats";
 import EventsUpcoming from "@/components/Events/EventsUpcoming";
 import EventsRecent from "@/components/Events/EventsRecent";
-import ImagePlaceholder from "@/components/Common/ImagePlaceholder";
 import Banner from "@/components/Common/Banner";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { getEvents } from "@/content";
 import LandingHero from "@/components/Landing/LandingHero";
+import FancyBorder from "@/components/Common/FancyBorder";
+import ImageSlideshow from "@/components/Common/ImageSlideshow";
 
 const events = await getEvents();
 ---
@@ -22,11 +23,24 @@ const events = await getEvents();
   <Section
     left
     split
+    variant="striped"
     title="About OKTech"
     description="A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan. We invite people from all walks of web-life and encourage members to present topics they enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka and Kyoto."
-    button={{ text: "Learn More", href: "/about" }}
+    button={{ text: "Learn More", href: "/about", className: "btn-secondary" }}
   >
-    <ImagePlaceholder />
+    <FancyBorder>
+      <ImageSlideshow
+        client:load
+        images={[
+          "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp",
+          "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp",
+          "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9863.webp",
+          "/content/events/301574205-the-state-of-js/gallery/IMG_0349.webp",
+          "/content/events/293291174-with-no-code-to-business/gallery/IMG_20230520_1723082.webp",
+          "/content/events/264574361-osaka-web-developer-and-designer-meetup-september/gallery/276278.webp",
+        ]}
+      />
+    </FancyBorder>
   </Section>
 
   <Section>
