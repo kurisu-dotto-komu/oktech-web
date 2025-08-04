@@ -1,6 +1,7 @@
 import clsx from "clsx";
 
 import { OKTechLogoRound, OKTechLogoText } from "@/components/Common/OKTechLogo";
+import { SITE } from "@/constants";
 
 interface BrandProps {
   fullText?: boolean;
@@ -8,8 +9,8 @@ interface BrandProps {
 }
 
 export default function Brand({ fullText = false, neutral = false }: BrandProps) {
-  const logoSize = "w-12 h-12";
-  const longText = "Osaka Kyoto Technology Meetup Group";
+  const logoSize = "w-8 h-8";
+  const longText = SITE.longName;
 
   return (
     <div className="group flex flex-col gap-4 md:flex-row md:items-center">
@@ -21,7 +22,8 @@ export default function Brand({ fullText = false, neutral = false }: BrandProps)
           )}
           svgClass={clsx(neutral && "neutral")}
         />
-        <OKTechLogoText className="h-auto w-28" svgClass={clsx((true || neutral) && "neutral")} />
+        <h1 className="text-2xl font-bold tracking-tighter">OKTech</h1>
+        {/* <OKTechLogoText className="h-auto w-28" svgClass={clsx((true || neutral) && "neutral")} /> */}
       </div>
       {fullText && <span className="font-header text-sm">{longText}</span>}
     </div>

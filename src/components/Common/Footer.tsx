@@ -7,6 +7,7 @@ import { formatDate } from "@/utils/formatDate";
 import { meta } from "@/utils/meta";
 
 import LinkReact from "./LinkReact";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Footer() {
   return (
@@ -42,6 +43,7 @@ export default function Footer() {
             Code of Conduct
           </LinkReact>
         </div>
+        <ThemeToggle testId="theme-switcher" />
       </Container>
     </footer>
   );

@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import clsx from "clsx";
+
 import Grid from "./Grid";
 
 interface ContainerProps {
@@ -12,18 +14,19 @@ interface ContainerProps {
 
 export default function Container({
   className,
-  class: classFromAstro,
   wide = false,
   grid = false,
   children,
 }: ContainerProps) {
-  const containerClasses = [
-    "mx-auto px-4 sm:px-6 lg:px-8",
-    wide ? "w-full max-w-[1800px]" : "w-full max-w-6xl",
-    className || classFromAstro,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  return <div className={containerClasses}>{grid ? <Grid>{children}</Grid> : children}</div>;
+  return (
+    <div
+      className={clsx([
+        "mx-auto px-4 sm:px-6 lg:px-8",
+        wide ? "w-full max-w-[1800px]" : "w-full max-w-6xl",
+        className,
+      ])}
+    >
+      {grid ? <Grid>{children}</Grid> : children}
+    </div>
+  );
 }
