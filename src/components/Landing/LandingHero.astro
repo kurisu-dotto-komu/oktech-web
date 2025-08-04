@@ -1,0 +1,49 @@
+---
+import Container from "@/components/Common/Container";
+import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
+---
+
+<div
+  class="bg-base-content/10 flex min-h-[40vh] max-w-full items-center py-32 md:overflow-x-hidden"
+>
+  <Container wide>
+    <div class="flex flex-col gap-20 md:grid md:grid-cols-2">
+      <div class="flex flex-col justify-center gap-8 pl-6 text-center md:text-left">
+        <h2 class="text-6xl font-bold md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
+          Together<br /> in tech and life
+        </h2>
+        <div class="text-xl md:text-lg">
+          Build cool things, share life hacks, and meet kind minds.
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="">
+            With 2,000+ Community Members,
+            <br />
+            OKTech is Kaisai's largest English speaking Technology Meetup Group
+          </div>
+        </div>
+      </div>
+      <div class="md:-mr-[30%] md:-ml-[10%] lg:-ml-0 xl:-ml-[10%] 2xl:-mr-0 2xl:-ml-[25%]">
+        <BlobSlideshow
+          images={[
+            "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp",
+            "/content/events/301456891-workshop-like-s3/gallery/IMG_7669.webp",
+            "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847554502.webp",
+            "/content/events/263532260-hot-summer-hot-topics-osaka-web-dev-and-design-meetup-in-august/gallery/255202.webp",
+            "/content/events/299830334-vim-and-noise/gallery/IMG_20240413_1728142.webp",
+            "/content/events/299335046-osaka-hanami-2024/gallery/IMG_9924.webp",
+          ]}
+          blobs={[
+            // Created with blobmaker.com, then scaled with scripts/precompute-blobs.ts
+            "M87.73,11.83C96.03,20.74,97.53,36.36,93.03,48.46C88.53,60.46,77.85,68.84,63.99,78.73C50.04,88.61,32.83,100.00,22.33,95.68C11.74,91.35,7.77,71.32,5.47,53.13C3.09,35.04,2.47,18.80,10.15,10.06C17.74,1.32,33.72,0.00,49.16,0.35C64.61,0.79,79.52,2.91,87.73,11.83Z",
+            "M85.32,26.04C93.72,34.37,100.00,46.64,97.95,57.60C95.91,68.55,85.61,78.20,73.70,83.46C61.87,88.79,48.43,89.66,34.84,85.28C21.26,80.90,7.45,71.26,3.73,58.25C0.00,45.33,6.28,29.11,16.65,20.34C27.03,11.58,41.42,10.34,53.91,11.87C66.33,13.40,76.92,17.79,85.32,26.04Z",
+            "M86.07,18.85C94.77,27.34,100.00,41.07,97.08,52.55C94.16,64.10,83.22,73.40,69.84,81.08C56.52,88.76,40.83,94.74,27.99,90.32C15.15,85.84,5.23,70.89,2.65,55.47C0.00,39.98,4.62,24.01,14.27,15.32C23.85,6.62,38.45,5.26,51.83,6.22C65.22,7.17,77.38,10.36,86.07,18.85Z",
+            "M92.39,21.72C100.00,28.87,98.29,45.73,92.54,58.08C86.87,70.51,77.23,78.36,67.13,81.93C57.03,85.43,46.54,84.58,34.19,81.08C21.91,77.66,7.77,71.52,3.89,61.11C0.00,50.78,6.37,36.17,15.93,28.55C25.56,20.94,38.38,20.32,53.22,18.76C68.07,17.21,84.85,14.57,92.39,21.72Z",
+            "M91.24,31.67C97.54,44.57,99.30,56.16,97.47,68.04C95.56,79.84,90.14,91.94,81.20,95.97C72.25,100.00,59.71,95.97,44.68,91.13C29.58,86.22,11.84,80.50,6.27,68.48C0.70,56.45,7.29,38.12,18.73,24.05C30.24,9.90,46.66,0.00,60.30,2.20C74.01,4.47,84.86,18.70,91.24,31.67Z",
+            "M89.20,22.02C94.04,33.81,89.54,47.31,86.33,61.01C83.13,74.71,81.29,88.62,73.24,94.34C65.13,100.00,50.82,97.48,37.59,91.55C24.30,85.62,12.10,76.35,9.03,64.49C5.96,52.62,11.96,38.17,21.30,25.29C30.64,12.41,43.39,1.16,56.82,0.61C70.25,0.00,84.42,10.22,89.20,22.02Z",
+          ]}
+        />
+      </div>
+    </div>
+  </Container>
+</div>

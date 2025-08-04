@@ -4,7 +4,6 @@ TARGET SOFT LAUNCH AUG 09.
 
 ## What I need
 
-- Rotate logo on hover
 - Confirm email address in CoC and elsewhere.
 - Copy for the about page and landing page, etc.
 - Ask for people permission to use their images?
@@ -13,31 +12,24 @@ TARGET SOFT LAUNCH AUG 09.
 
 ## Schedule
 
-### 4 Monday (New Landing Slider + Theme Prep)
-
-- Implement new slider (Evey's design)
-
-- Simplify the upcoming event view, but keep the countdown...
-- Refactor to include upcoming status?
-- Resume github pages workflow with sync script trigger.
-- Temporary Kitchen Sink Page with all Components for theming
-- https://fonts.google.com/specimen/Lexend
-- Implement color scheme
-
 ### 5 Tuesday (UI + Theme)
 
+- More padding article.
+- Resume github pages workflow with sync script trigger.
+- Temporary Kitchen Sink Page with a range of Components for theming
+- Refactor to include upcoming status?
+- Implement color scheme
+- Simplify the upcoming event view, but keep the cool countdown...
 - Most elements inherit Diasy UI theme (e.g. borders, etc.)
 - OG Image Styling
 - Clean up all UI elements
 - Mobile responsive design
 - Make sure images are optimized everywhere
+- Event page fade if filter selected.
 
 ### 6 Wednesday (Review + Bugfixes)
 
 **Wednesday Afternoon: UI Review**
-
-- Event page fade if filter selected.
-- Adjust hotspot box, and make it more responsive?
 
 ### 7 Thursday (Cleanup)
 
@@ -55,6 +47,7 @@ TARGET SOFT LAUNCH AUG 09.
 
 # Post Release Features
 
+- Feed modal, instead of direct link
 - Members: with hasPage: true.
 - Scripts for LLM decoration ?
 - https://docs.astro.build/en/guides/view-transitions/

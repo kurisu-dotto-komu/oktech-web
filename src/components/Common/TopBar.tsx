@@ -26,17 +26,11 @@ function GlassCell({
   );
 }
 
-interface TopBarProps {
-  subtle?: boolean;
-}
-
-export default function TopBar({ subtle = true }: TopBarProps) {
+export default function TopBar() {
   const items = MENU.filter((item) => item.header !== false);
-  const [showBackground, setShowBackground] = useState(!subtle);
+  const [showBackground, setShowBackground] = useState(false);
 
   useEffect(() => {
-    if (!subtle) return;
-
     const handleScroll = () => {
       const scrollY = window.scrollY;
       setShowBackground(scrollY > 0);
@@ -46,7 +40,7 @@ export default function TopBar({ subtle = true }: TopBarProps) {
     handleScroll(); // Set initial state
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [subtle]);
+  }, []);
 
   return (
     <div data-testid="top-bar" className="fixed top-0 z-50 w-full">
@@ -63,7 +57,12 @@ export default function TopBar({ subtle = true }: TopBarProps) {
                 <LinkReact
                   key={item.label}
                   href={item.href}
-                  className={clsx("btn btn-glass btn-lg rounded-full font-bold")}
+                  className={clsx(
+                    "btn btn-glass btn-lg rounded-full font-bold",
+                    // "-mr-1 -ml-1",
+                    i > 0 && "-ml-2",
+                    // i === items.length - 1 && "-mr-0",
+                  )}
                 >
                   {item.label}
                 </LinkReact>
