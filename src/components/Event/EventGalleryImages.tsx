@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { LuImage, LuImageOff } from "react-icons/lu";
+import { LuImageOff } from "react-icons/lu";
 
-import Container from "@/components/Common/Container";
 import type { EventEnriched } from "@/content";
 import { isEventUpcoming } from "@/utils/eventFilters";
 
@@ -27,8 +26,8 @@ export default function EventGalleryImages({ event }: Props) {
       <div className="text-base-content/60 m-auto flex items-center gap-3">
         <LuImageOff className="h-6 w-6" />
         <span>
-          {isUpcoming 
-            ? "Gallery will be available after the event" 
+          {isUpcoming
+            ? "Gallery will be available after the event"
             : "This event doesn't have a gallery yet"}
         </span>
       </div>

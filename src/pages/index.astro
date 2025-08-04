@@ -1,59 +1,84 @@
 ---
 import Section from "@/components/Common/Section";
-import Hero from "@/components/Common/Hero";
 import LandingStats from "@/components/Common/LandingStats";
 import EventsUpcoming from "@/components/Events/EventsUpcoming";
 import EventsRecent from "@/components/Events/EventsRecent";
-import Banner from "@/components/Common/Banner";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { getEvents } from "@/content";
 import FancyBorder from "@/components/Common/FancyBorder";
-import AboutSlideshow from "@/components/Home/AboutSlideshow.astro";
-import HeroSlideshow from "@/components/Home/HeroSlideshow.astro";
+import SlideshowSimple from "@/components/Common/SlideshowSimple.astro";
 import Container from "@/components/Common/Container";
 
 const events = await getEvents();
 ---
 
 <PageLayout>
-  <Banner />
-  <Hero>
-    <Container>
-      <div class="grid grid-cols-2">
-        <div>WIP</div>
-        <FancyBorder>
-          <HeroSlideshow />
-        </FancyBorder>
+  <div class="bg-base-content/10 flex min-h-[50vh] items-center">
+    <Container className="relative">
+      <div class="flex flex-col justify-center gap-8">
+        <h2 class="text-6xl font-bold">Together<br /> in tech and life</h2>
+        <div class="text-xl">Build cool things, share life hacks, and meet kind minds.</div>
+        <div class="flex flex-col gap-2">
+          <div class="">
+            With 2,000+ Community Members,
+            <br />
+            OKTech is Kaisai's largest English speaking Technology Meetup Group
+          </div>
+        </div>
+      </div>
+      <div class="absolute top-0 right-0">
+        <div class="aspect-square h-90 w-90">
+          <FancyBorder>
+            <SlideshowSimple
+              images={[
+                "/content/events/299830334-vim-and-noise/gallery/IMG_20240413_1728142.webp",
+                "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0839.webp",
+                "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp",
+                "/content/events/299335046-osaka-hanami-2024/gallery/IMG_9924.webp",
+                "/content/events/301456891-workshop-like-s3/gallery/IMG_7669.webp",
+              ]}
+            />
+          </FancyBorder>
+        </div>
       </div>
     </Container>
-    <Section>
-      <EventsUpcoming client:load events={events} />
-    </Section>
-    <Section
-      left
-      split
-      variant="striped"
-      title="About OKTech"
-      description="A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan. We invite people from all walks of web-life and encourage members to present topics they enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka and Kyoto."
-      button={{ text: "Learn More", href: "/about", className: "btn-secondary" }}
-    >
-      <FancyBorder>
-        <AboutSlideshow />
-      </FancyBorder>
-    </Section>
+  </div>
+  <Section>
+    <EventsUpcoming client:load events={events} />
+  </Section>
+  <Section
+    left
+    split
+    variant="striped"
+    title="About OKTech"
+    description="A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan. We invite people from all walks of web-life and encourage members to present topics they enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka and Kyoto."
+    button={{ text: "Learn More", href: "/about", className: "btn-secondary" }}
+  >
+    <FancyBorder>
+      <SlideshowSimple
+        images={[
+          "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp",
+          "/content/events/299455127-wasm-airplanes-and-llm/gallery/IMG_9659.webp",
+          "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp",
+          "/content/events/292890108-colorful-web-meetup/gallery/IMG_20230617_1731252.webp",
+          "/content/events/300388533-cross-cultural-teams/gallery/IMG_20240518_2030412.webp",
+          "/content/events/264574361-osaka-web-developer-and-designer-meetup-september/gallery/276278.webp",
+        ]}
+      />
+    </FancyBorder>
+  </Section>
 
-    <Section>
-      <LandingStats />
-    </Section>
-    <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
-      <EventsRecent client:load events={events} />
-    </Section>
+  <Section>
+    <LandingStats />
+  </Section>
+  <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
+    <EventsRecent client:load events={events} />
+  </Section>
 
-    <Section
-      title="Get Involved"
-      description="Ready to be part of something bigger? Whether you want to speak at our events, sponsor our initiatives, or simply join our community, we welcome your participation and ideas."
-      button={{ text: "Get Involved", href: "/about#contact" }}
-      class="text-center text-lg"
-    />
-  </Hero>
+  <Section
+    title="Get Involved"
+    description="Ready to be part of something bigger? Whether you want to speak at our events, sponsor our initiatives, or simply join our community, we welcome your participation and ideas."
+    button={{ text: "Get Involved", href: "/about#contact" }}
+    class="text-center text-lg"
+  />
 </PageLayout>

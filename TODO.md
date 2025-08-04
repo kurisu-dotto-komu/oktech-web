@@ -15,10 +15,11 @@ TARGET SOFT LAUNCH AUG 09.
 
 ### 4 Monday (New Landing Slider + Theme Prep)
 
-- Simplify the upcoming event view
+- Implement new slider (Evey's design)
+
+- Simplify the upcoming event view, but keep the countdown...
 - Refactor to include upcoming status?
 - Resume github pages workflow with sync script trigger.
-- Implement new slider (Evey's design)
 - Temporary Kitchen Sink Page with all Components for theming
 - https://fonts.google.com/specimen/Lexend
 - Implement color scheme

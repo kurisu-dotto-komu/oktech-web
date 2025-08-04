@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 
+interface ImageData {
+  src: string;
+  zoom?: string;
+  objectPosition?: string;
+}
+
 interface ImageSlideshowProps {
-  images: string[];
+  images: (string | ImageData)[];
   className?: string;
   interval?: number;
 }
@@ -15,9 +21,9 @@ export default function ImageSlideshow({
 
   // Preload all images
   useEffect(() => {
-    images.forEach((src) => {
+    images.forEach((image) => {
       const img = new Image();
-      img.src = src;
+      img.src = typeof image === "string" ? image : image.src;
     });
   }, [images]);
 
@@ -34,16 +40,31 @@ export default function ImageSlideshow({
   if (images.length === 0) return null;
   return (
     <div className={`relative h-full w-full overflow-hidden ${className}`}>
-      {images.map((image, index) => (
-        <img
-          key={index}
-          src={image}
-          alt="OKTech community gathering"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1000ms] ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
+      {images.map((image, index) => {
+        const isString = typeof image === "string";
+        const src = isString ? image : image.src;
+        const zoom = isString ? undefined : image.zoom;
+        const objectPosition = isString ? undefined : image.objectPosition;
+
+        return (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-[1000ms] ${
+              index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={src}
+              alt="OKTech community gathering"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{
+                transform: zoom ? `scale(${zoom})` : undefined,
+                objectPosition: objectPosition || "center",
+              }}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 }

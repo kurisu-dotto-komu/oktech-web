@@ -77,17 +77,17 @@ export default defineConfig({
           {
             weight: 400,
             style: "normal",
-            src: ["./public/fonts/NotoSans-Regular.ttf"],
+            src: ["./src/assets/fonts/NotoSans-Regular.ttf"],
           },
           {
             weight: 500,
             style: "normal",
-            src: ["./public/fonts/NotoSans-Medium.ttf"],
+            src: ["./src/assets/fonts/NotoSans-Medium.ttf"],
           },
           {
             weight: 700,
             style: "normal",
-            src: ["./public/fonts/NotoSans-Bold.ttf"],
+            src: ["./src/assets/fonts/NotoSans-Bold.ttf"],
           },
         ],
       },
@@ -99,12 +99,12 @@ export default defineConfig({
           {
             weight: 500,
             style: "normal",
-            src: ["./public/fonts/Lexend-Medium.ttf"],
+            src: ["./src/assets/fonts/Lexend-Medium.ttf"],
           },
           {
             weight: 700,
             style: "normal",
-            src: ["./public/fonts/Lexend-Bold.ttf"],
+            src: ["./src/assets/fonts/Lexend-Bold.ttf"],
           },
         ],
       },
@@ -116,12 +116,12 @@ export default defineConfig({
           {
             weight: 400,
             style: "normal",
-            src: ["./public/fonts/SpaceMono-Regular.ttf"],
+            src: ["./src/assets/fonts/SpaceMono-Regular.ttf"],
           },
           {
             weight: 700,
             style: "normal",
-            src: ["./public/fonts/SpaceMono-Bold.ttf"],
+            src: ["./src/assets/fonts/SpaceMono-Bold.ttf"],
           },
         ],
       },

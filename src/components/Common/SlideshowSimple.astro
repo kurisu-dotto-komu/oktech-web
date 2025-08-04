@@ -1,0 +1,59 @@
+---
+import SlideshowSimpleReact from "./SlideshowSimple";
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface ImageConfig {
+  path: string;
+  zoom?: string;
+  objectPosition?: string;
+}
+
+interface Props {
+  images: (string | ImageConfig)[];
+  height?: number;
+  format?: "webp" | "png" | "jpg" | "jpeg" | "avif";
+}
+
+const { images: imageConfigs, height = 512, format = "webp" } = Astro.props;
+
+// Import all images from content directory
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "/content/events/*/gallery/*.webp",
+);
+
+// Process the requested images
+const images = await Promise.all(
+  imageConfigs.map(async (config) => {
+    const isString = typeof config === "string";
+    const path = isString ? config : config.path;
+    const zoom = isString ? undefined : config.zoom;
+    const objectPosition = isString ? undefined : config.objectPosition;
+
+    const resolver = imageModules[path];
+    if (!resolver) {
+      console.warn(`Image not found: ${path}`);
+      return null;
+    }
+    const module = await resolver();
+    const optimized = await getImage({ src: module.default, height, format });
+
+    return {
+      src: optimized.src,
+      zoom,
+      objectPosition,
+    };
+  }),
+);
+
+// Filter out any null values and transform to match React component interface
+const validImages = images
+  .filter((img): img is NonNullable<typeof img> => img !== null)
+  .map((img) => ({
+    src: img.src,
+    zoom: img.zoom,
+    objectPosition: img.objectPosition,
+  }));
+---
+
+<SlideshowSimpleReact images={validImages} client:load />

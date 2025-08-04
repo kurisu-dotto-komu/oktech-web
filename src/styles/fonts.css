@@ -1,46 +1,22 @@
-/* Font family custom properties - managed by Astro experimental fonts */
-/* The --font-body, --font-header, and --font-mono variables are automatically set by Astro's experimental fonts feature */
-:root {
-  --font-subheader: var(--font-header);
-}
-
-/* Apply body font globally */
 body {
   font-family: var(--font-body);
 }
 
-/* Apply header font to headings */
 h1,
 h2,
-h3 {
-  font-family: var(--font-header);
-  font-weight: 500;
-}
-
-/* Apply subheader font to smaller headings */
+h3,
 h4,
 h5,
-h6 {
-  font-family: var(--font-subheader);
-  font-weight: 500;
-}
-
-/* Utility classes for font families */
-.font-body {
-  font-family: var(--font-body);
-}
-
-.font-header {
+h6,
+button,
+.btn {
   font-family: var(--font-header);
   font-weight: 500;
+  &.font-bold {
+    font-weight: 700;
+  }
 }
 
-.font-subheader {
-  font-family: var(--font-subheader);
-  font-weight: 500;
-}
-
-/* Apply monospace font to code elements */
 code,
 kbd,
 samp,
@@ -48,14 +24,14 @@ pre {
   font-family: var(--font-mono);
 }
 
-/* Utility class for monospace font */
-.font-mono {
-  font-family: var(--font-mono);
+.font-body {
+  font-family: var(--font-body);
 }
 
-/* Apply subheader font to buttons */
-button,
-.btn {
+.font-header {
   font-family: var(--font-header);
-  font-weight: 500;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
 }

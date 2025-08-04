@@ -14,7 +14,10 @@ interface StatsGridProps {
 
 export default function StatsGrid({ stats, "data-testid": dataTestId }: StatsGridProps) {
   return (
-    <div className="stats bg-base-100 stats-vertical md:stats-horizontal w-full shadow-lg" data-testid={dataTestId || "stats-grid"}>
+    <div
+      className="stats bg-base-100 stats-vertical md:stats-horizontal w-full shadow-lg"
+      data-testid={dataTestId || "stats-grid"}
+    >
       {stats.map((stat: Stat) => (
         <div key={stat.title} className="stat">
           <div className="stat-figure text-primary">

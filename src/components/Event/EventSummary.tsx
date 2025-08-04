@@ -2,8 +2,6 @@ import Link from "@/components/Common/LinkReact";
 import EventIconList from "@/components/Event/EventIconList";
 import type { EventEnriched } from "@/content";
 
-import EventCity from "./EventCity";
-
 interface Props {
   event: EventEnriched;
   className?: string;

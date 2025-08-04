@@ -17,7 +17,7 @@ export default function EventsGalleryView({ events }: Props) {
 
   return (
     <div className="space-y-8" data-testid="events-gallery-view">
-      {recentEvents.map((event, i) => {
+      {recentEvents.map((event) => {
         return (
           <div key={event.id} data-testid="event-card" className={`py-8`}>
             <Container>

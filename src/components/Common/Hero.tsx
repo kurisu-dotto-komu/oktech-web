@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 import clsx from "clsx";
 
-
 interface HeroProps {
   title?: string;
   description?: string;
@@ -20,11 +19,8 @@ interface HeroProps {
 
 export default function Hero({ slim, className, children }: HeroProps) {
   return (
-    <div
-      data-testid="hero"
-      className={clsx("py-20", slim ? "" : "min-h-[50vh]", className)}
-    >
-      <div className="relative z-10">{children}</div>
+    <div data-testid="hero" className={clsx("py-20", slim ? "" : "min-h-[50vh]", className)}>
+      {children}
     </div>
   );
 }

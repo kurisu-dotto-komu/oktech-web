@@ -245,7 +245,10 @@ export default function EventImageModal({
           </div>
         </div>
       </div>
-      <form method="dialog" className="modal-backdrop fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm">
+      <form
+        method="dialog"
+        className="modal-backdrop fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm"
+      >
         <button
           type="button"
           onClick={onClose}
