@@ -68,6 +68,64 @@ export default defineConfig({
   experimental: {
     clientPrerender: true,
     contentIntellisense: true,
+    fonts: [
+      {
+        provider: "local",
+        name: "Noto Sans",
+        cssVariable: "--font-body",
+        variants: [
+          {
+            weight: 400,
+            style: "normal",
+            src: ["./public/fonts/NotoSans-Regular.ttf"],
+          },
+          {
+            weight: 500,
+            style: "normal",
+            src: ["./public/fonts/NotoSans-Medium.ttf"],
+          },
+          {
+            weight: 700,
+            style: "normal",
+            src: ["./public/fonts/NotoSans-Bold.ttf"],
+          },
+        ],
+      },
+      {
+        provider: "local",
+        name: "Lexend",
+        cssVariable: "--font-header",
+        variants: [
+          {
+            weight: 500,
+            style: "normal",
+            src: ["./public/fonts/Lexend-Medium.ttf"],
+          },
+          {
+            weight: 700,
+            style: "normal",
+            src: ["./public/fonts/Lexend-Bold.ttf"],
+          },
+        ],
+      },
+      {
+        provider: "local",
+        name: "Space Mono",
+        cssVariable: "--font-mono",
+        variants: [
+          {
+            weight: 400,
+            style: "normal",
+            src: ["./public/fonts/SpaceMono-Regular.ttf"],
+          },
+          {
+            weight: 700,
+            style: "normal",
+            src: ["./public/fonts/SpaceMono-Bold.ttf"],
+          },
+        ],
+      },
+    ],
   },
   prefetch: {
     prefetchAll: !isDev, // enabled in prod

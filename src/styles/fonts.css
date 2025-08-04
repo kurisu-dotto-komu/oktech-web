@@ -1,202 +1,7 @@
-/* Nobile - Regular */
-@font-face {
-  font-family: "Nobile";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/Nobile-Regular.ttf") format("truetype");
-}
-
-/* Nobile - Italic */
-@font-face {
-  font-family: "Nobile";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/Nobile-Italic.ttf") format("truetype");
-}
-
-/* Nobile - Medium */
-@font-face {
-  font-family: "Nobile";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/Nobile-Medium.ttf") format("truetype");
-}
-
-/* Nobile - Medium Italic */
-@font-face {
-  font-family: "Nobile";
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/Nobile-MediumItalic.ttf") format("truetype");
-}
-
-/* Nobile - Bold */
-@font-face {
-  font-family: "Nobile";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/Nobile-Bold.ttf") format("truetype");
-}
-
-/* Nobile - Bold Italic */
-@font-face {
-  font-family: "Nobile";
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/Nobile-BoldItalic.ttf") format("truetype");
-}
-
-/* Gothic - Regular */
-@font-face {
-  font-family: "Gothic";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/MSGothic-Regular.ttf") format("truetype");
-}
-
-/* Gothic - Bold */
-@font-face {
-  font-family: "Gothic";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/MSGothic-Bold.ttf") format("truetype");
-}
-
-/* Special Gothic Expanded One */
-@font-face {
-  font-family: "Special Gothic Expanded One";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/SpecialGothicExpandedOne-Regular.ttf") format("truetype");
-}
-
-/* Special Gothic Condensed One */
-@font-face {
-  font-family: "Special Gothic Condensed One";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/SpecialGothicCondensedOne-Regular.ttf") format("truetype");
-}
-
-/* Zen Maru Gothic - Light */
-@font-face {
-  font-family: "Zen Maru Gothic";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url("/fonts/ZenMaruGothic-Light.ttf") format("truetype");
-}
-
-/* Zen Maru Gothic - Regular */
-@font-face {
-  font-family: "Zen Maru Gothic";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/ZenMaruGothic-Regular.ttf") format("truetype");
-}
-
-/* Zen Maru Gothic - Medium */
-@font-face {
-  font-family: "Zen Maru Gothic";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/ZenMaruGothic-Medium.ttf") format("truetype");
-}
-
-/* Zen Maru Gothic - Bold */
-@font-face {
-  font-family: "Zen Maru Gothic";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/ZenMaruGothic-Bold.ttf") format("truetype");
-}
-
-/* Zen Maru Gothic - Black */
-@font-face {
-  font-family: "Zen Maru Gothic";
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url("/fonts/ZenMaruGothic-Black.ttf") format("truetype");
-}
-
-/* Oxanium - Bold (700) */
-@font-face {
-  font-family: "Oxanium";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/Oxanium-Bold.woff2") format("woff2");
-}
-
-/* Space Mono - Regular */
-@font-face {
-  font-family: "Space Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/SpaceMono-Regular.woff2") format("woff2");
-}
-
-/* Space Mono - Bold */
-@font-face {
-  font-family: "Space Mono";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/SpaceMono-Bold.woff2") format("woff2");
-}
-
-/* Magistral - Medium (Default) */
-@font-face {
-  font-family: "Magistral";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/Magistral-Medium.woff2") format("woff2");
-}
-
-/* Magistral - ExtraBold */
-@font-face {
-  font-family: "Magistral";
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url("/fonts/Magistral-ExtraBold.woff2") format("woff2");
-}
-
-/* Font family custom properties */
+/* Font family custom properties - managed by Astro experimental fonts */
+/* The --font-body, --font-header, and --font-mono variables are automatically set by Astro's experimental fonts feature */
 :root {
-  --font-body: "Nobile", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-gothic: "Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-header:
-    "Special Gothic Expanded One", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-subheader:
-    "Special Gothic Condensed One", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
-  --font-mono: "Space Mono", "Courier New", Courier, monospace;
-  /* Experimental fonts */
-  --font-special-expanded:
-    "Special Gothic Expanded One", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-special-condensed:
-    "Special Gothic Condensed One", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
-  --font-zen-maru:
-    "Zen Maru Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-magistral: "Magistral", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-subheader: var(--font-header);
 }
 
 /* Apply body font globally */
@@ -209,7 +14,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-header);
-  font-weight: 400; /* Special Gothic only has regular weight */
+  font-weight: 500;
 }
 
 /* Apply subheader font to smaller headings */
@@ -217,10 +22,8 @@ h4,
 h5,
 h6 {
   font-family: var(--font-subheader);
-  font-weight: 400; /* Special Gothic only has regular weight */
+  font-weight: 500;
 }
-
-/* Note: Special Gothic fonts only have regular weight, so font-bold has no effect on them */
 
 /* Utility classes for font families */
 .font-body {
@@ -229,12 +32,12 @@ h6 {
 
 .font-header {
   font-family: var(--font-header);
-  font-weight: 400; /* Special Gothic only has regular weight */
+  font-weight: 500;
 }
 
 .font-subheader {
   font-family: var(--font-subheader);
-  font-weight: 400; /* Special Gothic only has regular weight */
+  font-weight: 500;
 }
 
 /* Apply monospace font to code elements */
@@ -250,31 +53,9 @@ pre {
   font-family: var(--font-mono);
 }
 
-/* Utility class for gothic font */
-.font-gothic {
-  font-family: var(--font-gothic);
-}
-
-/* Experimental font utility classes */
-.font-special-expanded {
-  font-family: var(--font-special-expanded);
-}
-
-.font-special-condensed {
-  font-family: var(--font-special-condensed);
-}
-
-.font-zen-maru {
-  font-family: var(--font-zen-maru);
-}
-
-.font-magistral {
-  font-family: var(--font-magistral);
-}
-
 /* Apply subheader font to buttons */
 button,
 .btn {
   font-family: var(--font-header);
-  font-weight: 400; /* Special Gothic only has regular weight */
+  font-weight: 500;
 }
