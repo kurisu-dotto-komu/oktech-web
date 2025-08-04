@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+### August 3, 2025
+
+Enhanced homepage with animated slideshow and visual improvements.
+
+- Added dynamic image slideshow to homepage hero section showcasing event highlights
+- Implemented fancy animated borders and visual effects for landing page sections
+- Improved about section with enhanced styling and animations
+
+### August 2, 2025
+
+Added dark mode support for maps and improved site navigation.
+
+- Introduced dark theme maps that automatically adapt to site theme
+- Added Code of Conduct page with community guidelines
+- Enhanced footer with improved social media links and tooltips
+- Improved compact event view styling for better readability
+- Updated event pages with refined visual tweaks
+
 ### August 1, 2025
 
 Improved gallery modal interaction and user experience.
@@ -9,6 +27,10 @@ Improved gallery modal interaction and user experience.
 - Improved modal backdrop interaction for better usability
 - Enhanced gallery view
 - Add informative disclaimer about event photos
+- Added event grouping by year with visual year separators
+- Implemented countdown timers for upcoming events
+- Enhanced event card visual effects with more realistic shadows
+- Updated social media icons throughout the site
 
 ### July 31, 2025
 

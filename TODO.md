@@ -1,28 +1,59 @@
-# vNow
+# CHRIS FINAL MEGA SPRINT CRUNCH DAILY GRIND SCHEDULE
 
-- Make sure images are optimized everywhere.
-- Nicer events page styling
-- Adjust hotspot box, and make it more responsive?
+TARGET SOFT LAUNCH AUG 09.
+
+## What I need
+
+- Rotate logo on hover
+- Confirm email address in CoC and elsewhere.
+- Copy for the about page and landing page, etc.
+- Ask for people permission to use their images?
+- Confirm Japanese copy in the about page
+- I will carve out time on Wednesday for a review, for whoever wants to join.
+
+## Schedule
+
+### 4 Monday (New Landing Slider + Theme Prep)
+
+- Simplify the upcoming event view
+- Refactor to include upcoming status?
+- Resume github pages workflow with sync script trigger.
+- Implement new slider (Evey's design)
+- Temporary Kitchen Sink Page with all Components for theming
+- https://fonts.google.com/specimen/Lexend
+- Implement color scheme
+
+### 5 Tuesday (UI + Theme)
+
+- Most elements inherit Diasy UI theme (e.g. borders, etc.)
+- OG Image Styling
+- Clean up all UI elements
+- Mobile responsive design
+- Make sure images are optimized everywhere
+
+### 6 Wednesday (Review + Bugfixes)
+
+**Wednesday Afternoon: UI Review**
+
 - Event page fade if filter selected.
+- Adjust hotspot box, and make it more responsive?
 
-# vNext
+### 7 Thursday (Cleanup)
 
-- Switch to a github pages workflow for deployment
-- Test the import script, convert to a package?
-- Kitchen Sink Page with all Components and Theme Editor
-- Mosaic gallery on landing page, and move the shader to the about page?
-- On mobile, have the spotlight track automatically with scrolling
+- Chekcs on multiple browsers and devices.
+- Clean up codebase, removing AI stuff.
 
-# vLater
+### 8 Friday
 
-- Scripts for LLM decoration (generate venus, people, tags, etc.)
-- Update CLAUDE.md to be consistent
+- Buffer Day
 
-## Next
+### 9 SOFT RELEASE DAY (oktech.jp/chris-wireframe)
 
-- Check that responsiveStyles images are being applied
+- Work with Martin or whoever controls domains to do manual release
+- Test automated builds
 
-# vAfter
+# Post Release Features
 
-- https://docs.astro.build/en/guides/view-transitions/
 - Members: with hasPage: true.
+- Scripts for LLM decoration ?
+- https://docs.astro.build/en/guides/view-transitions/

@@ -3,14 +3,14 @@ import SlideshowSimple from "@/components/Common/SlideshowSimple";
 import { getImage } from "astro:assets";
 
 // Import images directly
-import img1Raw from "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp";
-import img2Raw from "/content/events/299455127-wasm-airplanes-and-llm/gallery/IMG_9659.webp";
-import img3Raw from "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp";
-import img4Raw from "/content/events/292890108-colorful-web-meetup/gallery/IMG_20230617_1731252.webp";
-import img5Raw from "/content/events/300388533-cross-cultural-teams/gallery/IMG_20240518_2030412.webp";
-import img6Raw from "/content/events/264574361-osaka-web-developer-and-designer-meetup-september/gallery/276278.webp";
+import img1 from "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp";
+import img2 from "/content/events/299455127-wasm-airplanes-and-llm/gallery/IMG_9659.webp";
+import img3 from "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp";
+import img4 from "/content/events/292890108-colorful-web-meetup/gallery/IMG_20230617_1731252.webp";
+import img5 from "/content/events/300388533-cross-cultural-teams/gallery/IMG_20240518_2030412.webp";
+import img6 from "/content/events/264574361-osaka-web-developer-and-designer-meetup-september/gallery/276278.webp";
 
-const rawImages = [img1Raw, img2Raw, img3Raw, img4Raw, img5Raw, img6Raw];
+const rawImages = [img1, img2, img3, img4, img5, img6];
 
 // Process all images through getImage for optimization (smaller size for about section)
 const images = await Promise.all(

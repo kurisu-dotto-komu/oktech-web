@@ -10,7 +10,7 @@ export default function TopBar() {
   const items = MENU.filter((item) => item.header !== false);
 
   return (
-    <>
+    <div data-testid="top-bar">
       <div className="soft-glass navbar fixed top-0 z-50 shadow-sm" data-testid="navbar">
         <Container className="hidden justify-between md:flex">
           <div className="navbar-start">
@@ -70,6 +70,6 @@ export default function TopBar() {
           </div>
         </Container>
       </div>
-    </>
+    </div>
   );
 }

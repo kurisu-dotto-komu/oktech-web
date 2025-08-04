@@ -8,43 +8,52 @@ import Banner from "@/components/Common/Banner";
 import PageLayout from "@/layouts/PageLayout.astro";
 import { getEvents } from "@/content";
 import FancyBorder from "@/components/Common/FancyBorder";
-import HeroSlideshow from "@/components/Home/HeroSlideshow.astro";
 import AboutSlideshow from "@/components/Home/AboutSlideshow.astro";
+import HeroSlideshow from "@/components/Home/HeroSlideshow.astro";
+import Container from "@/components/Common/Container";
 
 const events = await getEvents();
 ---
 
 <PageLayout>
   <Banner />
-  <HeroSlideshow />
-  <Section>
-    <EventsUpcoming client:load events={events} />
-  </Section>
-  <Section
-    left
-    split
-    variant="striped"
-    title="About OKTech"
-    description="A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan. We invite people from all walks of web-life and encourage members to present topics they enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka and Kyoto."
-    button={{ text: "Learn More", href: "/about", className: "btn-secondary" }}
-  >
-    <FancyBorder>
-      <AboutSlideshow />
-    </FancyBorder>
-  </Section>
+  <Hero>
+    <Container>
+      <div class="grid grid-cols-2">
+        <div>WIP</div>
+        <FancyBorder>
+          <HeroSlideshow />
+        </FancyBorder>
+      </div>
+    </Container>
+    <Section>
+      <EventsUpcoming client:load events={events} />
+    </Section>
+    <Section
+      left
+      split
+      variant="striped"
+      title="About OKTech"
+      description="A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan. We invite people from all walks of web-life and encourage members to present topics they enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka and Kyoto."
+      button={{ text: "Learn More", href: "/about", className: "btn-secondary" }}
+    >
+      <FancyBorder>
+        <AboutSlideshow />
+      </FancyBorder>
+    </Section>
 
-  <Section>
-    <LandingStats />
-  </Section>
-  <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
-    <EventsRecent client:load events={events} />
-  </Section>
+    <Section>
+      <LandingStats />
+    </Section>
+    <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
+      <EventsRecent client:load events={events} />
+    </Section>
 
-  <Hero
-    slim
-    title="Get Involved"
-    description="Ready to be part of something bigger? Whether you want to speak at our events, sponsor our initiatives, or simply join our community, we welcome your participation and ideas."
-    button={{ text: "Get Involved", href: "/about#contact" }}
-    class="text-center text-lg"
-  />
+    <Section
+      title="Get Involved"
+      description="Ready to be part of something bigger? Whether you want to speak at our events, sponsor our initiatives, or simply join our community, we welcome your participation and ideas."
+      button={{ text: "Get Involved", href: "/about#contact" }}
+      class="text-center text-lg"
+    />
+  </Hero>
 </PageLayout>

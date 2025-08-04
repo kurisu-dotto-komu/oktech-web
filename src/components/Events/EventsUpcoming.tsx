@@ -1,4 +1,4 @@
-import EntryCard from "@/components/EntryCard/EntryCard";
+import EventSummary from "@/components/Event/EventSummary";
 import type { EventEnriched } from "@/content";
 import { filterUpcomingEvents } from "@/utils/eventFilters";
 
@@ -15,13 +15,15 @@ export default function EventsUpcoming({ events }: EventsUpcomingProps) {
   }
 
   return (
-    <div className="flex flex-col gap-24 xl:gap-32" data-testid="upcoming-events-section">
+    <div className="flex flex-col gap-8" data-testid="events-upcoming">
       <h2 className="text-center text-3xl" data-testid="upcoming-events-title">
         Upcoming Events
       </h2>
-      {futureEvents.map((event, index) => (
-        <EntryCard key={event.id} event={event} presetIndex={index} />
-      ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {futureEvents.map((event) => (
+          <EventSummary key={event.id} event={event} />
+        ))}
+      </div>
     </div>
   );
 }

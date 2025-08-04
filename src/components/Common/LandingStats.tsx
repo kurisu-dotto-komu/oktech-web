@@ -3,6 +3,7 @@ import StatsGrid from "./StatsGrid";
 export default function LandingStats() {
   return (
     <StatsGrid
+      data-testid="landing-stats"
       stats={[
         {
           title: "First Event",

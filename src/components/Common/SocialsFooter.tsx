@@ -6,7 +6,7 @@ interface SocialsFooterProps {
 
 export default function SocialsFooter({ className = "" }: SocialsFooterProps) {
   return (
-    <div className={`grid grid-flow-col gap-4 ${className}`}>
+    <div className={`grid grid-flow-col gap-4 ${className}`} data-testid="socials-footer">
       {SOCIALS.map((social) => {
         const IconComponent = social.icon;
         return (

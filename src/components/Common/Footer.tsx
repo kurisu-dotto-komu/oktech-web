@@ -10,7 +10,7 @@ import LinkReact from "./LinkReact";
 
 export default function Footer() {
   return (
-    <footer className="bg-base-200 text-base-content">
+    <footer className="bg-base-200 text-base-content" data-testid="footer">
       <Container className="flex flex-col gap-8 py-10 sm:gap-4">
         <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
           <MainMenu variant="footer" />

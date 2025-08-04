@@ -1,36 +1,26 @@
 import clsx from "clsx";
 
 import { OKTechLogoRound, OKTechLogoText } from "@/components/Common/OKTechLogo";
-import SpinningText from "@/components/Common/SpinningText";
 
 interface BrandProps {
   fullText?: boolean;
-  spinText?: boolean;
-  big?: boolean;
   neutral?: boolean;
 }
 
-export default function Brand({ fullText = false, big = false, neutral = false }: BrandProps) {
-  const logoSize = big ? "w-60 h-60 sm:w-80 sm:h-80" : "w-12 h-12";
-  const textSize = big ? "w-80 sm:w-90" : "w-28 h-auto";
+export default function Brand({ fullText = false, neutral = false }: BrandProps) {
+  const logoSize = "w-12 h-12";
   const longText = "Osaka Kyoto Technology Meetup Group";
 
-  if (big) {
-    return (
-      <div className="relative flex flex-col items-center gap-8 text-center">
-        <div className="relative">
-          <OKTechLogoRound className={logoSize} />
-          <SpinningText text={longText} radius={131} />
-        </div>
-        <OKTechLogoText className={textSize} />
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col gap-4 md:flex-row md:items-center">
+    <div className="group flex flex-col gap-4 md:flex-row md:items-center">
       <div className="flex items-center gap-3">
-        <OKTechLogoRound className={logoSize} svgClass={clsx(neutral && "neutral")} />
+        <OKTechLogoRound
+          className={clsx(
+            logoSize,
+            "transition-transform duration-[1000ms] ease-in-out group-hover:-rotate-12",
+          )}
+          svgClass={clsx(neutral && "neutral")}
+        />
         <OKTechLogoText className="h-auto w-28" svgClass={clsx((true || neutral) && "neutral")} />
       </div>
       {fullText && <span className="font-header text-sm">{longText}</span>}

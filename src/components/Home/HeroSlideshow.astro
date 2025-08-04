@@ -1,75 +1,25 @@
 ---
-import HeroSlideshowReact from "./HeroSlideshow.tsx";
-import type { SlideConfig } from "@/components/Common/SlideshowComplex";
+import SlideshowSimple from "@/components/Common/SlideshowSimple";
 import { getImage } from "astro:assets";
 
 // Import images directly
-import inspireImgRaw from "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp";
-import innovateImgRaw from "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0839.webp";
-import collabImgRaw from "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9847.webp";
-import connectImgRaw from "/content/events/299335046-osaka-hanami-2024/gallery/IMG_9924.webp";
-import learnImgRaw from "/content/events/299830334-vim-and-noise/gallery/IMG_20240413_1728142.webp";
-import growImgRaw from "/content/events/301456891-workshop-like-s3/gallery/IMG_7669.webp";
-import enjoyImgRaw from "/content/events/297594896-end-of-2023-dinner/gallery/IMG_7856.webp";
+import img1 from "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp";
+import img2 from "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0839.webp";
+import img3 from "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9847.webp";
+import img4 from "/content/events/299335046-osaka-hanami-2024/gallery/IMG_9924.webp";
+import img5 from "/content/events/299830334-vim-and-noise/gallery/IMG_20240413_1728142.webp";
+import img6 from "/content/events/301456891-workshop-like-s3/gallery/IMG_7669.webp";
+import img7 from "/content/events/297594896-end-of-2023-dinner/gallery/IMG_7856.webp";
 
-// Define slide data with raw images
-const slideData = [
-  {
-    imageRaw: inspireImgRaw,
-    title: "Inspire",
-    description: "Share your passion and ignite curiosity",
-    position: "bottom-left" as const,
-  },
-  {
-    imageRaw: innovateImgRaw,
-    title: "Innovate",
-    description: "Master cutting-edge technologies",
-    position: "center-right" as const,
-  },
-  {
-    imageRaw: collabImgRaw,
-    title: "Collab",
-    description: "Share knowledge and learn together",
-    position: "bottom-right" as const,
-  },
-  {
-    imageRaw: connectImgRaw,
-    title: "Connect",
-    description: "Make friends and build connections",
-    position: "top-center" as const,
-  },
-  {
-    imageRaw: learnImgRaw,
-    title: "Learn",
-    description: "Stay up to date with the latest techniques",
-    position: "top-left" as const,
-  },
-  {
-    imageRaw: growImgRaw,
-    title: "Grow",
-    description: "Advance your career and skills",
-    position: "bottom-center" as const,
-  },
-  {
-    imageRaw: enjoyImgRaw,
-    title: "Enjoy",
-    description: "Have fun while getting good",
-    position: "top-center" as const,
-  },
-];
+const rawImages = [img1, img2, img3, img4, img5, img6, img7];
 
-// Process all images through getImage for optimization
-const slides: SlideConfig[] = await Promise.all(
-  slideData.map(async (slide) => {
-    const optimizedImg = await getImage({ src: slide.imageRaw, width: 1920, format: "webp" });
-    return {
-      image: optimizedImg.src,
-      title: slide.title,
-      description: slide.description,
-      position: slide.position,
-    };
+// Process all images through getImage for optimization (smaller size for about section)
+const images = await Promise.all(
+  rawImages.map(async (imgRaw) => {
+    const optimized = await getImage({ src: imgRaw, width: 512, height: 512, format: "webp" });
+    return optimized.src;
   }),
 );
 ---
 
-<HeroSlideshowReact slides={slides} client:load />
+<SlideshowSimple images={images} client:load />

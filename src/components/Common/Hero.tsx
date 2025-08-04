@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 import clsx from "clsx";
 
-import AsanohaShader from "./AsanohaShader";
 
 interface HeroProps {
   title?: string;
@@ -17,16 +16,14 @@ interface HeroProps {
   class?: string;
   className?: string;
   children?: ReactNode;
-  shader?: boolean;
 }
 
-export default function Hero({ slim, className, children, shader }: HeroProps) {
+export default function Hero({ slim, className, children }: HeroProps) {
   return (
     <div
       data-testid="hero"
-      className={clsx("py-20", slim ? "" : "min-h-[50vh]", shader && "relative", className)}
+      className={clsx("py-20", slim ? "" : "min-h-[50vh]", className)}
     >
-      {shader && <AsanohaShader />}
       <div className="relative z-10">{children}</div>
     </div>
   );

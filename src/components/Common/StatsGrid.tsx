@@ -9,11 +9,12 @@ interface Stat {
 
 interface StatsGridProps {
   stats: Stat[];
+  "data-testid"?: string;
 }
 
-export default function StatsGrid({ stats }: StatsGridProps) {
+export default function StatsGrid({ stats, "data-testid": dataTestId }: StatsGridProps) {
   return (
-    <div className="stats bg-base-100 stats-vertical md:stats-horizontal w-full shadow-lg">
+    <div className="stats bg-base-100 stats-vertical md:stats-horizontal w-full shadow-lg" data-testid={dataTestId || "stats-grid"}>
       {stats.map((stat: Stat) => (
         <div key={stat.title} className="stat">
           <div className="stat-figure text-primary">

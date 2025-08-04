@@ -9,7 +9,7 @@ interface MainMenuProps {
 export default function MainMenu({ variant = "default", className = "" }: MainMenuProps) {
   if (variant === "footer") {
     return (
-      <nav className={`-mx-4 flex flex-wrap justify-center gap-1 ${className}`}>
+      <nav className={`-mx-4 flex flex-wrap justify-center gap-1 ${className}`} data-testid="main-menu">
         {MENU.map((item) => {
           const IconComponent = item.icon;
           return (
@@ -30,7 +30,7 @@ export default function MainMenu({ variant = "default", className = "" }: MainMe
   // Default variant for other uses
   const items = MENU.filter((item) => item.header !== false);
   return (
-    <nav className={className}>
+    <nav className={className} data-testid="main-menu">
       {items.map((item) => (
         <LinkReact
           key={item.label}
