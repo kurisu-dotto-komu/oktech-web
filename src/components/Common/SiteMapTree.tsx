@@ -14,7 +14,7 @@ interface Props {
 /**
  * Render a section with optional link and children
  */
-function Section({
+function SitemapSection({
   section,
   showOGImages = false,
 }: {
@@ -86,7 +86,7 @@ export default function SiteMapTree({ className = "", showOGImages = false }: Pr
   return (
     <div className={className}>
       {sections.map((section) => (
-        <Section key={section.title} section={section} showOGImages={showOGImages} />
+        <SitemapSection key={section.title} section={section} showOGImages={showOGImages} />
       ))}
     </div>
   );

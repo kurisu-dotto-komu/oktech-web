@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import type { EventEnriched } from "@/content";
 import { isEventRecent } from "@/utils/eventFilters";
 
-const DEFAULT_BADGE_CLASS = "badge";
+const DEFAULT_BADGE_CLASS = "badge badge-primary";
+const LIVE_BADGE_CLASS = "badge badge-secondary";
 
 interface EventCardCountdownProps {
   event: EventEnriched;
@@ -64,7 +65,7 @@ export default function EventCardCountdown({ event, renderer }: EventCardCountdo
       }
 
       setTimeString(timeStr);
-      setBadgeClass(isUpcoming ? DEFAULT_BADGE_CLASS : "badge badge-primary");
+      setBadgeClass(isUpcoming ? DEFAULT_BADGE_CLASS : LIVE_BADGE_CLASS);
 
       // Adjust interval based on time remaining/elapsed
       const totalHours = days * 24 + hours;

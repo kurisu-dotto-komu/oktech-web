@@ -43,11 +43,7 @@ export default function EventCard({
           />
         }
       />
-      <EventCardDescription
-        event={event}
-        variant={variant}
-        cityComponent={<CityBadge city={event.venue?.city} />}
-      />
+      <EventCardDescription event={event} variant={variant} />
     </Link>
   );
 }

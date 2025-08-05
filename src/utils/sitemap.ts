@@ -7,7 +7,7 @@ export interface PageEntry {
   title: string;
 }
 
-export interface SectionEntry {
+export interface Entry {
   title: string;
   href?: string;
   children: PageEntry[];
@@ -16,13 +16,19 @@ export interface SectionEntry {
 /**
  * Build organized sections for the sitemap
  */
-export async function buildSitemapSections(): Promise<SectionEntry[]> {
-  const sections: SectionEntry[] = [];
+export async function buildSitemapSections(): Promise<Entry[]> {
+  const sections: Entry[] = [];
 
   // Home section (single link)
   sections.push({
     title: "Home",
     href: "/",
+    children: [],
+  });
+  // About and other static pages
+  sections.push({
+    title: "About",
+    href: "/about",
     children: [],
   });
 
@@ -59,13 +65,6 @@ export async function buildSitemapSections(): Promise<SectionEntry[]> {
     children: venuePages,
   });
 
-  // About and other static pages
-  sections.push({
-    title: "About",
-    href: "/about",
-    children: [],
-  });
-
   sections.push({
     title: "Code of Conduct",
     href: "/code-of-conduct",
@@ -96,7 +95,7 @@ export async function buildSitemapSections(): Promise<SectionEntry[]> {
 /**
  * Extract all URLs from sitemap sections (recursively)
  */
-export function extractUrlsFromSections(sections: SectionEntry[]): string[] {
+export function extractUrlsFromSections(sections: Entry[]): string[] {
   const urls: string[] = [];
 
   for (const section of sections) {

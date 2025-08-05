@@ -23,3 +23,7 @@
   background-color: color-mix(in srgb, var(--color-primary) 70%, transparent);
   color: var(--color-primary-content);
 }
+
+code {
+  @apply bg-base-100/50 px-2 rounded-field;
+}

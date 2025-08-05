@@ -8,12 +8,13 @@ interface MainMenuProps {
 
 export default function MainMenu({ variant = "default", className = "" }: MainMenuProps) {
   if (variant === "footer") {
+    const majorItems = MENU.filter((item) => item.footerMajor === true);
     return (
       <nav
         className={`-mx-4 flex flex-wrap justify-center gap-1 ${className}`}
         data-testid="main-menu"
       >
-        {MENU.map((item) => {
+        {majorItems.map((item) => {
           const IconComponent = item.icon;
           return (
             <LinkReact
@@ -31,7 +32,7 @@ export default function MainMenu({ variant = "default", className = "" }: MainMe
   }
 
   // Default variant for other uses
-  const items = MENU.filter((item) => item.header !== false);
+  const items = MENU.filter((item) => item.header === true);
   return (
     <nav className={className} data-testid="main-menu">
       {items.map((item) => (

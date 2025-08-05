@@ -3,6 +3,7 @@ import clsx from "clsx";
 import type { EventEnriched } from "@/content";
 import { formatDate, formatDuration, formatTime, getEndTime } from "@/utils/formatDate";
 
+import CityBadge from "../Common/CityBadge";
 import EventCardCountdown from "./EventCardCountdown";
 
 type Variant = "compact" | "polaroid" | "big";
@@ -63,6 +64,7 @@ function Info({ event, variant }: { event: EventEnriched; variant: Variant }) {
         )}
       </InfoItem>
       <InfoItem variant={variant}>{event.venue?.title}</InfoItem>
+      {variant === "compact" && <InfoItem variant={variant}>{event.venue?.address}</InfoItem>}
     </div>
   );
 }
@@ -70,14 +72,9 @@ function Info({ event, variant }: { event: EventEnriched; variant: Variant }) {
 interface EventCardDescriptionProps {
   event: EventEnriched;
   variant: Variant;
-  cityComponent?: React.ReactNode;
 }
 
-export default function EventCardDescription({
-  event,
-  variant,
-  cityComponent,
-}: EventCardDescriptionProps) {
+export default function EventCardDescription({ event, variant }: EventCardDescriptionProps) {
   return (
     <div
       className={clsx(
@@ -99,7 +96,7 @@ export default function EventCardDescription({
         >
           {event.data.title}
         </h3>
-        {variant === "compact" && cityComponent}
+        {variant === "compact" && <CityBadge city={event.venue?.city} />}
       </div>
       <Info event={event} variant={variant} />
     </div>

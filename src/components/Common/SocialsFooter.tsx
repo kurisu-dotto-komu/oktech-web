@@ -6,7 +6,7 @@ interface SocialsFooterProps {
 
 export default function SocialsFooter({ className = "" }: SocialsFooterProps) {
   return (
-    <div className={`grid grid-flow-col gap-4 ${className}`} data-testid="socials-footer">
+    <div className={`flex items-center gap-2 ${className}`} data-testid="socials-footer">
       {SOCIALS.map((social) => {
         const IconComponent = social.icon;
         return (
@@ -16,7 +16,7 @@ export default function SocialsFooter({ className = "" }: SocialsFooterProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              className="hover:text-primary transition-colors"
+              className="btn btn-ghost btn-circle btn-sm hover:text-primary"
             >
               <IconComponent size={18} />
             </a>

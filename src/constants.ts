@@ -19,40 +19,57 @@ export const SITE = {
   },
 } as const;
 
-export const MENU: { label: string; href: string; header?: boolean; icon?: IconType }[] = [
+export const MENU: {
+  label: string;
+  href: string;
+  header?: boolean;
+  icon?: IconType;
+  footerMajor?: boolean;
+  footerMinor?: boolean;
+}[] = [
   {
     label: "Home",
     href: "/",
-    header: false,
+    footerMajor: true,
     icon: LuHouse,
   },
   {
     label: "Events",
     href: "/events",
+    header: true,
+    footerMajor: true,
     icon: LuCalendar,
   },
   {
     label: "About",
     href: "/about",
+    header: true,
+    footerMajor: true,
     icon: LuInfo,
   },
   {
     label: "Sitemap",
     href: "/sitemap",
-    header: false,
+    footerMinor: true,
     icon: LuMap,
   },
   {
-    label: "RSS",
+    label: "RSS Feed",
     href: "/rss.xml",
-    header: false,
     icon: LuRss,
+    footerMinor: true,
   },
   {
-    label: "ICS",
+    label: "ICS Calendar Feed",
     href: "/oktech-events.ics",
-    header: false,
     icon: LuCalendar,
+    footerMinor: true,
+  },
+  {
+    label: "Code of Conduct",
+    href: "/code-of-conduct",
+    icon: LuInfo,
+    footerMinor: true,
   },
 ];
 

@@ -26,7 +26,7 @@ function GlassCell({
 }
 
 export default function TopBar() {
-  const items = MENU.filter((item) => item.header !== false);
+  const items = MENU.filter((item) => item.header === true);
   const [showBackground, setShowBackground] = useState(false);
 
   useEffect(() => {

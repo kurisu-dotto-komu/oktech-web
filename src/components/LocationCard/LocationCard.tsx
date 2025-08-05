@@ -38,10 +38,18 @@ export default function LocationCard({
         )}
         <div className="flex flex-grow flex-col">
           <div className="flex flex-grow flex-col justify-center gap-2 p-8">{children}</div>
-          {info && <div className="bg-info/50 hidden px-8 py-4 text-sm md:block">{info}</div>}
+          {info && (
+            <div className="bg-primary/30 text-primary-content hidden px-8 py-4 text-sm md:block">
+              {info}
+            </div>
+          )}
         </div>
       </div>
-      {info && <div className="bg-info/50 rounded-box px-8 py-4 text-sm md:hidden">{info}</div>}
+      {info && (
+        <div className="bg-primary/30 text-primary-content rounded-box glass-border px-8 py-4 text-sm md:hidden">
+          {info}
+        </div>
+      )}
       {below && (
         <div className={clsx("grid gap-6", horizontal ? "grid-cols-2" : "grid-cols-1")}>
           {below}
