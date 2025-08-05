@@ -6,6 +6,7 @@ import SidebarPageLayout from "@/layouts/SidebarPageLayout.astro";
 import EntryMarkdown from "@/components/Common/EntryMarkdown.astro";
 import EventImageBig from "@/components/Event/EventImageBig";
 import LocationCardEvent from "@/components/LocationCard/LocationCardEvent";
+import EventTags from "@/components/Event/EventTags";
 
 export async function getStaticPaths() {
   const events = await getEvents();
@@ -39,7 +40,7 @@ const description = event.data.topics?.length
     <h1 class="mt-10 text-4xl font-bold">
       {event.data.title}
     </h1>
-    <div>TODO</div>
+    <EventTags tags={event.data.topics} />
     <EntryMarkdown collection="eventsMarkdown" entryId={eventSlug} />
   </Fragment>
 

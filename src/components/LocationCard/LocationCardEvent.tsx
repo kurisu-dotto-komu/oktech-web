@@ -39,7 +39,7 @@ export default function LocationCardEvent({
         </div>
       }
     >
-      <div>{formatDate(event.data.dateTime, "long")}</div>
+      <div className="font-bold">{formatDate(event.data.dateTime, "long")}</div>
       <div>
         {formatTime(event.data.dateTime)}
         {event.data.duration && (
