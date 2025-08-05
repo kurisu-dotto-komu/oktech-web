@@ -210,47 +210,44 @@ test.describe("Event Filters", () => {
       await page.getByTestId("view-mode-compact").click();
 
       // Wait for URL to change
-      await page.waitForURL("**/events/compact**");
+      await page.waitForURL("**/events/list**");
 
       // Check URL
-      expect(page.url()).toContain("/events/compact");
+      expect(page.url()).toContain("/events/list");
 
       // Wait a bit for view to load
       await page.waitForTimeout(1000);
 
       // For now, just check URL changed correctly
-      expect(page.url()).toContain("/events/compact");
+      expect(page.url()).toContain("/events/list");
     });
 
-    test("should switch to gallery view", async ({ page }) => {
-      await page.getByTestId("view-mode-gallery").click();
+    test("should switch to album view", async ({ page }) => {
+      await page.getByTestId("view-mode-album").click();
 
       // Wait for URL to change
-      await page.waitForURL("**/events/gallery**");
+      await page.waitForURL("**/events/album**");
 
       // Check URL
-      expect(page.url()).toContain("/events/gallery");
+      expect(page.url()).toContain("/events/album");
 
       // Wait a bit for view to load
       await page.waitForTimeout(1000);
 
       // For now, just check URL changed correctly
-      expect(page.url()).toContain("/events/gallery");
+      expect(page.url()).toContain("/events/album");
     });
 
-    test("should display gallery view correctly", async ({ page }) => {
-      // Navigate to gallery view
-      await page.goto("/events/gallery");
+    test("should display album view correctly", async ({ page }) => {
+      // Navigate to album view
+      await page.goto("/events/album");
       await page.waitForLoadState("networkidle");
 
-      // Check gallery view is displayed
-      const galleryView = page.getByTestId("events-gallery-view");
-      await expect(galleryView).toBeVisible();
+      // Check that we're on the album page by checking the title
+      await expect(page.getByText("OKTech Photo Album")).toBeVisible();
 
-      // Check that events are displayed
-      const eventCards = page.getByTestId("event-card");
-      const eventCount = await eventCards.count();
-      expect(eventCount).toBeGreaterThan(0);
+      // Check the subtitle is present
+      await expect(page.getByText("Events without images are hidden on this page.")).toBeVisible();
 
       // Gallery images section is optional - only check if present
       const galleryImages = page.getByTestId("event-gallery-images");
@@ -273,7 +270,7 @@ test.describe("Event Filters", () => {
       await page.getByTestId("view-mode-compact").click();
 
       // Wait for URL to change to compact view with filters
-      await page.waitForURL("**/events/compact*");
+      await page.waitForURL("**/events/list*");
 
       // Check filters are preserved in URL
       expect(page.url()).toContain("search=design");

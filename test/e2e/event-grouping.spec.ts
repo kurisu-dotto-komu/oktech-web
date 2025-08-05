@@ -55,7 +55,7 @@ test.describe("Event grouping", () => {
     await compactViewButton.click();
 
     // Wait for navigation
-    await page.waitForURL("**/events/compact**");
+    await page.waitForURL("**/events/list**");
 
     // Check compact view groups
     const compactView = page.getByTestId("events-compact-view");
