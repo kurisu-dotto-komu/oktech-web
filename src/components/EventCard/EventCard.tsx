@@ -9,8 +9,8 @@ import EventCardImage from "./EventCardImage";
 
 type Variant = "compact" | "polaroid" | "big";
 
-export const BORDER_CLASS = "border-base-100 overflow-hidden rounded-lg border";
-
+const BORDER = "border-base-100/30 hover:border-base-100/100 border-3";
+const ROUNDED = "rounded-box overflow-hidden";
 export default function EventCard({
   event,
   index,
@@ -26,8 +26,11 @@ export default function EventCard({
     <Link
       href={`/event/${event.id}`}
       className={clsx(
-        "hover:bg-base-100 flex p-1 transition-colors",
-        border && BORDER_CLASS,
+        "hover:bg-base-100/100 flex transition-all duration-200",
+        BORDER,
+        border && ROUNDED,
+        !border && index === 0 && "border-none",
+        !border && index > 0 && "border-r-0 border-b-0 border-l-0",
         odd ? "bg-base-100/30" : "bg-base-100/60",
         variant === "compact" && "flex-row items-center",
         variant === "polaroid" && "flex-col-reverse",
@@ -42,7 +45,12 @@ export default function EventCard({
       <EventCardImage
         event={event}
         variant={variant}
-        cityComponent={<CityBadge city={event.venue?.city} />}
+        cityComponent={
+          <CityBadge
+            city={event.venue?.city}
+            className="rounded-tr-none rounded-br-none rounded-bl-none pl-4"
+          />
+        }
       />
     </Link>
   );
@@ -50,7 +58,7 @@ export default function EventCard({
 
 export function EventCardList({ events }: { events: EventEnriched[] }) {
   return (
-    <div className={BORDER_CLASS}>
+    <div className={clsx(BORDER, ROUNDED)}>
       {events.map((event, index) => (
         <EventCard key={event.id} variant="compact" event={event} index={index} />
       ))}

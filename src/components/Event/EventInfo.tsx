@@ -29,7 +29,7 @@ export default function EventInfo({ event }: Props) {
   }
 
   const eventContent = (
-    <div className="bg-base-100 rounded-lg">
+    <div className="bg-base-100 rounded-box">
       {/* Date and Time Section */}
       <div className="space-y-4 p-6" data-testid="event-info">
         <div className="flex items-start gap-4">

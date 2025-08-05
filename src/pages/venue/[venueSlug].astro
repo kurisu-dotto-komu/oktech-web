@@ -53,7 +53,7 @@ const description =
       <div class="flex flex-1 flex-col gap-10">
         {
           venue.data.cover && (
-            <figure class="aspect-video w-full overflow-hidden rounded-xl bg-white shadow-xl">
+            <figure class="rounded-box aspect-video w-full overflow-hidden bg-white shadow-xl">
               <img
                 src={venue.data.cover.src}
                 alt={`${venue.data.title} cover`}
@@ -78,7 +78,7 @@ const description =
 
       <div class="lg:w-80">
         <div class="lg:sticky lg:top-20">
-          <div class="card bg-base-100 overflow-hidden rounded-lg shadow-lg">
+          <div class="card bg-base-100 rounded-box overflow-hidden shadow-lg">
             <div class="card-body p-0">
               <VenueInfo venue={venue} />
             </div>

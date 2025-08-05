@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import type { EventEnriched } from "@/content";
 import { isEventRecent } from "@/utils/eventFilters";
 
-const DEFAULT_BADGE_CLASS = "badge badge-neutral";
+const DEFAULT_BADGE_CLASS = "badge";
 
 interface EventCardCountdownProps {
   event: EventEnriched;

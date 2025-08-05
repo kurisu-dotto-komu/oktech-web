@@ -17,12 +17,19 @@ export default function EventCardImage({ event, variant, cityComponent }: EventC
     <div className={clsx("relative", variant === "compact" && "hidden sm:block")}>
       {variant !== "compact" && (
         <>
-          <div className="absolute right-1 bottom-1">{cityComponent}</div>
+          <div className="absolute right-0 bottom-0">{cityComponent}</div>
           <EventCardCountdown
             event={event}
             renderer={(timeString, badgeClass) => (
-              <div className="absolute top-1 left-1">
-                <div className={badgeClass}>{timeString}</div>
+              <div className="absolute top-0 left-0 flex">
+                <div
+                  className={clsx(
+                    badgeClass,
+                    "badge-info m-0 rounded-tl-none rounded-tr-none rounded-bl-none px-4",
+                  )}
+                >
+                  {timeString}
+                </div>
               </div>
             )}
           />
@@ -31,8 +38,8 @@ export default function EventCardImage({ event, variant, cityComponent }: EventC
 
       <figure
         className={clsx(
-          "bg-base-300 aspect-video overflow-hidden rounded-lg",
-          variant === "compact" && "h-22",
+          "bg-base-300 aspect-video overflow-hidden",
+          variant === "compact" && "h-24",
           variant === "polaroid" && "h-full",
           variant === "big" && "h-60",
         )}

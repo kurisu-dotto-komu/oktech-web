@@ -11,7 +11,7 @@ interface Props {
 
 export default function VenueInfo({ venue }: Props) {
   return (
-    <div className="bg-base-100 overflow-hidden rounded-lg">
+    <div className="bg-base-100 rounded-box overflow-hidden">
       {/* Venue Information Section */}
       <div className="space-y-4 p-6">
         <div className="flex items-start gap-4">

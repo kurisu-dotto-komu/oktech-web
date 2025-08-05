@@ -179,7 +179,7 @@ export default function EventImageModal({
             </button>
 
             {/* Modal box with image */}
-            <div className="w-full max-w-[90vw] overflow-hidden rounded-lg lg:max-w-[80vw] xl:max-w-[1200px]">
+            <div className="rounded-box w-full max-w-[90vw] overflow-hidden lg:max-w-[80vw] xl:max-w-[1200px]">
               {/* Image container */}
               <div className="relative aspect-[3/4] bg-black sm:aspect-square md:aspect-[4/3]">
                 <TransformWrapper
@@ -220,7 +220,7 @@ export default function EventImageModal({
 
                 {/* Caption overlay */}
                 {selectedImage.data.caption && (
-                  <div className="absolute bottom-2 left-1/2 max-w-[90%] -translate-x-1/2 transform rounded-lg bg-black/80 px-4 py-2 backdrop-blur-sm">
+                  <div className="rounded-box absolute bottom-2 left-1/2 max-w-[90%] -translate-x-1/2 transform bg-black/80 px-4 py-2 backdrop-blur-sm">
                     <p data-testid="modal-image-caption" className="text-center text-sm text-white">
                       {selectedImage.data.caption}
                     </p>

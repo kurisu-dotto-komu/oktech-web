@@ -40,7 +40,7 @@ function Section({
           <img
             src={getOGImageWithFallback(section.href)}
             alt={`OG image for ${section.title}`}
-            className="h-auto w-full rounded-lg object-cover shadow-md"
+            className="rounded-box h-auto w-full object-cover shadow-md"
             loading="lazy"
           />
         </div>
@@ -60,7 +60,7 @@ function Section({
                   <img
                     src={getOGImageWithFallback(child.href)}
                     alt={`OG image for ${child.title}`}
-                    className="aspect-[1200/630] h-auto w-full rounded-lg object-cover shadow-md"
+                    className="rounded-box aspect-[1200/630] h-auto w-full object-cover shadow-md"
                     loading="lazy"
                   />
                 </div>
