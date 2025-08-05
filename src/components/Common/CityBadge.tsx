@@ -16,9 +16,9 @@ export default function CityBadge({ city, className }: CityBadgeProps) {
   return (
     <span
       className={clsx(
-        cityLower === "osaka" && "badge badge-primary",
-        cityLower === "kyoto" && "badge badge-secondary",
-        cityLower === "kobe" && "badge badge-accent",
+        cityLower === "osaka" && "badge badge-error",
+        cityLower === "kyoto" && "badge badge-warning",
+        cityLower === "kobe" && "badge badge-success",
         className,
       )}
     >

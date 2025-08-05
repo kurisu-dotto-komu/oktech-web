@@ -8,17 +8,9 @@ interface Props {
   class?: string;
 }
 
-export default function VenueMapImage({
-  mapImage,
-  mapDarkImage,
-  marker,
-  className,
-  class: classFromAstro,
-}: Props) {
-  const finalClassName = className || classFromAstro || "";
-
+export default function VenueMapImage({ mapImage, mapDarkImage, marker, className }: Props) {
   return (
-    <figure className={`relative h-full w-full ${finalClassName}`}>
+    <figure className={`relative h-full w-full ${className}`}>
       {mapImage || mapDarkImage ? (
         <>
           {/* Light mode map */}

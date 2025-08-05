@@ -38,10 +38,8 @@ export default function EventCardImage({ event, variant, cityComponent }: EventC
 
       <figure
         className={clsx(
-          "bg-base-300 aspect-video overflow-hidden",
-          variant === "compact" && "h-24",
-          variant === "polaroid" && "h-full",
-          variant === "big" && "h-70",
+          "bg-base-300",
+          variant === "compact" ? "aspect-video w-42" : "h-full w-full",
         )}
       >
         <img

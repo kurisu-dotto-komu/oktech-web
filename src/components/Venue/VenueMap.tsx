@@ -7,18 +7,9 @@ interface Props {
   marker?: boolean | string;
   link?: boolean;
   className?: string;
-  class?: string;
 }
 
-export default function VenueMap({
-  venue,
-  marker,
-  link = false,
-  className,
-  class: classFromAstro,
-}: Props) {
-  const finalClassName = className || classFromAstro || "";
-
+export default function VenueMap({ venue, marker, link = false, className }: Props) {
   // Generate map URL - use gmaps if available, otherwise create from address
   const getMapUrl = () => {
     // Show link if either showMarker is true or marker prop is provided
@@ -54,28 +45,27 @@ export default function VenueMap({
 
   if (mapUrl && link) {
     return (
-      <div data-testid="venue-map">
-        <a
-          href={mapUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`block h-full w-full cursor-pointer transition-opacity hover:opacity-90 ${finalClassName}`}
-          data-testid="venue-map-link"
-        >
-          <VenueMapImage mapImage={mapImage} mapDarkImage={mapDarkImage} marker={marker} />
+      <>
+        <a href={mapUrl} target="_blank" rel="noopener noreferrer">
+          <VenueMapImage
+            mapImage={mapImage}
+            mapDarkImage={mapDarkImage}
+            marker={marker}
+            className={className}
+          />
         </a>
-      </div>
+      </>
     );
   }
 
   return (
-    <div data-testid="venue-map">
+    <>
       <VenueMapImage
         mapImage={mapImage}
         mapDarkImage={mapDarkImage}
         marker={marker}
-        className={finalClassName}
+        className={className}
       />
-    </div>
+    </>
   );
 }

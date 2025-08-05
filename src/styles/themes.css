@@ -27,6 +27,9 @@
   --color-warning-content: oklch(13.316% 0.031 58.318);
   --color-error: oklch(65.72% 0.199 27.33);
   --color-error-content: oklch(13.144% 0.039 27.33);
+  --radius-selector: 9999rem;
+  --radius-field: 9999rem;
+  --radius-box: 2rem;
 }
 
 @plugin "daisyui/theme" {

@@ -1,20 +1,14 @@
 ---
 import { getEvents, getEvent } from "@/content";
-import fs from "fs/promises";
-import path from "path";
-import yaml from "yaml";
-import EventNav from "@/components/Event/EventNav";
-import EventLinks from "@/components/Event/EventLinks";
+import EventLinks from "@/components/Event/EventLinks.astro";
 import EventGallery from "@/components/Event/EventGallery";
-import type { EventLink } from "@/components/Event/EventLinks";
-import PageLayout from "@/layouts/PageLayout.astro";
-import StickyNavigation from "@/components/Common/StickyNavigation";
-import Section from "@/components/Common/Section";
+import SidebarPageLayout from "@/layouts/SidebarPageLayout.astro";
 import EventInfo from "@/components/Event/EventInfo";
 import EventJoinButton from "@/components/Event/EventJoinButton";
-import EventProjectorButton from "@/components/Event/EventProjectorButton";
 import AddToCalendarDropdown from "@/components/Event/EventCalendarDropdown";
-import { getEntry, render } from "astro:content";
+import EntryMarkdown from "@/components/Common/EntryMarkdown.astro";
+import EventImageBig from "@/components/Event/EventImageBig";
+import LocationCard from "@/components/LocationCard/LocationCard";
 
 export async function getStaticPaths() {
   const events = await getEvents();
@@ -28,23 +22,6 @@ export async function getStaticPaths() {
 
 const { eventSlug } = Astro.params;
 const event = await getEvent(eventSlug);
-const events = await getEvents();
-
-const markdownFile = await getEntry("eventsMarkdown", eventSlug);
-if (!markdownFile) {
-  throw new Error(`Event ${eventSlug} not found`);
-}
-const { Content } = await render(markdownFile);
-
-// Load links for this event
-let links: EventLink[] = [];
-try {
-  const linksPath = path.join(process.cwd(), "content", "events", event.id, "links.yaml");
-  const linksContent = await fs.readFile(linksPath, "utf-8");
-  links = yaml.parse(linksContent) as EventLink[];
-} catch (error) {
-  // No links.yaml file found for this event
-}
 
 // Get topics as a description
 const description = event.data.topics?.length
@@ -52,71 +29,24 @@ const description = event.data.topics?.length
   : "Join us for this exciting tech meetup event!";
 ---
 
-<PageLayout title={`${event.data.title} - Events`} description={description} type="article">
-  <Section>
-    <div class="flex w-full flex-col gap-8">
-      <div class="flex flex-col gap-10 md:hidden">
-        <h1 class="pt-6 text-4xl font-bold" data-testid="event-title">{event.data.title}</h1>
-        <EventInfo event={event} />
-        <EventJoinButton event={event} client:load />
-        <AddToCalendarDropdown event={event} client:load />
-      </div>
+<SidebarPageLayout title={`${event.data.title} - Events`} description={description} type="article">
+  <Fragment slot="sidebar">
+    <LocationCard event={event} client:load />
+  </Fragment>
 
-      <div class="flex flex-col gap-12 md:flex-row">
-        <div class="flex flex-col gap-10 md:w-2/3">
-          <div class="group relative">
-            <div class="absolute top-2 right-2">
-              <EventProjectorButton event={event} client:load />
-            </div>
-            <figure class="bg-base-300 rounded-box aspect-video w-full overflow-hidden shadow-xl">
-              {
-                event.data.cover ? (
-                  <img
-                    src={event.data.cover.src}
-                    alt={event.data.title}
-                    class="h-full w-full object-cover"
-                    width={512}
-                    height={512}
-                  />
-                ) : (
-                  <div class="bg-base-300 h-full w-full" />
-                )
-              }
-            </figure>
-          </div>
-          <h1 class="hidden pt-6 text-4xl font-bold md:block" data-testid="event-title-desktop">
-            {event.data.title}
-          </h1>
-          <div class="prose prose-lg max-w-none">
-            <Content />
-          </div>
-        </div>
-        <div class="sticky top-20 hidden self-start pl-8 md:block md:w-1/3">
-          <div class="flex flex-col gap-8 overflow-visible">
-            <div class="card bg-base-100 rounded-box relative overflow-visible shadow-lg">
-              <div class="card-body overflow-visible p-0">
-                <EventInfo event={event} />
-              </div>
-            </div>
-            <EventJoinButton event={event} client:load />
-            <AddToCalendarDropdown event={event} client:load />
-          </div>
-        </div>
-      </div>
+  <Fragment slot="main-content">
+    <EventImageBig event={event} client:load />
+    <div class="flex flex-col gap-6 lg:hidden">
+      <LocationCard event={event} horizontal client:load />
     </div>
-  </Section>
-  <EventLinks links={links} />
-  <EventGallery event={event} client:load />
-  <Section>
-    <EventNav
-      event={event}
-      events={events}
-      className="event-navigation"
-      keyboardEvents
-      client:load
-    />
-  </Section>
-  <StickyNavigation navigationClass="event-navigation" client:load>
-    <EventNav event={event} events={events} />
-  </StickyNavigation>
-</PageLayout>
+    <h1 class="mt-10 text-4xl font-bold">
+      {event.data.title}
+    </h1>
+    <EntryMarkdown collection="eventsMarkdown" entryId={eventSlug} />
+  </Fragment>
+
+  <Fragment slot="after-content">
+    <EventLinks eventId={event.id} />
+    <EventGallery event={event} client:load />
+  </Fragment>
+</SidebarPageLayout>

@@ -22,7 +22,7 @@ export default function SimpleSection({
   };
 }) {
   return (
-    <section className="flex flex-col gap-12">
+    <section className="flex flex-col gap-18">
       <Container className="flex flex-col items-center justify-center gap-4">
         <div className="flex items-center justify-center gap-4">
           <h2 className="text-center text-4xl font-bold">{title}</h2>

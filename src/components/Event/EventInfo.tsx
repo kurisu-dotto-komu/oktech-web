@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { LuClock, LuMapPin } from "react-icons/lu";
 
 import BigTooltip from "@/components/Common/BigTooltip";
@@ -11,9 +12,10 @@ import HowToFindUs from "./EventHowToFindUs";
 
 interface Props {
   event: EventEnriched;
+  horizontal?: boolean;
 }
 
-export default function EventInfo({ event }: Props) {
+export default function EventInfo({ event, horizontal = false }: Props) {
   // Format the date and time range similar to Meetup.com
   const eventDate = new Date(event.data.dateTime);
   const fullDate = formatDate(eventDate, "long");
@@ -29,7 +31,7 @@ export default function EventInfo({ event }: Props) {
   }
 
   const eventContent = (
-    <div className="bg-base-100 rounded-box">
+    <div className={clsx("bg-base-100 rounded-box", horizontal && "flex flex-col gap-4")}>
       {/* Date and Time Section */}
       <div className="space-y-4 p-6" data-testid="event-info">
         <div className="flex items-start gap-4">

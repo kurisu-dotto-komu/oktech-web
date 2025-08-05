@@ -18,3 +18,10 @@
     @apply bg-base-100/50;
   }
 }
+
+.glass-card {
+  @apply bg-base-100/30 hover:bg-base-100/60 rounded-box overflow-hidden;
+}
+.glass-border, .glass-card {
+  @apply border-base-100/60 hover:border-base-100/100 border-1 transition-all duration-200 ;
+}

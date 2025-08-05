@@ -9,8 +9,6 @@ import EventCardImage from "./EventCardImage";
 
 type Variant = "compact" | "polaroid" | "big";
 
-const BORDER = "border-base-100/50 hover:border-base-100/100 border-1";
-const ROUNDED = "rounded-box overflow-hidden";
 export default function EventCard({
   event,
   index,
@@ -26,22 +24,15 @@ export default function EventCard({
     <Link
       href={`/event/${event.id}`}
       className={clsx(
-        "hover:bg-base-100/100 flex transition-all duration-200",
-        BORDER,
-        border && ROUNDED,
-        !border && index === 0 && "border-none",
-        !border && index > 0 && "border-r-0 border-b-0 border-l-0",
+        "hover:bg-base-100/100 glass-border transition-all duration-200",
+        border && "rounded-box overflow-hidden",
+        !border && "border-t-0 border-r-0 border-l-0",
         odd ? "bg-base-100/30" : "bg-base-100/60",
-        variant === "compact" && "flex-row items-center",
-        variant === "polaroid" && "flex-col-reverse",
-        variant === "big" && "flex-row-reverse",
+        variant === "compact" && "flex items-center",
+        variant === "polaroid" && "flex flex-col",
+        variant === "big" && "grid grid-cols-2",
       )}
     >
-      <EventCardDescription
-        event={event}
-        variant={variant}
-        cityComponent={<CityBadge city={event.venue?.city} />}
-      />
       <EventCardImage
         event={event}
         variant={variant}
@@ -52,13 +43,18 @@ export default function EventCard({
           />
         }
       />
+      <EventCardDescription
+        event={event}
+        variant={variant}
+        cityComponent={<CityBadge city={event.venue?.city} />}
+      />
     </Link>
   );
 }
 
 export function EventCardList({ events }: { events: EventEnriched[] }) {
   return (
-    <div className={clsx(BORDER, ROUNDED)}>
+    <div className={"glass-border rounded-box overflow-hidden"}>
       {events.map((event, index) => (
         <EventCard key={event.id} variant="compact" event={event} index={index} />
       ))}
