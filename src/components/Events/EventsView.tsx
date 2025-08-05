@@ -25,7 +25,7 @@ export default function EventsView({ events, view }: Props) {
     .filter((event): event is EventEnriched => event !== undefined);
 
   return (
-    <div className="my-12 flex flex-col gap-24">
+    <div className="my-24 flex flex-col gap-24">
       {view === "grid" && <EventsViewGrid events={sortedEvents} />}
       {view === "compact" && <EventsViewCompact events={sortedEvents} />}
       {view === "album" && <EventsViewAlbum events={sortedEvents} />}

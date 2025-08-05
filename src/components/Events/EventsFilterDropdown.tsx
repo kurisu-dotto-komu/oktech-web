@@ -73,7 +73,7 @@ export default function EventsFilterDropdown({
   return (
     <details className="dropdown" ref={dropdownRef} data-testid={dataTestId}>
       <summary
-        className={`btn join-item whitespace-nowrap ${selected.length > 0 ? "btn-primary" : ""}`}
+        className={`btn join-item whitespace-nowrap ${selected.length > 0 ? "btn-accent" : ""}`}
       >
         {getButtonLabel()}
         <LuChevronDown className="h-4 w-4" />

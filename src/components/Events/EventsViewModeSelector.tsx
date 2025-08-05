@@ -41,7 +41,7 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
   }, [currentFilters]);
 
   return (
-    <div className="join">
+    <>
       {views.map((view) => {
         const Icon = view.icon;
         return (
@@ -50,7 +50,7 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
             as="link"
             href={view.href}
             tooltip={view.label}
-            className={`join-item btn ${currentView === view.value ? "btn-primary" : ""}`}
+            className={`join-item btn ${currentView === view.value ? "btn-accent" : ""}`}
             data-view={view.value}
             data-testid={`view-mode-${view.value}`}
             aria-label={view.label}
@@ -59,6 +59,6 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
           </TooltipButton>
         );
       })}
-    </div>
+    </>
   );
 }

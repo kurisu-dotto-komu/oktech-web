@@ -32,6 +32,7 @@ export default function EventCard({
         variant === "polaroid" && "flex flex-col",
         variant === "big" && "grid grid-cols-2",
       )}
+      data-testid={`event-card-${event.id}`}
     >
       <EventCardImage
         event={event}

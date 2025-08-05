@@ -17,11 +17,11 @@ import type { EventEnriched, Venue } from "@/content";
 export interface EventItem {
   id: string;
   title: string;
-  description?: string;
   date: string;
   topics?: string[];
   location?: string;
   venue?: Venue;
+  venueName?: string;
   poster?: ImageMetadata;
   slug: string;
   hasGallery?: boolean;
@@ -86,6 +86,7 @@ export function EventFilterProvider({
         topics: event.data.topics || [],
         location: event.venue?.city || "",
         venue: event.venue,
+        venueName: event.venue?.title || "",
         poster: event.data.cover,
         slug: event.id,
         hasGallery: event.galleryImages && event.galleryImages.length > 0,
@@ -131,9 +132,17 @@ export function EventFilterProvider({
     if (!fuseRef.current) {
       const { default: Fuse } = await import("fuse.js");
       fuseRef.current = new Fuse(items, {
-        keys: ["title", "topics"],
-        threshold: 0.3,
+        keys: [
+          { name: "title", weight: 2 },
+          { name: "topics", weight: 1.5 },
+          { name: "venueName", weight: 1.5 },
+          { name: "location", weight: 0.5 },
+        ],
+        threshold: 0.4,
         includeScore: true,
+        ignoreLocation: true,
+        findAllMatches: true,
+        minMatchCharLength: 2,
       });
     }
     return fuseRef.current;
