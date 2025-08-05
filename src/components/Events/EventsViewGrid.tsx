@@ -2,6 +2,7 @@ import Section from "@/components/Common/Section";
 import type { EventEnriched } from "@/content";
 import { groupEventsByYearAndUpcoming } from "@/utils/eventGrouping";
 
+import SimpleSection from "../Common/SimpleSection";
 import EventCard from "../EventCard/EventCard";
 import { useEventsFilter } from "./EventsFilterProvider";
 
@@ -14,16 +15,16 @@ export default function EventsViewGrid({ events }: Props) {
   const eventGroups = groupEventsByYearAndUpcoming(events, currentFilters.sort);
 
   return (
-    <div>
+    <>
       {eventGroups.map((group) => (
-        <Section key={group.label} grid wide title={group.label} className="pb-6">
+        <SimpleSection key={group.label} title={group.label} wide grid>
           {group.events.map((event) => (
             <div key={event.id} data-testid="event-card">
               <EventCard event={event} variant="polaroid" />
             </div>
           ))}
-        </Section>
+        </SimpleSection>
       ))}
-    </div>
+    </>
   );
 }

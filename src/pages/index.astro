@@ -1,5 +1,5 @@
 ---
-import Section from "@/components/Common/Section";
+import SimpleSection from "@/components/Common/SimpleSection";
 import EventsUpcoming from "@/components/Events/EventsUpcoming";
 import EventsRecent from "@/components/Events/EventsRecent";
 import PageLayout from "@/layouts/PageLayout.astro";
@@ -10,19 +10,23 @@ import { getEvents } from "@/content";
 const events = await getEvents();
 ---
 
-<PageLayout flush>
+<PageLayout flush className="flex flex-col gap-24 pb-24">
   <LandingHero />
-  <Section>
+
+  <SimpleSection title="Upcoming OKTech Events">
     <EventsUpcoming client:load events={events} />
-  </Section>
+  </SimpleSection>
+
   <LandingAbout />
-  <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
+
+  <SimpleSection title="Recent OKTech Events" wide button={{ text: "All Events", href: "/events" }}>
     <EventsRecent events={events} />
-  </Section>
-  <Section
+  </SimpleSection>
+
+  <!-- <Section
     title="Get Involved"
     description="Ready to be part of something bigger? Whether you want to speak at our events, sponsor our initiatives, or simply join our community, we welcome your participation and ideas."
     button={{ text: "Get Involved", href: "/about#contact" }}
     class="text-center text-lg"
-  />
+  /> -->
 </PageLayout>

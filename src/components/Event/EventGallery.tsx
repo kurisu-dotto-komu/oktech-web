@@ -2,6 +2,7 @@ import GalleryDisclaimer from "@/components/Common/GalleryDisclaimer";
 import Section from "@/components/Common/Section";
 import type { EventEnriched } from "@/content";
 
+import SimpleSection from "../Common/SimpleSection";
 import EventGalleryImages from "./EventGalleryImages";
 
 interface Props {
@@ -17,8 +18,8 @@ export default function EventGallery({ event }: Props) {
   }
 
   return (
-    <Section wide grid title="Gallery" element={<GalleryDisclaimer />}>
+    <SimpleSection wide grid title={"Gallery"} element={<GalleryDisclaimer />}>
       <EventGalleryImages event={event} />
-    </Section>
+    </SimpleSection>
   );
 }

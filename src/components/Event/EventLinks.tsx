@@ -1,5 +1,4 @@
-import Section from "@/components/Common/Section";
-
+import SimpleSection from "../Common/SimpleSection";
 import EventLinkCard from "./EventLinkCard";
 
 export interface EventLink {
@@ -19,10 +18,10 @@ export default function EventLinks({ links }: Props) {
   }
 
   return (
-    <Section grid title="Links">
+    <SimpleSection grid title="Links">
       {links.map((link, index) => (
         <EventLinkCard key={index} link={link} />
       ))}
-    </Section>
+    </SimpleSection>
   );
 }

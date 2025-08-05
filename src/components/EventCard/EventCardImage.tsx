@@ -41,7 +41,7 @@ export default function EventCardImage({ event, variant, cityComponent }: EventC
           "bg-base-300 aspect-video overflow-hidden",
           variant === "compact" && "h-24",
           variant === "polaroid" && "h-full",
-          variant === "big" && "h-60",
+          variant === "big" && "h-70",
         )}
       >
         <img

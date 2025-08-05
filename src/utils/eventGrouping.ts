@@ -7,6 +7,9 @@ export interface EventGroup {
   events: EventEnriched[];
 }
 
+const UPCOMING_LABEL = "Upcoming OKTech Events";
+const getYearLabel = (year: number) => `Events in ${year}`;
+
 /**
  * Groups events by year and upcoming status
  * Upcoming events are grouped together, past events are grouped by year
@@ -47,7 +50,7 @@ export function groupEventsByYearAndUpcoming(
     // Newest first: Upcoming events go first, then years in descending order
     if (upcomingEvents.length > 0) {
       groups.push({
-        label: "Upcoming",
+        label: UPCOMING_LABEL,
         events: upcomingEvents,
       });
     }
@@ -55,7 +58,7 @@ export function groupEventsByYearAndUpcoming(
       const yearEvents = eventsByYear.get(year)!;
       if (yearEvents.length > 0) {
         groups.push({
-          label: year.toString(),
+          label: getYearLabel(year, sortOrder),
           events: yearEvents,
         });
       }
@@ -66,14 +69,14 @@ export function groupEventsByYearAndUpcoming(
       const yearEvents = eventsByYear.get(year)!;
       if (yearEvents.length > 0) {
         groups.push({
-          label: year.toString(),
+          label: getYearLabel(year, sortOrder),
           events: yearEvents,
         });
       }
     });
     if (upcomingEvents.length > 0) {
       groups.push({
-        label: "Upcoming",
+        label: UPCOMING_LABEL,
         events: upcomingEvents,
       });
     }

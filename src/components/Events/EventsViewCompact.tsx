@@ -2,6 +2,8 @@ import Section from "@/components/Common/Section";
 import type { EventEnriched } from "@/content";
 import { groupEventsByYearAndUpcoming } from "@/utils/eventGrouping";
 
+import Container from "../Common/Container";
+import SimpleSection from "../Common/SimpleSection";
 import { EventCardList } from "../EventCard/EventCard";
 import { useEventsFilter } from "./EventsFilterProvider";
 
@@ -14,12 +16,12 @@ export default function EventsViewCompact({ events }: Props) {
   const eventGroups = groupEventsByYearAndUpcoming(events, currentFilters.sort);
 
   return (
-    <div>
+    <>
       {eventGroups.map((group) => (
-        <Section key={group.label} title={group.label}>
+        <SimpleSection key={group.label} title={group.label}>
           <EventCardList events={group.events} />
-        </Section>
+        </SimpleSection>
       ))}
-    </div>
+    </>
   );
 }

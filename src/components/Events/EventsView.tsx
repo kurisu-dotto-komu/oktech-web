@@ -24,13 +24,11 @@ export default function EventsView({ events, view }: Props) {
     .map((item) => filteredEvents.find((event) => event.id === item.id))
     .filter((event): event is EventEnriched => event !== undefined);
 
-  switch (view) {
-    case "compact":
-      return <EventsViewCompact events={sortedEvents} />;
-    case "gallery":
-      return <EventsViewGallery events={sortedEvents} />;
-    case "grid":
-    default:
-      return <EventsViewGrid events={sortedEvents} />;
-  }
+  return (
+    <div className="my-12 flex flex-col gap-24">
+      {view === "grid" && <EventsViewGrid events={sortedEvents} />}
+      {view === "compact" && <EventsViewCompact events={sortedEvents} />}
+      {view === "gallery" && <EventsViewGallery events={sortedEvents} />}
+    </div>
+  );
 }

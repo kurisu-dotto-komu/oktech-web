@@ -2,10 +2,10 @@ import { LuInfo } from "react-icons/lu";
 
 import BigTooltip from "@/components/Common/BigTooltip";
 
-export default function GalleryDisclaimer() {
+export default function GalleryDisclaimer({ position = "top" }: { position?: "top" | "bottom" }) {
   return (
     <BigTooltip
-      position="top"
+      position={position}
       content={
         <div className="bg-base-200 rounded-box max-w-md p-6 text-left shadow-lg">
           <ul className="text-base-content list-inside list-disc space-y-3 text-sm">
@@ -54,7 +54,7 @@ export default function GalleryDisclaimer() {
         </div>
       }
     >
-      <button className="btn btn-circle btn-sm btn-ghost" aria-label="Gallery information">
+      <button className="btn btn-circle btn-ghost" aria-label="Gallery information">
         <LuInfo className="h-4 w-4" />
       </button>
     </BigTooltip>

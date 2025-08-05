@@ -7,6 +7,7 @@ import PageLayout from "@/layouts/PageLayout.astro";
 import StickyNavigation from "@/components/Common/StickyNavigation";
 import Section from "@/components/Common/Section";
 import { getVenue, getVenues, getEvents } from "@/content";
+import SimpleSection from "@/components/Common/SimpleSection";
 
 export async function getStaticPaths() {
   const venues = await getCollection("venues");
@@ -90,10 +91,9 @@ const description =
 
   {
     venueEvents.length > 0 && (
-      <Section>
-        <h2 class="mb-8 text-2xl font-bold">Events Hosted at {venue.data.title}</h2>
+      <SimpleSection title={`Events Hosted`}>
         <EventCardList events={venueEvents} />
-      </Section>
+      </SimpleSection>
     )
   }
 

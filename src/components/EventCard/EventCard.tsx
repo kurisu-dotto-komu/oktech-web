@@ -9,7 +9,7 @@ import EventCardImage from "./EventCardImage";
 
 type Variant = "compact" | "polaroid" | "big";
 
-const BORDER = "border-base-100/30 hover:border-base-100/100 border-3";
+const BORDER = "border-base-100/50 hover:border-base-100/100 border-1";
 const ROUNDED = "rounded-box overflow-hidden";
 export default function EventCard({
   event,

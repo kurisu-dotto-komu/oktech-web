@@ -28,7 +28,7 @@ function Info({ event, variant }: { event: EventEnriched; variant: Variant }) {
         "text-base-content/70 flex",
         variant === "compact" && "flex-row items-center gap-4",
         variant === "polaroid" && "flex-col gap-2",
-        variant === "big" && "flex-col gap-2",
+        variant === "big" && "flex-col gap-2 text-lg",
       )}
       style={
         variant === "compact"
@@ -54,16 +54,15 @@ function Info({ event, variant }: { event: EventEnriched; variant: Variant }) {
         {formatTime(event.data.dateTime)}
         {event.data.duration && (
           <>
-            {" - "}
+            {" to "}
             {formatTime(getEndTime(event.data.dateTime, event.data.duration)!)}
-            {" ・ "}
+            {" ("}
             {formatDuration(event.data.duration)}
+            {")"}
           </>
         )}
       </InfoItem>
-      <InfoItem variant={variant}>
-        {event.venue?.title} {event.venue?.address}
-      </InfoItem>
+      <InfoItem variant={variant}>{event.venue?.title}</InfoItem>
     </div>
   );
 }
