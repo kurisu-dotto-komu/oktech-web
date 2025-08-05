@@ -1,4 +1,3 @@
-import Brand from "@/components/Common/Brand";
 import Container from "@/components/Common/Container";
 import MainMenu from "@/components/Common/MainMenu";
 import SocialsFooter from "@/components/Common/SocialsFooter";

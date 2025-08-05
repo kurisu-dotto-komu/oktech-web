@@ -17,7 +17,7 @@ interface Props {
   class?: string;
 }
 
-const { title, pageTitle, buttons, active, class: className } = Astro.props;
+const { title, pageTitle, buttons, active } = Astro.props;
 const hasHeaderSlot = Astro.slots.has("header");
 ---
 

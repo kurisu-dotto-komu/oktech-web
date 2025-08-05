@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import type { EventEnriched } from "@/content";
-import { getEventEndTimeWithBuffer, isEventRecent } from "@/utils/eventFilters";
+import { isEventRecent } from "@/utils/eventFilters";
 
 const DEFAULT_BADGE_CLASS = "badge badge-neutral";
 
@@ -35,7 +35,6 @@ export default function EventCardCountdown({ event, renderer }: EventCardCountdo
 
       const now = new Date().getTime();
       const start = new Date(event.data.dateTime).getTime();
-      const end = start + (event.data.duration ?? 0) * 60 * 60 * 1000;
 
       const isUpcoming = now < start;
       const difference = isUpcoming ? start - now : now - start;

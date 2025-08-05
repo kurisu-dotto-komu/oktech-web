@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { OKTechLogoRound, OKTechLogoText } from "@/components/Common/OKTechLogo";
+import { OKTechLogoRound } from "@/components/Common/OKTechLogo";
 import { SITE } from "@/constants";
 
 interface BrandProps {
@@ -23,7 +23,6 @@ export default function Brand({ fullText = false, neutral = false }: BrandProps)
           svgClass={clsx(neutral && "neutral")}
         />
         <h1 className="text-2xl font-bold tracking-tighter">OKTech</h1>
-        {/* <OKTechLogoText className="h-auto w-28" svgClass={clsx((true || neutral) && "neutral")} /> */}
       </div>
       {fullText && <span className="font-header text-sm">{longText}</span>}
     </div>

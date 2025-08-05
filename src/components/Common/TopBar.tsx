@@ -5,7 +5,6 @@ import clsx from "clsx";
 import Brand from "@/components/Common/Brand";
 import Container from "@/components/Common/Container";
 import LinkReact from "@/components/Common/LinkReact";
-import ThemeToggle from "@/components/Common/ThemeToggle";
 import { MENU } from "@/constants";
 
 function GlassCell({
