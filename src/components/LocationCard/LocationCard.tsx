@@ -50,11 +50,7 @@ export default function LocationCard({
           {info}
         </div>
       )}
-      {below && (
-        <div className={clsx("grid gap-6", horizontal ? "grid-cols-2" : "grid-cols-1")}>
-          {below}
-        </div>
-      )}
+      {below}
     </>
   );
 }

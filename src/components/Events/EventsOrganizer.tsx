@@ -6,7 +6,7 @@ import type { EventEnriched } from "@/content";
 import Container from "../Common/Container";
 import EventsView from "./EventsView";
 
-export type EventsOrganizerViews = "grid" | "compact" | "gallery";
+export type EventsOrganizerViews = "grid" | "compact" | "album";
 
 function EventsOrganizerInner({
   events,

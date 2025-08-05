@@ -35,8 +35,8 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
 
     return [
       { value: "grid", label: "Grid", icon: LuGrid3X3, href: `/events${query}` },
-      { value: "compact", label: "List", icon: LuList, href: `/events/compact${query}` },
-      { value: "gallery", label: "Gallery", icon: LuImage, href: `/events/gallery${query}` },
+      { value: "compact", label: "List", icon: LuList, href: `/events/list${query}` },
+      { value: "album", label: "Album", icon: LuImage, href: `/events/album${query}` },
     ];
   }, [currentFilters]);
 

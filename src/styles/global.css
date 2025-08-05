@@ -25,5 +25,5 @@
 }
 
 code {
-  @apply bg-base-100/50 px-2 rounded-field;
+  @apply bg-base-100/50 rounded-field px-2;
 }

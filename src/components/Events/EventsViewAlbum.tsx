@@ -12,7 +12,7 @@ interface Props {
   events: EventEnriched[];
 }
 
-export default function EventsViewGallery({ events }: Props) {
+export default function EventsViewAlbum({ events }: Props) {
   // Only show past events (events that have ended including 30-minute buffer)
   const recentEvents = filterRecentEvents(events)
     // only show event swith images
@@ -21,7 +21,7 @@ export default function EventsViewGallery({ events }: Props) {
   return (
     <div className="flex flex-col gap-24">
       <SimpleSection
-        title="OKTech Events Gallery"
+        title="OKTech Photo Album"
         subTitle="Events without images are hidden on this page."
         element={<GalleryDisclaimer position="bottom" />}
       />

@@ -45,8 +45,8 @@ export async function buildSitemapSections(): Promise<Entry[]> {
     title: "Events",
     href: "/events",
     children: [
-      { href: "/events/compact", title: "Events (Compact View)" },
-      { href: "/events/gallery", title: "Events (Gallery View)" },
+      { href: "/events/list", title: "Events (List View)" },
+      { href: "/events/album", title: "Photo Album" },
       ...eventPages,
     ],
   });

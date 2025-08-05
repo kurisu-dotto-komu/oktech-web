@@ -1,10 +1,10 @@
 import Link from "@/components/Common/LinkReact";
 import { getOGImageWithFallback } from "@/utils/og";
-import { type SectionEntry, buildSitemapSections } from "@/utils/sitemap";
+import { type Entry, buildSitemapSections } from "@/utils/sitemap";
 
 // The sections promise will resolve once and remain cached for subsequent renders.
 const sectionsPromise = buildSitemapSections();
-const sections: SectionEntry[] = await sectionsPromise;
+const sections: Entry[] = await sectionsPromise;
 
 interface Props {
   className?: string;
@@ -18,7 +18,7 @@ function SitemapSection({
   section,
   showOGImages = false,
 }: {
-  section: SectionEntry;
+  section: Entry;
   showOGImages?: boolean;
 }) {
   return (

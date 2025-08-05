@@ -4,10 +4,12 @@ import EventsOrganizer from "@/components/Events/EventsOrganizer";
 import { getEvents } from "@/content";
 
 const { eventsView } = Astro.params;
-const view = (eventsView || "grid") as "grid" | "compact" | "gallery";
+// Map "list" URL to "compact" view internally
+const viewParam = eventsView === "list" ? "compact" : eventsView;
+const view = (viewParam || "grid") as "grid" | "compact" | "album";
 
 // Validate view
-const validViews = ["grid", "compact", "gallery"];
+const validViews = ["grid", "compact", "album"];
 if (!validViews.includes(view)) {
   return Astro.redirect("/events");
 }
@@ -17,8 +19,8 @@ const events = await getEvents();
 export async function getStaticPaths() {
   return [
     { params: { eventsView: undefined } },
-    { params: { eventsView: "compact" } },
-    { params: { eventsView: "gallery" } },
+    { params: { eventsView: "list" } },
+    { params: { eventsView: "album" } },
   ];
 }
 ---

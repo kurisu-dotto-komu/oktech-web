@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import type { EventEnriched } from "@/content";
 import { formatDate, formatDuration, formatTime, getEndTime } from "@/utils/formatDate";
 
@@ -27,14 +29,14 @@ export default function LocationCardEvent({
         )
       }
       below={
-        <>
-          <div>
+        <div className={clsx("flex gap-6", horizontal ? "flex-col sm:flex-row" : "flex-col")}>
+          <div className="w-full">
             <EventJoinButton event={event} />
           </div>
-          <div>
+          <div className="w-full">
             <AddToCalendarDropdown event={event} />
           </div>
-        </>
+        </div>
       }
     >
       <div>{formatDate(event.data.dateTime, "long")}</div>

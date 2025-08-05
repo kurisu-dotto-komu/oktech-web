@@ -3,11 +3,48 @@ import { useEffect, useRef } from "react";
 import { FaGoogle, FaYahoo } from "react-icons/fa6";
 import { LuCalendar, LuCalendarPlus, LuChevronDown, LuRss } from "react-icons/lu";
 
+import CopyText from "@/components/Common/CopyText";
 import type { EventEnriched } from "@/content/events";
 import { resolveBaseUrl } from "@/utils/urlResolver";
 
 interface AddToCalendarDropdownProps {
   event: EventEnriched;
+}
+
+interface ButtonProps {
+  href: string;
+  icon: React.ReactNode;
+  text: string;
+  testId: string;
+}
+
+function Button({ href, icon, text, testId }: ButtonProps) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn btn-ghost btn-sm justify-start gap-3"
+      data-testid={testId}
+    >
+      {icon}
+      {text}
+    </a>
+  );
+}
+
+interface SubsectionProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+function Subsection({ title, children }: SubsectionProps) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="text-base-content/70 px-2 text-xs font-semibold">{title}</div>
+      <div className="flex gap-2">{children}</div>
+    </div>
+  );
 }
 
 export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownProps) {
@@ -60,10 +97,11 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
 
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${formattedStart}/${formattedEnd}&details=${details}&location=${location}&sf=true`;
   const yahooUrl = `https://calendar.yahoo.com/?v=60&title=${title}&st=${formattedStart}&et=${formattedEnd}&desc=${details}&in_loc=${location}`;
+  const icsUrl = `${baseUrl}/oktech-events.ics`;
 
   return (
     <details
-      className="dropdown dropdown-bottom w-full"
+      className="dropdown dropdown-bottom dropdown-end w-full"
       ref={dropdownRef}
       data-testid="add-to-calendar-dropdown"
     >
@@ -72,58 +110,44 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
         <LuCalendarPlus />
         <LuChevronDown className="h-4 w-4" />
       </summary>
-      <div className="dropdown-content bg-base-100 rounded-box z-50 mt-1 flex w-full max-w-full flex-col gap-2 p-2 shadow">
-        <a
-          href={`/event/${event.id}.ics`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost w-full justify-start gap-3"
-          data-testid="calendar-ical"
-        >
-          <LuCalendar className="h-4 w-4" />
-          Outlook / iCal
-        </a>
-        <a
-          href={googleUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost w-full justify-start gap-3"
-          data-testid="calendar-google"
-        >
-          <FaGoogle className="h-4 w-4" />
-          Google Calendar
-        </a>
-        <a
-          href={yahooUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost w-full justify-start gap-3"
-          data-testid="calendar-yahoo"
-        >
-          <FaYahoo className="h-4 w-4" />
-          Yahoo Calendar
-        </a>
-        <div className="divider my-0"></div>
-        <a
-          href="/rss.xml"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost w-full justify-start gap-3"
-          data-testid="subscribe-rss"
-        >
-          <LuRss className="h-4 w-4" />
-          Subscribe with RSS
-        </a>
-        <a
-          href={`/oktech-events.ics`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost w-full justify-start gap-3"
-          data-testid="subscribe-ics"
-        >
-          <LuCalendar className="h-4 w-4" />
-          Subscribe to ICS
-        </a>
+      <div className="dropdown-content bg-base-100 rounded-box z-50 mt-1 flex min-w-max flex-col gap-6 p-6 shadow">
+        <Subsection title="Add Single Event">
+          <Button
+            href={`/event/${event.id}.ics`}
+            icon={<LuCalendar className="h-4 w-4" />}
+            text="Outlook / iCal"
+            testId="calendar-ical"
+          />
+          <Button
+            href={googleUrl}
+            icon={<FaGoogle className="h-4 w-4" />}
+            text="Google Calendar"
+            testId="calendar-google"
+          />
+          <Button
+            href={yahooUrl}
+            icon={<FaYahoo className="h-4 w-4" />}
+            text="Yahoo Calendar"
+            testId="calendar-yahoo"
+          />
+        </Subsection>
+        <Subsection title="Subscribe to All Events">
+          <Button
+            href="/rss.xml"
+            icon={<LuRss className="h-4 w-4" />}
+            text="RSS Feed"
+            testId="subscribe-rss"
+          />
+          <Button
+            href="/oktech-events.ics"
+            icon={<LuCalendar className="h-4 w-4" />}
+            text="Calendar Feed (ICS)"
+            testId="subscribe-ics"
+          />
+        </Subsection>
+        <Subsection title="Calendar Subscription URL">
+          <CopyText text={icsUrl} className="w-full" />
+        </Subsection>
       </div>
     </details>
   );
