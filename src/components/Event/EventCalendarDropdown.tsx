@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import { FaGoogle, FaYahoo } from "react-icons/fa6";
-import { LuCalendar, LuCalendarPlus, LuChevronDown } from "react-icons/lu";
+import { LuCalendar, LuCalendarPlus, LuChevronDown, LuRss } from "react-icons/lu";
 
 import type { EventEnriched } from "@/content/events";
 import { resolveBaseUrl } from "@/utils/urlResolver";
@@ -102,6 +102,27 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
         >
           <FaYahoo className="h-4 w-4" />
           Yahoo Calendar
+        </a>
+        <div className="divider my-0"></div>
+        <a
+          href="/rss.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-ghost w-full justify-start gap-3"
+          data-testid="subscribe-rss"
+        >
+          <LuRss className="h-4 w-4" />
+          Subscribe to RSS
+        </a>
+        <a
+          href="/oktech-events.ics"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-ghost w-full justify-start gap-3"
+          data-testid="subscribe-ics"
+        >
+          <LuCalendar className="h-4 w-4" />
+          Subscribe to ICS
         </a>
       </div>
     </details>

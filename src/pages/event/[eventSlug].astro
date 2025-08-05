@@ -3,12 +3,9 @@ import { getEvents, getEvent } from "@/content";
 import EventLinks from "@/components/Event/EventLinks.astro";
 import EventGallery from "@/components/Event/EventGallery";
 import SidebarPageLayout from "@/layouts/SidebarPageLayout.astro";
-import EventInfo from "@/components/Event/EventInfo";
-import EventJoinButton from "@/components/Event/EventJoinButton";
-import AddToCalendarDropdown from "@/components/Event/EventCalendarDropdown";
 import EntryMarkdown from "@/components/Common/EntryMarkdown.astro";
 import EventImageBig from "@/components/Event/EventImageBig";
-import LocationCard from "@/components/LocationCard/LocationCard";
+import LocationCardEvent from "@/components/LocationCard/LocationCardEvent";
 
 export async function getStaticPaths() {
   const events = await getEvents();
@@ -31,13 +28,13 @@ const description = event.data.topics?.length
 
 <SidebarPageLayout title={`${event.data.title} - Events`} description={description} type="article">
   <Fragment slot="sidebar">
-    <LocationCard event={event} client:load />
+    <LocationCardEvent event={event} client:load />
   </Fragment>
 
   <Fragment slot="main-content">
     <EventImageBig event={event} client:load />
     <div class="flex flex-col gap-6 lg:hidden">
-      <LocationCard event={event} horizontal client:load />
+      <LocationCardEvent event={event} horizontal client:load />
     </div>
     <h1 class="mt-10 text-4xl font-bold">
       {event.data.title}
