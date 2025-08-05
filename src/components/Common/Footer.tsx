@@ -20,9 +20,6 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-8 sm:flex-row sm:items-baseline">
-          <div className="opacity-80">
-            <Brand fullText neutral />
-          </div>
           <div className="text-xs">
             <a
               href={`${meta.repository}/commit/${meta.commitHash}`}
@@ -36,7 +33,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="text-xs">
-          Copyright © {new Date().getFullYear()} {SITE.longName}
+          Copyright © {new Date().getFullYear()} {SITE.shortName} {SITE.longName}
         </div>
         <div className="text-xs">
           <LinkReact href="/code-of-conduct" className="link link-hover">

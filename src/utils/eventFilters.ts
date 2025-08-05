@@ -1,11 +1,12 @@
 import type { EventEnriched } from "@/content";
 
+// an event is considered "ended" if it has ended + 30 min buffer
 const BUFFER_MINUTES = 30;
 
 /**
  * Calculates the end time of an event including a buffer period
  */
-function getEventEndTimeWithBuffer(event: EventEnriched): Date {
+export function getEventEndTimeWithBuffer(event: EventEnriched): Date {
   const startTime = new Date(event.data.dateTime);
   const durationMinutes = event.data.duration || 120; // Default 2 hours if not specified
   const totalMinutes = durationMinutes + BUFFER_MINUTES;

@@ -1,8 +1,9 @@
 import clsx from "clsx";
 
-import EventSummary from "@/components/Event/EventSummary";
 import type { EventEnriched } from "@/content";
 import { filterRecentEvents } from "@/utils/eventFilters";
+
+import EventCard from "../EventCard/EventCard";
 
 interface EventsRecentProps {
   events: EventEnriched[];
@@ -27,7 +28,7 @@ export default function EventsRecent({ events, limit = 6 }: EventsRecentProps) {
             index === 5 && "hidden lg:block xl:hidden",
           ])}
         >
-          <EventSummary event={event} />
+          <EventCard event={event} variant="polaroid" />
         </div>
       ))}
     </div>

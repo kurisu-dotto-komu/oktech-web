@@ -2,7 +2,7 @@
 import { getCollection, getEntry, render } from "astro:content";
 import VenueInfo from "@/components/Venue/VenueInfo";
 import VenueNav from "@/components/Venue/VenueNav";
-import EventFeatured from "@/components/Event/EventFeatured";
+import EventCard, { EventCardList } from "@/components/EventCard/EventCard";
 import PageLayout from "@/layouts/PageLayout.astro";
 import StickyNavigation from "@/components/Common/StickyNavigation";
 import Section from "@/components/Common/Section";
@@ -92,11 +92,7 @@ const description =
     venueEvents.length > 0 && (
       <Section>
         <h2 class="mb-8 text-2xl font-bold">Events Hosted at {venue.data.title}</h2>
-        <div class="flex flex-col gap-8">
-          {venueEvents.map((event) => (
-            <EventFeatured event={event} hideMap={true} />
-          ))}
-        </div>
+        <EventCardList events={venueEvents} />
       </Section>
     )
   }

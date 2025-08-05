@@ -1,6 +1,7 @@
-import EventSummary from "@/components/Event/EventSummary";
 import type { EventEnriched } from "@/content";
 import { filterUpcomingEvents } from "@/utils/eventFilters";
+
+import EventCard from "../EventCard/EventCard";
 
 interface EventsUpcomingProps {
   events: EventEnriched[];
@@ -19,9 +20,9 @@ export default function EventsUpcoming({ events }: EventsUpcomingProps) {
       <h2 className="text-center text-3xl" data-testid="upcoming-events-title">
         Upcoming Events
       </h2>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col gap-4">
         {futureEvents.map((event) => (
-          <EventSummary key={event.id} event={event} />
+          <EventCard key={event.id} event={event} variant="big" />
         ))}
       </div>
     </div>

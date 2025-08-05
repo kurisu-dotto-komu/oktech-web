@@ -40,7 +40,7 @@ const events = await getEvents();
     <LandingStats />
   </Section>
   <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
-    <EventsRecent client:load events={events} />
+    <EventsRecent events={events} />
   </Section>
   <Section
     title="Get Involved"

@@ -2,20 +2,11 @@
 
 TARGET SOFT LAUNCH AUG 09.
 
-## What I need
-
-- Confirm email address in CoC and elsewhere.
-- Copy for the about page and landing page, etc.
-- Ask for people permission to use their images?
-- Confirm Japanese copy in the about page
-- I will carve out time on Wednesday for a review, for whoever wants to join.
-
 ## Schedule
 
 ### 5 Tuesday (UI + Theme)
 
 - More padding article.
-- Resume github pages workflow with sync script trigger.
 - Temporary Kitchen Sink Page with a range of Components for theming
 - Refactor to include upcoming status?
 - Implement color scheme
@@ -26,8 +17,11 @@ TARGET SOFT LAUNCH AUG 09.
 - Mobile responsive design
 - Make sure images are optimized everywhere
 - Event page fade if filter selected.
+- Refactor Section (KISS)
 
 ### 6 Wednesday (Review + Bugfixes)
+
+- Resume github pages workflow with sync script trigger.
 
 **Wednesday Afternoon: UI Review**
 

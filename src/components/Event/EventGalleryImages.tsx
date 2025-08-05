@@ -23,7 +23,7 @@ export default function EventGalleryImages({ event }: Props) {
 
   if (isUpcoming || galleryImages.length === 0) {
     return (
-      <div className="text-base-content/60 m-auto flex items-center gap-3">
+      <div className="text-base-content/40 m-auto flex items-center gap-3">
         <LuImageOff className="h-6 w-6" />
         <span>
           {isUpcoming

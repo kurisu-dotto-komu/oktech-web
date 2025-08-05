@@ -1,0 +1,25 @@
+---
+import PageLayout from "@/layouts/PageLayout.astro";
+import EventCard, { BORDER_CLASS } from "@/components/EventCard/EventCard";
+import { getEvents } from "@/content";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+
+const events = await getEvents();
+const testEvents = events.slice(1, 7);
+---
+
+<ArticleLayout title="Test EventCard">
+  <div class="flex flex-col gap-12">
+    <div class={`flex flex-col ${BORDER_CLASS}`}>
+      {testEvents.map((event, index) => <EventCard event={event} index={index} client:load />)}
+    </div>
+
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
+      {testEvents.map((event) => <EventCard event={event} variant="polaroid" client:load />)}
+    </div>
+
+    <div class={`flex flex-col gap-4`}>
+      {testEvents.map((event, index) => <EventCard event={event} variant="big" client:load />)}
+    </div>
+  </div>
+</ArticleLayout>

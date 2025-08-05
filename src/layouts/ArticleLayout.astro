@@ -2,6 +2,7 @@
 import PageLayout from "@/layouts/PageLayout.astro";
 import Link from "@/components/Common/LinkAstro.astro";
 import { Icon } from "astro-icon/components";
+import Container from "@/components/Common/Container";
 
 interface Props {
   title: string;
@@ -20,31 +21,27 @@ const { title, pageTitle, buttons, active, class: className } = Astro.props;
 const hasHeaderSlot = Astro.slots.has("header");
 ---
 
-<PageLayout title={pageTitle || title}>
-  <section class={`py-18 ${className || ""}`}>
-    <div class="mx-auto w-full max-w-6xl px-4 md:px-6 lg:px-8">
-      <div class="mb-8 flex items-center justify-between">
-        <h1 class="text-5xl font-bold">{title}</h1>
-        {hasHeaderSlot && <slot name="header" />}
-        {
-          !hasHeaderSlot && buttons && active && (
-            <div class="join">
-              {buttons.map((button) => (
-                <Link
-                  href={button.href}
-                  class={`btn join-item ${active === button.value ? "btn-active" : ""}`}
-                  title={button.title || button.value}
-                >
-                  <Icon name={button.icon} size={20} />
-                </Link>
-              ))}
-            </div>
-          )
-        }
-      </div>
+<PageLayout title={pageTitle || title} className="pt-32 pb-22">
+  <Container>
+    <div class="mb-12 flex items-center justify-between">
+      <h1 class="text-5xl font-bold">{title}</h1>
+      {hasHeaderSlot && <slot name="header" />}
+      {
+        !hasHeaderSlot && buttons && active && (
+          <div class="join">
+            {buttons.map((button) => (
+              <Link
+                href={button.href}
+                class={`btn join-item ${active === button.value ? "btn-active" : ""}`}
+                title={button.title || button.value}
+              >
+                <Icon name={button.icon} size={20} />
+              </Link>
+            ))}
+          </div>
+        )
+      }
     </div>
-    <div class="mx-auto w-full max-w-6xl px-4 md:px-6 lg:px-8">
-      <slot />
-    </div>
-  </section>
+    <slot />
+  </Container>
 </PageLayout>

@@ -2,8 +2,8 @@ import clsx from "clsx";
 
 import Container from "@/components/Common/Container";
 import Grid from "@/components/Common/Grid";
-import EventCompact from "@/components/Event/EventCompact";
 import EventGalleryImages from "@/components/Event/EventGalleryImages";
+import EventCard from "@/components/EventCard/EventCard";
 import type { EventEnriched } from "@/content";
 import { filterRecentEvents } from "@/utils/eventFilters";
 
@@ -16,20 +16,16 @@ export default function EventsGalleryView({ events }: Props) {
   const recentEvents = filterRecentEvents(events);
 
   return (
-    <div className="space-y-8" data-testid="events-gallery-view">
-      {recentEvents.map((event) => {
+    <div className="my-20 flex flex-col">
+      {recentEvents.map((event, i) => {
         return (
-          <div key={event.id} data-testid="event-card" className={`py-8`}>
+          <div
+            key={event.id}
+            className={clsx("py-20", i % 2 === 0 ? "bg-base-content/5" : "bg-base-content/10")}
+          >
             <Container>
               <div className="border-base-100 overflow-hidden rounded-lg border">
-                <EventCompact
-                  event={event}
-                  className={clsx(
-                    "hover:bg-base-100 bg-base-100/30",
-                    // i % 2 === 0 && "bg-base-100/30",
-                    // i % 2 === 1 && "bg-base-100/60",
-                  )}
-                />
+                <EventCard event={event} variant="compact" />
               </div>
             </Container>
             <Container wide className="mt-8">
