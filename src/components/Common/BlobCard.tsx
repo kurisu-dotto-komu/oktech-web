@@ -2,7 +2,7 @@ import React from "react";
 
 import clsx from "clsx";
 
-import { DEFAULT_SLIDESHOW_BLOBS, LANDING_HERO_BLOBS } from "@/utils/blobs";
+import { BLOBS } from "@/utils/blobs";
 
 interface BlobCardProps {
   children: React.ReactNode;
@@ -12,20 +12,10 @@ interface BlobCardProps {
   hoverBgColor?: string;
 }
 
-const BLOBS = [
-  DEFAULT_SLIDESHOW_BLOBS[1],
-  LANDING_HERO_BLOBS[2],
-  LANDING_HERO_BLOBS[4],
-  LANDING_HERO_BLOBS[5],
-  DEFAULT_SLIDESHOW_BLOBS[2],
-];
-
 export default function BlobCard({ children, preset = 0, className = "" }: BlobCardProps) {
   const maskId = `blob-card-${React.useId()}`;
   const blobIndex = preset % BLOBS.length;
   const blobPath = BLOBS[blobIndex];
-
-  console.log(preset, blobIndex, blobPath);
 
   return (
     <div className={`group relative drop-shadow-lg transition-all duration-300 ${className}`}>

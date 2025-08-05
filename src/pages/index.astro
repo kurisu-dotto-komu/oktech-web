@@ -1,16 +1,12 @@
 ---
 import Section from "@/components/Common/Section";
-import LandingStats from "@/components/Common/LandingStats.astro";
 import EventsUpcoming from "@/components/Events/EventsUpcoming";
 import EventsRecent from "@/components/Events/EventsRecent";
 import PageLayout from "@/layouts/PageLayout.astro";
-import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
 import LandingHero from "@/components/Landing/LandingHero.astro";
-
+import LandingAbout from "@/components/Landing/LandingAbout.astro";
 import { getEvents } from "@/content";
-import StripeSegment from "@/components/Common/StripeSegment";
-import Container from "@/components/Common/Container";
-import Button from "@/components/Common/Button";
+
 const events = await getEvents();
 ---
 
@@ -19,43 +15,7 @@ const events = await getEvents();
   <Section>
     <EventsUpcoming client:load events={events} />
   </Section>
-
-  <StripeSegment>
-    <Container>
-      <div class="flex flex-col items-center justify-center gap-20 md:flex-row">
-        <div class="h-96 w-96">
-          <BlobSlideshow
-            className="aspect-square"
-            height={400}
-            images={[
-              "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp",
-              "/content/events/299455127-wasm-airplanes-and-llm/gallery/IMG_9659.webp",
-              "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp",
-              "/content/events/300388533-cross-cultural-teams/gallery/IMG_20240518_2030412.webp",
-              "/content/events/264574361-osaka-web-developer-and-designer-meetup-september/gallery/276278.webp",
-            ]}
-          />
-        </div>
-
-        <div class="flex max-w-xl flex-col gap-8 text-center">
-          <h2 class="text-3xl font-bold">About OKTech</h2>
-          <p>
-            A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan.
-            We invite people from all walks of web-life and encourage members to present topics they
-            enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka
-            and Kyoto.
-          </p>
-          <Button text="Learn More" href="/about" />
-        </div>
-      </div>
-      <div
-        class="col-span-2 grid grid-cols-2 items-center justify-center gap-4 py-12 sm:grid-cols-4"
-      >
-        <LandingStats />
-      </div>
-    </Container>
-  </StripeSegment>
-
+  <LandingAbout />
   <Section inline wide title="Recent Events" button={{ text: "All Events", href: "/events" }}>
     <EventsRecent events={events} />
   </Section>
