@@ -1,7 +1,11 @@
 @import "tailwindcss";
+
 @import "./fonts.css";
 @import "./utils.css";
 @import "./themes.css";
+
+@source "../**/*.{astro,html,js,jsx,ts,tsx}";
+@source not "../../test/**";
 
 @plugin "@tailwindcss/typography";
 
