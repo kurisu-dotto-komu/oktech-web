@@ -9,7 +9,7 @@ interface Props {
   events: EventEnriched[];
 }
 
-export default function EventsGalleryView({ events }: Props) {
+export default function EventsViewGallery({ events }: Props) {
   // Only show past events (events that have ended including 30-minute buffer)
   const recentEvents = filterRecentEvents(events);
 

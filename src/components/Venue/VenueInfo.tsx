@@ -1,6 +1,6 @@
 import { LuBuilding, LuGlobe, LuMapPin } from "react-icons/lu";
 
-import EventCity from "@/components/Event/EventCity";
+import CityBadge from "@/components/Common/CityBadge";
 import type { VenueEnriched } from "@/content";
 
 import VenueMap from "./VenueMap";
@@ -61,7 +61,7 @@ export default function VenueInfo({ venue }: Props) {
         <VenueMap venue={venue.data} marker={venue.data.title} link={true} />
         {venue.data.city && (
           <div className="absolute right-2 bottom-2">
-            <EventCity city={venue.data.city} />
+            <CityBadge city={venue.data.city} />
           </div>
         )}
       </div>

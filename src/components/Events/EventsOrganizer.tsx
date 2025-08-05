@@ -4,7 +4,7 @@ import { useEventsFilter } from "@/components/Events/EventsFilterProvider";
 import type { EventEnriched } from "@/content";
 
 import Container from "../Common/Container";
-import EventsContainer from "./EventsContainer";
+import EventsView from "./EventsView";
 
 export type EventsOrganizerViews = "grid" | "compact" | "gallery";
 
@@ -22,7 +22,7 @@ function EventsOrganizerInner({
       <Container>
         <EventsFilter availableFilters={availableFilters} currentView={view} />
       </Container>
-      <EventsContainer events={events} view={view} />
+      <EventsView events={events} view={view} />
     </>
   );
 }

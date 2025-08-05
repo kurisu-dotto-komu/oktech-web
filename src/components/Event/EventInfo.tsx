@@ -1,12 +1,12 @@
 import { LuClock, LuMapPin } from "react-icons/lu";
 
 import BigTooltip from "@/components/Common/BigTooltip";
+import CityBadge from "@/components/Common/CityBadge";
 import Link from "@/components/Common/LinkReact";
 import VenueMap from "@/components/Venue/VenueMap";
 import type { EventEnriched } from "@/content";
 import { formatDate, formatTime } from "@/utils/formatDate";
 
-import EventCity from "./EventCity";
 import HowToFindUs from "./EventHowToFindUs";
 
 interface Props {
@@ -77,7 +77,7 @@ export default function EventInfo({ event }: Props) {
           <VenueMap venue={event.venue} marker={event.venue.title} link={true} />
           {event.venue.city && (
             <div className="absolute right-2 bottom-2">
-              <EventCity city={event.venue.city} />
+              <CityBadge city={event.venue.city} />
             </div>
           )}
         </div>

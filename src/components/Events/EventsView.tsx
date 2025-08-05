@@ -1,16 +1,16 @@
 import { useEventsFilter } from "@/components/Events/EventsFilterProvider";
 import type { EventEnriched } from "@/content";
 
-import EventsCompactView from "./EventsCompactView";
-import EventsGalleryView from "./EventsGalleryView";
-import EventsGridView from "./EventsGridView";
+import EventsViewCompact from "./EventsViewCompact";
+import EventsViewGallery from "./EventsViewGallery";
+import EventsViewGrid from "./EventsViewGrid";
 
 interface Props {
   events: EventEnriched[];
   view: "grid" | "compact" | "gallery";
 }
 
-export default function EventsContainer({ events, view }: Props) {
+export default function EventsView({ events, view }: Props) {
   const { filteredItems } = useEventsFilter();
 
   // Create a map of filtered event IDs for quick lookup
@@ -26,11 +26,11 @@ export default function EventsContainer({ events, view }: Props) {
 
   switch (view) {
     case "compact":
-      return <EventsCompactView events={sortedEvents} />;
+      return <EventsViewCompact events={sortedEvents} />;
     case "gallery":
-      return <EventsGalleryView events={sortedEvents} />;
+      return <EventsViewGallery events={sortedEvents} />;
     case "grid":
     default:
-      return <EventsGridView events={sortedEvents} />;
+      return <EventsViewGrid events={sortedEvents} />;
   }
 }
