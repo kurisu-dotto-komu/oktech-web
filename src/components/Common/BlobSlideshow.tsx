@@ -2,12 +2,7 @@ import "@/styles/animations.css";
 
 import React, { useEffect, useState } from "react";
 
-// Created with blobmaker.com, then scaled with scripts/precompute-blobs.ts
-const DEFAULT_BLOBS = [
-  "M96.00,32.00C100.00,50.40,92.00,70.40,76.00,81.60C60.00,92.80,36.00,96.00,20.00,86.40C4.00,76.80,0.00,54.40,8.00,36.00C16.00,17.60,32.00,4.00,56.00,4.80C80.00,5.60,92.00,13.60,96.00,32.00Z",
-  "M93.60,30.00C100.00,50.00,92.00,70.00,76.00,82.00C60.00,94.00,36.00,98.00,20.00,90.00C4.00,82.00,0.00,62.00,8.00,42.00C16.00,22.00,32.00,2.00,56.00,3.60C80.00,5.20,87.20,10.00,93.60,30.00Z",
-  "M94.62,30.00C100.00,48.46,88.46,70.00,73.08,81.54C57.69,93.08,34.62,94.62,19.23,86.92C3.85,79.23,0.00,56.15,7.69,37.69C15.38,19.23,30.77,5.38,53.85,6.92C76.92,8.46,89.23,11.54,94.62,30.00Z",
-];
+import { DEFAULT_SLIDESHOW_BLOBS } from "@/utils/blobs";
 
 interface ImageData {
   src: string;
@@ -27,7 +22,7 @@ export default function BlobSlideshow({
   transitionSpeed = 1000,
   slideDelay = 3000,
   className = "",
-  blobs = DEFAULT_BLOBS,
+  blobs = DEFAULT_SLIDESHOW_BLOBS,
   containerClassName = "",
 }: BlobSlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
