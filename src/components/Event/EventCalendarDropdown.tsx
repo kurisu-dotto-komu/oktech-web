@@ -74,7 +74,7 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
       </summary>
       <div className="dropdown-content bg-base-100 rounded-box z-50 mt-1 flex w-full max-w-full flex-col gap-2 p-2 shadow">
         <a
-          href={`/event/${event.id}/event.ics`}
+          href={`/event/${event.id}.ics`}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-ghost w-full justify-start gap-3"
@@ -112,10 +112,10 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
           data-testid="subscribe-rss"
         >
           <LuRss className="h-4 w-4" />
-          Subscribe to RSS
+          Subscribe with RSS
         </a>
         <a
-          href="/oktech-events.ics"
+          href={`/oktech-events.ics`}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-ghost w-full justify-start gap-3"

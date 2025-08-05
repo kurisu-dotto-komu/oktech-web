@@ -1,5 +1,4 @@
 import GalleryDisclaimer from "@/components/Common/GalleryDisclaimer";
-import Section from "@/components/Common/Section";
 import type { EventEnriched } from "@/content";
 
 import SimpleSection from "../Common/SimpleSection";

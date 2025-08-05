@@ -1,4 +1,3 @@
-import Section from "@/components/Common/Section";
 import type { EventEnriched } from "@/content";
 import { groupEventsByYearAndUpcoming } from "@/utils/eventGrouping";
 

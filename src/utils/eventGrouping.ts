@@ -58,7 +58,7 @@ export function groupEventsByYearAndUpcoming(
       const yearEvents = eventsByYear.get(year)!;
       if (yearEvents.length > 0) {
         groups.push({
-          label: getYearLabel(year, sortOrder),
+          label: getYearLabel(year),
           events: yearEvents,
         });
       }
@@ -69,7 +69,7 @@ export function groupEventsByYearAndUpcoming(
       const yearEvents = eventsByYear.get(year)!;
       if (yearEvents.length > 0) {
         groups.push({
-          label: getYearLabel(year, sortOrder),
+          label: getYearLabel(year),
           events: yearEvents,
         });
       }

@@ -25,7 +25,7 @@ export default function EventsSortSelector({ "data-testid": dataTestId }: Props 
       aria-label={`Sort by ${isNewestFirst ? "oldest" : "newest"} first`}
       title={isNewestFirst ? "Newest First" : "Oldest First"}
     >
-      <span className="hidden sm:inline">{isNewestFirst ? "Newest" : "Oldest"}</span>
+      <span>{isNewestFirst ? "Newest" : "Oldest"}</span>
       {isNewestFirst ? (
         <LuArrowDownWideNarrow className="h-4 w-4" />
       ) : (

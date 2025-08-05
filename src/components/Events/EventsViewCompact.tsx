@@ -1,8 +1,6 @@
-import Section from "@/components/Common/Section";
 import type { EventEnriched } from "@/content";
 import { groupEventsByYearAndUpcoming } from "@/utils/eventGrouping";
 
-import Container from "../Common/Container";
 import SimpleSection from "../Common/SimpleSection";
 import { EventCardList } from "../EventCard/EventCard";
 import { useEventsFilter } from "./EventsFilterProvider";
