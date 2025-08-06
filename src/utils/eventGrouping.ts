@@ -7,7 +7,7 @@ export interface EventGroup {
   events: EventEnriched[];
 }
 
-const UPCOMING_LABEL = "Upcoming OKTech Events";
+const UPCOMING_LABEL = "Upcoming Events";
 const getYearLabel = (year: number) => `Events in ${year}`;
 
 /**

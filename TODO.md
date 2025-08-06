@@ -4,17 +4,14 @@ TARGET SOFT LAUNCH AUG 09.
 
 ## Schedule
 
-### 5 Tuesday (UI + Theme)
+### 6 Wednesday (Review + Bugfixes)
 
-- Refactor Section (KISS)
-- Daisy UI borders
-- Most elements inherit Diasy UI theme (e.g. borders, etc.)
-- OG Image Styling
-- Clean up all UI elements (events page w/ mobile)
-- Mobile responsive design
-- Kitcehn sink + theme editor
+- About page
+- Remove Section component
 
-Visual Checks
+- Clean up all UI elements - check all pages on mobile
+
+**Visual Checks**
 
 | Route              | Mobile | Desktop |
 | ------------------ | ------ | ------- |
@@ -24,16 +21,15 @@ Visual Checks
 | /venue/[venueSlug] | X      | X       |
 | /about             | X      | X       |
 
-### 6 Wednesday (Review + Bugfixes)
-
 - Event page fade if filter selected.
 - Make sure images are optimized everywhere
-- Resume github pages workflow with sync script trigger.
+- Resume github pages workflow with sync script trigger
 
 **Wednesday Afternoon: UI Review**
 
-### 7 Thursday (Cleanup)
+### 7 Thursday (Cleanup/Bugfix)
 
+- OG Image Styling
 - Check why 'skeleton' isn't searching.
 - Chekcs on multiple browsers and devices.
 - Clean up codebase, removing AI stuff.
@@ -46,17 +42,6 @@ Visual Checks
 
 - Work with Martin or whoever controls domains to do manual release
 - Test automated builds
-
-### Deprecate Section
-
-- [src/components/Events/EventsViewCompact.tsx](src/components/Events/EventsViewCompact.tsx)
-- [src/components/Events/EventsViewGrid.tsx](src/components/Events/EventsViewGrid.tsx)
-- [src/components/Event/EventLinks.tsx](src/components/Event/EventLinks.tsx)
-- [src/components/Event/EventGallery.tsx](src/components/Event/EventGallery.tsx)
-- [src/pages/index.astro](src/pages/index.astro)
-- [src/pages/venue/[venueSlug].astro](src/pages/venue/[venueSlug].astro)
-- [src/pages/about.astro](src/pages/about.astro)
-- [src/pages/event/[eventSlug].astro](src/pages/event/[eventSlug].astro)
 
 # Post Release Features
 

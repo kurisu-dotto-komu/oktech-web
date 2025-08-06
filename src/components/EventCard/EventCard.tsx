@@ -37,7 +37,7 @@ export default function EventCard({
         odd ? "bg-base-100/30" : "bg-base-100/60",
         variant === "compact" && "flex items-center",
         variant === "polaroid" && "flex flex-col",
-        variant === "big" && "grid grid-cols-2",
+        variant === "big" && "flex flex-col sm:grid sm:grid-cols-2",
       )}
       data-testid={`event-card-${event.id}`}
     >

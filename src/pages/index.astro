@@ -13,13 +13,13 @@ const events = await getEvents();
 <PageLayout flush className="flex flex-col gap-24 pb-24">
   <LandingHero />
 
-  <SimpleSection title="Upcoming OKTech Events">
+  <SimpleSection title="Upcoming Events">
     <EventsUpcoming client:load events={events} />
   </SimpleSection>
 
   <LandingAbout />
 
-  <SimpleSection title="Recent OKTech Events" wide button={{ text: "All Events", href: "/events" }}>
+  <SimpleSection title="Recent Events" wide button={{ text: "All Events", href: "/events" }}>
     <EventsRecent events={events} />
   </SimpleSection>
 
