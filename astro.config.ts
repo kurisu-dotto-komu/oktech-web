@@ -73,6 +73,8 @@ export default defineConfig({
         provider: "local",
         name: "Noto Sans",
         cssVariable: "--font-body",
+        optimizedFallbacks: true,
+        fallbacks: ["Arial", "sans-serif"],
         variants: [
           {
             weight: 400,
@@ -95,6 +97,8 @@ export default defineConfig({
         provider: "local",
         name: "Lexend",
         cssVariable: "--font-header",
+        optimizedFallbacks: true,
+        fallbacks: ["Helvetica Neue", "Helvetica", "sans-serif"],
         variants: [
           {
             weight: 500,
@@ -112,6 +116,8 @@ export default defineConfig({
         provider: "local",
         name: "Space Mono",
         cssVariable: "--font-mono",
+        optimizedFallbacks: true,
+        fallbacks: ["Courier New", "monospace"],
         variants: [
           {
             weight: 400,

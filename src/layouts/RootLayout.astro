@@ -34,9 +34,9 @@ const { title, ...seoProps } = Astro.props;
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
     <SEO title={title} {...seoProps} />
-    <Font cssVariable="--font-body" />
-    <Font cssVariable="--font-header" />
-    <Font cssVariable="--font-mono" />
+    <Font cssVariable="--font-body" preload />
+    <Font cssVariable="--font-header" preload />
+    <Font cssVariable="--font-mono" preload />
     <link
       rel="alternate"
       type="application/rss+xml"
