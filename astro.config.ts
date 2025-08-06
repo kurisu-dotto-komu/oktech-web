@@ -75,22 +75,24 @@ export default defineConfig({
         cssVariable: "--font-body",
         optimizedFallbacks: true,
         fallbacks: ["Arial", "sans-serif"],
-        display: "block",
         variants: [
           {
             weight: 400,
             style: "normal",
             src: ["./src/assets/fonts/NotoSans-Regular.ttf"],
+            display: "block",
           },
           {
             weight: 500,
             style: "normal",
             src: ["./src/assets/fonts/NotoSans-Medium.ttf"],
+            display: "block",
           },
           {
             weight: 700,
             style: "normal",
             src: ["./src/assets/fonts/NotoSans-Bold.ttf"],
+            display: "block",
           },
         ],
       },
@@ -100,17 +102,18 @@ export default defineConfig({
         cssVariable: "--font-header",
         optimizedFallbacks: true,
         fallbacks: ["Helvetica Neue", "Helvetica", "sans-serif"],
-        display: "block",
         variants: [
           {
             weight: 500,
             style: "normal",
             src: ["./src/assets/fonts/Lexend-Medium.ttf"],
+            display: "block",
           },
           {
             weight: 700,
             style: "normal",
             src: ["./src/assets/fonts/Lexend-Bold.ttf"],
+            display: "block",
           },
         ],
       },
@@ -120,17 +123,18 @@ export default defineConfig({
         cssVariable: "--font-mono",
         optimizedFallbacks: true,
         fallbacks: ["Courier New", "monospace"],
-        display: "block",
         variants: [
           {
             weight: 400,
             style: "normal",
             src: ["./src/assets/fonts/SpaceMono-Regular.ttf"],
+            display: "block",
           },
           {
             weight: 700,
             style: "normal",
             src: ["./src/assets/fonts/SpaceMono-Bold.ttf"],
+            display: "block",
           },
         ],
       },
