@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { LuChevronDown } from "react-icons/lu";
 
@@ -20,7 +20,9 @@ export default function EventsFilterDropdown({
   "data-testid": dataTestId,
 }: EventsFilterDropdownProps) {
   const { currentFilters, updateFilter } = useEventsFilter();
-  const dropdownRef = useRef<HTMLDetailsElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const selected =
     id === "topics"
@@ -33,25 +35,28 @@ export default function EventsFilterDropdown({
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
-        dropdownRef.current.open &&
-        !dropdownRef.current.contains(event.target as Node)
+        !dropdownRef.current.contains(event.target as Node) &&
+        !buttonRef.current?.contains(event.target as Node)
       ) {
-        dropdownRef.current.open = false;
+        setIsOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isOpen]);
 
-  const handleOptionChange = (option: string, checked: boolean) => {
+  const handleOptionChange = (option: string) => {
     if (id === "topics") {
       updateFilter("topics", option);
     } else {
-      updateFilter("location", checked ? option : "");
+      // For location, toggle between selected and empty
+      updateFilter("location", currentFilters.location === option ? "" : option);
       // Close dropdown for single select
-      if (dropdownRef.current && checked) {
-        dropdownRef.current.open = false;
+      if (currentFilters.location !== option) {
+        setIsOpen(false);
       }
     }
   };
@@ -71,45 +76,37 @@ export default function EventsFilterDropdown({
   };
 
   return (
-    <details className="dropdown" ref={dropdownRef} data-testid={dataTestId}>
-      <summary
+    <div className="relative" data-testid={dataTestId}>
+      <button
+        ref={buttonRef}
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
         className={`btn join-item whitespace-nowrap ${selected.length > 0 ? "btn-accent" : ""}`}
       >
         {getButtonLabel()}
-        <LuChevronDown className="h-4 w-4" />
-      </summary>
-      <ul className="dropdown-content menu bg-base-100 rounded-box z-50 max-h-80 w-52 overflow-y-auto p-2 shadow">
-        {options.map((option) => (
-          <li key={option}>
-            <label
-              className="label cursor-pointer justify-start gap-2"
-              data-testid={`${id === "topics" ? "topic" : id}-option`}
-            >
-              {multiple ? (
-                <input
-                  type="checkbox"
-                  className="checkbox checkbox-sm checkbox-primary"
-                  value={option}
-                  checked={selected.includes(option)}
-                  onChange={(e) => handleOptionChange(option, e.target.checked)}
-                />
-              ) : (
-                <input
-                  type="radio"
-                  name={`filter-${id}`}
-                  className="radio radio-sm radio-primary"
-                  value={option}
-                  checked={selected.includes(option)}
-                  onChange={(e) => handleOptionChange(option, e.target.checked)}
-                />
-              )}
-              <span className="label-text">
+        <LuChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+
+      {isOpen && (
+        <div
+          ref={dropdownRef}
+          className="absolute top-full -right-10 z-50 mt-2 flex w-[25em] items-end justify-end md:right-auto md:-left-10 md:w-[30em] md:justify-start lg:w-[40em]"
+        >
+          <div className="soft-glass inline-flex flex-wrap gap-2 p-4!">
+            {options.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => handleOptionChange(option)}
+                className={`btn btn-sm rounded-full ${selected.includes(option) ? "btn-accent" : ""}`}
+                data-testid={`${id === "topics" ? "topic" : "location"}-option`}
+              >
                 {id === "location" ? capitalizeFirst(option) : option}
-              </span>
-            </label>
-          </li>
-        ))}
-      </ul>
-    </details>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
