@@ -1,10 +1,10 @@
 #!/usr/bin/env npx tsx
 /**
  * Generate redirects.json file from content/events directory
- * 
+ *
  * Run this script after adding new events to generate updated redirects
  * for migrating from old owddm.com URL format (/events/[id]) to new format (/event/[slug])
- * 
+ *
  * Usage: npm run generate-redirects (add this to package.json scripts)
  *        or: npx tsx scripts/generate-redirects.tsx
  */
@@ -33,7 +33,7 @@ async function generateRedirects() {
       discord: "https://discord.com/invite/k8xj8d75f6",
 
       // Static page redirects
-      "/photos": "/events/gallery",
+      "/photos": "/events/album",
       "/join": "/about",
       "/coc": "/code-of-conduct",
     };
