@@ -75,6 +75,7 @@ export default defineConfig({
         cssVariable: "--font-body",
         optimizedFallbacks: true,
         fallbacks: ["Arial", "sans-serif"],
+        display: "block",
         variants: [
           {
             weight: 400,
@@ -99,6 +100,7 @@ export default defineConfig({
         cssVariable: "--font-header",
         optimizedFallbacks: true,
         fallbacks: ["Helvetica Neue", "Helvetica", "sans-serif"],
+        display: "block",
         variants: [
           {
             weight: 500,
@@ -118,6 +120,7 @@ export default defineConfig({
         cssVariable: "--font-mono",
         optimizedFallbacks: true,
         fallbacks: ["Courier New", "monospace"],
+        display: "block",
         variants: [
           {
             weight: 400,
