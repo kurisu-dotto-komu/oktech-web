@@ -20,7 +20,7 @@ test.describe("Event Gallery Modal", () => {
     await expect(modal).toBeVisible();
 
     // Check modal contains image
-    const modalImage = modal.locator("img");
+    const modalImage = page.getByTestId("modal-main-image");
     await expect(modalImage).toBeVisible();
 
     // Check close button exists (the X button in the header)
@@ -68,8 +68,9 @@ test.describe("Event Gallery Modal", () => {
     await expect(modal).toBeVisible();
 
     // Get initial image src
-    const img = modal.locator("img");
+    const img = page.getByTestId("modal-main-image");
     const firstImageSrc = await img.getAttribute("src");
+    const firstImageName = firstImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
 
     // Navigate using arrow buttons
     const nextButton = modal.locator('button[aria-label="Next image"]');
@@ -81,15 +82,19 @@ test.describe("Event Gallery Modal", () => {
 
     // Check image changed
     const secondImageSrc = await img.getAttribute("src");
-    expect(secondImageSrc).not.toBe(firstImageSrc);
+    const secondImageName = secondImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
+    expect(secondImageName).not.toBe(firstImageName);
 
     // Click previous
     await prevButton.click();
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
 
-    // Should be back at first image
-    const currentImageSrc = await img.getAttribute("src");
-    expect(currentImageSrc).toBe(firstImageSrc);
+    // Should be back at first image - wait for src to change back
+    await expect(async () => {
+      const currentImageSrc = await img.getAttribute("src");
+      const currentImageName = currentImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
+      expect(currentImageName).toBe(firstImageName);
+    }).toPass({ timeout: 5000 });
   });
 
   test("should navigate through all images without looping", async ({ page }) => {
@@ -115,15 +120,17 @@ test.describe("Event Gallery Modal", () => {
     }
 
     // At last image, clicking next should go to first (circular navigation)
-    const img = modal.locator("img");
+    const img = page.getByTestId("modal-main-image");
     const lastImageSrc = await img.getAttribute("src");
 
     await nextButton.click();
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
 
-    // Should be at first image (circular)
-    const currentImageSrc = await img.getAttribute("src");
-    expect(currentImageSrc).not.toBe(lastImageSrc);
+    // Should be at first image (circular) - verify it's different from last
+    await expect(async () => {
+      const currentImageSrc = await img.getAttribute("src");
+      expect(currentImageSrc).not.toBe(lastImageSrc);
+    }).toPass({ timeout: 5000 });
   });
 
   test("should navigate with keyboard arrows", async ({ page }) => {
@@ -138,8 +145,9 @@ test.describe("Event Gallery Modal", () => {
     await expect(modal).toBeVisible();
 
     // Get initial image src to track changes
-    const img = modal.locator("img");
+    const img = page.getByTestId("modal-main-image");
     const firstImageSrc = await img.getAttribute("src");
+    const firstImageName = firstImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
 
     // Press right arrow to go to next image
     await page.keyboard.press("ArrowRight");
@@ -147,15 +155,19 @@ test.describe("Event Gallery Modal", () => {
 
     // Check that image changed
     const secondImageSrc = await img.getAttribute("src");
-    expect(secondImageSrc).not.toBe(firstImageSrc);
+    const secondImageName = secondImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
+    expect(secondImageName).not.toBe(firstImageName);
 
     // Press left arrow to go back
     await page.keyboard.press("ArrowLeft");
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(500);
 
     // Check we're back to first image
-    const currentImageSrc = await img.getAttribute("src");
-    expect(currentImageSrc).toBe(firstImageSrc);
+    await expect(async () => {
+      const currentImageSrc = await img.getAttribute("src");
+      const currentImageName = currentImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
+      expect(currentImageName).toBe(firstImageName);
+    }).toPass({ timeout: 5000 });
 
     // Close with Escape
     await page.keyboard.press("Escape");
@@ -201,7 +213,7 @@ test.describe("Event Gallery Modal", () => {
     await expect(modal).toBeVisible();
 
     // Get initial image
-    const img = modal.locator("img");
+    const img = page.getByTestId("modal-main-image");
     const firstImageSrc = await img.getAttribute("src");
 
     // Wait for dots to be visible
@@ -253,8 +265,9 @@ test.describe("Event Gallery Modal", () => {
     await expect(modal).toBeVisible();
 
     // Get initial image src
-    const img = modal.locator("img");
+    const img = page.getByTestId("modal-main-image");
     const firstImageSrc = await img.getAttribute("src");
+    const firstImageName = firstImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
 
     // Test keyboard navigation as a proxy for swipe functionality
     // (Full touch simulation is complex and may not work reliably in headless mode)
@@ -265,13 +278,15 @@ test.describe("Event Gallery Modal", () => {
     await page.waitForTimeout(300);
 
     const secondImageSrc = await img.getAttribute("src");
-    expect(secondImageSrc).not.toBe(firstImageSrc);
+    const secondImageName = secondImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
+    expect(secondImageName).not.toBe(firstImageName);
 
     await page.keyboard.press("ArrowLeft");
     await page.waitForTimeout(300);
 
     const currentImageSrc = await img.getAttribute("src");
-    expect(currentImageSrc).toBe(firstImageSrc);
+    const currentImageName = currentImageSrc?.match(/gallery%2F([^%]+\.webp)/)?.[1];
+    expect(currentImageName).toBe(firstImageName);
 
     // Note: The swipe functionality is implemented in EventImageModal.tsx
     // and will work on real touch devices. This test verifies the navigation

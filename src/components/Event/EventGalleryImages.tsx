@@ -87,7 +87,7 @@ export default function EventGalleryImages({ event }: Props) {
         <button
           key={img.id}
           onClick={() => handleImageClick(index)}
-          className="focus:ring-primary rounded-box w-full focus:ring-2 focus:outline-none"
+          className="glass-border rounded-box w-full overflow-hidden"
           type="button"
           aria-label={`View larger image: ${img.data.caption ?? ""}`}
           data-testid={`gallery-image-${index}`}
@@ -95,7 +95,7 @@ export default function EventGalleryImages({ event }: Props) {
           <img
             src={img.thumbnailSrc}
             alt={img.data.caption ?? ""}
-            className="bg-base-300 rounded-box aspect-[4/3] w-full cursor-pointer object-cover transition-opacity hover:opacity-90"
+            className="bg-base-300 aspect-[4/3] w-full cursor-pointer object-cover transition-opacity hover:opacity-90"
             loading="lazy"
             width={320}
             height={240}

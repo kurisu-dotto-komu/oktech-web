@@ -42,7 +42,7 @@ function Subsection({ title, children }: SubsectionProps) {
   return (
     <div className="flex flex-col gap-2">
       <div className="text-base-content/70 px-2 text-xs font-semibold">{title}</div>
-      <div className="flex gap-2">{children}</div>
+      <div className="flex flex-col gap-2 sm:flex-row">{children}</div>
     </div>
   );
 }

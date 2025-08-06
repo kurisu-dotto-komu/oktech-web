@@ -8,22 +8,20 @@ import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
 >
   <Container wide className="">
     <div class="flex flex-col gap-20 md:grid md:grid-cols-2 2xl:px-32">
-      <div class="flex flex-col justify-center gap-8 pl-6 text-center md:text-left">
-        <h2 class="text-6xl font-bold md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
-          Together<br /> in tech and life
+      <div class="flex flex-col justify-center gap-8 text-center text-pretty md:pl-6 md:text-left">
+        <h2 class="text-5xl font-bold xl:text-6xl 2xl:text-7xl">
+          Together<br />in tech and life
         </h2>
-        <div class="text-xl md:text-lg">
-          Build cool things, share life hacks, and meet kind minds.
-        </div>
-        <div class="flex flex-col gap-2">
-          <div class="">
-            With 2,000+ Community Members,
-            <br />
-            OKTech is Kaisai's largest English speaking Technology Meetup Group
-          </div>
-        </div>
+
+        <p class="text-2xl">Build cool things, share life hacks, and meet kind minds.</p>
+        <p class="text-lg">
+          With over 2,000 attendees, OKTech is Kaisai's largest English speaking Technology Meetup
+          Group.
+        </p>
       </div>
-      <div class="md:-mr-[30%] md:-ml-[10%] lg:-ml-0 xl:-ml-[10%] 2xl:-mr-0 2xl:-ml-[25%]">
+      <div
+        class="-mx-[20%] md:-mx-0 md:-mr-[30%] md:-ml-[10%] lg:-ml-0 xl:-ml-[10%] 2xl:-mr-0 2xl:-ml-[25%]"
+      >
         <BlobSlideshow
           images={[
             "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp",

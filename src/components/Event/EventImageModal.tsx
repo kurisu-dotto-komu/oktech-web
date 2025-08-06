@@ -36,6 +36,7 @@ export default function EventImageModal({
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isPanning, setIsPanning] = useState(false);
+  const [isFullImageLoaded, setIsFullImageLoaded] = useState(false);
 
   // Calculate previous and next image URLs for prefetching
   const { prevImageUrl, nextImageUrl } = useMemo(() => {
@@ -52,40 +53,39 @@ export default function EventImageModal({
   useEffect(() => {
     if (!isOpen) return;
 
+    // Store preloaded images in refs to keep them in memory
+    const preloadedImages: HTMLImageElement[] = [];
+
     const preloadImage = (src: string) => {
       // Create image element for browser caching
       const img = new Image();
       img.src = src;
+      preloadedImages.push(img);
 
       // Also add link preload for higher priority
       const link = document.createElement("link");
-      link.rel = "preload";
+      link.rel = "prefetch";
       link.as = "image";
       link.href = src;
+      link.setAttribute("data-gallery-prefetch", "true");
       document.head.appendChild(link);
-
-      // Cleanup function to remove link
-      return () => {
-        if (document.head.contains(link)) {
-          document.head.removeChild(link);
-        }
-      };
     };
 
-    const cleanups: (() => void)[] = [];
-
     if (prevImageUrl) {
-      const cleanup = preloadImage(prevImageUrl);
-      if (cleanup) cleanups.push(cleanup);
+      preloadImage(prevImageUrl);
     }
 
     if (nextImageUrl) {
-      const cleanup = preloadImage(nextImageUrl);
-      if (cleanup) cleanups.push(cleanup);
+      preloadImage(nextImageUrl);
     }
 
+    // Cleanup on modal close, not on every image change
     return () => {
-      cleanups.forEach((cleanup) => cleanup());
+      if (!isOpen) {
+        // Remove prefetch links when modal closes
+        const links = document.querySelectorAll('link[data-gallery-prefetch="true"]');
+        links.forEach((link) => link.remove());
+      }
     };
   }, [isOpen, prevImageUrl, nextImageUrl]);
 
@@ -150,6 +150,11 @@ export default function EventImageModal({
     if (!isOpen || !transformComponentRef.current) return;
     transformComponentRef.current.resetTransform();
   }, [isOpen, selectedImage]);
+
+  // Reset full image loaded state when image changes
+  useEffect(() => {
+    setIsFullImageLoaded(false);
+  }, [selectedImage]);
 
   if (!isOpen || !selectedImage) return null;
 
@@ -253,12 +258,23 @@ export default function EventImageModal({
                     }}
                   >
                     <img
-                      src={selectedImage.fullSrc}
+                      src={isFullImageLoaded ? selectedImage.fullSrc : selectedImage.thumbnailSrc}
                       alt={selectedImage.data.caption ?? ""}
                       className="h-full w-full object-contain"
                       style={{ userSelect: "none" }}
                       draggable={false}
+                      data-testid="modal-main-image"
                     />
+                    {/* Hidden preloader for full image */}
+                    {!isFullImageLoaded && (
+                      <img
+                        src={selectedImage.fullSrc}
+                        alt=""
+                        className="absolute h-0 w-0 opacity-0"
+                        onLoad={() => setIsFullImageLoaded(true)}
+                        aria-hidden="true"
+                      />
+                    )}
                   </TransformComponent>
                 </TransformWrapper>
 

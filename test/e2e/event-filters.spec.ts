@@ -46,24 +46,24 @@ test.describe("Event Filters", () => {
       // First, get a venue name from an event card
       const firstEventCard = page.getByTestId("event-card").first();
       await firstEventCard.waitFor();
-      
+
       // Get the venue name from the first event (if it has one)
       const venueElement = firstEventCard.locator('[data-testid="event-venue"]');
       const venueCount = await venueElement.count();
-      
+
       if (venueCount > 0) {
         const venueName = await venueElement.textContent();
-        
+
         if (venueName) {
           // Search for the venue name
           await page.getByTestId("events-search-input").fill(venueName);
           await page.waitForTimeout(600); // Wait for debounce + filter update
-          
+
           // Check that we have results
           const eventCards = page.getByTestId("event-card");
           const count = await eventCards.count();
           expect(count).toBeGreaterThan(0);
-          
+
           // Verify the search parameter is in the URL
           const url = page.url();
           expect(url).toContain(`search=${encodeURIComponent(venueName)}`);
