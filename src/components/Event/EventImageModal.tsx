@@ -33,10 +33,10 @@ export default function EventImageModal({
 }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const transformComponentRef = useRef<any>(null);
-  const [isZooming, setIsZooming] = useState(false);
-  const [currentScale, setCurrentScale] = useState(1);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isPanning, setIsPanning] = useState(false);
   const [isFullImageLoaded, setIsFullImageLoaded] = useState(false);
-  const [pointerStart, setPointerStart] = useState<number | null>(null);
 
   // Calculate previous and next image URLs for prefetching
   const { prevImageUrl, nextImageUrl } = useMemo(() => {
@@ -116,34 +116,25 @@ export default function EventImageModal({
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
 
-  // Pointer events (work for both touch and mouse)
-  const onPointerDown = (e: React.PointerEvent) => {
-    // Only track single touch/left mouse for swipe
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    
-    // Don't interfere with pinch-to-zoom (multi-touch)
-    if (e.isPrimary) {
-      setPointerStart(e.clientX);
-    }
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const onPointerMove = (e: React.PointerEvent) => {
-    // Intentionally empty - we only care about start and end positions
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
   };
 
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (pointerStart === null || !e.isPrimary) return;
-    
-    const pointerEnd = e.clientX;
-    
-    // Don't trigger swipe if we're zoomed in or currently zooming
-    if (currentScale > 1 || isZooming) {
-      setPointerStart(null);
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    // Don't trigger swipe if we're panning/zooming
+    if (isPanning) {
+      setIsPanning(false);
       return;
     }
 
-    const distance = pointerStart - pointerEnd;
-    
+    const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
@@ -152,19 +143,12 @@ export default function EventImageModal({
     } else if (isRightSwipe) {
       onPrevious();
     }
-    
-    setPointerStart(null);
-  };
-
-  const onPointerCancel = () => {
-    setPointerStart(null);
   };
 
   // Reset zoom when modal closes or image changes
   useEffect(() => {
     if (!isOpen || !transformComponentRef.current) return;
     transformComponentRef.current.resetTransform();
-    setCurrentScale(1);
   }, [isOpen, selectedImage]);
 
   // Reset full image loaded state when image changes
@@ -239,18 +223,10 @@ export default function EventImageModal({
               {/* Image container */}
               <div
                 className="relative aspect-[3/4] bg-black sm:aspect-square md:aspect-[4/3]"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
               >
-                {/* Swipe detection overlay - only when not zoomed */}
-                {currentScale === 1 && !isZooming && (
-                  <div
-                    className="absolute inset-0 z-10"
-                    onPointerDown={onPointerDown}
-                    onPointerMove={onPointerMove}
-                    onPointerUp={onPointerUp}
-                    onPointerCancel={onPointerCancel}
-                    style={{ pointerEvents: "auto" }}
-                  />
-                )}
                 <TransformWrapper
                   ref={transformComponentRef}
                   minScale={1}
@@ -263,15 +239,10 @@ export default function EventImageModal({
                   wheel={{ disabled: false }}
                   alignmentAnimation={{ sizeX: 0, sizeY: 0 }}
                   centerZoomedOut={true}
-                  onTransformed={(_, state) => {
-                    setCurrentScale(state.scale);
-                  }}
-                  onZoomStart={() => {
-                    setIsZooming(true);
-                  }}
-                  onZoomStop={() => {
-                    setIsZooming(false);
-                  }}
+                  onPanning={() => setIsPanning(true)}
+                  onPanningStop={() => setIsPanning(false)}
+                  onZoomStart={() => setIsPanning(true)}
+                  onZoomStop={() => setIsPanning(false)}
                 >
                   <TransformComponent
                     wrapperStyle={{
