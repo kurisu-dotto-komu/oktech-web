@@ -33,9 +33,6 @@ export default function EventImageModal({
 }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const transformComponentRef = useRef<any>(null);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [isPanning, setIsPanning] = useState(false);
   const [isFullImageLoaded, setIsFullImageLoaded] = useState(false);
 
   // Calculate previous and next image URLs for prefetching
@@ -113,37 +110,6 @@ export default function EventImageModal({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose, onPrevious, onNext]);
 
-  // Minimum swipe distance (in px)
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    // Don't trigger swipe if we're panning/zooming
-    if (isPanning) {
-      setIsPanning(false);
-      return;
-    }
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      onNext();
-    } else if (isRightSwipe) {
-      onPrevious();
-    }
-  };
 
   // Reset zoom when modal closes or image changes
   useEffect(() => {
@@ -221,12 +187,7 @@ export default function EventImageModal({
             {/* Modal box with image */}
             <div className="rounded-box w-full max-w-[90vw] overflow-hidden lg:max-w-[80vw] xl:max-w-[1200px]">
               {/* Image container */}
-              <div
-                className="relative aspect-[3/4] bg-black sm:aspect-square md:aspect-[4/3]"
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
-              >
+              <div className="relative aspect-[3/4] bg-black sm:aspect-square md:aspect-[4/3]">
                 <TransformWrapper
                   ref={transformComponentRef}
                   minScale={1}
@@ -239,10 +200,6 @@ export default function EventImageModal({
                   wheel={{ disabled: false }}
                   alignmentAnimation={{ sizeX: 0, sizeY: 0 }}
                   centerZoomedOut={true}
-                  onPanning={() => setIsPanning(true)}
-                  onPanningStop={() => setIsPanning(false)}
-                  onZoomStart={() => setIsPanning(true)}
-                  onZoomStop={() => setIsPanning(false)}
                 >
                   <TransformComponent
                     wrapperStyle={{
