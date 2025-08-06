@@ -5,7 +5,7 @@ import { LuImageOff } from "react-icons/lu";
 import type { EventEnriched } from "@/content";
 import { isEventUpcoming } from "@/utils/eventFilters";
 
-import EventImageModal from "./EventImageModal";
+import EventImageModal from "./EventImageModalSimple";
 
 interface Props {
   event: EventEnriched;

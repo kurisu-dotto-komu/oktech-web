@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { LuChevronLeft, LuChevronRight, LuX } from "react-icons/lu";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 import type { EventEnriched, GalleryImage } from "@/content";
 import { formatDate } from "@/utils/formatDate";
@@ -32,8 +31,10 @@ export default function EventImageModal({
   allImages,
 }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const transformComponentRef = useRef<any>(null);
   const [isFullImageLoaded, setIsFullImageLoaded] = useState(false);
+  const startX = useRef<number | null>(null);
+  const startY = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
   // Calculate previous and next image URLs for prefetching
   const { prevImageUrl, nextImageUrl } = useMemo(() => {
@@ -50,22 +51,12 @@ export default function EventImageModal({
   useEffect(() => {
     if (!isOpen) return;
 
-    // Store preloaded images in refs to keep them in memory
     const preloadedImages: HTMLImageElement[] = [];
 
     const preloadImage = (src: string) => {
-      // Create image element for browser caching
       const img = new Image();
       img.src = src;
       preloadedImages.push(img);
-
-      // Also add link preload for higher priority
-      const link = document.createElement("link");
-      link.rel = "prefetch";
-      link.as = "image";
-      link.href = src;
-      link.setAttribute("data-gallery-prefetch", "true");
-      document.head.appendChild(link);
     };
 
     if (prevImageUrl) {
@@ -75,17 +66,9 @@ export default function EventImageModal({
     if (nextImageUrl) {
       preloadImage(nextImageUrl);
     }
-
-    // Cleanup on modal close, not on every image change
-    return () => {
-      if (!isOpen) {
-        // Remove prefetch links when modal closes
-        const links = document.querySelectorAll('link[data-gallery-prefetch="true"]');
-        links.forEach((link) => link.remove());
-      }
-    };
   }, [isOpen, prevImageUrl, nextImageUrl]);
 
+  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -110,17 +93,87 @@ export default function EventImageModal({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose, onPrevious, onNext]);
 
-
-  // Reset zoom when modal closes or image changes
-  useEffect(() => {
-    if (!isOpen || !transformComponentRef.current) return;
-    transformComponentRef.current.resetTransform();
-  }, [isOpen, selectedImage]);
-
   // Reset full image loaded state when image changes
   useEffect(() => {
     setIsFullImageLoaded(false);
+    if (selectedImage) {
+      const img = new Image();
+      img.src = selectedImage.fullSrc;
+      img.onload = () => setIsFullImageLoaded(true);
+    }
   }, [selectedImage]);
+
+  // Handle both touch and mouse events for swipe/drag navigation
+  const handlePointerStart = (e: React.TouchEvent | React.MouseEvent) => {
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    startX.current = clientX;
+    startY.current = clientY;
+    isDragging.current = true;
+    
+    // Prevent text selection during drag
+    if (!('touches' in e)) {
+      e.preventDefault();
+    }
+  };
+
+  const handlePointerEnd = (e: React.TouchEvent | React.MouseEvent) => {
+    if (startX.current === null || startY.current === null || !isDragging.current) return;
+
+    const clientX = 'changedTouches' in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientY = 'changedTouches' in e ? e.changedTouches[0].clientY : e.clientY;
+    
+    const deltaX = clientX - startX.current;
+    const deltaY = clientY - startY.current;
+    
+    // Only trigger swipe if horizontal movement is greater than vertical
+    // and the swipe distance is significant (more than 50px)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        // Swipe right - go to previous image
+        onPrevious();
+      } else {
+        // Swipe left - go to next image
+        onNext();
+      }
+    }
+    
+    startX.current = null;
+    startY.current = null;
+    isDragging.current = false;
+  };
+
+  const handleMouseLeave = () => {
+    // Reset if mouse leaves the area while dragging
+    startX.current = null;
+    startY.current = null;
+    isDragging.current = false;
+  };
+
+  // Calculate which dots to show (max 10)
+  const maxDots = 10;
+  const dotsToShow = Math.min(totalImages, maxDots);
+  const halfDots = Math.floor(dotsToShow / 2);
+  
+  let startDot = 0;
+  let endDot = totalImages;
+  
+  if (totalImages > maxDots) {
+    if (currentIndex < halfDots) {
+      // Near the beginning
+      startDot = 0;
+      endDot = maxDots;
+    } else if (currentIndex >= totalImages - halfDots) {
+      // Near the end
+      startDot = totalImages - maxDots;
+      endDot = totalImages;
+    } else {
+      // In the middle
+      startDot = currentIndex - halfDots;
+      endDot = currentIndex + halfDots + (dotsToShow % 2);
+    }
+  }
 
   if (!isOpen || !selectedImage) return null;
 
@@ -146,11 +199,11 @@ export default function EventImageModal({
           }
         }}
       >
-        <div className="flex w-full max-w-[80vw] flex-col items-center text-white lg:max-w-[80vw] xl:max-w-[1200px]">
-          {/* Header with title and close button - aligned with modal box */}
+        <div className="flex w-full max-w-[90vw] flex-col items-center text-white lg:max-w-[80vw] xl:max-w-[1200px]">
+          {/* Header with title and close button */}
           <div className="mb-4 flex w-full items-end justify-between px-1">
             <div className="flex flex-wrap-reverse items-baseline gap-4">
-              <h3 className="text-lg font-semibold drop-shadow-lg">{event.data.title} </h3>
+              <h3 className="text-lg font-semibold drop-shadow-lg">{event.data.title}</h3>
               <span className="text-base font-normal">
                 {formatDate(event.data.dateTime, "long")}
               </span>
@@ -166,7 +219,7 @@ export default function EventImageModal({
 
           {/* Container for modal box and navigation arrows */}
           <div className="relative flex w-full items-center">
-            {/* Left navigation arrow - outside box */}
+            {/* Left navigation arrow */}
             <button
               className="absolute -left-12 z-20 cursor-pointer p-2 text-white transition-colors hover:text-white/80 sm:-left-16"
               onClick={onPrevious}
@@ -175,7 +228,7 @@ export default function EventImageModal({
               <LuChevronLeft size={32} />
             </button>
 
-            {/* Right navigation arrow - outside box */}
+            {/* Right navigation arrow */}
             <button
               className="absolute -right-12 z-20 cursor-pointer p-2 text-white transition-colors hover:text-white/80 sm:-right-16"
               onClick={onNext}
@@ -184,56 +237,34 @@ export default function EventImageModal({
               <LuChevronRight size={32} />
             </button>
 
-            {/* Modal box with image */}
-            <div className="rounded-box w-full max-w-[90vw] overflow-hidden lg:max-w-[80vw] xl:max-w-[1200px]">
-              {/* Image container */}
-              <div className="relative aspect-[3/4] bg-black sm:aspect-square md:aspect-[4/3]">
-                <TransformWrapper
-                  ref={transformComponentRef}
-                  minScale={1}
-                  maxScale={6}
-                  centerOnInit={true}
-                  limitToBounds={true}
-                  doubleClick={{ mode: "reset" }}
-                  panning={{ disabled: false }}
-                  pinch={{ disabled: false }}
-                  wheel={{ disabled: false }}
-                  alignmentAnimation={{ sizeX: 0, sizeY: 0 }}
-                  centerZoomedOut={true}
-                >
-                  <TransformComponent
-                    wrapperStyle={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                    contentStyle={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <img
-                      src={isFullImageLoaded ? selectedImage.fullSrc : selectedImage.thumbnailSrc}
-                      alt={selectedImage.data.caption ?? ""}
-                      className="h-full w-full object-contain"
-                      style={{ userSelect: "none" }}
-                      draggable={false}
-                      data-testid="modal-main-image"
-                    />
-                    {/* Hidden preloader for full image */}
-                    {!isFullImageLoaded && (
-                      <img
-                        src={selectedImage.fullSrc}
-                        alt=""
-                        className="absolute h-0 w-0 opacity-0"
-                        onLoad={() => setIsFullImageLoaded(true)}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </TransformComponent>
-                </TransformWrapper>
+            {/* Modal box with image - simple version without zoom */}
+            <div className="rounded-box w-full overflow-hidden">
+              {/* Image container with touch and mouse handlers */}
+              <div 
+                className="relative flex aspect-[3/4] items-center justify-center bg-black sm:aspect-square md:aspect-[4/3] cursor-grab active:cursor-grabbing"
+                onTouchStart={handlePointerStart}
+                onTouchEnd={handlePointerEnd}
+                onMouseDown={handlePointerStart}
+                onMouseUp={handlePointerEnd}
+                onMouseLeave={handleMouseLeave}
+              >
+                <img
+                  src={isFullImageLoaded ? selectedImage.fullSrc : selectedImage.thumbnailSrc}
+                  alt={selectedImage.data.caption ?? ""}
+                  className="h-full w-full object-contain select-none pointer-events-none"
+                  data-testid="modal-main-image"
+                  draggable={false}
+                />
+                {/* Hidden preloader for full image */}
+                {!isFullImageLoaded && (
+                  <img
+                    src={selectedImage.fullSrc}
+                    alt=""
+                    className="absolute h-0 w-0 opacity-0"
+                    onLoad={() => setIsFullImageLoaded(true)}
+                    aria-hidden="true"
+                  />
+                )}
 
                 {/* Caption overlay */}
                 {selectedImage.data.caption && (
@@ -247,18 +278,27 @@ export default function EventImageModal({
             </div>
           </div>
 
-          {/* Navigation dots - outside modal box */}
+          {/* Navigation dots with sliding window */}
           <div className="mt-4 flex items-center justify-center gap-2">
-            {Array.from({ length: totalImages }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => onDotClick(index)}
-                className={`h-2 w-2 cursor-pointer rounded-full transition-all ${
-                  index === currentIndex ? "w-8 bg-white" : "bg-white/50 hover:bg-white/70"
-                }`}
-                aria-label={`Go to image ${index + 1}`}
-              />
-            ))}
+            {totalImages > maxDots && startDot > 0 && (
+              <span className="text-white/50 text-sm">...</span>
+            )}
+            {Array.from({ length: endDot - startDot }).map((_, i) => {
+              const index = startDot + i;
+              return (
+                <button
+                  key={index}
+                  onClick={() => onDotClick(index)}
+                  className={`h-2 w-2 cursor-pointer rounded-full transition-all ${
+                    index === currentIndex ? "w-8 bg-white" : "bg-white/50 hover:bg-white/70"
+                  }`}
+                  aria-label={`Go to image ${index + 1}`}
+                />
+              );
+            })}
+            {totalImages > maxDots && endDot < totalImages && (
+              <span className="text-white/50 text-sm">...</span>
+            )}
           </div>
         </div>
       </div>
