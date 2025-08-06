@@ -3,6 +3,7 @@ import clsx from "clsx";
 import CityBadge from "@/components/Common/CityBadge";
 import Link from "@/components/Common/LinkReact";
 import type { EventEnriched } from "@/content";
+import { useViewportPrefetch } from "@/utils/useViewportPrefetch";
 
 import EventCardDescription from "./EventCardDescription";
 import EventCardImage from "./EventCardImage";
@@ -20,9 +21,15 @@ export default function EventCard({
 }) {
   const odd = index !== undefined && index % 2 === 1;
   const border = index === undefined;
+  const eventUrl = `/event/${event.id}`;
+  // Only enable prefetching in production
+  const isProd = typeof window !== "undefined" && window.location.hostname !== "localhost";
+  const prefetchRef = useViewportPrefetch(eventUrl, isProd);
+  
   return (
     <Link
-      href={`/event/${event.id}`}
+      ref={prefetchRef}
+      href={eventUrl}
       className={clsx(
         "hover:bg-base-100/100 glass-border transition-all duration-200",
         border && "rounded-box overflow-hidden",
