@@ -6,6 +6,7 @@ import { formatDate, formatDuration, formatTime, getEndTime } from "@/utils/form
 import LinkReact from "../Common/LinkReact";
 import AddToCalendarDropdown from "../Event/EventCalendarDropdown";
 import EventJoinButton from "../Event/EventJoinButton";
+import EventCardCountdown from "../EventCard/EventCardCountdown";
 import LocationCard from "./LocationCard";
 
 export default function LocationCardEvent({

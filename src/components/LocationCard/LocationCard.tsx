@@ -20,24 +20,26 @@ export default function LocationCard({
 }) {
   return (
     <>
-      <div className={clsx("glass-card flex", horizontal ? "flex-row" : "flex-col")}>
+      <div className={clsx("glass-card flex", horizontal ? "flex-col sm:flex-row" : "flex-col")}>
         {venue && (
-          <div className={clsx("relative flex", horizontal ? "h-60 w-60" : "h-full w-full")}>
-            <VenueMap
-              venue={venue}
-              marker={venue?.title}
-              link={true}
-              className="absolute inset-0"
-            />
-            {venue.city && (
-              <div className="absolute right-2 bottom-2">
-                <CityBadge city={venue.city} />
+          <div className={clsx("flex", horizontal ? "h-50 sm:h-auto sm:w-90" : "h-60")}>
+            <div className="relative flex-grow">
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                <VenueMap venue={venue} marker={venue?.title} link={true} />
               </div>
-            )}
+              {venue.city && (
+                <div className="absolute right-0 bottom-0 z-10">
+                  <CityBadge
+                    city={venue.city}
+                    className="m-0 rounded-tr-none rounded-br-none rounded-bl-none pl-4"
+                  />
+                </div>
+              )}
+            </div>
           </div>
         )}
-        <div className="flex flex-grow flex-col">
-          <div className="flex flex-grow flex-col justify-center gap-2 p-8">{children}</div>
+        <div className="flex w-full flex-grow flex-col">
+          <div className="flex flex-col justify-center gap-2 p-8">{children}</div>
           {info && (
             <div className="bg-primary/30 text-primary-content hidden px-8 py-4 text-sm md:block">
               {info}

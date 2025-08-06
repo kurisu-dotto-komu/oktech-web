@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import type { EventEnriched } from "@/content";
 
-import EventCardCountdown from "./EventCardCountdown";
+import EventCardCountdownAbsolute from "./EventCardCountdownAbsolute";
 
 type Variant = "compact" | "polaroid" | "big";
 
@@ -18,21 +18,7 @@ export default function EventCardImage({ event, variant, cityComponent }: EventC
       {variant !== "compact" && (
         <>
           <div className="absolute right-0 bottom-0">{cityComponent}</div>
-          <EventCardCountdown
-            event={event}
-            renderer={(timeString, badgeClass) => (
-              <div className="absolute top-0 left-0 flex">
-                <div
-                  className={clsx(
-                    badgeClass,
-                    "badge-info m-0 rounded-tl-none rounded-tr-none rounded-bl-none px-4",
-                  )}
-                >
-                  {timeString}
-                </div>
-              </div>
-            )}
-          />
+          <EventCardCountdownAbsolute event={event} />
         </>
       )}
 
