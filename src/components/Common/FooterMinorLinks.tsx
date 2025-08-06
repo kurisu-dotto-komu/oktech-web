@@ -6,11 +6,26 @@ export default function FooterMinorLinks() {
 
   return (
     <div className="flex flex-wrap justify-center gap-4" data-testid="footer-minor-links">
-      {minorItems.map((item) => (
-        <LinkReact key={item.href} href={item.href} className="link link-hover">
-          {item.label}
-        </LinkReact>
-      ))}
+      {minorItems.map((item) => {
+        // Use custom component if provided
+        if (item.component) {
+          const Component = item.component;
+          return <Component key={item.href} label={item.label} href={item.href} icon={item.icon} />;
+        }
+        
+        // Default link without icon
+        return (
+          <LinkReact 
+            key={item.href} 
+            href={item.href} 
+            className="link link-hover"
+            target={item.target}
+            rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+          >
+            {item.label}
+          </LinkReact>
+        );
+      })}
     </div>
   );
 }

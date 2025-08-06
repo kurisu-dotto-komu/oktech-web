@@ -5,6 +5,7 @@ import EventsRecent from "@/components/Events/EventsRecent";
 import PageLayout from "@/layouts/PageLayout.astro";
 import LandingHero from "@/components/Landing/LandingHero.astro";
 import LandingAbout from "@/components/Landing/LandingAbout.astro";
+import GetInvolved from "@/components/Landing/GetInvolved";
 import { getEvents } from "@/content";
 
 const events = await getEvents();
@@ -23,12 +24,7 @@ const events = await getEvents();
     <EventsRecent events={events} />
   </SimpleSection>
 
-  <SimpleSection
-    title="TODO: Get Involved"
-    button={{ text: "Get Involved", href: "/about#contact" }}
-  >
-    <div>
-      <p>TODO: Get Involved</p>
-    </div>
+  <SimpleSection title="Get Involved (TODO)">
+    <GetInvolved client:load />
   </SimpleSection>
 </PageLayout>

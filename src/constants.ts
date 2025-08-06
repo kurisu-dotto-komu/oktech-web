@@ -1,6 +1,10 @@
+import type { ComponentType } from "react";
+
 import type { IconType } from "react-icons";
 import { FaDiscord, FaGithub, FaLinkedin, FaMeetup, FaXTwitter } from "react-icons/fa6";
-import { LuCalendar, LuHouse, LuInfo, LuMap, LuRss } from "react-icons/lu";
+import { LuCalendar, LuFileText, LuHouse, LuInfo, LuMap, LuRss } from "react-icons/lu";
+
+import ICSTooltipLink from "@/components/Common/ICSTooltipLink";
 
 // Development mode flag - change this to false for production
 export const DEV_MODE = true;
@@ -26,6 +30,8 @@ export const MENU: {
   icon?: IconType;
   footerMajor?: boolean;
   footerMinor?: boolean;
+  component?: ComponentType<{ label: string; href: string; icon?: IconType }>;
+  target?: string;
 }[] = [
   {
     label: "Home",
@@ -48,6 +54,12 @@ export const MENU: {
     icon: LuInfo,
   },
   {
+    label: "Code of Conduct",
+    href: "/code-of-conduct",
+    icon: LuFileText,
+    footerMinor: true,
+  },
+  {
     label: "Sitemap",
     href: "/sitemap",
     footerMinor: true,
@@ -58,18 +70,14 @@ export const MENU: {
     href: "/rss.xml",
     icon: LuRss,
     footerMinor: true,
+    target: "_blank",
   },
   {
-    label: "ICS Calendar Feed",
+    label: "Calendar Feed",
     href: "/oktech-events.ics",
     icon: LuCalendar,
     footerMinor: true,
-  },
-  {
-    label: "Code of Conduct",
-    href: "/code-of-conduct",
-    icon: LuInfo,
-    footerMinor: true,
+    component: ICSTooltipLink,
   },
 ];
 
