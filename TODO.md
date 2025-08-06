@@ -8,7 +8,6 @@ TARGET SOFT LAUNCH AUG 09.
 
 - About page
 - Remove Section component
-
 - Clean up all UI elements - check all pages on mobile
 
 **Visual Checks**
@@ -45,7 +44,9 @@ TARGET SOFT LAUNCH AUG 09.
 
 # Post Release Features
 
+- How to find us photos for hankyu etc.
 - Feed modal, instead of direct link
 - Members: with hasPage: true.
 - Scripts for LLM decoration ?
 - https://docs.astro.build/en/guides/view-transitions/
+- Create an issue for font loadiong strategy

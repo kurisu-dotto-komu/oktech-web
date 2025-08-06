@@ -21,7 +21,7 @@ export default function EventsViewAlbum({ events }: Props) {
   return (
     <div className="flex flex-col gap-24">
       <SimpleSection
-        title="OKTech Photo Album"
+        title="Photo Album"
         subTitle="Events without images are hidden on this page."
         element={<GalleryDisclaimer position="bottom" />}
       />
