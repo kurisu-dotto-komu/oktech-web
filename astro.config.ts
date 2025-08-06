@@ -5,6 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
+import redirects from "./redirects.json";
+
 // Determine the site URL and base path
 const isVercel = !!process.env.VERCEL_PROJECT_PRODUCTION_URL;
 
@@ -62,9 +64,7 @@ export default defineConfig({
     },
   },
   integrations: [react(), icon()],
-  redirects: {
-    discord: "https://discord.com/invite/k8xj8d75f6",
-  },
+  redirects,
   experimental: {
     clientPrerender: true,
     contentIntellisense: true,

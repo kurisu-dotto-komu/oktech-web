@@ -15,6 +15,7 @@
     "checks": "npm-run-all -p format typecheck knip",
     "import": "tsx ./scripts/import-data",
     "og-cache": "tsx scripts/manage-og-cache.ts",
+    "generate-redirects": "tsx scripts/generate-redirects.tsx",
     "test": "playwright test",
     "test:screenshots": "rm -rf test/screenshots/output && TEST_TYPE=screenshots playwright test",
     "test:build": "npm run build && TEST_BUILD=true playwright test",
