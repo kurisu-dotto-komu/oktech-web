@@ -64,8 +64,8 @@ export default function BlobSlideshow<T = string | ImageData>({
   const maskId = `blob-mask-${React.useId()}`;
 
   return (
-    <div className={`relative h-full w-full ${containerClassName || "aspect-[4/3]"}`}>
-      <div className="absolute inset-0">
+    <div className={`relative z-10 h-full w-full ${containerClassName || "aspect-[4/3]"}`}>
+      <div className="absolute inset-0 -mx-20 -my-10 md:-mx-16 md:-my-16 lg:-mx-12 lg:-my-12">
         <svg width={0} height={0}>
           <defs>
             <mask

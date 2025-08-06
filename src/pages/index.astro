@@ -7,6 +7,8 @@ import LandingHero from "@/components/Landing/LandingHero.astro";
 import LandingAbout from "@/components/Landing/LandingAbout.astro";
 import GetInvolved from "@/components/Landing/GetInvolved";
 import { getEvents } from "@/content";
+import Container from "@/components/Common/Container";
+import Cut from "@/components/Common/Cut";
 
 const events = await getEvents();
 ---
@@ -18,13 +20,15 @@ const events = await getEvents();
     <EventsUpcoming client:load events={events} />
   </SimpleSection>
 
-  <LandingAbout />
+  <Cut>
+    <LandingAbout />
+  </Cut>
 
   <SimpleSection title="Recent Events" wide button={{ text: "All Events", href: "/events" }}>
     <EventsRecent events={events} />
   </SimpleSection>
 
-  <SimpleSection title="Get Involved (TODO)">
+  <Container>
     <GetInvolved client:load />
-  </SimpleSection>
+  </Container>
 </PageLayout>

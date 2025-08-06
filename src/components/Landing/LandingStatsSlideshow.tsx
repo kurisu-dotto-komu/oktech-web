@@ -45,10 +45,10 @@ export default function LandingStatsSlideshow({
     return (
       <div className="bg-primary text-primary-content flex h-full w-full items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-4 p-12">
-          <Icon className="h-14 w-14" />
+          <Icon className="h-20 w-20" />
           <div className="flex flex-col items-center justify-center">
-            <div className="font-header text-3xl font-bold">{stat.value}</div>
-            <div className="text-sm tracking-wider whitespace-nowrap uppercase">{stat.title}</div>
+            <div className="font-header text-5xl font-bold">{stat.value}</div>
+            <div className="text-lg tracking-wider whitespace-nowrap uppercase">{stat.title}</div>
           </div>
         </div>
       </div>

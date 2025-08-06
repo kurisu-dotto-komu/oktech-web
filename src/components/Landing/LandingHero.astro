@@ -1,12 +1,15 @@
 ---
 import Container from "@/components/Common/Container";
 import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
+import Cut from "../Common/Cut";
 ---
 
-<div
-  class="bg-base-content/10 flex min-h-[40vh] max-w-full items-center py-32 md:overflow-x-hidden"
+<Cut
+  className="flex min-h-[40vh] max-w-full items-center py-32"
+  position="bottom"
+  bgClass="bg-base-content/10"
 >
-  <Container wide className="">
+  <Container wide>
     <div class="flex flex-col gap-20 md:grid md:grid-cols-2 2xl:px-32">
       <div class="flex flex-col justify-center gap-8 text-center text-pretty md:pl-6 md:text-left">
         <h2 class="text-5xl font-bold xl:text-6xl 2xl:text-7xl">
@@ -19,9 +22,7 @@ import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
           Group.
         </p>
       </div>
-      <div
-        class="-mx-[20%] md:-mx-0 md:-mr-[30%] md:-ml-[10%] lg:-ml-0 xl:-ml-[10%] 2xl:-mr-0 2xl:-ml-[25%]"
-      >
+      <div class="-mb-20">
         <BlobSlideshow
           images={[
             "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp",
@@ -38,4 +39,4 @@ import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
       </div>
     </div>
   </Container>
-</div>
+</Cut>

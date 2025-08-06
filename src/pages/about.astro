@@ -1,12 +1,13 @@
 ---
 import PageLayout from "@/layouts/PageLayout.astro";
-import ImagePlaceholder from "@/components/Common/ImagePlaceholder";
-import Section from "@/components/Common/Section";
 import SocialsBig from "@/components/Common/SocialsBig";
-import Link from "@/components/Common/LinkAstro.astro";
 import { Icon } from "astro-icon/components";
-import SimpleSection from "@/components/Common/SimpleSection";
+
 import Container from "@/components/Common/Container";
+import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
+import { BLOBS } from "@/utils/blobs";
+import ContentSection from "@/components/Common/ContentSectiont";
+import Cut from "@/components/Common/Cut";
 ---
 
 <PageLayout
@@ -14,211 +15,109 @@ import Container from "@/components/Common/Container";
   description="Learn about OKTech - Osaka Kyoto Tech Meetup Group. Our mission is to build a thriving tech community through events, workshops, and networking opportunities. Discover our history and how to get involved."
   flush
 >
-  <div class="hero bg-base-200 min-h-[60vh] pt-32">
-    <div class="hero-content text-center">
-      <div class="max-w-3xl">
-        <h1 class="mb-8 text-5xl font-bold">Osaka Kyoto Tech Meetup</h1>
-        <p class="mb-6 text-xl">
-          Yes, that's quite a mouthful! 👆 That's why we go by <span class="font-bold">OKTech</span>
-          for short.
+  <div class="bg-base-200 py-24 pt-42">
+    <Container>
+      <div
+        class="m-auto flex max-w-3xl flex-col gap-12 text-center leading-relaxed text-pretty md:gap-18"
+      >
+        <h1 class="text-5xl font-bold">About OKTech</h1>
+        <p class="text-2xl">
+          OKTech is a volunteer-run, non-profit group that organizes monthly English in-person
+          technology meetups in Japan's Kansai region.
         </p>
-        <p class="text-lg">
-          The "O" stands for <em>Osaka</em>, the vibrant tech hub where our journey began. The "K"
-          represents <em>Kyoto</em>, where tradition meets innovation. But really, we like to think
-          of ourselves as <em>OK</em>Tech – because we're OK with all skill levels, OK with making
-          mistakes, and definitely OK with having fun while coding! 😊
-        </p>
+        <div class="flex flex-col gap-12 text-lg sm:flex-row md:gap-24 md:text-justify">
+          <p>
+            We welcome people from all backgrounds and encouraging members to share topics they’re
+            passionate about. Join us in Osaka and Kyoto for technical workshops, study sessions,
+            and social gatherings.
+          </p>
+          <p>
+            オーケーテックは、関西地域で毎月対面の技術系ミートアップを開催するボランティアによる非営利団体で、誰でも参加可能であり、発表や交流を通じて学び合う場を提供しています。
+          </p>
+        </div>
       </div>
-    </div>
+    </Container>
   </div>
-
-  <Container>
-    <div class="flex flex-col items-center justify-center gap-20 lg:flex-row">
-      <div class="h-90 w-90">
-        TODO
-        <!-- <LandingStatsSlideshow client:load totalEvents={totalEvents} uniqueVenues={uniqueVenues} /> -->
-      </div>
-
-      <div class="flex max-w-xl flex-col gap-8 text-center">
-        <SimpleSection title="About OKTech" button={{ text: "Learn More", href: "/about" }}>
-          <p class="text-lg">
-            A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan.
-            We invite people from all walks of web-life and encourage members to present topics they
-            enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka
-            and Kyoto.
-          </p>
-        </SimpleSection>
-      </div>
-    </div>
-  </Container>
-
-  <Section
-    split
-    left
-    title="Join Our Events"
-    description="Ready to dive in? No need to be shy! We welcome everyone from curious beginners to seasoned pros. Each meetup features 1-2 community presentations followed by optional dinner outings where the real magic happens – debugging life's problems over good food and drinks. Whether you're into React hooks, machine learning, or just want to meet fellow tech enthusiasts, there's a place for you at OKTech."
+  <ContentSection
+    reverse
+    title="Join in"
+    text="The first step is to come to an event and meet people! We're a friendly bunch and we're always happy to meet new people. Our events are the core experience of OKTech. "
+    button={{ text: "Find an Event", href: "/events" }}
   >
-    <div class="space-y-4">
-      <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-          <h3 class="card-title">
-            <Icon name="lucide:calendar" class="h-6 w-6" />
-            RSVP to Our Next Event
-          </h3>
-          <p>Check out our upcoming meetups and workshops. New events added monthly!</p>
-          <div class="card-actions justify-end">
-            <Link href="/events" class="btn btn-primary">View Events</Link>
-          </div>
-        </div>
-      </div>
-      <ImagePlaceholder />
-    </div>
-  </Section>
+    <BlobSlideshow
+      blobs={[BLOBS[2], BLOBS[0], BLOBS[4], BLOBS[5], BLOBS[7], BLOBS[1]]}
+      images={[
+        "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9847.webp",
+        "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9823.webp",
+        "/content/events/299334647-workshop-create-a-blogportfolio-in-astro-and-hygraph/gallery/IMG_9751.webp",
+      ]}
+    />
+  </ContentSection>
 
-  <Section
-    split
-    title="Present Your Ideas"
-    description="Got something cool to share? We're always excited to welcome new presenters! Whether it's a deep dive into a framework you love, a design pattern that changed your workflow, or lessons learned from that project that almost broke you – if it's web-related, we want to hear it. Don't worry about being perfect; we're all here to learn together."
+  <Cut bgClass="bg-secondary/40">
+    <ContentSection
+      title="Become a Speaker"
+      text="Practice. And Benefit and help raise your profile. Practice. And Benefit and help raise your profile. Practice. And Benefit and help raise your profile."
+      button={{
+        text: "Submit a Talk",
+        href: "/events/submit-a-talk",
+        className: "btn-secondary btn-lg",
+      }}
+    >
+      <BlobSlideshow
+        blobs={[BLOBS[2], BLOBS[0], BLOBS[4], BLOBS[5], BLOBS[7]]}
+        images={[
+          "/content/events/298753297-how-to-get-into-tech-part-2/gallery/IMG_3840.webp",
+          "/content/events/305451315-rights-and-unions/gallery/PXL_20250419_0930442362.webp",
+          "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0820206402.webp",
+          "/content/events/302750416-key-to-resume/gallery/IMG_20240907_1732152.webp",
+          "/content/events/301456891-workshop-like-s3/gallery/IMG_7679.webp",
+        ]}
+      />
+    </ContentSection>
+  </Cut>
+  <ContentSection
+    reverse
+    title="Volunteer"
+    text=`OKTech operates as a transparent, community-driven organization. While we have organizers who
+    handle the logistics and final decisions, every volunteer has a voice in shaping our
+      direction.
+    </p>
+    <p>
+      We discuss ideas openly, work collaboratively, and believe the best communities are built by
+      the people who show up. Want to help organize an event, suggest a workshop theme, or bring
+      OKTech to the next level?`
+    reverse
   >
-    <div class="card bg-primary text-primary-content">
-      <div class="card-body">
-        <h3 class="card-title">
-          <Icon name="lucide:presentation" class="h-6 w-6" />
-          Submit a Talk Proposal
-        </h3>
-        <p>Share your knowledge, gain experience presenting, and contribute to our community.</p>
-        <div class="card-actions justify-end">
-          <a href="https://forms.gle/KifJzLSmcXUPxSFk7" target="_blank" class="btn btn-secondary">
-            Propose a Talk
-          </a>
-        </div>
-      </div>
-    </div>
-  </Section>
-
-  <Section
-    split
-    left
-    title="Become a Volunteer"
-    description="OKTech has always been volunteer-driven, and that's what makes us special. There's always something to improve, whether it's helping with event organization, managing our online presence, moderating Discord, or brainstorming new ways to connect our community. Volunteers shape the future of OKTech – bringing fresh ideas and making things happen."
-  >
-    <div class="space-y-4">
-      <div class="alert alert-info">
-        <Icon name="lucide:users" class="h-6 w-6" />
+    <BlobSlideshow
+      blobs={[BLOBS[2], BLOBS[0], BLOBS[4], BLOBS[5], BLOBS[7]]}
+      images={[
+        "/content/events/298753297-how-to-get-into-tech-part-2/gallery/IMG_3840.webp",
+        "/content/events/305451315-rights-and-unions/gallery/PXL_20250419_0930442362.webp",
+        "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0820206402.webp",
+        "/content/events/302750416-key-to-resume/gallery/IMG_20240907_1732152.webp",
+        "/content/events/301456891-workshop-like-s3/gallery/IMG_7679.webp",
+      ]}
+    />
+  </ContentSection>
+  <Cut>
+    <ContentSection title="OK History">
+      <div class="prose prose-lg grid max-w-none grid-cols-1 gap-16 md:grid-cols-2">
         <div>
-          <h4 class="font-bold">How to Get Involved</h4>
           <p>
-            Join our Discord and introduce yourself! Look for the Volunteer role or chat with us at
-            any meetup.
+            Orignally, OKTech was started 2015 as a Web Development Meetup Group in Osaka, called
+            OWDDM. A Kyoto sister group was started called KWDDM.
           </p>
+          <p>IN 2025</p>
+        </div>
+        <div>
+          <p>TODO</p>
         </div>
       </div>
-      <ImagePlaceholder />
-    </div>
-  </Section>
+    </ContentSection>
+  </Cut>
 
-  <Section
-    title="Stay Connected"
-    description="The best part of OKTech happens between events. Join our Discord to discuss projects, share resources, find collaborators, or just chat about the latest tech trends. We've built a supportive online space where questions are welcomed and wins are celebrated."
-    wide
-    class="text-center"
-  >
-    <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
-      <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-          <h3 class="card-title justify-center">
-            <Icon name="lucide:message-circle" class="h-8 w-8" />
-            Join Our Discord
-          </h3>
-          <p>
-            Connect with fellow developers, get help with your projects, and stay updated on events.
-          </p>
-          <div class="card-actions justify-center">
-            <Link href="/discord" class="btn btn-primary">Join Discord</Link>
-          </div>
-        </div>
-      </div>
-
-      <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-          <h3 class="card-title justify-center">
-            <Icon name="lucide:share-2" class="h-8 w-8" />
-            Follow Our Journey
-          </h3>
-          <p>Stay up to date with announcements, event photos, and community highlights.</p>
-          <div class="card-actions justify-center">
-            <a
-              href="https://www.meetup.com/osaka-kyoto-tech-meetup/"
-              target="_blank"
-              class="btn btn-primary"
-            >
-              Follow on Meetup
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Section>
-
-  <Section
-    split
-    title="How We Work"
-    description="OKTech operates as a transparent, community-driven organization. While we have organizers who handle the logistics and final decisions, every volunteer has a voice in shaping our direction. We discuss ideas openly, work collaboratively, and believe the best communities are built by the people who show up. Want to help organize an event, suggest a workshop theme, or bring OKTech to your company? Let's talk!"
-  >
-    <div class="stats stats-vertical lg:stats-horizontal shadow">
-      <div class="stat">
-        <div class="stat-figure text-primary">
-          <Icon name="lucide:calendar-days" class="h-8 w-8" />
-        </div>
-        <div class="stat-title">Monthly Events</div>
-        <div class="stat-value text-primary">2+</div>
-        <div class="stat-desc">Osaka & Kyoto</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-figure text-secondary">
-          <Icon name="lucide:users" class="h-8 w-8" />
-        </div>
-        <div class="stat-title">Community</div>
-        <div class="stat-value text-secondary">Growing</div>
-        <div class="stat-desc">All skill levels welcome</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-figure text-accent">
-          <Icon name="lucide:heart" class="h-8 w-8" />
-        </div>
-        <div class="stat-title">Volunteer Run</div>
-        <div class="stat-value text-accent">100%</div>
-        <div class="stat-desc">Community driven</div>
-      </div>
-    </div>
-  </Section>
-
-  <Section
-    anchor="contact"
-    title="Ready to Join?"
-    description="Whether you want to attend your first meetup, share your expertise as a speaker, volunteer to help organize, or just connect with fellow tech enthusiasts – we're excited to meet you!"
-    class="text-center"
-    wide
-  >
-    <div class="flex flex-col items-center gap-8">
-      <div class="flex flex-wrap justify-center gap-4">
-        <Link href="/events" class="btn btn-primary btn-lg">
-          <Icon name="lucide:calendar" class="h-5 w-5" />
-          See Upcoming Events
-        </Link>
-        <Link href="/discord" class="btn btn-secondary btn-lg">
-          <Icon name="lucide:message-circle" class="h-5 w-5" />
-          Join Discord
-        </Link>
-        <a href="https://forms.gle/KifJzLSmcXUPxSFk7" target="_blank" class="btn btn-accent btn-lg">
-          <Icon name="lucide:mic" class="h-5 w-5" />
-          Propose a Talk
-        </a>
-      </div>
-      <div class="divider">Connect With Us</div>
-      <SocialsBig />
-    </div>
-  </Section>
+  <ContentSection title="Connect">
+    <SocialsBig />
+  </ContentSection>
 </PageLayout>

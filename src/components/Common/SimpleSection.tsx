@@ -1,15 +1,7 @@
 import Button from "./Button";
 import Container from "./Container";
 
-export default function SimpleSection({
-  title,
-  element,
-  wide = false,
-  grid = false,
-  children,
-  subTitle,
-  button,
-}: {
+export type SimpleSectionProps = {
   title: string | React.ReactNode;
   element?: React.ReactNode;
   wide?: boolean;
@@ -19,10 +11,21 @@ export default function SimpleSection({
   button?: {
     text: string;
     href: string;
+    className?: string;
   };
-}) {
+};
+
+export default function SimpleSection({
+  title,
+  element,
+  wide = false,
+  grid = false,
+  children,
+  subTitle,
+  button,
+}: SimpleSectionProps) {
   return (
-    <section className="flex flex-col gap-18">
+    <section className="flex flex-col gap-12">
       <Container className="flex flex-col items-center justify-center gap-4">
         <div className="flex items-center justify-center gap-4">
           <h2 className="text-center text-4xl font-bold">{title}</h2>
@@ -37,7 +40,7 @@ export default function SimpleSection({
       )}
       {button && (
         <Container className="flex justify-center">
-          <Button href={button.href} text={button.text} className="btn-lg" />
+          <Button href={button.href} text={button.text} className={button.className || "btn-lg"} />
         </Container>
       )}
     </section>
