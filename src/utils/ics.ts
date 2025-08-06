@@ -10,7 +10,6 @@ export function formatICSDate(date: Date): string {
     .replace(/\.\d{3}/, "");
 }
 
-
 export function generateEventICS(event: EventEnriched): string {
   const startDate = new Date(event.data.dateTime);
   const endDate = new Date(event.data.dateTime);

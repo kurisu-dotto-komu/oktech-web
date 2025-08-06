@@ -20,7 +20,14 @@ type TooltipButtonProps = {
 );
 
 export default function TooltipButton(props: TooltipButtonProps) {
-  const { tooltip, tooltipPosition = "top", children, className = "", as = "button" } = props;
+  const {
+    tooltip,
+    tooltipPosition = "top",
+    children,
+    className = "",
+    as = "button",
+    ...restProps
+  } = props;
   const tooltipClass = tooltipPosition === "top" ? "tooltip-top" : `tooltip-${tooltipPosition}`;
 
   return (
@@ -28,14 +35,14 @@ export default function TooltipButton(props: TooltipButtonProps) {
       {as === "link" ? (
         <LinkReact
           className={className}
-          {...(props as Extract<TooltipButtonProps, { as: "link" }>)}
+          {...(restProps as Extract<TooltipButtonProps, { as: "link" }>)}
         >
           {children}
         </LinkReact>
       ) : (
         <button
           className={className}
-          {...(props as Extract<TooltipButtonProps, { as?: "button" }>)}
+          {...(restProps as Extract<TooltipButtonProps, { as?: "button" }>)}
         >
           {children}
         </button>

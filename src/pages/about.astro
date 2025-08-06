@@ -5,6 +5,8 @@ import Section from "@/components/Common/Section";
 import SocialsBig from "@/components/Common/SocialsBig";
 import Link from "@/components/Common/LinkAstro.astro";
 import { Icon } from "astro-icon/components";
+import SimpleSection from "@/components/Common/SimpleSection";
+import Container from "@/components/Common/Container";
 ---
 
 <PageLayout
@@ -30,13 +32,25 @@ import { Icon } from "astro-icon/components";
     </div>
   </div>
 
-  <Section
-    split
-    title="What We're All About"
-    description="OKTech is a volunteer-driven, non-profit community organizing tech meetups across Kansai. We typically host one meetup per month in each city, featuring presentations from community members on topics they're passionate about. Our events are in English and cover everything from frontend and backend development to design, cloud architecture, AI, and even game development. No prior skills required – if you're interested in tech, you belong here!"
-  >
-    <ImagePlaceholder />
-  </Section>
+  <Container>
+    <div class="flex flex-col items-center justify-center gap-20 lg:flex-row">
+      <div class="h-90 w-90">
+        TODO
+        <!-- <LandingStatsSlideshow client:load totalEvents={totalEvents} uniqueVenues={uniqueVenues} /> -->
+      </div>
+
+      <div class="flex max-w-xl flex-col gap-8 text-center">
+        <SimpleSection title="About OKTech" button={{ text: "Learn More", href: "/about" }}>
+          <p class="text-lg">
+            A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan.
+            We invite people from all walks of web-life and encourage members to present topics they
+            enjoy. Join us for technical workshops, study sessions, and social gatherings in Osaka
+            and Kyoto.
+          </p>
+        </SimpleSection>
+      </div>
+    </div>
+  </Container>
 
   <Section
     split

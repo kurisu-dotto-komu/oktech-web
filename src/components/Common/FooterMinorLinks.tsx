@@ -12,12 +12,12 @@ export default function FooterMinorLinks() {
           const Component = item.component;
           return <Component key={item.href} label={item.label} href={item.href} icon={item.icon} />;
         }
-        
+
         // Default link without icon
         return (
-          <LinkReact 
-            key={item.href} 
-            href={item.href} 
+          <LinkReact
+            key={item.href}
+            href={item.href}
             className="link link-hover"
             target={item.target}
             rel={item.target === "_blank" ? "noopener noreferrer" : undefined}

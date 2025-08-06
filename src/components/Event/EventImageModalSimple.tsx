@@ -105,15 +105,15 @@ export default function EventImageModal({
 
   // Handle both touch and mouse events for swipe/drag navigation
   const handlePointerStart = (e: React.TouchEvent | React.MouseEvent) => {
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+
     startX.current = clientX;
     startY.current = clientY;
     isDragging.current = true;
-    
+
     // Prevent text selection during drag
-    if (!('touches' in e)) {
+    if (!("touches" in e)) {
       e.preventDefault();
     }
   };
@@ -121,12 +121,12 @@ export default function EventImageModal({
   const handlePointerEnd = (e: React.TouchEvent | React.MouseEvent) => {
     if (startX.current === null || startY.current === null || !isDragging.current) return;
 
-    const clientX = 'changedTouches' in e ? e.changedTouches[0].clientX : e.clientX;
-    const clientY = 'changedTouches' in e ? e.changedTouches[0].clientY : e.clientY;
-    
+    const clientX = "changedTouches" in e ? e.changedTouches[0].clientX : e.clientX;
+    const clientY = "changedTouches" in e ? e.changedTouches[0].clientY : e.clientY;
+
     const deltaX = clientX - startX.current;
     const deltaY = clientY - startY.current;
-    
+
     // Only trigger swipe if horizontal movement is greater than vertical
     // and the swipe distance is significant (more than 50px)
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
@@ -138,7 +138,7 @@ export default function EventImageModal({
         onNext();
       }
     }
-    
+
     startX.current = null;
     startY.current = null;
     isDragging.current = false;
@@ -155,10 +155,10 @@ export default function EventImageModal({
   const maxDots = 10;
   const dotsToShow = Math.min(totalImages, maxDots);
   const halfDots = Math.floor(dotsToShow / 2);
-  
+
   let startDot = 0;
   let endDot = totalImages;
-  
+
   if (totalImages > maxDots) {
     if (currentIndex < halfDots) {
       // Near the beginning
@@ -240,8 +240,8 @@ export default function EventImageModal({
             {/* Modal box with image - simple version without zoom */}
             <div className="rounded-box w-full overflow-hidden">
               {/* Image container with touch and mouse handlers */}
-              <div 
-                className="relative flex aspect-[3/4] items-center justify-center bg-black sm:aspect-square md:aspect-[4/3] cursor-grab active:cursor-grabbing"
+              <div
+                className="relative flex aspect-[3/4] cursor-grab items-center justify-center bg-black active:cursor-grabbing sm:aspect-square md:aspect-[4/3]"
                 onTouchStart={handlePointerStart}
                 onTouchEnd={handlePointerEnd}
                 onMouseDown={handlePointerStart}
@@ -251,7 +251,7 @@ export default function EventImageModal({
                 <img
                   src={isFullImageLoaded ? selectedImage.fullSrc : selectedImage.thumbnailSrc}
                   alt={selectedImage.data.caption ?? ""}
-                  className="h-full w-full object-contain select-none pointer-events-none"
+                  className="pointer-events-none h-full w-full object-contain select-none"
                   data-testid="modal-main-image"
                   draggable={false}
                 />
@@ -281,7 +281,7 @@ export default function EventImageModal({
           {/* Navigation dots with sliding window */}
           <div className="mt-4 flex items-center justify-center gap-2">
             {totalImages > maxDots && startDot > 0 && (
-              <span className="text-white/50 text-sm">...</span>
+              <span className="text-sm text-white/50">...</span>
             )}
             {Array.from({ length: endDot - startDot }).map((_, i) => {
               const index = startDot + i;
@@ -297,7 +297,7 @@ export default function EventImageModal({
               );
             })}
             {totalImages > maxDots && endDot < totalImages && (
-              <span className="text-white/50 text-sm">...</span>
+              <span className="text-sm text-white/50">...</span>
             )}
           </div>
         </div>
