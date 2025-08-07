@@ -12,7 +12,7 @@ export async function GET() {
 
   // Build ICS content
   const icsEvents = sortedEvents.map((event) => generateEventICS(event));
-  const icsContent = wrapICSCalendar(icsEvents, `${SITE.longName} Events`);
+  const icsContent = wrapICSCalendar(icsEvents, `${SITE.shortName} Events`);
 
   return new Response(icsContent, {
     headers: {
