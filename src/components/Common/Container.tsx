@@ -8,6 +8,7 @@ interface ContainerProps {
   className?: string;
   class?: string;
   wide?: boolean;
+  thin?: boolean;
   grid?: boolean;
   children: ReactNode;
 }
@@ -15,6 +16,7 @@ interface ContainerProps {
 export default function Container({
   className,
   wide = false,
+  thin = false,
   grid = false,
   children,
 }: ContainerProps) {
@@ -22,7 +24,9 @@ export default function Container({
     <div
       className={clsx([
         "mx-auto px-4 sm:px-6 lg:px-8",
-        wide ? "w-full max-w-[1800px]" : "w-full max-w-6xl",
+        wide && "w-full max-w-[1800px]",
+        thin && "max-w-4xl",
+        !wide && !thin && "w-full max-w-6xl",
         className,
       ])}
     >

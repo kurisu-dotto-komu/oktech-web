@@ -22,7 +22,7 @@ const hasHeaderSlot = Astro.slots.has("header");
 ---
 
 <PageLayout title={pageTitle || title} className="pt-32 pb-22">
-  <Container>
+  <Container thin>
     <div class="mb-12 flex items-center justify-between">
       <h1 class="text-5xl font-bold">{title}</h1>
       {hasHeaderSlot && <slot name="header" />}
@@ -42,6 +42,8 @@ const hasHeaderSlot = Astro.slots.has("header");
         )
       }
     </div>
-    <slot />
+    <div class="prose prose-lg max-w-none">
+      <slot />
+    </div>
   </Container>
 </PageLayout>

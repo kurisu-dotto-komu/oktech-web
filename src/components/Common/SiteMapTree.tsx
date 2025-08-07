@@ -29,10 +29,10 @@ function SitemapSection({
             <Link href={section.href} className="link link-hover">
               {section.title}
             </Link>
-            <span className="text-base-content/50 ml-2 text-sm">{section.href}</span>
+            <div className="text-base-content/50 ml-2 text-sm">{section.href}</div>
           </>
         ) : (
-          <span className="text-base-content/70">{section.title}</span>
+          <div className="text-base-content/70">{section.title}</div>
         )}
       </h3>
       {showOGImages && section.href && (
@@ -48,9 +48,7 @@ function SitemapSection({
       {section.children.length > 0 && (
         <div
           className={
-            showOGImages
-              ? "grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-5"
-              : "list-none space-y-1 md:ml-4"
+            showOGImages ? "grid grid-cols-1 gap-4 md:grid-cols-3" : "list-none space-y-1 md:ml-4"
           }
         >
           {section.children.map((child) => (
@@ -69,7 +67,7 @@ function SitemapSection({
                 <Link href={child.href} className="link link-hover block text-sm">
                   {child.title}
                 </Link>
-                <span className="text-base-content/50 text-xs break-all">{child.href}</span>
+                <div className="text-base-content/50 text-xs">{child.href}</div>
               </div>
             </div>
           ))}
