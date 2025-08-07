@@ -32,8 +32,8 @@ export function EventsFilter({ availableFilters, currentView }: EventsFilterProp
             data-testid="location-filter-dropdown"
           />
         )}
-
-        {availableFilters.topics.length > 0 && (
+        {/* TODO: Add topics back in */}
+        {false && availableFilters.topics.length > 0 && (
           <EventsFilterDropdown
             id="topics"
             label="Topics"
