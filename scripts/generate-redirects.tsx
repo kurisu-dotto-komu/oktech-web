@@ -9,7 +9,7 @@
  *        or: npx tsx scripts/generate-redirects.tsx
  */
 import { readdirSync, writeFileSync } from "fs";
-import { join, resolve } from "path";
+import { resolve } from "path";
 
 // Type for the redirect structure
 interface Redirects {

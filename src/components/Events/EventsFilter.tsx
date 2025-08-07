@@ -29,7 +29,6 @@ export function EventsFilter({ availableFilters, currentView }: EventsFilterProp
             id="location"
             label="Location"
             options={availableFilters.locations}
-            multiple={false}
             data-testid="location-filter-dropdown"
           />
         )}
@@ -39,7 +38,6 @@ export function EventsFilter({ availableFilters, currentView }: EventsFilterProp
             id="topics"
             label="Topics"
             options={availableFilters.topics}
-            multiple={true}
             data-testid="topics-filter-dropdown"
           />
         )}

@@ -8,7 +8,6 @@ interface EventsFilterDropdownProps {
   id: "topics" | "location";
   label: string;
   options: string[];
-  multiple?: boolean;
   "data-testid"?: string;
 }
 
@@ -16,7 +15,6 @@ export default function EventsFilterDropdown({
   id,
   label,
   options,
-  multiple = false,
   "data-testid": dataTestId,
 }: EventsFilterDropdownProps) {
   const { currentFilters, updateFilter } = useEventsFilter();
