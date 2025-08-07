@@ -1,6 +1,7 @@
 ---
 import Container from "@/components/Common/Container";
 import BlobSlideshow from "@/components/Common/BlobSlideshow.astro";
+import Parallax from "@/components/Common/Parallax";
 import Cut from "../Common/Cut";
 ---
 
@@ -23,19 +24,21 @@ import Cut from "../Common/Cut";
         </p>
       </div>
       <div class="md:-my-26 md:-mr-12">
-        <BlobSlideshow
-          images={[
-            "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp",
-            "/content/events/301456891-workshop-like-s3/gallery/IMG_7669.webp",
-            "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847554502.webp",
-            "/content/events/263532260-hot-summer-hot-topics-osaka-web-dev-and-design-meetup-in-august/gallery/255202.webp",
-            "/content/events/299830334-vim-and-noise/gallery/IMG_20240413_1728142.webp",
-            "/content/events/299335046-osaka-hanami-2024/gallery/IMG_9924.webp",
-            "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp",
-            "/content/events/299455127-wasm-airplanes-and-llm/gallery/IMG_9659.webp",
-            "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp",
-          ]}
-        />
+        <Parallax client:load>
+          <BlobSlideshow
+            images={[
+              "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp",
+              "/content/events/301456891-workshop-like-s3/gallery/IMG_7669.webp",
+              "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847554502.webp",
+              "/content/events/263532260-hot-summer-hot-topics-osaka-web-dev-and-design-meetup-in-august/gallery/255202.webp",
+              "/content/events/299830334-vim-and-noise/gallery/IMG_20240413_1728142.webp",
+              "/content/events/299335046-osaka-hanami-2024/gallery/IMG_9924.webp",
+              "/content/events/302995505-how-to-present-and-sql/gallery/DSCF0941.webp",
+              "/content/events/299455127-wasm-airplanes-and-llm/gallery/IMG_9659.webp",
+              "/content/events/308580120-agentic-sentiments/gallery/PXL_20250719_0946379792.webp",
+            ]}
+          />
+        </Parallax>
       </div>
     </div>
   </Container>
