@@ -13,15 +13,18 @@ export default function SocialsFooter({ className = "" }: SocialsFooterProps) {
 
         if ((social as any).type === "calendar") {
           return (
-            <CalendarFeeds key={social.label} dropdownPosition="top" className="dropdown-end">
-              <button
-                aria-label={social.label}
-                className="btn btn-ghost btn-circle btn-sm hover:text-primary"
-                title={social.label}
-              >
-                <IconComponent size={18} />
-              </button>
-            </CalendarFeeds>
+            <div key={social.label} className="tooltip tooltip-top" data-tip={social.label}>
+              <CalendarFeeds dropdownPosition="top" className="dropdown-end">
+                <span
+                  aria-label={social.label}
+                  className="btn btn-ghost btn-circle btn-sm hover:text-primary"
+                  role="button"
+                  tabIndex={0}
+                >
+                  <IconComponent size={18} />
+                </span>
+              </CalendarFeeds>
+            </div>
           );
         }
 
