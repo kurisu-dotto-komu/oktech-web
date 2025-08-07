@@ -5,6 +5,8 @@ import { LuChevronLeft, LuChevronRight, LuX } from "react-icons/lu";
 import type { EventEnriched, GalleryImage } from "@/content";
 import { formatDate } from "@/utils/formatDate";
 
+import Container from "../Common/Container";
+
 interface Props {
   isOpen: boolean;
   selectedImage: GalleryImage | null;
@@ -190,21 +192,15 @@ export default function EventImageModal({
         }
       }}
     >
-      <div
-        className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8"
-        onClick={(e) => {
-          // Also handle clicks on the container
-          if (e.target === e.currentTarget) {
-            onClose();
-          }
-        }}
-      >
-        <div className="flex w-full max-w-[90vw] flex-col items-center text-white lg:max-w-[80vw] xl:max-w-[1200px]">
-          {/* Header with title and close button */}
-          <div className="mb-4 flex w-full items-end justify-between px-1">
-            <div className="flex flex-wrap-reverse items-baseline gap-4">
-              <h3 className="text-lg font-semibold drop-shadow-lg">{event.data.title}</h3>
-              <span className="text-base font-normal">
+      <div className="bg-black/2- fixed inset-0 z-[9999] flex flex-col">
+        {/* Header with title and close button - flexible height */}
+        <Container wide>
+          <div className="flex min-h-[60px] items-start justify-between p-4 backdrop-blur-sm">
+            <div className="flex flex-1 flex-col gap-1 pr-4">
+              <h3 className="text-lg font-semibold text-white drop-shadow-lg sm:text-xl">
+                {event.data.title}
+              </h3>
+              <span className="text-sm text-white/80 sm:text-base">
                 {formatDate(event.data.dateTime, "long")}
               </span>
             </div>
@@ -213,93 +209,93 @@ export default function EventImageModal({
               onClick={onClose}
               aria-label="Close modal"
             >
-              <LuX size={24} />
+              <LuX size={28} />
             </button>
           </div>
+        </Container>
 
-          {/* Container for modal box and navigation arrows */}
-          <div className="relative flex w-full items-center">
-            {/* Left navigation arrow */}
-            <button
-              className="absolute -left-12 z-20 cursor-pointer p-2 text-white transition-colors hover:text-white/80 sm:-left-16"
-              onClick={onPrevious}
-              aria-label="Previous image"
-            >
-              <LuChevronLeft size={32} />
-            </button>
+        {/* Main content area - takes remaining space */}
+        <div className="group relative flex flex-1 items-center justify-center overflow-hidden">
+          {/* Left navigation arrow - fixed position */}
+          <button
+            className="absolute left-2 z-20 cursor-pointer rounded-full bg-black/50 p-3 text-white opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 hover:bg-black/70 sm:left-4"
+            onClick={onPrevious}
+            aria-label="Previous image"
+          >
+            <LuChevronLeft size={28} />
+          </button>
 
-            {/* Right navigation arrow */}
-            <button
-              className="absolute -right-12 z-20 cursor-pointer p-2 text-white transition-colors hover:text-white/80 sm:-right-16"
-              onClick={onNext}
-              aria-label="Next image"
-            >
-              <LuChevronRight size={32} />
-            </button>
+          {/* Right navigation arrow - fixed position */}
+          <button
+            className="absolute right-2 z-20 cursor-pointer rounded-full bg-black/50 p-3 text-white opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 hover:bg-black/70 sm:right-4"
+            onClick={onNext}
+            aria-label="Next image"
+          >
+            <LuChevronRight size={28} />
+          </button>
 
-            {/* Modal box with image - simple version without zoom */}
-            <div className="rounded-box w-full overflow-hidden">
-              {/* Image container with touch and mouse handlers */}
-              <div
-                className="relative flex aspect-[3/4] cursor-grab items-center justify-center bg-black active:cursor-grabbing sm:aspect-square md:aspect-[4/3]"
-                onTouchStart={handlePointerStart}
-                onTouchEnd={handlePointerEnd}
-                onMouseDown={handlePointerStart}
-                onMouseUp={handlePointerEnd}
-                onMouseLeave={handleMouseLeave}
-              >
-                <img
-                  src={isFullImageLoaded ? selectedImage.fullSrc : selectedImage.thumbnailSrc}
-                  alt={selectedImage.data.caption ?? ""}
-                  className="pointer-events-none h-full w-full object-contain select-none"
-                  data-testid="modal-main-image"
-                  draggable={false}
-                />
-                {/* Hidden preloader for full image */}
-                {!isFullImageLoaded && (
-                  <img
-                    src={selectedImage.fullSrc}
-                    alt=""
-                    className="absolute h-0 w-0 opacity-0"
-                    onLoad={() => setIsFullImageLoaded(true)}
-                    aria-hidden="true"
-                  />
-                )}
+          {/* Image container - fills available space */}
+          <div
+            className="relative h-full w-full cursor-grab active:cursor-grabbing"
+            onTouchStart={handlePointerStart}
+            onTouchEnd={handlePointerEnd}
+            onMouseDown={handlePointerStart}
+            onMouseUp={handlePointerEnd}
+            onMouseLeave={handleMouseLeave}
+          >
+            <img
+              src={isFullImageLoaded ? selectedImage.fullSrc : selectedImage.thumbnailSrc}
+              alt={selectedImage.data.caption ?? ""}
+              className="pointer-events-none h-full w-full object-contain select-none"
+              data-testid="modal-main-image"
+              draggable={false}
+            />
+            {/* Hidden preloader for full image */}
+            {!isFullImageLoaded && (
+              <img
+                src={selectedImage.fullSrc}
+                alt=""
+                className="absolute h-0 w-0 opacity-0"
+                onLoad={() => setIsFullImageLoaded(true)}
+                aria-hidden="true"
+              />
+            )}
 
-                {/* Caption overlay */}
-                {selectedImage.data.caption && (
-                  <div className="rounded-box absolute bottom-2 left-1/2 max-w-[90%] -translate-x-1/2 transform bg-black/80 px-4 py-2 backdrop-blur-sm">
-                    <p data-testid="modal-image-caption" className="text-center text-sm text-white">
-                      {selectedImage.data.caption}
-                    </p>
-                  </div>
-                )}
+            {/* Caption overlay */}
+            {selectedImage.data.caption && (
+              <div className="absolute bottom-20 left-1/2 max-w-[90%] -translate-x-1/2 transform rounded-lg bg-black/80 px-4 py-2 backdrop-blur-sm sm:bottom-24">
+                <p
+                  data-testid="modal-image-caption"
+                  className="text-center text-sm text-white sm:text-base"
+                >
+                  {selectedImage.data.caption}
+                </p>
               </div>
-            </div>
+            )}
           </div>
+        </div>
 
-          {/* Navigation dots with sliding window */}
-          <div className="mt-4 flex items-center justify-center gap-2">
-            {totalImages > maxDots && startDot > 0 && (
-              <span className="text-sm text-white/50">...</span>
-            )}
-            {Array.from({ length: endDot - startDot }).map((_, i) => {
-              const index = startDot + i;
-              return (
-                <button
-                  key={index}
-                  onClick={() => onDotClick(index)}
-                  className={`h-2 w-2 cursor-pointer rounded-full transition-all ${
-                    index === currentIndex ? "w-8 bg-white" : "bg-white/50 hover:bg-white/70"
-                  }`}
-                  aria-label={`Go to image ${index + 1}`}
-                />
-              );
-            })}
-            {totalImages > maxDots && endDot < totalImages && (
-              <span className="text-sm text-white/50">...</span>
-            )}
-          </div>
+        {/* Bottom navigation dots - fixed height */}
+        <div className="flex h-[60px] items-center justify-center gap-2 bg-black/90 backdrop-blur-sm">
+          {totalImages > maxDots && startDot > 0 && (
+            <span className="text-sm text-white/50">...</span>
+          )}
+          {Array.from({ length: endDot - startDot }).map((_, i) => {
+            const index = startDot + i;
+            return (
+              <button
+                key={index}
+                onClick={() => onDotClick(index)}
+                className={`h-2 w-2 cursor-pointer rounded-full transition-all ${
+                  index === currentIndex ? "w-8 bg-white" : "bg-white/50 hover:bg-white/70"
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+              />
+            );
+          })}
+          {totalImages > maxDots && endDot < totalImages && (
+            <span className="text-sm text-white/50">...</span>
+          )}
         </div>
       </div>
       <form
