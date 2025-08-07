@@ -2,9 +2,7 @@ import type { ComponentType } from "react";
 
 import type { IconType } from "react-icons";
 import { FaDiscord, FaGithub, FaLinkedin, FaMeetup, FaXTwitter } from "react-icons/fa6";
-import { LuCalendar, LuFileText, LuHouse, LuInfo, LuMap, LuRss } from "react-icons/lu";
-
-import ICSTooltipLink from "@/components/Common/ICSTooltipLink";
+import { LuCalendar, LuFileText, LuHouse, LuInfo, LuMap } from "react-icons/lu";
 
 // Development mode flag - change this to false for production
 export const DEV_MODE = true;
@@ -65,20 +63,6 @@ export const MENU: {
     footerMinor: true,
     icon: LuMap,
   },
-  {
-    label: "RSS Feed",
-    href: "/rss.xml",
-    icon: LuRss,
-    footerMinor: true,
-    target: "_blank",
-  },
-  {
-    label: "Calendar Feed",
-    href: "/oktech-events.ics",
-    icon: LuCalendar,
-    footerMinor: true,
-    component: ICSTooltipLink,
-  },
 ];
 
 export const SOCIALS = [
@@ -86,30 +70,37 @@ export const SOCIALS = [
     icon: FaDiscord,
     href: "/discord",
     label: "Discord",
-    description: "Chat with us on our Discord Server",
+    description: "Join our community for real-time discussions and tech support",
   },
   {
     icon: FaMeetup,
     href: "https://www.meetup.com/osaka-web-designers-and-developers-meetup/",
     label: "Meetup",
-    description: "RSVP our next event on Meetup.com",
+    description: "RSVP for upcoming events and connect with local developers",
   },
   {
     icon: FaGithub,
     href: "https://github.com/owddm/owddm.com",
     label: "GitHub",
-    description: "Developers can watch us on Github",
+    description: "Contribute to our open-source projects and website",
   },
   {
     icon: FaXTwitter,
     href: "https://x.com/owddm",
     label: "X (Twitter)",
-    description: "Follow us on X (formally Twitter)",
+    description: "Stay updated with event announcements and tech news",
   },
   {
     icon: FaLinkedin,
     href: "https://www.linkedin.com/company/owddm-kwddm",
     label: "LinkedIn",
-    description: "Todo",
+    description: "Network with professionals and explore career opportunities",
+  },
+  {
+    icon: LuCalendar,
+    href: "#",
+    label: "Calendar",
+    description: "Subscribe to our event calendar and RSS feeds",
+    type: "calendar" as const,
   },
 ] as const;

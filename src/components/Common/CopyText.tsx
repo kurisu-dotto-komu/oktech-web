@@ -37,7 +37,7 @@ export default function CopyText({ text, label, className = "" }: CopyTextProps)
           className="btn btn-ghost btn-xs p-1"
           aria-label="Copy to clipboard"
         >
-          {copied ? <LuCheck className="text-success h-4 w-4" /> : <LuCopy className="h-4 w-4" />}
+          {copied ? <LuCheck className="h-4 w-4" /> : <LuCopy className="h-4 w-4" />}
         </button>
       </div>
     </div>

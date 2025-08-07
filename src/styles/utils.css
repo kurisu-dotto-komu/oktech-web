@@ -28,5 +28,8 @@
 }
 
 .text-link {
-  @apply decoration-base-content/20 hover:decoration-base-content/90 underline decoration-dotted underline-offset-2 transition-all duration-200;
+  @apply decoration-base-content/20 hover:decoration-primary-content/90 underline decoration-dotted underline-offset-2 transition-all duration-200;
+  &:hover {
+    @apply text-primary-content;
+  }
 }

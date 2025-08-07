@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
 import { FaGoogle, FaYahoo } from "react-icons/fa6";
-import { LuCalendar, LuCalendarPlus, LuChevronDown, LuRss } from "react-icons/lu";
+import { LuCalendar, LuCalendarPlus, LuChevronDown } from "react-icons/lu";
 
-import CopyText from "@/components/Common/CopyText";
+import CalendarFeeds from "@/components/Common/CalendarFeeds";
 import type { EventEnriched } from "@/content/events";
 import { resolveBaseUrl } from "@/utils/urlResolver";
 
@@ -97,7 +97,6 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
 
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${formattedStart}/${formattedEnd}&details=${details}&location=${location}&sf=true`;
   const yahooUrl = `https://calendar.yahoo.com/?v=60&title=${title}&st=${formattedStart}&et=${formattedEnd}&desc=${details}&in_loc=${location}`;
-  const icsUrl = `${baseUrl}/oktech-events.ics`;
 
   return (
     <details
@@ -132,21 +131,7 @@ export default function AddToCalendarDropdown({ event }: AddToCalendarDropdownPr
           />
         </Subsection>
         <Subsection title="Subscribe to All Events">
-          <Button
-            href="/rss.xml"
-            icon={<LuRss className="h-4 w-4" />}
-            text="RSS Feed"
-            testId="subscribe-rss"
-          />
-          <Button
-            href="/oktech-events.ics"
-            icon={<LuCalendar className="h-4 w-4" />}
-            text="Calendar Feed (ICS)"
-            testId="subscribe-ics"
-          />
-        </Subsection>
-        <Subsection title="Calendar Subscription URL">
-          <CopyText text={icsUrl} className="w-full" />
+          <CalendarFeeds inline className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2" />
         </Subsection>
       </div>
     </details>

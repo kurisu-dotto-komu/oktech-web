@@ -12,7 +12,7 @@ import Cut from "@/components/Common/Cut";
 <PageLayout
   title="About"
   description="Learn about OKTech - Osaka Kyoto Tech Meetup Group. Our mission is to build a thriving tech community through events, workshops, and networking opportunities. Discover our history and how to get involved."
-  className="flex flex-col gap-18 text-justify"
+  className="flex flex-col gap-18 pb-24 text-justify"
   flush
 >
   <Cut bottom="down" bgClass="bg-base-200" className="pt-42 pb-24">
@@ -138,7 +138,8 @@ import Cut from "@/components/Common/Cut";
     </ContentSection>
   </Cut>
 
-  <ContentSection title="Connect">
-    <SocialsBig />
-  </ContentSection>
+  <ContentSection title="Connect" />
+  <Container>
+    <SocialsBig client:load />
+  </Container>
 </PageLayout>
