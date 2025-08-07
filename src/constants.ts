@@ -85,12 +85,6 @@ export const SOCIALS = [
     description: "Our open-source projects and this website's source code",
   },
   {
-    icon: FaXTwitter,
-    href: "https://x.com/owddm",
-    label: "X (Twitter)",
-    description: "Stay updated with event announcements",
-  },
-  {
     icon: FaLinkedin,
     href: "https://www.linkedin.com/company/owddm-kwddm",
     label: "LinkedIn",

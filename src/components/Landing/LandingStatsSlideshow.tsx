@@ -58,6 +58,7 @@ export default function LandingStatsSlideshow({
   return (
     <BlobSlideshow
       data={stats}
+      blobOffset={1}
       renderer={renderer}
       slideDelay={1500}
       transitionSpeed={500}
