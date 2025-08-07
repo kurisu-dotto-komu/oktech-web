@@ -17,7 +17,7 @@ export default function Cut({
   bgClass?: string;
   className?: string;
 }) {
-  const cutSize = "4rem"; // Base cut height (32px)
+  const cutSize = "5rem"; // Base cut height (32px)
 
   // Default to both if no props are passed
   const noPropsSpecified = !top && !bottom && !both;
@@ -48,7 +48,7 @@ export default function Cut({
           "pointer-events-none absolute inset-0 z-0",
           bgClass,
           // Extend div beyond container to accommodate cuts
-          showTop && `-top-[4rem]`,
+          showTop && `-top-[5rem]`,
           showBottom && `-bottom-[4rem]`,
         )}
         style={{
