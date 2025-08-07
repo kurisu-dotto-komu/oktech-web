@@ -20,9 +20,11 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-8 text-xs lg:flex-row lg:items-baseline">
-          <FooterMinorLinks />
-          <div>
-            Copyright © {new Date().getFullYear()} {SITE.shortName}
+          <div className="flex items-center gap-4">
+            <span>
+              Copyright © {new Date().getFullYear()} {SITE.shortName}
+            </span>
+            <FooterMinorLinks />
           </div>
           <div className="opacity-50 hover:opacity-100">
             <a

@@ -99,7 +99,7 @@ export const SOCIALS = [
   {
     icon: LuCalendar,
     href: "#",
-    label: "Calendar",
+    label: "Calendar Subscription",
     description: "Subscribe to our event calendar and RSS feeds",
     type: "calendar" as const,
   },

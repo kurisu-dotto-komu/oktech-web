@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import clsx from "clsx";
-import { LuCalendar, LuRss } from "react-icons/lu";
+import { LuArrowUp, LuCalendar, LuRss } from "react-icons/lu";
 
 import CopyText from "@/components/Common/CopyText";
 import { resolveBaseUrl } from "@/utils/urlResolver";
@@ -13,7 +13,17 @@ interface CalendarFeedsProps {
   inline?: boolean;
 }
 
-function FeedBox({ url, Icon, label }: { url: string; Icon: React.ElementType; label: string }) {
+function FeedBox({
+  url,
+  Icon,
+  label,
+  infoText,
+}: {
+  url: string;
+  Icon: React.ElementType;
+  label: string;
+  infoText?: string;
+}) {
   return (
     <div className="flex flex-col gap-2">
       <a
@@ -26,6 +36,12 @@ function FeedBox({ url, Icon, label }: { url: string; Icon: React.ElementType; l
         <span>{label}</span>
       </a>
       <CopyText text={url} className="w-full" />
+      {infoText && (
+        <div className="text-base-content/70 flex w-56 items-start gap-3 px-2 text-xs">
+          <LuArrowUp className="mt-1 h-3 w-3 flex-shrink-0" />
+          <span>{infoText}</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -59,9 +75,19 @@ export default function CalendarFeeds({
   }, [inline]);
 
   const feedsContent = (
-    <div className={clsx((inline && className) || "flex flex-col gap-4")}>
-      <FeedBox url={icsUrl} Icon={LuCalendar} label="Calendar Feed (ICS)" />
-      <FeedBox url={rssUrl} Icon={LuRss} label="RSS Feed (XML)" />
+    <div className={clsx((inline && className) || "flex flex-col gap-6")}>
+      <FeedBox
+        url={icsUrl}
+        Icon={LuCalendar}
+        label="Calendar Feed (ICS)"
+        infoText="You can add this link to Outlook, iCal, Google Calendar, etc."
+      />
+      <FeedBox
+        url={rssUrl}
+        Icon={LuRss}
+        label="RSS Feed (XML)"
+        infoText="If you remember what RSS is, you know what to do."
+      />
     </div>
   );
 
