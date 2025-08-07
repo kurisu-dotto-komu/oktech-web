@@ -17,6 +17,8 @@ interface BlobSlideshowProps<T = string | ImageData> {
   className?: string;
   blobs?: string[];
   containerClassName?: string;
+  blobOffset?: number; // optional offset for starting blob index
+  startTimeOffset?: number; // optional delay before starting transitions (milliseconds)
 }
 
 export default function BlobSlideshow<T = string | ImageData>({
@@ -28,6 +30,8 @@ export default function BlobSlideshow<T = string | ImageData>({
   className = "",
   blobs = BLOBS,
   containerClassName = "",
+  blobOffset = 0,
+  startTimeOffset = 0,
 }: BlobSlideshowProps<T>) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentBlob, setCurrentBlob] = useState(0);
@@ -50,13 +54,22 @@ export default function BlobSlideshow<T = string | ImageData>({
   useEffect(() => {
     if (items.length <= 1) return;
 
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % items.length);
-      setCurrentBlob((prev) => (prev + 1) % blobs.length);
-    }, slideDelay);
+    let intervalTimer: NodeJS.Timeout;
 
-    return () => clearInterval(timer);
-  }, [items.length, slideDelay, blobs.length]);
+    // Reason: Delay the start of transitions if startTimeOffset is provided
+    const startTimer = setTimeout(() => {
+      intervalTimer = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % items.length);
+        // Reason: Loop through same number of blobs as items to maintain 1:1 correspondence
+        setCurrentBlob((prev) => (prev + 1) % items.length);
+      }, slideDelay);
+    }, startTimeOffset);
+
+    return () => {
+      clearTimeout(startTimer);
+      if (intervalTimer) clearInterval(intervalTimer);
+    };
+  }, [items.length, slideDelay, startTimeOffset]);
 
   if (items.length === 0) return null;
 
@@ -81,7 +94,7 @@ export default function BlobSlideshow<T = string | ImageData>({
               <path
                 fill="white"
                 transform="translate(0 0) scale(0.01)"
-                d={blobs[currentBlob]}
+                d={blobs[(currentBlob + blobOffset) % blobs.length]}
                 style={{ transition: `d ${transitionSpeed}ms cubic-bezier(0.68,-0.55,0.265,1.55)` }}
               />
             </mask>

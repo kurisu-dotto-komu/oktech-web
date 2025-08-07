@@ -17,7 +17,7 @@ function SectionLayout({ children, text, reverse }: ContentSectionProps) {
     <div
       className={clsx(
         "flex flex-col items-center justify-center gap-20 sm:flex-row",
-        reverse && "flex-col-reverse sm:flex-row-reverse",
+        reverse && "sm:flex-row-reverse",
       )}
     >
       {children}
@@ -26,12 +26,12 @@ function SectionLayout({ children, text, reverse }: ContentSectionProps) {
 }
 
 export default function ContentSection(props: ContentSectionProps) {
-  const { children, text, ...rest } = props;
+  const { children, text, className = "py-12", ...rest } = props;
   return (
     <Container>
       <SectionLayout {...props}>
         {!!text && children}
-        <SimpleSection {...rest}>
+        <SimpleSection className={className} {...rest}>
           {!text ? children : <p className="text-lg">{text}</p>}
         </SimpleSection>
       </SectionLayout>
