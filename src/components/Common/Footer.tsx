@@ -10,7 +10,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Footer() {
   return (
-    <footer className="bg-base-300 text-base-content overflow-hidden" data-testid="footer">
+    <footer className="bg-base-300 text-base-content" data-testid="footer">
       <Container className="flex flex-col gap-8 py-10">
         <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
           <MainMenu variant="footer" />

@@ -229,13 +229,9 @@ export function EventFilterProvider({
       url.searchParams.set("sort", filters.sort);
     }
 
-    // Updated URL - use replaceState on initial mount, pushState afterwards
-    if (isInitialMountRef.current) {
-      window.history.replaceState(filters, "", url.toString());
-    } else {
-      window.history.pushState(filters, "", url.toString());
-    }
-    // Don't dispatch popstate - it can cause unwanted side effects
+    // Reason: Astro View Transitions already handle history, so we should only use replaceState
+    // to avoid duplicate history entries that cause the back button issue
+    window.history.replaceState(filters, "", url.toString());
   }, []);
 
   useEffect(() => {
