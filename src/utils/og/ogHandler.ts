@@ -33,21 +33,24 @@ export async function createOGImageHandler({
       });
     }
 
-    // Fetch fonts - including Japanese font support
-    const [regularFont, boldFont, japaneseFont, japaneseBoldFont] = await Promise.all([
-      fetch("https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.ttf").then(
-        (res) => res.arrayBuffer(),
-      ),
-      fetch("https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.ttf").then(
-        (res) => res.arrayBuffer(),
-      ),
-      // Noto Sans JP for Japanese characters
-      fetch(
-        "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-400-normal.ttf",
-      ).then((res) => res.arrayBuffer()),
-      fetch(
-        "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-700-normal.ttf",
-      ).then((res) => res.arrayBuffer()),
+    // Load local fonts from assets
+    const fs = await import("fs/promises");
+    const path = await import("path");
+    
+    const fontsDir = path.join(process.cwd(), "src/assets/fonts");
+    
+    const [
+      notoRegular,
+      notoMedium,
+      notoBold,
+      lexendMedium,
+      lexendBold,
+    ] = await Promise.all([
+      fs.readFile(path.join(fontsDir, "NotoSans-Regular.ttf")),
+      fs.readFile(path.join(fontsDir, "NotoSans-Medium.ttf")),
+      fs.readFile(path.join(fontsDir, "NotoSans-Bold.ttf")),
+      fs.readFile(path.join(fontsDir, "Lexend-Medium.ttf")),
+      fs.readFile(path.join(fontsDir, "Lexend-Bold.ttf")),
     ]);
 
     // Generate the markup using the provided component
@@ -57,27 +60,35 @@ export async function createOGImageHandler({
       width,
       height,
       fonts: [
+        // Body font - Noto Sans
         {
-          name: "Inter",
-          data: regularFont,
+          name: "Noto Sans",
+          data: notoRegular,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Inter",
-          data: boldFont,
+          name: "Noto Sans",
+          data: notoMedium,
+          weight: 500,
+          style: "normal",
+        },
+        {
+          name: "Noto Sans",
+          data: notoBold,
           weight: 700,
           style: "normal",
         },
+        // Header font - Lexend
         {
-          name: "Noto Sans JP",
-          data: japaneseFont,
-          weight: 400,
+          name: "Lexend",
+          data: lexendMedium,
+          weight: 500,
           style: "normal",
         },
         {
-          name: "Noto Sans JP",
-          data: japaneseBoldFont,
+          name: "Lexend",
+          data: lexendBold,
           weight: 700,
           style: "normal",
         },

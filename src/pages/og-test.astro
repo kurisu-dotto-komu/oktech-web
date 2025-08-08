@@ -72,6 +72,21 @@ const cacheBuster = isDev ? `?v=${Date.now()}` : "";
         )
       }
 
+      <!-- About Page OG Image -->
+      <section>
+        <h2 class="mb-4 text-2xl font-semibold">About Page OG Image</h2>
+        <div class="bg-base-200 rounded-lg p-4">
+          <p class="mb-2 text-sm opacity-70">Used for: /about page (uses default OG image)</p>
+          <img
+            src={`/og.png${cacheBuster}`}
+            alt="About Page OG Image"
+            class="border-base-300 rounded border"
+            width="1200"
+            height="630"
+          />
+        </div>
+      </section>
+
       <!-- Additional test cases -->
       <section>
         <h2 class="mb-4 text-2xl font-semibold">Quick Links to Other Examples</h2>

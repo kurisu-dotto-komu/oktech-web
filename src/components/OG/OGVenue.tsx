@@ -1,4 +1,5 @@
-import { twStyle } from "@/utils/og/tw";
+import { themeColorsHex } from "@/utils/og/theme-colors";
+import { twMerge, twStyle } from "@/utils/og/tw";
 
 import OGLayout, { IconWrapper, LocationIcon } from "./OGLayout";
 
@@ -17,6 +18,7 @@ interface OGVenueProps {
 }
 
 export default function OGVenue({ venue }: OGVenueProps) {
+  const colors = themeColorsHex.light;
   // Create location string
   const locationParts = [
     venue.data.address,
@@ -34,15 +36,24 @@ export default function OGVenue({ venue }: OGVenueProps) {
             <IconWrapper>
               <LocationIcon />
             </IconWrapper>
-            <span style={twStyle("text-white/95 text-[22px]")}>{location}</span>
+            <span style={twMerge("text-[20px]", {
+              color: colors.baseContent,
+              opacity: 0.8,
+            })}>{location}</span>
           </div>
         )}
 
         <div style={twStyle("flex flex-col gap-3")}>
-          <p style={twStyle("text-white/90 text-xl leading-relaxed")}>
+          <p style={twMerge("text-xl leading-relaxed", {
+            color: colors.baseContent,
+            opacity: 0.7,
+          })}>
             Host venue for OKTech community events and meetups.
           </p>
-          <p style={twStyle("text-white/80 text-lg")}>
+          <p style={twMerge("text-lg", {
+            color: colors.baseContent,
+            opacity: 0.6,
+          })}>
             Join us at this location for networking, learning, and collaboration.
           </p>
         </div>

@@ -1,0 +1,96 @@
+// Auto-generated from src/styles/themes.css
+// Run: npm run extract-themes
+
+export const themeColors = {
+  "dark": {
+    "base-100": "oklch(21% 0.006 56.043)",
+    "base-200": "oklch(14% 0.004 49.25)",
+    "base-300": "oklch(0% 0 0)",
+    "baseContent": "oklch(84.955% 0 0)",
+    "primary": "oklch(77.48% 0.204 60.62)",
+    "primaryContent": "oklch(19.693% 0.004 196.779)",
+    "secondary": "oklch(45.98% 0.248 305.03)",
+    "secondaryContent": "oklch(89.196% 0.049 305.03)",
+    "accent": "oklch(64.8% 0.223 136.073)",
+    "accentContent": "oklch(0% 0 0)",
+    "neutral": "oklch(24.371% 0.046 65.681)",
+    "neutralContent": "oklch(84.874% 0.009 65.681)",
+    "info": "oklch(54.615% 0.215 262.88)",
+    "infoContent": "oklch(90.923% 0.043 262.88)",
+    "success": "oklch(62.705% 0.169 149.213)",
+    "successContent": "oklch(12.541% 0.033 149.213)",
+    "warning": "oklch(66.584% 0.157 58.318)",
+    "warningContent": "oklch(13.316% 0.031 58.318)",
+    "error": "oklch(65.72% 0.199 27.33)",
+    "errorContent": "oklch(13.144% 0.039 27.33)"
+  },
+  "light": {
+    "base-100": "oklch(97.788% 0.004 56.375)",
+    "base-200": "oklch(93.982% 0.007 61.449)",
+    "base-300": "oklch(91.586% 0.006 53.44)",
+    "baseContent": "oklch(23.574% 0.066 313.189)",
+    "primary": "oklch(0.757 0.12 173.7)",
+    "primaryContent": "oklch(0.436 0.069 173.7)",
+    "secondary": "oklch(90% 0.063 306.703)",
+    "secondaryContent": "oklch(43% 0.218 303.724)",
+    "accent": "oklch(90% 0.076 70.697)",
+    "accentContent": "oklch(47% 0.157 37.304)",
+    "neutral": "oklch(27% 0.006 286.033)",
+    "neutralContent": "oklch(92% 0.004 286.32)",
+    "info": "oklch(95% 0.045 203.388)",
+    "infoContent": "oklch(52% 0.105 223.128)",
+    "success": "oklch(93% 0.127 124.321)",
+    "successContent": "oklch(45% 0.124 130.933)",
+    "warning": "oklch(49% 0.265 301.924)",
+    "warningContent": "oklch(90% 0.063 306.703)",
+    "error": "oklch(51% 0.222 16.935)",
+    "errorContent": "oklch(94% 0.03 12.58)"
+  }
+} as const;
+
+export const themeColorsHex = {
+  "dark": {
+    "base-100": "#1b1816",
+    "base-200": "#0b0908",
+    "base-300": "#000000",
+    "baseContent": "#cdcdcd",
+    "primary": "#ff8f00",
+    "primaryContent": "#131616",
+    "secondary": "#7a00c2",
+    "secondaryContent": "#e3d4f6",
+    "accent": "#42aa00",
+    "accentContent": "#000000",
+    "neutral": "#2f1b05",
+    "neutralContent": "#d2ccc7",
+    "info": "#2563eb",
+    "infoContent": "#d2e2ff",
+    "success": "#18a34a",
+    "successContent": "#000a02",
+    "warning": "#d97708",
+    "warningContent": "#110500",
+    "error": "#f35248",
+    "errorContent": "#140202"
+  },
+  "light": {
+    "base-100": "#faf7f5",
+    "base-200": "#efeae6",
+    "base-300": "#e7e2df",
+    "baseContent": "#291334",
+    "primary": "#4bc9aa",
+    "primaryContent": "#1f5e4e",
+    "secondary": "#e9d4ff",
+    "secondaryContent": "#6b0bad",
+    "accent": "#ffd6a7",
+    "accentContent": "#9f2d00",
+    "neutral": "#262629",
+    "neutralContent": "#e4e4e7",
+    "info": "#ccf8fc",
+    "infoContent": "#007595",
+    "success": "#d6f796",
+    "successContent": "#3c6200",
+    "warning": "#8000d9",
+    "warningContent": "#e9d4ff",
+    "error": "#c50035",
+    "errorContent": "#ffe3e6"
+  }
+} as const;

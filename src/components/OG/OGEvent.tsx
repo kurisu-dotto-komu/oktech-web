@@ -1,4 +1,5 @@
-import { twStyle } from "@/utils/og/tw";
+import { themeColorsHex } from "@/utils/og/theme-colors";
+import { twMerge, twStyle } from "@/utils/og/tw";
 
 import OGLayout, { CalendarIcon, IconWrapper, LocationIcon } from "./OGLayout";
 
@@ -22,6 +23,7 @@ interface OGEventProps {
 }
 
 export default function OGEvent({ event }: OGEventProps) {
+  const colors = themeColorsHex.light;
   // Format date
   const eventDate = new Date(event.data.dateTime);
   const formattedDate = eventDate.toLocaleDateString("en-US", {
@@ -51,19 +53,28 @@ export default function OGEvent({ event }: OGEventProps) {
           <IconWrapper>
             <CalendarIcon />
           </IconWrapper>
-          <span style={twStyle("text-white/95 text-[22px]")}>{formattedDate}</span>
+          <span style={twMerge("text-[20px]", {
+            color: colors.baseContent,
+            opacity: 0.8,
+          })}>{formattedDate}</span>
         </div>
 
         <div style={twStyle("flex items-center gap-4")}>
           <IconWrapper>
             <LocationIcon />
           </IconWrapper>
-          <span style={twStyle("text-white/95 text-[22px]")}>{venueLocation}</span>
+          <span style={twMerge("text-[20px]", {
+            color: colors.baseContent,
+            opacity: 0.8,
+          })}>{venueLocation}</span>
         </div>
 
         {event.data.topics && event.data.topics.length > 2 && (
           <div style={twStyle("flex mt-2")}>
-            <p style={twStyle("text-white/85 text-lg")}>
+            <p style={twMerge("text-lg", {
+              color: colors.baseContent,
+              opacity: 0.6,
+            })}>
               Also featuring: {event.data.topics.slice(2).join(", ")}
             </p>
           </div>
