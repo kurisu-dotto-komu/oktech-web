@@ -1,78 +1,73 @@
-import type { ReactNode } from "react";
+import React from "react";
 
-import { SITE } from "@/constants";
+import { twMerge, twStyle } from "@/utils/og/tw";
 
 interface OGLayoutProps {
-  children: ReactNode;
-  gradient?: string;
-  bottomLeft?: ReactNode;
+  children: React.ReactNode;
+  title?: string;
+  subtitle?: string;
 }
 
-export default function OGLayout({
-  children,
-  gradient = "linear-gradient(135deg, #1a1c2e 0%, #2d1b69 100%)",
-  bottomLeft,
-}: OGLayoutProps) {
+export default function OGLayout({ children, title, subtitle }: OGLayoutProps) {
   return (
     <div
-      style={{
+      style={twMerge("h-full w-full flex flex-col bg-gradient-to-br from-primary to-secondary", {
         height: "100%",
         width: "100%",
         display: "flex",
-        background: gradient,
-        position: "relative",
-        fontFamily: "Inter, Nobile, sans-serif",
-      }}
+        flexDirection: "column",
+        background: "linear-gradient(135deg, #570df8 0%, #f000b8 100%)",
+        fontFamily:
+          "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+      })}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          width: "100%",
-          height: "100%",
-          padding: "48px",
-          position: "relative",
-        }}
-      >
-        {/* Main content */}
-        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>{children}</div>
+      {/* Main container */}
+      <div style={twStyle("flex flex-col flex-1 p-[60px]")}>
+        {/* Header */}
+        <div style={twStyle("flex justify-start items-center mb-10")}>
+          <span style={twStyle("text-[32px] font-bold text-primary-content tracking-tight")}>
+            OKTech
+          </span>
+        </div>
 
-        {/* Bottom section with optional left content and branding */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: bottomLeft ? "space-between" : "flex-end",
-            alignItems: "flex-end",
-            marginTop: "32px",
-          }}
-        >
-          {bottomLeft ? bottomLeft : null}
-
-          {/* Site branding */}
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <div
-              style={{
-                width: "48px",
-                height: "48px",
-                background: "white",
-                borderRadius: "12px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+        {/* Content area */}
+        <div style={twStyle("flex-1 flex flex-col justify-center max-w-[1000px]")}>
+          {/* Title if provided */}
+          {title && (
+            <h1
+              style={twMerge(
+                `font-bold text-primary-content leading-tight tracking-tight ${
+                  title.length > 50 ? "text-[56px]" : "text-[72px]"
+                } ${subtitle ? "mb-4" : "mb-8"}`,
+                {
+                  color: "#ffffff",
+                },
+              )}
             >
-              <span style={{ fontSize: "24px", fontWeight: "bold", color: "#1a1c2e" }}>
-                {SITE.shortName.charAt(0)}
+              {title}
+            </h1>
+          )}
+
+          {/* Subtitle if provided */}
+          {subtitle && (
+            <p style={twStyle("text-[28px] text-white/95 leading-tight mb-8 font-medium")}>
+              {subtitle}
+            </p>
+          )}
+
+          {/* Children content */}
+          <div style={twStyle("flex flex-col")}>{children}</div>
+        </div>
+
+        {/* Bottom branding */}
+        <div style={twStyle("flex justify-between items-center mt-10")}>
+          <div style={twStyle("flex items-center gap-3")}>
+            <div style={twStyle("w-1 h-8 bg-accent rounded-sm")} />
+            <div style={twStyle("flex flex-col")}>
+              <span style={twStyle("text-primary-content text-xl font-semibold")}>
+                Osaka Kansai Tech Community
               </span>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ color: "white", fontSize: "20px", fontWeight: 600 }}>
-                {SITE.shortName}
-              </span>
-              <span style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "14px" }}>
-                {SITE.longName}
-              </span>
+              <span style={twStyle("text-white/70 text-sm")}>Connect • Learn • Build • Grow</span>
             </div>
           </div>
         </div>
@@ -83,44 +78,25 @@ export default function OGLayout({
 
 // Common icon components for reuse
 export const CalendarIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
     <g>
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-      <line x1="16" y1="2" x2="16" y2="6"></line>
-      <line x1="8" y1="2" x2="8" y2="6"></line>
-      <line x1="3" y1="10" x2="21" y2="10"></line>
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
     </g>
   </svg>
 );
 
-export const LocationIcon = ({ size = 20, fill = false }: { size?: number; fill?: boolean }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill={fill ? "white" : "none"}
-    stroke={fill ? "none" : "white"}
-    strokeWidth={fill ? 0 : 2}
-  >
+export const LocationIcon = ({ size = 24 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
     <g>
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-      <circle cx="12" cy="10" r="3"></circle>
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
     </g>
   </svg>
 );
 
-export const IconWrapper = ({ children }: { children: ReactNode }) => (
-  <div
-    style={{
-      width: "40px",
-      height: "40px",
-      background: "rgba(255, 255, 255, 0.1)",
-      borderRadius: "8px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    {children}
-  </div>
+export const IconWrapper = ({ children }: { children: React.ReactNode }) => (
+  <div style={twStyle("flex items-center gap-3")}>{children}</div>
 );

@@ -1,3 +1,5 @@
+import { twStyle } from "@/utils/og/tw";
+
 import OGLayout, { CalendarIcon, IconWrapper, LocationIcon } from "./OGLayout";
 
 interface EventData {
@@ -19,12 +21,11 @@ interface OGEventProps {
   coverImageBase64?: string | null;
 }
 
-export default function OGEvent({ event, mapImageBase64, coverImageBase64 }: OGEventProps) {
+export default function OGEvent({ event }: OGEventProps) {
   // Format date
   const eventDate = new Date(event.data.dateTime);
   const formattedDate = eventDate.toLocaleDateString("en-US", {
     weekday: "long",
-    year: "numeric",
     month: "long",
     day: "numeric",
     hour: "numeric",
@@ -35,96 +36,36 @@ export default function OGEvent({ event, mapImageBase64, coverImageBase64 }: OGE
   // Get venue info
   const venueLocation = event.venue
     ? `${event.venue.title}${event.venue.city ? `, ${event.venue.city}` : ""}`
-    : undefined;
+    : "Location TBD";
 
-  // Get description
-  const description = event.data.topics?.length
-    ? `Topics: ${event.data.topics.join(", ")}`
-    : "Join us for this exciting tech meetup event!";
-
-  const bottomLeft = coverImageBase64 ? (
-    <img
-      src={coverImageBase64}
-      style={{
-        width: "320px",
-        height: "180px", // 16:9 aspect ratio
-        borderRadius: "12px",
-        border: "2px solid rgba(255, 255, 255, 0.2)",
-        objectFit: "cover",
-      }}
-    />
-  ) : undefined;
+  // Determine subtitle based on event data
+  const subtitle =
+    event.data.topics && event.data.topics.length > 0
+      ? event.data.topics.slice(0, 2).join(" • ")
+      : "OKTech Event";
 
   return (
-    <OGLayout bottomLeft={bottomLeft}>
-      <div style={{ display: "flex", gap: "32px", alignItems: "flex-start" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px", flex: 1 }}>
-          <h1
-            style={{
-              fontSize: event.data.title.length > 40 ? "48px" : "56px",
-              fontWeight: "bold",
-              color: "white",
-              margin: 0,
-              lineHeight: 1.1,
-            }}
-          >
-            {event.data.title}
-          </h1>
-
-          {description && (
-            <p
-              style={{
-                fontSize: "20px",
-                color: "rgba(255, 255, 255, 0.8)",
-                margin: 0,
-                lineHeight: 1.4,
-              }}
-            >
-              {description.length > 120 ? description.substring(0, 120) + "..." : description}
-            </p>
-          )}
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "8px" }}>
-            {formattedDate && (
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <IconWrapper>
-                  <CalendarIcon />
-                </IconWrapper>
-                <span style={{ color: "white", fontSize: "18px" }}>{formattedDate}</span>
-              </div>
-            )}
-            {venueLocation && (
-              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                <IconWrapper>
-                  <LocationIcon />
-                </IconWrapper>
-                <span style={{ color: "white", fontSize: "18px" }}>{venueLocation}</span>
-              </div>
-            )}
-          </div>
+    <OGLayout title={event.data.title} subtitle={subtitle}>
+      <div style={twStyle("flex flex-col gap-6")}>
+        <div style={twStyle("flex items-center gap-4")}>
+          <IconWrapper>
+            <CalendarIcon />
+          </IconWrapper>
+          <span style={twStyle("text-white/95 text-[22px]")}>{formattedDate}</span>
         </div>
-        {mapImageBase64 && event.venue?.title && (
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" }}
-          >
-            <img
-              src={mapImageBase64}
-              style={{
-                width: "250px",
-                height: "250px", // Square aspect ratio
-                borderRadius: "16px",
-                border: "3px solid rgba(255, 255, 255, 0.2)",
-                objectFit: "cover",
-              }}
-            />
-            <div
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" }}
-            >
-              <span style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "14px" }}>Venue</span>
-              <span style={{ color: "white", fontSize: "16px", fontWeight: 500 }}>
-                {event.venue.title}
-              </span>
-            </div>
+
+        <div style={twStyle("flex items-center gap-4")}>
+          <IconWrapper>
+            <LocationIcon />
+          </IconWrapper>
+          <span style={twStyle("text-white/95 text-[22px]")}>{venueLocation}</span>
+        </div>
+
+        {event.data.topics && event.data.topics.length > 2 && (
+          <div style={twStyle("flex mt-2")}>
+            <p style={twStyle("text-white/85 text-lg")}>
+              Also featuring: {event.data.topics.slice(2).join(", ")}
+            </p>
           </div>
         )}
       </div>

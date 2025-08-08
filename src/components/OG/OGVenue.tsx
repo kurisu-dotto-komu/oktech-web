@@ -1,4 +1,6 @@
-import OGLayout, { LocationIcon } from "./OGLayout";
+import { twStyle } from "@/utils/og/tw";
+
+import OGLayout, { IconWrapper, LocationIcon } from "./OGLayout";
 
 interface VenueData {
   data: {
@@ -25,42 +27,25 @@ export default function OGVenue({ venue }: OGVenueProps) {
   const location = locationParts.join(", ");
 
   return (
-    <OGLayout gradient="linear-gradient(135deg, #fa709a 0%, #fee140 100%)">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          minHeight: "430px",
-        }}
-      >
-        <div style={{ display: "flex", marginBottom: "24px", justifyContent: "center" }}>
-          <LocationIcon size={80} fill={true} />
-        </div>
-        <h1
-          style={{
-            fontSize: "56px",
-            fontWeight: "bold",
-            color: "white",
-            textAlign: "center",
-            margin: 0,
-          }}
-        >
-          {venue.data.title}
-        </h1>
+    <OGLayout title={venue.data.title} subtitle="Event Venue">
+      <div style={twStyle("flex flex-col gap-6")}>
         {location && (
-          <p
-            style={{
-              fontSize: "24px",
-              color: "rgba(255, 255, 255, 0.9)",
-              marginTop: "16px",
-            }}
-          >
-            {location}
-          </p>
+          <div style={twStyle("flex items-center gap-4")}>
+            <IconWrapper>
+              <LocationIcon />
+            </IconWrapper>
+            <span style={twStyle("text-white/95 text-[22px]")}>{location}</span>
+          </div>
         )}
+
+        <div style={twStyle("flex flex-col gap-3")}>
+          <p style={twStyle("text-white/90 text-xl leading-relaxed")}>
+            Host venue for OKTech community events and meetups.
+          </p>
+          <p style={twStyle("text-white/80 text-lg")}>
+            Join us at this location for networking, learning, and collaboration.
+          </p>
+        </div>
       </div>
     </OGLayout>
   );

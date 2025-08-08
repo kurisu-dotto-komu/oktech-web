@@ -65,6 +65,7 @@ oktech-web/
 - **Astro templates require opening and closing frontmatter fences (---)** with TypeScript code in between
 - **We are using daisy ui v5**, so always use these components when possible, and use its theme classes
 - **Use Tailwind classes instead of inline styles** - prefer `className="text-[2vw]"` over `style={{ fontSize: '2vw' }}`
+- **Always use `flex` on divs in OG image templates** - this is a limitation of the og image generator.
 
 ## Icons & Components
 
