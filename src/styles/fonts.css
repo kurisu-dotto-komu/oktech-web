@@ -1,3 +1,10 @@
+/* Define CSS variables for Fontsource fonts */
+:root {
+  --font-body: "Noto Sans", Arial, sans-serif;
+  --font-header: "Lexend", "Helvetica Neue", Helvetica, sans-serif;
+  --font-mono: "Space Mono", "Courier New", monospace;
+}
+
 body {
   font-family: var(--font-body);
 }
@@ -11,10 +18,7 @@ h6,
 button,
 .btn {
   font-family: var(--font-header);
-  font-weight: 500;
-  &.font-bold {
-    font-weight: 700;
-  }
+  font-weight: 700;
 }
 
 code,
@@ -30,6 +34,7 @@ pre {
 
 .font-header {
   font-family: var(--font-header);
+  font-weight: 700;
 }
 
 .font-mono {

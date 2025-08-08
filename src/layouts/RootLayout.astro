@@ -3,8 +3,12 @@ import "@/styles/global.css";
 import { SITE } from "@/constants";
 import { resolveInternalHref } from "@/utils/urlResolver";
 import SEO from "./SEO.astro";
-import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+
+import "@fontsource/noto-sans/400.css";
+import "@fontsource/noto-sans/700.css";
+import "@fontsource/lexend/700.css"; // Only 700 weight for headers
+import "@fontsource/space-mono/400.css";
 
 export interface Props {
   title?: string;
@@ -34,9 +38,6 @@ const { title, ...seoProps } = Astro.props;
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
     <SEO title={title} {...seoProps} />
-    <Font cssVariable="--font-body" preload />
-    <Font cssVariable="--font-header" preload />
-    <Font cssVariable="--font-mono" preload />
     <link
       rel="alternate"
       type="application/rss+xml"
