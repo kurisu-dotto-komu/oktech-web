@@ -10,7 +10,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Footer() {
   return (
-    <footer className="bg-base-200 text-base-content" data-testid="footer">
+    <footer className="bg-base-300 text-base-content overflow-hidden" data-testid="footer">
       <Container className="flex flex-col gap-8 py-10">
         <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
           <MainMenu variant="footer" />
@@ -39,6 +39,9 @@ export default function Footer() {
           </div>
         </div>
       </Container>
+      <div className="fade-out font-header -mb-[4vw] overflow-hidden text-center text-[24vw] leading-none tracking-tighter opacity-35 select-none lg:-mb-16 lg:text-[20em]">
+        OKTech
+      </div>
     </footer>
   );
 }

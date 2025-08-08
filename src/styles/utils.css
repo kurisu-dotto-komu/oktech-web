@@ -1,5 +1,5 @@
 .hover-zoom {
-  @apply shadow-md transition-all duration-100 ease-in-out hover:scale-[1.01] hover:shadow-lg;
+  @apply shadow-md transition-all duration-90 ease-in-out hover:scale-[1.01] hover:shadow-lg;
 }
 
 .soft-glass {
@@ -36,6 +36,11 @@
 
 .fade-overflow {
   @apply overflow-hidden;
-  mask-image: linear-gradient(to right, black 80%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  mask-image: linear-gradient(to right, black 80%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 90%);
+}
+
+.fade-out {
+  mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
 }
