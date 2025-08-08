@@ -91,11 +91,7 @@ export default function OGLayout({ children, title, subtitle }: OGLayoutProps) {
 }
 
 // Common icon components for reuse
-export const CalendarIcon = ({
-  color = themeColorsHex.light.baseContent,
-}: {
-  color?: string;
-}) => (
+export const CalendarIcon = ({ color = themeColorsHex.light.baseContent }: { color?: string }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2">
     <g>
       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />

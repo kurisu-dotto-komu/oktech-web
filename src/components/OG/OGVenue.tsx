@@ -36,24 +36,32 @@ export default function OGVenue({ venue }: OGVenueProps) {
             <IconWrapper>
               <LocationIcon />
             </IconWrapper>
-            <span style={twMerge("text-[20px]", {
-              color: colors.baseContent,
-              opacity: 0.8,
-            })}>{location}</span>
+            <span
+              style={twMerge("text-[20px]", {
+                color: colors.baseContent,
+                opacity: 0.8,
+              })}
+            >
+              {location}
+            </span>
           </div>
         )}
 
         <div style={twStyle("flex flex-col gap-3")}>
-          <p style={twMerge("text-xl leading-relaxed", {
-            color: colors.baseContent,
-            opacity: 0.7,
-          })}>
+          <p
+            style={twMerge("text-xl leading-relaxed", {
+              color: colors.baseContent,
+              opacity: 0.7,
+            })}
+          >
             Host venue for OKTech community events and meetups.
           </p>
-          <p style={twMerge("text-lg", {
-            color: colors.baseContent,
-            opacity: 0.6,
-          })}>
+          <p
+            style={twMerge("text-lg", {
+              color: colors.baseContent,
+              opacity: 0.6,
+            })}
+          >
             Join us at this location for networking, learning, and collaboration.
           </p>
         </div>

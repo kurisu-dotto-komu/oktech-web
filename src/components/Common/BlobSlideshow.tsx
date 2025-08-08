@@ -6,6 +6,8 @@ import { BLOBS } from "@/utils/blobs";
 
 interface ImageData {
   src: string;
+  srcSet?: string;
+  sizes?: string;
 }
 
 interface BlobSlideshowProps<T = string | ImageData> {
@@ -49,7 +51,7 @@ export default function BlobSlideshow<T = string | ImageData>({
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.01 }
+      { threshold: 0.01 },
     );
 
     if (containerRef.current) {
@@ -116,7 +118,10 @@ export default function BlobSlideshow<T = string | ImageData>({
   const maskId = `blob-mask-${React.useId()}`;
 
   return (
-    <div ref={containerRef} className={`relative z-10 h-full w-full ${containerClassName || "aspect-[4/3]"}`}>
+    <div
+      ref={containerRef}
+      className={`relative z-10 h-full w-full ${containerClassName || "aspect-[4/3]"}`}
+    >
       <div className="absolute inset-0 -mx-20 -my-10 md:-mx-16 md:-my-16 lg:-mx-12 lg:-my-12">
         <svg width={0} height={0}>
           <defs>
@@ -167,9 +172,11 @@ export default function BlobSlideshow<T = string | ImageData>({
                       index === currentIndex ? "opacity-100" : "opacity-0"
                     }`}
                   >
-                    <img 
-                      src={src} 
-                      alt="" 
+                    <img
+                      src={src}
+                      srcSet={!isString ? image.srcSet : undefined}
+                      sizes={!isString ? image.sizes || "100vw" : undefined}
+                      alt=""
                       className="absolute inset-0 h-full w-full object-cover"
                       loading={index === 0 && isVisible ? "eager" : "lazy"}
                     />

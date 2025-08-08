@@ -53,28 +53,38 @@ export default function OGEvent({ event }: OGEventProps) {
           <IconWrapper>
             <CalendarIcon />
           </IconWrapper>
-          <span style={twMerge("text-[20px]", {
-            color: colors.baseContent,
-            opacity: 0.8,
-          })}>{formattedDate}</span>
+          <span
+            style={twMerge("text-[20px]", {
+              color: colors.baseContent,
+              opacity: 0.8,
+            })}
+          >
+            {formattedDate}
+          </span>
         </div>
 
         <div style={twStyle("flex items-center gap-4")}>
           <IconWrapper>
             <LocationIcon />
           </IconWrapper>
-          <span style={twMerge("text-[20px]", {
-            color: colors.baseContent,
-            opacity: 0.8,
-          })}>{venueLocation}</span>
+          <span
+            style={twMerge("text-[20px]", {
+              color: colors.baseContent,
+              opacity: 0.8,
+            })}
+          >
+            {venueLocation}
+          </span>
         </div>
 
         {event.data.topics && event.data.topics.length > 2 && (
           <div style={twStyle("flex mt-2")}>
-            <p style={twMerge("text-lg", {
-              color: colors.baseContent,
-              opacity: 0.6,
-            })}>
+            <p
+              style={twMerge("text-lg", {
+                color: colors.baseContent,
+                opacity: 0.6,
+              })}
+            >
               Also featuring: {event.data.topics.slice(2).join(", ")}
             </p>
           </div>

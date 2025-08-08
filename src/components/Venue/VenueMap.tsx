@@ -30,26 +30,13 @@ export default function VenueMap({ venue, marker, link = false, className }: Pro
 
   const mapUrl = getMapUrl();
 
-  // Get processed map images from venue data
-  const mapImage = venue.mapImageSrc
-    ? {
-        default: { src: venue.mapImageSrc },
-      }
-    : null;
-
-  const mapDarkImage = venue.mapDarkImageSrc
-    ? {
-        default: { src: venue.mapDarkImageSrc },
-      }
-    : null;
-
   if (mapUrl && link) {
     return (
       <>
         <a href={mapUrl} target="_blank" rel="noopener noreferrer">
           <VenueMapImage
-            mapImage={mapImage}
-            mapDarkImage={mapDarkImage}
+            mapImage={venue.mapImage}
+            mapDarkImage={venue.mapDarkImage}
             marker={marker}
             className={className}
           />
@@ -61,8 +48,8 @@ export default function VenueMap({ venue, marker, link = false, className }: Pro
   return (
     <>
       <VenueMapImage
-        mapImage={mapImage}
-        mapDarkImage={mapDarkImage}
+        mapImage={venue.mapImage}
+        mapDarkImage={venue.mapDarkImage}
         marker={marker}
         className={className}
       />

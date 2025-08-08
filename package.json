@@ -12,7 +12,7 @@
     "typecheck": "npm-run-all -p typecheck:astro typecheck:tsc",
     "typecheck:tsc": "tsc --noEmit",
     "typecheck:astro": "astro check",
-    "checks": "npm-run-all -p format typecheck knip",
+    "checks": "npm-run-all format typecheck knip",
     "import": "tsx ./scripts/import-data",
     "og-cache": "tsx scripts/manage-og-cache.ts",
     "generate-redirects": "tsx scripts/generate-redirects.tsx",

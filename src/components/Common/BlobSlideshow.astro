@@ -1,7 +1,7 @@
 ---
 import BlobSlideshowReact from "./BlobSlideshow";
-import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { generateResponsiveImage } from "@/utils/responsiveImage";
 
 interface ImageConfig {
   path: string;
@@ -9,8 +9,6 @@ interface ImageConfig {
 
 interface Props {
   images: (string | ImageConfig)[];
-  height?: number;
-  format?: "webp" | "png" | "jpg" | "jpeg" | "avif";
   transitionSpeed?: number;
   slideDelay?: number;
   blobs?: string[];
@@ -21,8 +19,6 @@ interface Props {
 
 const {
   images: imageConfigs,
-  height = 1024,
-  format = "webp",
   transitionSpeed,
   slideDelay,
   blobs,
@@ -48,20 +44,15 @@ const images = await Promise.all(
       return null;
     }
     const module = await resolver();
-    const optimized = await getImage({ src: module.default, height, format });
 
-    return {
-      src: optimized.src,
-    };
+    // Generate responsive images for the slideshow
+    const responsive = await generateResponsiveImage(module.default, "100vw");
+    return responsive;
   }),
 );
 
-// Filter out any null values and transform to match React component interface
-const validImages = images
-  .filter((img): img is NonNullable<typeof img> => img !== null)
-  .map((img) => ({
-    src: img.src,
-  }));
+// Filter out any null values
+const validImages = images.filter((img): img is NonNullable<typeof img> => img !== null);
 ---
 
 <BlobSlideshowReact

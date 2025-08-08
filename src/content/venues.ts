@@ -1,19 +1,19 @@
 import { defineCollection, z, type InferEntrySchema, type CollectionEntry, getEntry, getCollection } from "astro:content";
 import path from "path";
 import { memoize } from "@/utils/memoize";
-import { safeGetImage } from "@/utils/imageOptimization";
+import { generateResponsiveImage, type ResponsiveImageData } from "@/utils/responsiveImage";
 
 // Type definitions
 export type Venue = InferEntrySchema<"venues">;
 
 // Enhanced venue type with processed map images
-export type ProcessedVenue = Venue & {
-  mapImageSrc?: string;
-  mapDarkImageSrc?: string;
+export type ProcessedVenue = Omit<Venue, "mapImage" | "mapDarkImage"> & {
+  mapImage?: ResponsiveImageData;
+  mapDarkImage?: ResponsiveImageData;
 };
 
 // Enriched venue type that combines CollectionEntry with processed data
-export type VenueEnriched = CollectionEntry<"venues"> & {
+export type VenueEnriched = Omit<CollectionEntry<"venues">, "data"> & {
   data: ProcessedVenue;
 };
 
@@ -98,34 +98,29 @@ export const venuesCollection = defineCollection({
 const processVenue = memoize(async function processVenue(
   venue: CollectionEntry<"venues">,
 ): Promise<ProcessedVenue> {
-  let mapImageSrc: string | undefined;
-  let mapDarkImageSrc: string | undefined;
+  let mapImage: ResponsiveImageData | undefined;
+  let mapDarkImage: ResponsiveImageData | undefined;
 
   if (venue.data.mapImage) {
-    const mapImage = await safeGetImage({
-      src: venue.data.mapImage,
-      format: "webp",
-      width: 512,
-    });
-    mapImageSrc = mapImage.src;
+    mapImage = await generateResponsiveImage(
+      venue.data.mapImage,
+      "(max-width: 768px) 100vw, 50vw"
+    );
   }
 
   if (venue.data.mapDarkImage) {
-    const mapDarkImage = await safeGetImage({
-      src: venue.data.mapDarkImage,
-      format: "webp",
-      width: 512,
-    });
-    mapDarkImageSrc = mapDarkImage.src;
+    mapDarkImage = await generateResponsiveImage(
+      venue.data.mapDarkImage,
+      "(max-width: 768px) 100vw, 50vw"
+    );
   }
 
-    return {
-      ...venue.data,
-      mapImageSrc,
-      mapDarkImageSrc,
-    };
-  },
-);
+  return {
+    ...venue.data,
+    mapImage,
+    mapDarkImage,
+  };
+});
 
 // Export memoized functions
 export const getVenues = memoize(async (): Promise<CollectionEntry<"venues">[]> => {

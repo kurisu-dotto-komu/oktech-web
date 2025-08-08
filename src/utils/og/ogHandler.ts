@@ -36,16 +36,10 @@ export async function createOGImageHandler({
     // Load local fonts from assets
     const fs = await import("fs/promises");
     const path = await import("path");
-    
+
     const fontsDir = path.join(process.cwd(), "src/assets/fonts");
-    
-    const [
-      notoRegular,
-      notoMedium,
-      notoBold,
-      lexendMedium,
-      lexendBold,
-    ] = await Promise.all([
+
+    const [notoRegular, notoMedium, notoBold, lexendMedium, lexendBold] = await Promise.all([
       fs.readFile(path.join(fontsDir, "NotoSans-Regular.ttf")),
       fs.readFile(path.join(fontsDir, "NotoSans-Medium.ttf")),
       fs.readFile(path.join(fontsDir, "NotoSans-Bold.ttf")),

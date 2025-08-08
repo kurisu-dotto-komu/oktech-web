@@ -34,7 +34,10 @@ export default function EventCardImage({ event, variant }: EventCardImageProps) 
       >
         <img
           src={event.data.cover.src}
+          srcSet={event.data.cover.srcSet}
+          sizes={event.data.cover.sizes}
           alt={event.data.title}
+          loading="lazy"
           className="h-full w-full object-cover"
         />
       </figure>

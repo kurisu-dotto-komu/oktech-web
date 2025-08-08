@@ -93,7 +93,9 @@ export default function EventGalleryImages({ event }: Props) {
           data-testid={`gallery-image-${index}`}
         >
           <img
-            src={img.thumbnailSrc}
+            src={img.thumbnail.src}
+            srcSet={img.thumbnail.srcSet}
+            sizes={img.thumbnail.sizes}
             alt={img.data.caption ?? ""}
             className="bg-base-300 aspect-[4/3] w-full cursor-pointer object-cover transition-opacity hover:opacity-90"
             loading="lazy"

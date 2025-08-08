@@ -3,6 +3,7 @@ export { getVenues, getVenue, type Venue, type ProcessedVenue, type VenueEnriche
 export {
   getEvents,
   getEvent,
+  getGalleryImages,
   type EventEnriched,
   type GalleryImage,
 } from "./events";

@@ -1,8 +1,10 @@
 import { LuMapPin } from "react-icons/lu";
 
+import type { ResponsiveImageData } from "@/utils/responsiveImage";
+
 interface Props {
-  mapImage?: { default: { src: string } } | null;
-  mapDarkImage?: { default: { src: string } } | null;
+  mapImage?: ResponsiveImageData;
+  mapDarkImage?: ResponsiveImageData;
   marker?: boolean | string;
   className?: string;
   class?: string;
@@ -16,8 +18,11 @@ export default function VenueMapImage({ mapImage, mapDarkImage, marker, classNam
           {/* Light mode map */}
           {mapImage && (
             <img
-              src={mapImage.default.src}
+              src={mapImage.src}
+              srcSet={mapImage.srcSet}
+              sizes={mapImage.sizes}
               alt="Venue location map"
+              loading="lazy"
               className="h-full w-full scale-105 object-cover transition-transform duration-300 group-hover:scale-110 dark:hidden"
               width={1024}
               height={1024}
@@ -26,8 +31,11 @@ export default function VenueMapImage({ mapImage, mapDarkImage, marker, classNam
           {/* Dark mode map */}
           {mapDarkImage && (
             <img
-              src={mapDarkImage.default.src}
+              src={mapDarkImage.src}
+              srcSet={mapDarkImage.srcSet}
+              sizes={mapDarkImage.sizes}
               alt="Venue location map"
+              loading="lazy"
               className="hidden h-full w-full scale-105 object-cover transition-transform duration-300 group-hover:scale-110 dark:block"
               width={1024}
               height={1024}

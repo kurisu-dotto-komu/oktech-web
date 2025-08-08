@@ -1,18 +1,21 @@
 import { defineCollection, reference, z, type CollectionEntry, getEntry, getCollection } from "astro:content";
 import path from "path";
 import { memoize } from "@/utils/memoize";
-import { safeGetImage } from "@/utils/imageOptimization";
 import { DEV_MODE } from "@/constants";
 import { processVenue, type ProcessedVenue } from "./venues";
+import { generateResponsiveImage, type ResponsiveImageData } from "@/utils/responsiveImage";
 
 // Type definitions
 export type GalleryImage = CollectionEntry<"eventGalleryImage"> & {
-  thumbnailSrc: string;
-  fullSrc: string;
+  thumbnail: ResponsiveImageData;
+  full: ResponsiveImageData;
 };
 
 // Enriched event type that combines CollectionEntry with processed data
-export type EventEnriched = CollectionEntry<"events"> & {
+export type EventEnriched = Omit<CollectionEntry<"events">, "data"> & {
+  data: Omit<CollectionEntry<"events">["data"], "cover"> & {
+    cover: ResponsiveImageData;
+  };
   venue?: ProcessedVenue;
   venueSlug?: string;
   galleryImages?: GalleryImage[];
@@ -96,32 +99,32 @@ export const eventGalleryImageCollection = defineCollection({
     }),
 });
 
-// Helper function to process gallery images for an event
-const processGalleryImages = memoize(async (eventId: string): Promise<GalleryImage[]> => {
+
+// Helper function to get gallery images with responsive data
+export const getGalleryImages = memoize(async (eventId: string): Promise<GalleryImage[]> => {
   const allGalleryImages = await getCollection("eventGalleryImage");
   const eventGalleryImages = allGalleryImages.filter((img) => img.data.event.id === eventId);
-
+  
   return await Promise.all(
     eventGalleryImages.map(async (img) => {
+      // Generate responsive data for thumbnail and full images
       const [thumbnail, full] = await Promise.all([
-        safeGetImage({
-          src: img.data.image,
-          width: 320,
-          format: "webp",
-        }),
-        safeGetImage({
-          src: img.data.image,
-          width: 1920,
-          format: "webp",
-        }),
+        generateResponsiveImage(
+          img.data.image,
+          "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        ),
+        generateResponsiveImage(
+          img.data.image,
+          "(max-width: 640px) 100vw, 90vw"
+        )
       ]);
-
+      
       return {
         ...img,
-        thumbnailSrc: thumbnail.src,
-        fullSrc: full.src,
+        thumbnail,
+        full,
       };
-    }),
+    })
   );
 });
 
@@ -165,13 +168,24 @@ export const getEvent = memoize(async (eventSlug: string): Promise<EventEnriched
     }
   }
 
-  // Get gallery images for this event
-  const galleryImages = await processGalleryImages(event.id);
+  // Get gallery images for this event with responsive data
+  const galleryImages = await getGalleryImages(event.id);
+  
+  // Generate responsive cover image
+  const cover = await generateResponsiveImage(
+    event.data.cover,
+    "100vw"
+  );
 
   return {
     ...event,
+    data: {
+      ...event.data,
+      cover,
+    },
     venue: processedVenue,
     venueSlug,
     galleryImages,
   };
 });
+

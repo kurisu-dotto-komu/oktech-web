@@ -44,8 +44,8 @@ export default function EventImageModal({
     const nextIndex = currentIndex === totalImages - 1 ? 0 : currentIndex + 1;
 
     return {
-      prevImageUrl: allImages[prevIndex]?.fullSrc,
-      nextImageUrl: allImages[nextIndex]?.fullSrc,
+      prevImageUrl: allImages[prevIndex]?.full.src,
+      nextImageUrl: allImages[nextIndex]?.full.src,
     };
   }, [currentIndex, totalImages, allImages]);
 
@@ -100,7 +100,7 @@ export default function EventImageModal({
     setIsFullImageLoaded(false);
     if (selectedImage) {
       const img = new Image();
-      img.src = selectedImage.fullSrc;
+      img.src = selectedImage.full.src;
       img.onload = () => setIsFullImageLoaded(true);
     }
   }, [selectedImage]);
@@ -244,7 +244,11 @@ export default function EventImageModal({
             onMouseLeave={handleMouseLeave}
           >
             <img
-              src={isFullImageLoaded ? selectedImage.fullSrc : selectedImage.thumbnailSrc}
+              src={isFullImageLoaded ? selectedImage.full.src : selectedImage.thumbnail.src}
+              srcSet={
+                isFullImageLoaded ? selectedImage.full.srcSet : selectedImage.thumbnail.srcSet
+              }
+              sizes={isFullImageLoaded ? selectedImage.full.sizes : selectedImage.thumbnail.sizes}
               alt={selectedImage.data.caption ?? ""}
               className="pointer-events-none h-full w-full object-contain select-none"
               data-testid="modal-main-image"
@@ -253,7 +257,9 @@ export default function EventImageModal({
             {/* Hidden preloader for full image */}
             {!isFullImageLoaded && (
               <img
-                src={selectedImage.fullSrc}
+                src={selectedImage.full.src}
+                srcSet={selectedImage.full.srcSet}
+                sizes={selectedImage.full.sizes}
                 alt=""
                 className="absolute h-0 w-0 opacity-0"
                 onLoad={() => setIsFullImageLoaded(true)}

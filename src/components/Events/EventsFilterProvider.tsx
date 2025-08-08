@@ -9,10 +9,10 @@ import {
   useState,
 } from "react";
 
-import type { ImageMetadata } from "astro";
 import type Fuse from "fuse.js";
 
-import type { EventEnriched, Venue } from "@/content";
+import type { EventEnriched, ProcessedVenue } from "@/content";
+import type { ResponsiveImageData } from "@/utils/responsiveImage";
 
 export interface EventItem {
   id: string;
@@ -20,9 +20,9 @@ export interface EventItem {
   date: string;
   topics?: string[];
   location?: string;
-  venue?: Venue;
+  venue?: ProcessedVenue;
   venueName?: string;
-  poster?: ImageMetadata;
+  poster?: ResponsiveImageData;
   slug: string;
   hasGallery?: boolean;
 }

@@ -13,17 +13,16 @@ export default function EventImageBig({ event }: { event: EventEnriched }) {
         <div className="absolute top-3 left-3">
           <EventCardCountdown event={event} />
         </div>
-        {event.data.cover ? (
-          <img
-            src={event.data.cover.src}
-            alt={event.data.title}
-            className="h-full w-full object-cover"
-            width={512}
-            height={512}
-          />
-        ) : (
-          <div className="bg-base-300 h-full w-full" />
-        )}
+        <img
+          src={event.data.cover.src}
+          srcSet={event.data.cover.srcSet}
+          sizes={event.data.cover.sizes}
+          alt={event.data.title}
+          loading="lazy"
+          className="h-full w-full object-cover"
+          width={512}
+          height={512}
+        />
       </figure>
     </div>
   );
