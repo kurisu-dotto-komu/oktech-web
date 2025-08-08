@@ -6,7 +6,7 @@ This isn't an exhaustive list of things that you can't do. Rather, take it in th
 
 This code of conduct applies to all spaces (real or digital) managed by the OKTech group. This includes but is not limited to the our physical events, Discord Chat, Github, LinkedIn, and any other system created or maintained by the group. In addition, violations of this code outside these spaces may affect a person's ability to participate within them.
 
-If you believe someone is violating the code of conduct, we ask that you report it to [oktechjp@proton.me](mailto:oktechjp@proton.me) and follow the [Reporting Guide](/coc-report).
+If you believe someone is violating the code of conduct, we ask that you report it to [oktechjp@proton.me](mailto:oktechjp@proton.me) and follow the [Reporting Guide](#code-of-conduct---reporting-guide).
 
 ## Be friendly and patient.
 
@@ -38,6 +38,77 @@ We are a community of professionals, and we conduct ourselves professionally. Be
 ## When we disagree, try to understand why.
 
 Disagreements, both social and technical, happen all the time and the OKTech community is no exception. It is important that we resolve disagreements and differing views constructively. Remember that we're different. The strength of the OKTech community comes from its varied community, people from a wide range of backgrounds. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn't mean that they're wrong. Don't forget that it is human to err and blaming each other doesn't get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.
+
+
+---
+
+# Code of Conduct - Reporting Guide
+
+If you believe someone is violating [the code of conduct](/coc) we ask that you report it to [the OKTech organizer](/about#organization) using the [oktechjp@proton.me](mailto:oktechjp@proton.me) email address.
+
+All reports will be kept confidential. In some cases we may determine that a public statement will need to be made. If that's the case, the identities of all victims and reporters will remain confidential unless those individuals instruct us otherwise.
+
+**If you believe anyone is in physical danger, please notify appropriate law enforcement first.**
+
+If you are unsure what law enforcement agency is appropriate, please include this in your report and we will attempt to notify them.
+
+If you are unsure whether the incident is a violation, or whether the space where it happened is covered by our code of conduct, we encourage you to still report it.
+
+We would much rather have a few extra reports where we decide to take no action, than miss a report of an actual violation.
+
+We do not look negatively on you if we find the incident is not a violation.
+
+And knowing about incidents that are not violations, or happen outside our spaces, can also help us to improve the Code of Conduct or the processes surrounding it.
+
+### In your report please include:
+
+- Your contact info (so we can get in touch with you if we need to follow up)
+- Names (real, nicknames, or pseudonyms) of any individuals involved. If there were other witnesses besides you, please try to include them as well.
+- When and where the incident occurred. Please be as specific as possible.
+- Your account of what occurred. If there is a publicly available record (e.g. a link to a Discord message or Meetup comment) please include a link and/or screenshot.
+- Any extra context you believe existed for the incident.
+- If you believe this incident is ongoing.
+- Any other information you believe we should have.
+
+### What happens after you file a report?
+
+We promise to acknowledge the issue with a reply within 72 hours (and will aim for much quicker than that). If you are at an physical event and you feel comfortable doing-so, it would be helpful to notify the event organizer that you submitted an report.
+
+The organizers will meet to review the incident and determine:
+
+- What happened.
+- Whether this event constitutes a code of conduct violation.
+- Who the bad actor was.
+- Whether this is an ongoing situation, or if there is a threat to anyone's physical safety.
+- If this is determined to be an ongoing incident or a threat to physical safety, the organizers' immediate priority will be to protect everyone involved. This means we may delay an "official" response until we believe that the situation has ended and that everyone is physically safe.
+
+The organizers will give their best effort responding to the situation and responses may include:
+
+- Nothing (if we determine no violation occurred).
+- A private reprimand from the organizers to the individual(s) involved.
+- A public reprimand.
+- An imposed vacation (i.e. asking someone to "take a week off" from Discord and skip the next meetup).
+- A permanent or temporary ban from some or all OKTech spaces (Discord Chat, Meetups, etc.).
+- A request for a public or private apology.
+- A public incident report.
+
+We'll respond as soon as we can to the person who filed the report with either a resolution or an explanation of why the situation is not yet resolved.
+
+Furthermore, once we've determined our final action, we'll let them know what action (if any) we'll be taking.
+
+We'll take into account feedback from the reporter on the appropriateness of our response, but we don't guarantee we'll act on it.
+
+### What if your report concerns a possible violation by the organizer?
+
+The group organizer occasionally hands over the responsibility to run events to volunteers. (see: [the organizer section on the about page](/about#organization)). No person other than **the group organizer** will process the violations. Event organizers will not receive a copy.
+
+As there is currently only one organizer of the group, it is a problem if your issue concerns them. In that case, we ask you to contact a trusted Volunteer. Together with other Volunteers, they may be able to support and help you.
+
+### Reconsideration
+
+Any of the parties directly involved or affected can request reconsideration of the organizers's decision.
+
+To make such a request, contact the organizer using [oktechjp@proton.me](mailto:oktechjp@proton.me) with your request and motivation and the organizer will review the case.
 
 ---
 
