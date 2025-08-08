@@ -1,117 +1,73 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import type { ReactNode } from "react";
+
+import { animated, useSpring } from "@react-spring/web";
 
 interface ParallaxProps {
-  children: React.ReactNode;
-  speed?: number; // Speed multiplier (negative = slower than scroll, positive = faster)
-  maxOffset?: number; // Maximum offset in pixels
-  speedSm?: number; // Speed for small screens (<=640px)
-  maxOffsetSm?: number; // Max offset for small screens
+  children: ReactNode;
   className?: string;
-  disabled?: boolean;
+  maxOffset?: string;
 }
 
-export default function Parallax({
-  children,
-  speed = -0.7, // Negative for traditional parallax (moves slower than scroll)
-  maxOffset = 300,
-  speedSm = -0.9,
-  maxOffsetSm = 500,
-  className = "",
-  disabled = false,
-}: ParallaxProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<number | undefined>(undefined);
-  const lastScrollY = useRef<number>(0);
-  const ticking = useRef<boolean>(false);
+export default function Parallax({ children, className = "", maxOffset = "8rem" }: ParallaxProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [springs, api] = useSpring(() => ({
+    y: 0,
+    config: {
+      mass: 1,
+      tension: 280,
+      friction: 120,
+    },
+  }));
 
   useEffect(() => {
-    if (disabled || !containerRef.current || !innerRef.current) return;
-
-    const updateParallax = () => {
-      if (!containerRef.current || !innerRef.current) return;
-
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const windowWidth = window.innerWidth;
-
-      // Reason: Check if element is in viewport (with buffer for smoother experience)
-      const buffer = 200;
-      const isInViewport = rect.bottom > -buffer && rect.top < windowHeight + buffer;
-
-      if (!isInViewport) {
-        ticking.current = false;
-        return;
-      }
-
-      // Reason: Determine which values to use based on screen size (640px is Tailwind's sm breakpoint)
-      const isSmallScreen = windowWidth <= 640;
-      const currentSpeed = isSmallScreen && speedSm !== undefined ? speedSm : speed;
-      const currentMaxOffset = isSmallScreen && maxOffsetSm !== undefined ? maxOffsetSm : maxOffset;
-
-      // Reason: Calculate parallax offset based on element position in viewport
-      // Center of viewport is 0, top is -1, bottom is 1
-      const viewportCenter = windowHeight / 2;
-      const elementCenter = rect.top + rect.height / 2;
-      const relativePosition = (elementCenter - viewportCenter) / viewportCenter;
-
-      // Reason: Apply speed multiplier and clamp to max offset
-      let offset = relativePosition * currentSpeed * 100;
-      offset = Math.max(-currentMaxOffset, Math.min(currentMaxOffset, offset));
-
-      // Reason: Round to nearest 0.01 for smoother animation while avoiding excessive precision
-      offset = Math.round(offset * 100) / 100;
-
-      // Reason: Use transform3d for hardware acceleration
-      innerRef.current.style.transform = `translate3d(0, ${offset}px, 0)`;
-
-      ticking.current = false;
+    // Reason: Convert CSS units to pixels
+    const convertToPixels = (value: string) => {
+      const temp = document.createElement("div");
+      temp.style.position = "absolute";
+      temp.style.height = value;
+      document.body.appendChild(temp);
+      const pixels = temp.offsetHeight;
+      document.body.removeChild(temp);
+      return pixels;
     };
+
+    const maxOffsetPx = convertToPixels(maxOffset);
 
     const handleScroll = () => {
-      lastScrollY.current = window.scrollY;
+      if (!ref.current) return;
 
-      if (!ticking.current) {
-        frameRef.current = window.requestAnimationFrame(updateParallax);
-        ticking.current = true;
-      }
+      const scrollY = window.scrollY;
+
+      // Reason: Simple parallax based only on scroll position
+      const parallaxSpeed = 0.2;
+      const offset = Math.min(scrollY * parallaxSpeed, maxOffsetPx);
+
+      api.start({ y: offset });
     };
 
-    // Reason: Initial position setup
-    updateParallax();
-
-    // Reason: Passive listener for better scroll performance
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll, { passive: true });
+
+    // Reason: Initial calculation on mount
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
-      if (frameRef.current) {
-        window.cancelAnimationFrame(frameRef.current);
-      }
     };
-  }, [disabled, speed, maxOffset, speedSm, maxOffsetSm]);
-
-  if (disabled) {
-    return <div className={className}>{children}</div>;
-  }
+  }, [api, maxOffset]);
 
   return (
-    <div ref={containerRef} className={`relative h-full w-full ${className}`}>
-      <div
-        className="h-full w-full"
-        ref={innerRef}
+    <div ref={ref} className={`relative ${className}`}>
+      <animated.div
         style={{
+          transform: springs.y.to((y) => `translate3d(0, ${y}px, 0)`),
           willChange: "transform",
-          // Reason: Promote to its own layer for better performance
-          transform: "translate3d(0, 0, 0)",
-          // Reason: Prevent blurry text on some browsers
-          WebkitFontSmoothing: "antialiased",
         }}
       >
         {children}
-      </div>
+      </animated.div>
     </div>
   );
 }
