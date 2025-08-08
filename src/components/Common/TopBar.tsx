@@ -46,7 +46,7 @@ export default function TopBar() {
       <Container>
         <div className="flex justify-between pt-4">
           <GlassCell showBackground={showBackground} testId="navbar-logo">
-            <LinkReact href="/" className="btn btn-glass btn-lg rounded-full">
+            <LinkReact href="/" className="group btn btn-glass btn-lg rounded-full">
               <Brand />
             </LinkReact>
           </GlassCell>

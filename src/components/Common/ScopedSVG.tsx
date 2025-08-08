@@ -33,9 +33,27 @@ export default function ScopedSVG({ svg, className, svgClass }: ScopedSVGProps) 
     // 1. Inject an ID into the root <svg> tag
     result = result.replace(/<svg\b([^>]*)>/, `<svg id="${scopedId}" class="${svgClass}"$1>`);
 
-    // 2. Prefix all CSS selectors in <style> with #scopedId
+    // 2. Collect all IDs that will be renamed
+    const idRegex = /id="([\w:-]+)"/g;
+    const ids = new Set<string>();
+    let match;
+    while ((match = idRegex.exec(result)) !== null) {
+      ids.add(match[1]);
+    }
+
+    // 3. Prefix all CSS selectors in <style> with #scopedId and update ID references
     result = result.replace(/<style[^>]*>([\s\S]*?)<\/style>/g, (_: string, css: string) => {
-      const scopedCss = css.replace(
+      let scopedCss = css;
+
+      // First, rename all ID references in the CSS
+      ids.forEach((id) => {
+        const scoped = `${id}-${uniqueId}`;
+        // Update ID selectors in CSS
+        scopedCss = scopedCss.replace(new RegExp(`#${id}\\b`, "g"), `#${scoped}`);
+      });
+
+      // Then handle other selector scoping
+      scopedCss = scopedCss.replace(
         /(^|\n)\s*([^{\n]+)\s*\{/g,
         (_match: string, p1: string, selector: string) => {
           const scopedSelector = selector
@@ -44,6 +62,15 @@ export default function ScopedSVG({ svg, className, svgClass }: ScopedSVGProps) 
               const trimmedSel = sel.trim();
               // dont trim keyframe definitions
               if (["@keyframes", "from", "to"].some((prefix) => trimmedSel.startsWith(prefix))) {
+                return trimmedSel;
+              }
+              // If selector starts with a parent class/pseudo selector (like .colorful or .group:hover)
+              // and contains an ID reference, it's already been updated above, so leave it as is
+              if (trimmedSel.match(/^(\.[^\s]+|\S+:hover)\s+#/)) {
+                return trimmedSel;
+              }
+              // If selector is just an ID selector, it's already been updated
+              if (/^#/.test(trimmedSel)) {
                 return trimmedSel;
               }
               // If selector is just "svg" or starts with "svg." or "svg[" or "svg:", replace with svg#scopedId
@@ -60,14 +87,7 @@ export default function ScopedSVG({ svg, className, svgClass }: ScopedSVGProps) 
       return `<style>${scopedCss}</style>`;
     });
 
-    // 3. Scope all IDs and their references (e.g., url(#id), mask, href)
-    const idRegex = /id="([\w:-]+)"/g;
-    const ids = new Set<string>();
-    let match;
-    while ((match = idRegex.exec(result)) !== null) {
-      ids.add(match[1]);
-    }
-
+    // 4. Scope all IDs and their references in the HTML (e.g., url(#id), mask, href)
     ids.forEach((id) => {
       const scoped = `${id}-${uniqueId}`;
       result = result

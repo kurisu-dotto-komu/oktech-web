@@ -13,7 +13,7 @@ export default function Brand({ fullText = false, neutral = false }: BrandProps)
   const longText = SITE.longName;
 
   return (
-    <div className="group flex flex-col gap-4 md:flex-row md:items-center">
+    <div className="flex flex-col gap-4 md:flex-row md:items-center">
       <div className="flex items-center gap-3">
         <OKTechLogoRound
           className={clsx(
