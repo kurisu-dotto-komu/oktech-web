@@ -44,9 +44,9 @@ export default function TopBar() {
   return (
     <div data-testid="top-bar" className="fixed top-0 z-50 w-full">
       <Container>
-        <div className="flex justify-between pt-4">
+        <div className="-mx-2 flex items-start justify-between pt-2 sm:-mx-5 sm:pt-4">
           <GlassCell showBackground={showBackground} testId="navbar-logo">
-            <LinkReact href="/" className="group btn btn-glass btn-lg rounded-full">
+            <LinkReact href="/" className="group btn btn-glass sm:btn-lg rounded-full">
               <Brand />
             </LinkReact>
           </GlassCell>
@@ -57,7 +57,7 @@ export default function TopBar() {
                   key={item.label}
                   href={item.href}
                   className={clsx(
-                    "btn btn-glass btn-lg rounded-full font-bold",
+                    "btn btn-glass btn-md sm:btn-lg rounded-full font-bold",
                     // "-mr-1 -ml-1",
                     i > 0 && "-ml-2",
                     // i === items.length - 1 && "-mr-0",

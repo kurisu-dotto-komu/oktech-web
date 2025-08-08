@@ -4,6 +4,7 @@ import { LuGrid3X3, LuImage, LuList } from "react-icons/lu";
 
 import TooltipButton from "@/components/Common/TooltipButton";
 
+import LinkReact from "../Common/LinkReact";
 import { useEventsFilter } from "./EventsFilterProvider";
 
 interface EventsViewModeSelectorProps {
@@ -45,18 +46,19 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
       {views.map((view) => {
         const Icon = view.icon;
         return (
-          <TooltipButton
+          <LinkReact
             key={view.value}
-            as="link"
+            // as="link"
             href={view.href}
-            tooltip={view.label}
+            // tooltip={view.label}
             className={`join-item btn ${currentView === view.value ? "btn-accent" : ""}`}
             data-view={view.value}
             data-testid={`view-mode-${view.value}`}
             aria-label={view.label}
           >
             <Icon className="h-4 w-4" />
-          </TooltipButton>
+            {view.label}
+          </LinkReact>
         );
       })}
     </>

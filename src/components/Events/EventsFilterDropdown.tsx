@@ -88,7 +88,8 @@ export default function EventsFilterDropdown({
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute top-full -right-10 z-50 mt-2 flex w-[25em] items-end justify-end md:right-auto md:-left-10 md:w-[30em] md:justify-start lg:w-[40em]"
+          // className="absolute top-full -right-10 z-50 mt-2 flex w-[25em] items-end justify-end md:right-auto md:-left-10 md:w-[30em] md:justify-start lg:w-[40em]"
+          className="absolute top-full right-0 mt-2 flex w-[25em] items-end justify-end"
         >
           <div className="soft-glass inline-flex flex-wrap gap-2 p-4!">
             {options.map((option) => (
