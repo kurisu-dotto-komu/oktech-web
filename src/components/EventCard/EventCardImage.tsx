@@ -29,7 +29,7 @@ export default function EventCardImage({ event, variant }: EventCardImageProps) 
       <figure
         className={clsx(
           "bg-base-300",
-          variant === "compact" ? "aspect-video w-42" : "h-full w-full",
+          variant === "compact" ? "aspect-video w-42" : "aspect-video h-full w-full",
         )}
       >
         <img
@@ -37,7 +37,8 @@ export default function EventCardImage({ event, variant }: EventCardImageProps) 
           srcSet={event.data.cover.srcSet}
           sizes={event.data.cover.sizes}
           alt={event.data.title}
-          loading="lazy"
+          loading={event.priority ? "eager" : "lazy"}
+          fetchPriority={event.priority ? "high" : "auto"}
           className="h-full w-full object-cover"
         />
       </figure>

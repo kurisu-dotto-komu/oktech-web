@@ -178,7 +178,8 @@ export default function BlobSlideshow<T = string | ImageData>({
                       sizes={!isString ? image.sizes || "100vw" : undefined}
                       alt=""
                       className="absolute inset-0 h-full w-full object-cover"
-                      loading={index === 0 && isVisible ? "eager" : "lazy"}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchPriority={index === 0 ? "high" : "auto"}
                     />
                   </div>
                 );

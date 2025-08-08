@@ -57,6 +57,8 @@ const description =
             src={venue.data.cover.src}
             alt={`${venue.data.title} cover`}
             class="h-full w-full object-contain p-8"
+            loading="eager"
+            fetchpriority="high"
             width={512}
             height={512}
           />

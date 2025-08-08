@@ -18,7 +18,8 @@ export default function EventImageBig({ event }: { event: EventEnriched }) {
           srcSet={event.data.cover.srcSet}
           sizes={event.data.cover.sizes}
           alt={event.data.title}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           className="h-full w-full object-cover"
           width={512}
           height={512}

@@ -104,14 +104,14 @@ const processVenue = memoize(async function processVenue(
   if (venue.data.mapImage) {
     mapImage = await generateResponsiveImage(
       venue.data.mapImage,
-      "(max-width: 768px) 100vw, 50vw"
+      "container"
     );
   }
 
   if (venue.data.mapDarkImage) {
     mapDarkImage = await generateResponsiveImage(
       venue.data.mapDarkImage,
-      "(max-width: 768px) 100vw, 50vw"
+      "container"
     );
   }
 

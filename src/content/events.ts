@@ -19,6 +19,7 @@ export type EventEnriched = Omit<CollectionEntry<"events">, "data"> & {
   venue?: ProcessedVenue;
   venueSlug?: string;
   galleryImages?: GalleryImage[];
+  priority?: boolean; // For image loading optimization
 };
 
 
@@ -111,11 +112,11 @@ export const getGalleryImages = memoize(async (eventId: string): Promise<Gallery
       const [thumbnail, full] = await Promise.all([
         generateResponsiveImage(
           img.data.image,
-          "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          "grid"
         ),
         generateResponsiveImage(
           img.data.image,
-          "(max-width: 640px) 100vw, 90vw"
+          "lightbox"
         )
       ]);
       
@@ -138,12 +139,18 @@ export const getEvents = memoize(async (): Promise<EventEnriched[]> => {
   // Enrich each event with venue and gallery data using getEvent logic
   const enrichedEvents = await Promise.all(filteredEvents.map((event) => getEvent(event.id)));
 
-  // Sort events by date (newest first)
-  return enrichedEvents.sort((a, b) => {
+  // Sort events by date (newest first) and add priority flag for first 16
+  const sortedEvents = enrichedEvents.sort((a, b) => {
     const dateA = new Date(a.data.dateTime).getTime();
     const dateB = new Date(b.data.dateTime).getTime();
     return dateB - dateA;
   });
+
+  // Add priority flag to first 16 events for optimized image loading
+  return sortedEvents.map((event, index) => ({
+    ...event,
+    priority: index < 16
+  }));
 });
 
 export const getEvent = memoize(async (eventSlug: string): Promise<EventEnriched> => {
@@ -174,7 +181,7 @@ export const getEvent = memoize(async (eventSlug: string): Promise<EventEnriched
   // Generate responsive cover image
   const cover = await generateResponsiveImage(
     event.data.cover,
-    "100vw"
+    "container"
   );
 
   return {

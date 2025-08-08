@@ -22,7 +22,8 @@ export default function VenueMapImage({ mapImage, mapDarkImage, marker, classNam
               srcSet={mapImage.srcSet}
               sizes={mapImage.sizes}
               alt="Venue location map"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               className="h-full w-full scale-105 object-cover transition-transform duration-300 group-hover:scale-110 dark:hidden"
               width={1024}
               height={1024}
@@ -35,7 +36,8 @@ export default function VenueMapImage({ mapImage, mapDarkImage, marker, classNam
               srcSet={mapDarkImage.srcSet}
               sizes={mapDarkImage.sizes}
               alt="Venue location map"
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               className="hidden h-full w-full scale-105 object-cover transition-transform duration-300 group-hover:scale-110 dark:block"
               width={1024}
               height={1024}

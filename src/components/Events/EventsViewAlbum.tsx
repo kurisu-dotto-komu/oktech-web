@@ -26,20 +26,18 @@ export default function EventsViewAlbum({ events }: Props) {
         element={<GalleryDisclaimer position="bottom" />}
       />
       <section className="flex flex-col gap-32">
-        {recentEvents.map((event) => {
-          return (
-            <div key={event.id}>
-              <Container>
-                <EventCardList events={[event]} />
-              </Container>
-              <Container wide className="mt-6">
-                <Grid data-testid="event-gallery-images">
-                  <EventGalleryImages event={event} />
-                </Grid>
-              </Container>
-            </div>
-          );
-        })}
+        {recentEvents.map((event) => (
+          <div key={event.id}>
+            <Container>
+              <EventCardList events={[event]} />
+            </Container>
+            <Container wide className="mt-6">
+              <Grid data-testid="event-gallery-images">
+                <EventGalleryImages event={event} />
+              </Grid>
+            </Container>
+          </div>
+        ))}
       </section>
     </div>
   );
