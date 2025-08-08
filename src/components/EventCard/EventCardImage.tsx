@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import type { EventEnriched } from "@/content";
 
-import EventCardCountdownAbsolute from "./EventCardCountdownAbsolute";
+import EventCardCountdown from "./EventCardCountdown";
 
 type Variant = "compact" | "polaroid" | "big";
 
@@ -12,14 +12,18 @@ interface EventCardImageProps {
   cityComponent?: React.ReactNode;
 }
 
-export default function EventCardImage({ event, variant, cityComponent }: EventCardImageProps) {
+export default function EventCardImage({ event, variant }: EventCardImageProps) {
   return (
-    <div className={clsx("relative", variant === "compact" && "hidden sm:block")}>
+    <div
+      className={clsx(
+        "relative m-2 overflow-hidden",
+        variant === "compact" ? "hidden rounded-2xl sm:block" : "rounded-box",
+      )}
+    >
       {variant !== "compact" && (
-        <>
-          <div className="absolute right-0 bottom-0">{cityComponent}</div>
-          <EventCardCountdownAbsolute event={event} />
-        </>
+        <div className="absolute top-3 left-3">
+          <EventCardCountdown event={event} />
+        </div>
       )}
 
       <figure

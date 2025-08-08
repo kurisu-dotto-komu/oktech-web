@@ -202,7 +202,7 @@ export function EventFilterProvider({
     };
     updateFilteredItems();
   }, [getFilteredItems]);
-  const [isInitialMount, setIsInitialMount] = useState(true);
+  const isInitialMountRef = useRef(true);
 
   const updateURL = useCallback((filters: EventFilters) => {
     if (typeof window === "undefined") return; // Skip on SSR
@@ -229,8 +229,12 @@ export function EventFilterProvider({
       url.searchParams.set("sort", filters.sort);
     }
 
-    // Updated URL
-    window.history.pushState(filters, "", url.toString());
+    // Updated URL - use replaceState on initial mount, pushState afterwards
+    if (isInitialMountRef.current) {
+      window.history.replaceState(filters, "", url.toString());
+    } else {
+      window.history.pushState(filters, "", url.toString());
+    }
     // Don't dispatch popstate - it can cause unwanted side effects
   }, []);
 
@@ -239,16 +243,14 @@ export function EventFilterProvider({
     if (onFiltersChange) {
       onFiltersChange(currentFilters, filteredItems);
     }
-    // Skip URL update on initial mount to preserve existing params
-    if (!isInitialMount) {
-      updateURL(currentFilters);
-    }
-  }, [currentFilters, filteredItems, onFiltersChange, updateURL, isInitialMount]);
+    // Always update URL but use replaceState on initial mount
+    updateURL(currentFilters);
 
-  useEffect(() => {
-    // Initial mount complete
-    setIsInitialMount(false);
-  }, []);
+    // Mark initial mount as complete after first run
+    if (isInitialMountRef.current) {
+      isInitialMountRef.current = false;
+    }
+  }, [currentFilters, filteredItems, onFiltersChange, updateURL]);
 
   const updateFilter = useCallback(
     (filterType: keyof EventFilters, value: EventFilters[keyof EventFilters]) => {

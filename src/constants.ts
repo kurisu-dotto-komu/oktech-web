@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 
 import type { IconType } from "react-icons";
-import { FaDiscord, FaGithub, FaLinkedin, FaMeetup, FaXTwitter } from "react-icons/fa6";
+import { FaDiscord, FaGithub, FaLinkedin, FaMeetup } from "react-icons/fa6";
 import { LuCalendar, LuFileText, LuHouse, LuInfo, LuMap } from "react-icons/lu";
 
 // Development mode flag - change this to false for production

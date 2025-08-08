@@ -2,8 +2,6 @@ import { useMemo } from "react";
 
 import { LuGrid3X3, LuImage, LuList } from "react-icons/lu";
 
-import TooltipButton from "@/components/Common/TooltipButton";
-
 import LinkReact from "../Common/LinkReact";
 import { useEventsFilter } from "./EventsFilterProvider";
 

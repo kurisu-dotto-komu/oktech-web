@@ -1,5 +1,3 @@
-import clsx from "clsx";
-
 import { OKTechLogoRound } from "@/components/Common/OKTechLogo";
 import { SITE } from "@/constants";
 

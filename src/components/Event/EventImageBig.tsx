@@ -1,16 +1,18 @@
 import type { EventEnriched } from "@/content";
 
-import EventCardCountdownAbsolute from "../EventCard/EventCardCountdownAbsolute";
+import EventCardCountdown from "../EventCard/EventCardCountdown";
 import EventProjectorButton from "./EventProjectorButton";
 
 export default function EventImageBig({ event }: { event: EventEnriched }) {
   return (
     <div className="group relative">
-      <div className="absolute top-2 right-2 z-10">
+      <div className="absolute top-3 right-3 z-10">
         <EventProjectorButton event={event} />
       </div>
       <figure className="glass-card relative aspect-video w-full overflow-hidden">
-        <EventCardCountdownAbsolute event={event} />
+        <div className="absolute top-3 left-3">
+          <EventCardCountdown event={event} />
+        </div>
         {event.data.cover ? (
           <img
             src={event.data.cover.src}

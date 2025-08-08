@@ -2,18 +2,25 @@
 
 import { useEffect, useState } from "react";
 
+import clsx from "clsx";
+import { LuCalendarClock } from "react-icons/lu";
+
 import type { EventEnriched } from "@/content";
 import { isEventRecent } from "@/utils/eventFilters";
 
-const DEFAULT_BADGE_CLASS = "badge badge-accent";
-const LIVE_BADGE_CLASS = "badge badge-info";
+const BADGE_BASE = "badge";
+const DEFAULT_BADGE_CLASS = `${BADGE_BASE} badge-accent`;
+const LIVE_BADGE_CLASS = `${BADGE_BASE} badge-info`;
 
 interface EventCardCountdownProps {
   event: EventEnriched;
-  renderer?: (timeString: string, badgeClass: string) => React.ReactNode;
+  className?: string;
 }
 
-export default function EventCardCountdown({ event, renderer }: EventCardCountdownProps) {
+export default function EventCardCountdown({
+  event,
+  className = "badge-lg",
+}: EventCardCountdownProps) {
   const [timeString, setTimeString] = useState<string>("");
   const [badgeClass, setBadgeClass] = useState<string>(DEFAULT_BADGE_CLASS);
 
@@ -84,9 +91,10 @@ export default function EventCardCountdown({ event, renderer }: EventCardCountdo
 
   if (!timeString) return null;
 
-  if (renderer) {
-    return <>{renderer(timeString, badgeClass)}</>;
-  }
-
-  return <div className={badgeClass}>{timeString}</div>;
+  return (
+    <div className={clsx(badgeClass, "flex items-center gap-2", className)}>
+      <LuCalendarClock />
+      {timeString}
+    </div>
+  );
 }

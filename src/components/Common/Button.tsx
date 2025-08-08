@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { LuArrowUpRight, LuChevronLeft } from "react-icons/lu";
 
 import LinkReact from "./LinkReact";
 
@@ -17,7 +17,7 @@ export default function Button({ href, text, className, iconLeft = false }: Butt
     <LinkReact className={clsx("btn btn-primary mx-auto", className)} href={href}>
       {iconLeft && <LuChevronLeft />}
       {text}
-      {!iconLeft && <LuChevronRight />}
+      {!iconLeft && <LuArrowUpRight />}
     </LinkReact>
   );
 }
