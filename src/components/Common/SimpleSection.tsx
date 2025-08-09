@@ -15,6 +15,7 @@ export type SimpleSectionProps = {
     text: string;
     href: string;
     className?: string;
+    ariaLabel?: string;
   };
 };
 
@@ -44,7 +45,12 @@ export default function SimpleSection({
       )}
       {button && (
         <Container className="flex justify-center">
-          <Button href={button.href} text={button.text} className={button.className || "btn-lg"} />
+          <Button
+            href={button.href}
+            text={button.text}
+            className={button.className || "btn-lg"}
+            ariaLabel={button.ariaLabel}
+          />
         </Container>
       )}
     </section>

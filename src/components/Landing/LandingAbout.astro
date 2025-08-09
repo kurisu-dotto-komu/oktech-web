@@ -25,7 +25,10 @@ const uniqueVenues = venues.filter((venue) => !venue.id.startsWith("999999")).le
     </div>
 
     <div class="flex max-w-xl flex-col gap-8 text-center">
-      <SimpleSection title="About OKTech" button={{ text: "Learn More", href: "/about" }}>
+      <SimpleSection
+        title="About OKTech"
+        button={{ text: "Learn More", href: "/about", ariaLabel: "Learn More About OKTech" }}
+      >
         <p class="text-lg">
           A volunteer, non-profit group organizing monthly meetups in the Kansai region of Japan. We
           invite people from all walks of web-life and encourage members to present topics they

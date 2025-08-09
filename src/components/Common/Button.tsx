@@ -10,13 +10,29 @@ interface ButtonProps {
   className?: string;
   class?: string;
   iconLeft?: boolean;
+  ariaLabel?: string;
 }
 
-export default function Button({ href, text, className, iconLeft = false }: ButtonProps) {
+export default function Button({
+  href,
+  text,
+  className,
+  iconLeft = false,
+  ariaLabel,
+}: ButtonProps) {
+  const needsSrText = ariaLabel && ariaLabel !== text;
+
   return (
     <LinkReact className={clsx("btn btn-primary mx-auto", className)} href={href}>
       {iconLeft && <LuChevronLeft />}
-      {text}
+      {needsSrText ? (
+        <>
+          <span aria-hidden="true">{text}</span>
+          <span className="sr-only">{ariaLabel}</span>
+        </>
+      ) : (
+        text
+      )}
       {!iconLeft && <LuArrowUpRight />}
     </LinkReact>
   );
