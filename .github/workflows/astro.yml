@@ -71,6 +71,7 @@ jobs:
         working-directory: ${{ env.BUILD_PATH }}
         env:
           STADIA_MAPS_API_KEY: ${{ secrets.STADIA_MAPS_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} astro build \

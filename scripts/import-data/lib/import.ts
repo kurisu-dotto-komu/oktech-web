@@ -3,6 +3,7 @@ import path from "node:path";
 
 import { CONTENT_DIR, getGithubRawUrl } from "./constants";
 import { processEvent } from "./events";
+import { githubFetchJSON } from "./github-fetch";
 import { logger } from "./logger";
 import { assignPhotosToEvents } from "./photos";
 import { createStatistics } from "./statistics";
@@ -48,8 +49,8 @@ export async function handleImport(args: string[]) {
   // Fetch data
   logger.section("Fetching Data");
   const [eventsWithVenuesJSON, photosJSON] = await Promise.all([
-    fetch(eventsUrl).then((r) => r.json()) as Promise<EventsWithVenuesJSON>,
-    fetch(photosUrl).then((r) => r.json()) as Promise<PhotoJSON>,
+    githubFetchJSON<EventsWithVenuesJSON>(eventsUrl),
+    githubFetchJSON<PhotoJSON>(photosUrl),
   ]);
 
   // Process photos

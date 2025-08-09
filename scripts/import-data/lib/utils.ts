@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import { GITHUB_API_BASE, GITHUB_RAW_BASE } from "./constants";
+import { githubFetch, githubFetchJSON } from "./github-fetch";
 import { logger } from "./logger";
 import type { ImportStatistics } from "./statistics";
 
@@ -25,8 +26,8 @@ export async function downloadImage(url: string, localPath: string): Promise<boo
     let imageBuffer = IMAGE_CACHE.get(fullUrl);
 
     if (!imageBuffer) {
-      // Download image
-      const response = await fetch(fullUrl);
+      // Download image using centralized GitHub fetch
+      const response = await githubFetch(fullUrl);
       if (!response.ok) {
         throw new Error(`Failed to download: ${response.status} ${response.statusText}`);
       }
@@ -63,11 +64,7 @@ export function calculateImageStats(
 
 export async function fetchLatestCommitInfo(): Promise<{ sha: string; date: string }> {
   try {
-    const response = await fetch(`${GITHUB_API_BASE}/commits/main`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch commit info: ${response.status} ${response.statusText}`);
-    }
-    const data = await response.json();
+    const data = await githubFetchJSON(`${GITHUB_API_BASE}/commits/main`);
     return {
       sha: data.sha,
       date: data.commit.committer.date,
