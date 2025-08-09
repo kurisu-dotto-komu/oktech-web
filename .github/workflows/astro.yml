@@ -66,6 +66,11 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
         working-directory: ${{ env.BUILD_PATH }}
+      - name: Fetch data
+        run: npm run import
+        working-directory: ${{ env.BUILD_PATH }}
+        env:
+          STADIA_MAPS_API_KEY: ${{ secrets.STADIA_MAPS_API_KEY }}
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} astro build \
