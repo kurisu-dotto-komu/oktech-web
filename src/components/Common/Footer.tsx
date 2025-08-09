@@ -8,11 +8,7 @@ import { meta } from "@/utils/meta";
 
 import ThemeToggle from "./ThemeToggle";
 
-interface FooterProps {
-  showFullBuildInfo?: boolean;
-}
-
-export default function Footer({ showFullBuildInfo = false }: FooterProps) {
+export default function Footer() {
   return (
     <footer className="bg-base-300 text-base-content" data-testid="footer">
       <Container className="flex flex-col gap-8 py-10">
@@ -31,21 +27,15 @@ export default function Footer({ showFullBuildInfo = false }: FooterProps) {
             <FooterMinorLinks />
           </div>
           <div className="opacity-70 hover:opacity-100">
-            {showFullBuildInfo ? (
-              <a
-                href={`${meta.repository}/commit/${meta.commitHash}`}
-                target="_blank"
-                className="link text-link"
-              >
-                Built with <code>{`<3`}</code> at{" "}
-                <code>{formatDate(new Date(), "datetime")} UTC</code> using{" "}
-                <code>{meta.commitHash.substring(0, 7)}</code>
-              </a>
-            ) : (
-              <span>
-                Built with <code>{`<3`}</code>
-              </span>
-            )}
+            <a
+              href={`${meta.repository}/commit/${meta.commitHash}`}
+              target="_blank"
+              className="link text-link"
+            >
+              Built with <code>{`<3`}</code> at{" "}
+              <code>{formatDate(new Date(), "datetime")} UTC</code> using{" "}
+              <code>{meta.commitHash.substring(0, 7)}</code>
+            </a>
           </div>
         </div>
       </Container>

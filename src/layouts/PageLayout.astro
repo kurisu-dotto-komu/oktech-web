@@ -5,7 +5,6 @@ import Footer from "@/components/Common/Footer";
 import clsx from "clsx";
 
 const { flush, className, ...rest } = Astro.props;
-const isIndexPage = Astro.url.pathname === "/" || Astro.url.pathname === "";
 ---
 
 <RootLayout {...rest}>
@@ -18,7 +17,7 @@ const isIndexPage = Astro.url.pathname === "/" || Astro.url.pathname === "";
       <slot />
     </main>
     <footer>
-      <Footer client:visible showFullBuildInfo={isIndexPage} />
+      <Footer client:visible />
     </footer>
   </div>
   <!-- <DevInfo client:visible /> -->
