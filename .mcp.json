@@ -10,9 +10,7 @@
     },
     "lighthouse": {
       "command": "npx",
-      "args": ["lighthouse-mcp"],
-      "disabled": false,
-      "autoApprove": []
+      "args": ["@danielsogl/lighthouse-mcp@latest"]
     }
   }
 }
