@@ -29,7 +29,10 @@ export type Event = {
   duration: number;
   feeSettings: null;
   id: string;
-  image?: { file: string };
+  image?: {
+    location: string; // Path to the image file (changed from 'file' to match remote schema)
+    date?: number; // Timestamp when image was added
+  };
   maxTickets: number;
   numberOfAllowedGuests: number;
   time: number;

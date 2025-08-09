@@ -46,11 +46,17 @@ export async function processEvent(
     newFrontmatter.duration = Math.round(event.duration / 60000);
   }
 
-  if (event.image && event.image.file) {
-    const coverBasename = path.basename(event.image.file);
-    newFrontmatter.cover = `./${coverBasename}`;
+  if (event.image && event.image.location) {
+    const coverBasename = path.basename(event.image.location);
     const coverLocalPath = path.join(eventDir, coverBasename);
-    await downloadImage(event.image.file, coverLocalPath); // Cover images don't track stats
+    try {
+      await downloadImage(event.image.location, coverLocalPath); // Cover images don't track stats
+      // Only set cover in frontmatter if download succeeded
+      newFrontmatter.cover = `./${coverBasename}`;
+    } catch (err) {
+      logger.warn(`Failed to download cover image for event ${event.id}: ${err}`);
+      // Don't set cover in frontmatter if download failed
+    }
   }
 
   if (event.topics && event.topics.length > 0) {
