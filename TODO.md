@@ -19,6 +19,7 @@ TARGET SOFT LAUNCH AUG 09.
 
 ### THEN
 
+- Pinch to zoom
 - Prettier touches like asanhoa
 - Feedback integration
 
