@@ -24,14 +24,16 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  BUILD_PATH: "." # default value when not using subfolders
-  # BUILD_PATH: subfolder
-
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    environment: github-pages
+    env:
+      BUILD_PATH: ${{ vars.BUILD_PATH || '.' }}
+      SITE_URL: ${{ vars.SITE_URL }}
+      BASE_PATH: ${{ vars.BASE_PATH }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -72,6 +74,11 @@ jobs:
         env:
           STADIA_MAPS_API_KEY: ${{ secrets.STADIA_MAPS_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print env
+        run: |
+          echo "vars.SITE_URL='${{ vars.SITE_URL }}'"
+          echo "env SITE_URL='$SITE_URL'"
+          echo "env BASE_PATH='$BASE_PATH'"
       - name: Build with Astro
         run: |
           ${{ steps.detect-package-manager.outputs.runner }} astro build \
