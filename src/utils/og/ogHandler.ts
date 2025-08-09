@@ -33,18 +33,22 @@ export async function createOGImageHandler({
       });
     }
 
-    // Load local fonts from assets
+    /*
+    // in root layout
+    import "@fontsource/noto-sans/400.css";
+    import "@fontsource/noto-sans/700.css";
+    import "@fontsource/lexend/700.css";
+    */
+    // Load fonts from @fontsource packages
     const fs = await import("fs/promises");
     const path = await import("path");
 
-    const fontsDir = path.join(process.cwd(), "src/assets/fonts");
+    const fontsDir = path.join(process.cwd(), "node_modules/@fontsource");
 
-    const [notoRegular, notoMedium, notoBold, lexendMedium, lexendBold] = await Promise.all([
-      fs.readFile(path.join(fontsDir, "NotoSans-Regular.ttf")),
-      fs.readFile(path.join(fontsDir, "NotoSans-Medium.ttf")),
-      fs.readFile(path.join(fontsDir, "NotoSans-Bold.ttf")),
-      fs.readFile(path.join(fontsDir, "Lexend-Medium.ttf")),
-      fs.readFile(path.join(fontsDir, "Lexend-Bold.ttf")),
+    const [notoRegular, notoBold, lexendBold] = await Promise.all([
+      fs.readFile(path.join(fontsDir, "noto-sans/files/noto-sans-latin-400-normal.woff")),
+      fs.readFile(path.join(fontsDir, "noto-sans/files/noto-sans-latin-700-normal.woff")),
+      fs.readFile(path.join(fontsDir, "lexend/files/lexend-latin-700-normal.woff")),
     ]);
 
     // Generate the markup using the provided component
@@ -54,7 +58,6 @@ export async function createOGImageHandler({
       width,
       height,
       fonts: [
-        // Body font - Noto Sans
         {
           name: "Noto Sans",
           data: notoRegular,
@@ -63,21 +66,8 @@ export async function createOGImageHandler({
         },
         {
           name: "Noto Sans",
-          data: notoMedium,
-          weight: 500,
-          style: "normal",
-        },
-        {
-          name: "Noto Sans",
           data: notoBold,
           weight: 700,
-          style: "normal",
-        },
-        // Header font - Lexend
-        {
-          name: "Lexend",
-          data: lexendMedium,
-          weight: 500,
           style: "normal",
         },
         {

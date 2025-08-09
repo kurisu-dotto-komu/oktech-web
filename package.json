@@ -24,11 +24,11 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/rss": "^4.0.12",
     "@fontsource/lexend": "^5.2.9",
     "@fontsource/noto-sans": "^5.2.7",
     "@fontsource/space-mono": "^5.2.8",
-    "@astrojs/react": "^4.3.0",
-    "@astrojs/rss": "^4.0.12",
     "@iconify-json/cib": "^1.2.2",
     "@iconify-json/lucide": "^1.2.52",
     "@playwright/test": "^1.53.1",

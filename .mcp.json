@@ -7,6 +7,12 @@
     "playwright": {
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--isolated", "--headless", "--no-sandbox"]
+    },
+    "lighthouse": {
+      "command": "npx",
+      "args": ["lighthouse-mcp"],
+      "disabled": false,
+      "autoApprove": []
     }
   }
 }

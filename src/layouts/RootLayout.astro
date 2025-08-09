@@ -7,7 +7,7 @@ import { ClientRouter } from "astro:transitions";
 
 import "@fontsource/noto-sans/400.css";
 import "@fontsource/noto-sans/700.css";
-import "@fontsource/lexend/700.css"; // Only 700 weight for headers
+import "@fontsource/lexend/700.css";
 import "@fontsource/space-mono/400.css";
 
 export interface Props {
@@ -33,10 +33,7 @@ const { title, ...seoProps } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <SEO title={title} {...seoProps} />
     <link
       rel="alternate"

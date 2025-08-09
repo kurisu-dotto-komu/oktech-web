@@ -6,16 +6,25 @@ TARGET SOFT LAUNCH AUG 09.
 
 ### 9 SOFT RELEASE DAY (oktech.jp/chris-wireframe)
 
+- Update logo
 - OG Image Styling
-- Chekcs on multiple browsers and devices.
-- SEO Keyword Stuffing
-- Resume github pages workflow with sync script trigger
+- Manual checks on multiple browsers and devices.
+
+- Standardize importing of markdown to fix that css import.
 - Clean up codebase, removing AI stuff.
-- Work with Martin or whoever controls domains to do manual release
+
 - Test automated builds
+- Resume github pages workflow with sync script trigger
+- Work with Martin or whoever controls domains to do manual release
+
+### THEN
+
+- Prettier touches like asanhoa
+- Feedback integration
 
 # Post Release Features
 
+- SEO test page / Keyword Stuffing
 - Carousel for upcoming events
 - Tagging with LLMs and shit.
 - How to find us photos for hankyu etc.
