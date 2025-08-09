@@ -78,7 +78,7 @@ export default function BlobSlideshow<T = string | ImageData>({
         };
       }
 
-      // Prefetch only the next image
+      // Prefetch next image immediately
       const nextIndex = (currentIndex + 1) % images.length;
       if (!loadedImages.has(nextIndex)) {
         const nextImage = images[nextIndex];
@@ -87,6 +87,19 @@ export default function BlobSlideshow<T = string | ImageData>({
         img.onload = () => {
           setLoadedImages((prev) => new Set(prev).add(nextIndex));
         };
+      }
+      
+      // Also prefetch the image after next for smoother transitions
+      const nextNextIndex = (currentIndex + 2) % images.length;
+      if (!loadedImages.has(nextNextIndex)) {
+        setTimeout(() => {
+          const nextNextImage = images[nextNextIndex];
+          const img = new Image();
+          img.src = typeof nextNextImage === "string" ? nextNextImage : nextNextImage.src;
+          img.onload = () => {
+            setLoadedImages((prev) => new Set(prev).add(nextNextIndex));
+          };
+        }, 500); // Slight delay to prioritize immediate next image
       }
     }
   }, [currentIndex, images, isDataMode, isVisible, loadedImages]);
@@ -161,7 +174,13 @@ export default function BlobSlideshow<T = string | ImageData>({
               images!.map((image, index) => {
                 const isString = typeof image === "string";
                 const src = isString ? image : image.src;
-                const shouldRender = loadedImages.has(index) || index === currentIndex;
+                const isLoaded = loadedImages.has(index);
+                const isCurrent = index === currentIndex;
+                const isNext = index === (currentIndex + 1) % images!.length;
+                const isPrev = index === (currentIndex - 1 + images!.length) % images!.length;
+                
+                // Render current, next, previous, and all loaded images to maintain fade effect
+                const shouldRender = isLoaded || isCurrent || isNext || isPrev;
 
                 if (!shouldRender) return null;
 
