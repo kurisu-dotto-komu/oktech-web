@@ -40,7 +40,7 @@ const GRID_SIZES = [
 
 export const SIZE_PRESETS: Record<SizePreset, string> = {
   grid: GRID_SIZES,
-  container: "100vw", // full-bleed content images
+  container: "100vw, 50vw", // full-bleed content images that might be in columns
   lightbox: "100vw", // expanded/modal images
 };
 

@@ -181,7 +181,7 @@ export const getEvent = memoize(async (eventSlug: string): Promise<EventEnriched
   // Generate responsive cover image
   const cover = await generateResponsiveImage(
     event.data.cover,
-    "container"
+    "grid"
   );
 
   return {

@@ -104,14 +104,14 @@ const processVenue = memoize(async function processVenue(
   if (venue.data.mapImage) {
     mapImage = await generateResponsiveImage(
       venue.data.mapImage,
-      "container"
+      "grid"
     );
   }
 
   if (venue.data.mapDarkImage) {
     mapDarkImage = await generateResponsiveImage(
       venue.data.mapDarkImage,
-      "container"
+      "grid"
     );
   }
 

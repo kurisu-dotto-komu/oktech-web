@@ -37,76 +37,32 @@ export default function BlobSlideshow<T = string | ImageData>({
 }: BlobSlideshowProps<T>) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentBlob, setCurrentBlob] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [renderedImages, setRenderedImages] = useState<Set<number>>(new Set([0, 1]));
 
   // Determine which mode we're in
   const items = data || images || [];
   const isDataMode = !!data && !!renderer;
 
-  // Use Intersection Observer to detect when slideshow is in viewport
+  // Progressively include images in the DOM as we advance through slides
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.01 },
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
-  }, []);
-
-  // Lazy load current image and prefetch next image only
-  useEffect(() => {
-    if (!isDataMode && images && isVisible) {
-      // Load current image
-      if (!loadedImages.has(currentIndex)) {
-        const image = images[currentIndex];
-        const img = new Image();
-        img.src = typeof image === "string" ? image : image.src;
-        img.onload = () => {
-          setLoadedImages((prev) => new Set(prev).add(currentIndex));
-        };
-      }
-
-      // Prefetch next image immediately
+    if (!isDataMode && images && images.length > 0) {
+      // Always include current and next two images
       const nextIndex = (currentIndex + 1) % images.length;
-      if (!loadedImages.has(nextIndex)) {
-        const nextImage = images[nextIndex];
-        const img = new Image();
-        img.src = typeof nextImage === "string" ? nextImage : nextImage.src;
-        img.onload = () => {
-          setLoadedImages((prev) => new Set(prev).add(nextIndex));
-        };
-      }
-      
-      // Also prefetch the image after next for smoother transitions
       const nextNextIndex = (currentIndex + 2) % images.length;
-      if (!loadedImages.has(nextNextIndex)) {
-        setTimeout(() => {
-          const nextNextImage = images[nextNextIndex];
-          const img = new Image();
-          img.src = typeof nextNextImage === "string" ? nextNextImage : nextNextImage.src;
-          img.onload = () => {
-            setLoadedImages((prev) => new Set(prev).add(nextNextIndex));
-          };
-        }, 500); // Slight delay to prioritize immediate next image
-      }
+
+      setRenderedImages((prev) => {
+        const newSet = new Set(prev);
+        newSet.add(currentIndex);
+        newSet.add(nextIndex);
+        newSet.add(nextNextIndex);
+        return newSet;
+      });
     }
-  }, [currentIndex, images, isDataMode, isVisible, loadedImages]);
+  }, [currentIndex, images, isDataMode]);
 
   // Synchronize slide and blob transitions
   useEffect(() => {
-    if (items.length <= 1 || !isVisible) return;
+    if (items.length <= 1) return;
 
     let intervalTimer: NodeJS.Timeout;
 
@@ -123,7 +79,7 @@ export default function BlobSlideshow<T = string | ImageData>({
       clearTimeout(startTimer);
       if (intervalTimer) clearInterval(intervalTimer);
     };
-  }, [items.length, slideDelay, startTimeOffset, isVisible]);
+  }, [items.length, slideDelay, startTimeOffset]);
 
   if (items.length === 0) return null;
 
@@ -131,10 +87,7 @@ export default function BlobSlideshow<T = string | ImageData>({
   const maskId = `blob-mask-${React.useId()}`;
 
   return (
-    <div
-      ref={containerRef}
-      className={`relative z-10 h-full w-full ${containerClassName || "aspect-[4/3]"}`}
-    >
+    <div className={`relative z-10 h-full w-full ${containerClassName || "aspect-[4/3]"}`}>
       <div className="absolute inset-0 -mx-20 -my-10 md:-mx-16 md:-my-16 lg:-mx-12 lg:-my-12">
         <svg width={0} height={0}>
           <defs>
@@ -174,20 +127,14 @@ export default function BlobSlideshow<T = string | ImageData>({
               images!.map((image, index) => {
                 const isString = typeof image === "string";
                 const src = isString ? image : image.src;
-                const isLoaded = loadedImages.has(index);
-                const isCurrent = index === currentIndex;
-                const isNext = index === (currentIndex + 1) % images!.length;
-                const isPrev = index === (currentIndex - 1 + images!.length) % images!.length;
-                
-                // Render current, next, previous, and all loaded images to maintain fade effect
-                const shouldRender = isLoaded || isCurrent || isNext || isPrev;
+                const shouldRender = renderedImages.has(index);
 
                 if (!shouldRender) return null;
 
                 return (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-opacity duration-[1000ms] ${
+                    className={`bg-base-300 absolute inset-0 transition-opacity duration-[1000ms] ${
                       index === currentIndex ? "opacity-100" : "opacity-0"
                     }`}
                   >
@@ -196,9 +143,9 @@ export default function BlobSlideshow<T = string | ImageData>({
                       srcSet={!isString ? image.srcSet : undefined}
                       sizes={!isString ? image.sizes || "100vw" : undefined}
                       alt=""
-                      className="absolute inset-0 h-full w-full object-cover"
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchPriority={index === 0 ? "high" : "auto"}
+                      className="bg-base-content/20 absolute inset-0 h-full w-full object-cover"
+                      loading={index === 0 || index === 1 ? "eager" : "lazy"}
+                      fetchPriority={index === 0 ? "high" : index === 1 ? "low" : "auto"}
                     />
                   </div>
                 );

@@ -47,6 +47,6 @@ const description = event.data.topics?.length
 
   <Fragment slot="after-content">
     <EventLinks eventId={event.id} />
-    <EventGallery event={event} client:load />
+    <EventGallery event={event} client:visible />
   </Fragment>
 </SidebarPageLayout>

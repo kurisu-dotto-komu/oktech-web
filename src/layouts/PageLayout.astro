@@ -17,8 +17,8 @@ const { flush, className, ...rest } = Astro.props;
       <slot />
     </main>
     <footer>
-      <Footer client:load />
+      <Footer client:visible />
     </footer>
   </div>
-  <!-- <DevInfo client:load /> -->
+  <!-- <DevInfo client:visible /> -->
 </RootLayout>

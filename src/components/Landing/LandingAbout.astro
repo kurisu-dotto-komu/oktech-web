@@ -21,7 +21,7 @@ const uniqueVenues = venues.filter((venue) => !venue.id.startsWith("999999")).le
 <Container>
   <div class="flex flex-col items-center justify-center gap-20 lg:flex-row">
     <div class="h-90 w-90">
-      <LandingStatsSlideshow client:load totalEvents={totalEvents} uniqueVenues={uniqueVenues} />
+      <LandingStatsSlideshow client:visible totalEvents={totalEvents} uniqueVenues={uniqueVenues} />
     </div>
 
     <div class="flex max-w-xl flex-col gap-8 text-center">

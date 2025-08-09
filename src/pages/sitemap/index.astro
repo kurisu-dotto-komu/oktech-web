@@ -6,7 +6,7 @@ import ArticleLayout from "@/layouts/ArticleLayout.astro";
 ---
 
 <ArticleLayout title="Sitemap">
-  <SitemapSwitcher slot="header" currentView="list" client:load />
+  <SitemapSwitcher slot="header" currentView="list" client:visible />
   <div>
     This page lists every accessible route on the website for easy navigation. You can also download
     the

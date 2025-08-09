@@ -23,9 +23,10 @@ import Cut from "../Common/Cut";
           Group.
         </p>
       </div>
-      <div class="lg:-my-20 lg:-mr-12">
-        <Parallax client:load>
+      <div>
+        <Parallax client:idle>
           <BlobSlideshow
+            blobOffset={1000}
             images={[
               "/content/events/307265699-led-and-vulnerability-disclosure/gallery/PXL_20250524_0847033052.webp",
               "/content/events/301456891-workshop-like-s3/gallery/IMG_7669.webp",
