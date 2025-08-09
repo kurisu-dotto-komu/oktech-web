@@ -39,6 +39,8 @@ const getSiteConfig = () => {
 
 const { site } = getSiteConfig();
 
+console.log(`URL: ${site}${base}`);
+
 // https://astro.build/config
 export default defineConfig({
   site,
