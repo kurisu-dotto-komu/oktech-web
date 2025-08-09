@@ -6,5 +6,6 @@ coordinates:
   lat: 34.672886
   lng: 135.50374
 meetupId: 27929713
+gmaps: https://maps.app.goo.gl/tXYwsCJ6fNWKNyA99
 ---
 

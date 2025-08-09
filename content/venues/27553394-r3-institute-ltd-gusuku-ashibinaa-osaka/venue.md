@@ -10,6 +10,7 @@ meetupId: 27553394
 hasPage: true
 cover: ./r3-logo.svg
 website: https://www.r3it.com/
+gmaps: https://maps.app.goo.gl/MJb1aqGsnXqXgqMQ7
 ---
 
 R3 Institute Ltd. is located in the Grand Front Osaka Tower C on the 16th floor. This modern coworking space offers a professional environment for tech meetups and community events in the heart of Osaka.
