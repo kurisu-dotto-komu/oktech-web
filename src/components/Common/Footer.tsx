@@ -26,7 +26,7 @@ export default function Footer() {
             </span>
             <FooterMinorLinks />
           </div>
-          <div className="opacity-50 hover:opacity-100">
+          <div className="opacity-70 hover:opacity-100">
             <a
               href={`${meta.repository}/commit/${meta.commitHash}`}
               target="_blank"
@@ -39,7 +39,7 @@ export default function Footer() {
           </div>
         </div>
       </Container>
-      <div className="fade-out font-header -mb-[4vw] overflow-hidden text-center text-[24vw] leading-none tracking-tighter opacity-35 select-none lg:-mb-16 lg:text-[20em]">
+      <div className="fade-out font-header -mb-[4vw] overflow-hidden text-center text-[24vw] leading-none tracking-tighter opacity-50 select-none lg:-mb-16 lg:text-[20em]">
         OKTech
       </div>
     </footer>
