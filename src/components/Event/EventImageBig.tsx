@@ -21,8 +21,6 @@ export default function EventImageBig({ event }: { event: EventEnriched }) {
           loading="eager"
           fetchPriority="high"
           className="h-full w-full object-cover"
-          width={512}
-          height={512}
         />
       </figure>
     </div>
