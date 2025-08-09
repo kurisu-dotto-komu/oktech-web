@@ -2,79 +2,120 @@
 import type { ImageMetadata } from "astro";
 import { getImage } from "astro:assets";
 
-/**
- * Responsive Image Generation System
- *
- * Generates optimized image variants by combining:
- * 1) BREAKPOINTS → actual output file widths (px)
- * 2) SIZE_PRESETS → the <img sizes="..."> rule that tells the browser how wide
- *    the image will render at different viewport widths
- *
- * Notes:
- * - BREAKPOINTS control which *files* we create (e.g. 420w.webp, 720w.webp, 1200w.webp)
- * - SIZE_PRESETS control how large the image *appears* in layout (e.g. 100vw, 50vw, 20vw)
- * - The browser picks the tightest srcset candidate based on `sizes` + device DPR
- */
+// Default breakpoints as fallback
+export const OUTPUT_SIZES = [420, 720, 1200] as const;
 
-// Simple, fixed breakpoints that cover most use cases
-export const BREAKPOINTS = [420, 720, 1200] as const;
+// Tailwind CSS breakpoint values
+const BP = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+} as const;
 
-// Cache for memoization
 const imageCache = new Map<string, ResponsiveImageData>();
 
 export interface ResponsiveImageData {
-  src: string; // Fallback image URL (largest variant)
-  srcSet: string; // e.g. "img-420.webp 420w, img-720.webp 720w, img-1200.webp 1200w"
-  sizes: string; // e.g. "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw, 100vw"
+  src: string;
+  srcSet: string;
+  sizes: string;
 }
 
-export type SizePreset = "grid" | "container" | "lightbox";
+export type ImageType =
+  | "sidebarLayoutHero"
+  | "eventPolaroid"
+  | "eventCompact"
+  | "galleryThumbnail"
+  | "galleryLightbox"
+  | "blobSlideshow"
+  | "venueMap";
 
-// Build a gap-aware sizes string
-const GRID_SIZES = [
-  "(max-width: 640px) 100vw", // phones
-  "(max-width: 1024px) 50vw", // tablets
-  "(min-width: 1025px) 20vw", // desktop
-  "100vw", // fallback
-].join(", ");
+interface ImageConfig {
+  sizes: string;
+  cropAspectRatio?: number; // Optional aspect ratio (width/height)
+  breakpoints?: readonly number[]; // Optional custom breakpoints for this image type
+}
 
-export const SIZE_PRESETS: Record<SizePreset, string> = {
-  grid: GRID_SIZES,
-  container: "100vw, 50vw", // full-bleed content images that might be in columns
-  lightbox: "100vw", // expanded/modal images
+export const IMAGE_CONFIGS: Record<ImageType, ImageConfig> = {
+  sidebarLayoutHero: {
+    sizes: `(max-width: ${BP.md}px) 100vw, 70vw`,
+    // 100vw on mobile, 70vw on desktop
+  },
+  eventPolaroid: {
+    sizes: [
+      `(max-width: ${BP.sm}px) 100vw`,
+      `(max-width: ${BP.lg}px) 50vw`,
+      `(min-width: ${BP.lg + 1}px) 20vw`,
+      "100vw",
+    ].join(", "),
+    // 100vw mobile, 50vw tablet, 20vw desktop
+  },
+  eventCompact: {
+    sizes: "200px", // Fixed width
+  },
+  galleryThumbnail: {
+    sizes: [
+      `(max-width: ${BP.sm}px) 100vw`,
+      `(max-width: ${BP.lg}px) 50vw`,
+      `(min-width: ${BP.lg + 1}px) 25vw`,
+      "100vw",
+    ].join(", "),
+    cropAspectRatio: 4 / 3,
+    // Same as eventPolaroid
+  },
+  galleryLightbox: {
+    // Full viewport at key breakpoints
+    sizes: "100vw",
+  },
+  blobSlideshow: {
+    sizes: `(max-width: ${BP.md}px) 100vw, 50vw`,
+    cropAspectRatio: 4 / 3,
+  },
+  venueMap: {
+    sizes: `(min-width: ${BP.sm}px) 33vw, 100vw`,
+  },
 };
 
 /**
- * Creates a cache key based on image metadata and preset
+ * Creates a cache key based on image metadata and image type
  */
-function createCacheKey(image: ImageMetadata, preset: SizePreset): string {
-  // Use the image source path and preset to create a unique key
+function createCacheKey(image: ImageMetadata, imageType: ImageType): string {
+  // Use the image source path and image type to create a unique key
   const imagePath = (image as any).src || String(image);
-  return `${imagePath}:${preset}`;
+  return `${imagePath}:${imageType}`;
 }
 
+/*
+srcset="
+/_astro/PXL_20250719_0946379792.Dotqtig7_ZoBrEI.webp 420w, 
+/_astro/PXL_20250719_0946379792.Dotqtig7_1RxIhl.webp 720w, 
+/_astro/PXL_20250719_0946379792.Dotqtig7_2jEGBn.webp 1200w"
+
+
 /**
- * Generate responsive image data for an Astro ImageMetadata input and a size preset.
+ * Generate responsive image data for an Astro ImageMetadata input and an image type.
  *
  * - Uses BREAKPOINTS, capped to the original image width
  * - Produces WebP variants at quality 80
+ * - Applies cropping if specified in the image config
  * - Returns { src, srcSet, sizes } ready to spread onto <img>
  */
 export async function generateResponsiveImage(
   image: ImageMetadata,
-  preset: SizePreset = "lightbox",
+  imageType: ImageType = "galleryLightbox",
 ): Promise<ResponsiveImageData> {
   // Check cache first
-  const cacheKey = createCacheKey(image, preset);
+  const cacheKey = createCacheKey(image, imageType);
   if (imageCache.has(cacheKey)) {
     return imageCache.get(cacheKey)!;
   }
 
-  // Get the sizes string from the preset
-  const sizes = SIZE_PRESETS[preset];
+  // Get the config for this image type
+  const config = IMAGE_CONFIGS[imageType];
+  const { sizes, cropAspectRatio } = config;
 
   // Only use breakpoints smaller than or equal to original image width
-  const widths = BREAKPOINTS.filter((w) => w <= image.width);
+  const widths = OUTPUT_SIZES.filter((w) => w <= image.width);
 
   // If no valid widths, use the original width
   const candidateWidths = widths.length > 0 ? widths : [image.width];
@@ -82,12 +123,20 @@ export async function generateResponsiveImage(
   // Generate all variants
   const variants = await Promise.all(
     candidateWidths.map(async (width) => {
-      const optimized = await getImage({
+      const imageOptions: any = {
         src: image,
         width,
         format: "webp",
         quality: 80,
-      });
+      };
+
+      // Apply cropping if aspect ratio is specified
+      if (cropAspectRatio) {
+        imageOptions.height = Math.round(width / cropAspectRatio);
+        imageOptions.fit = "cover";
+      }
+
+      const optimized = await getImage(imageOptions);
       return { url: optimized.src, width };
     }),
   );

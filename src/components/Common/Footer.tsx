@@ -39,7 +39,11 @@ export default function Footer() {
           </div>
         </div>
       </Container>
-      <div className="fade-out font-header -mb-[4vw] overflow-hidden text-center text-[24vw] leading-none tracking-tighter opacity-50 select-none lg:-mb-16 lg:text-[20em]">
+      <div
+        className="fade-out font-header -mb-[4vw] overflow-hidden text-center text-[24vw] leading-none tracking-tighter opacity-50 select-none lg:-mb-16 lg:text-[20em]"
+        aria-hidden="true"
+        role="presentation"
+      >
         OKTech
       </div>
     </footer>

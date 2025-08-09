@@ -112,11 +112,11 @@ export const getGalleryImages = memoize(async (eventId: string): Promise<Gallery
       const [thumbnail, full] = await Promise.all([
         generateResponsiveImage(
           img.data.image,
-          "grid"
+          "galleryThumbnail"
         ),
         generateResponsiveImage(
           img.data.image,
-          "lightbox"
+          "galleryLightbox"
         )
       ]);
       
@@ -181,7 +181,7 @@ export const getEvent = memoize(async (eventSlug: string): Promise<EventEnriched
   // Generate responsive cover image
   const cover = await generateResponsiveImage(
     event.data.cover,
-    "grid"
+    "eventPolaroid"
   );
 
   return {

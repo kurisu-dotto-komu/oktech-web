@@ -46,7 +46,7 @@ const images = await Promise.all(
     const module = await resolver();
 
     // Generate responsive images for the slideshow
-    const responsive = await generateResponsiveImage(module.default, "container");
+    const responsive = await generateResponsiveImage(module.default, "blobSlideshow");
     return responsive;
   }),
 );
