@@ -18,7 +18,7 @@ export default function EventStatusBadge({ event, className = "badge-lg" }: Even
 
   if (isCancelled) {
     return (
-      <div className={clsx("badge badge-error text-base-800 dark:text-base-100 gap-2", className)}>
+      <div className={clsx("badge badge-error text-dark-neutral gap-2", className)}>
         <LuCalendarX />
         Cancelled
       </div>

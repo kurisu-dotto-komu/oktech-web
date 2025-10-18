@@ -35,15 +35,15 @@ const isUpcoming = isEventUpcoming(event);
     <LocationCardEvent event={event} client:load />
   </Fragment>
   <Fragment slot="main-content">
-    <h2 class="title !font-light">{isUpcoming ? "Upcoming" : "Past"} Event</h2>
-    <div class="block lg:hidden">
-      <EventActionAlert event={event} client:visible />
-    </div>
-    <EventImageBig event={event} client:load />
-    <div class="flex flex-col gap-6 pb-8 lg:hidden">
-      <LocationCardEvent event={event} horizontal client:load />
-    </div>
     <div class="gap-responsive flex flex-col">
+      <h2 class="title !font-light">{isUpcoming ? "Upcoming" : "Past"} Event</h2>
+      <div class="block lg:hidden">
+        <EventActionAlert event={event} client:visible />
+      </div>
+      <EventImageBig event={event} client:load />
+      <div class="flex flex-col gap-6 pb-8 lg:hidden">
+        <LocationCardEvent event={event} horizontal client:load />
+      </div>
       <h1 class="sub-title !font-medium">
         {event.data.title}
       </h1>

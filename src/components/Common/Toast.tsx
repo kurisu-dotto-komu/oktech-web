@@ -44,7 +44,7 @@ export default function Toast() {
         isVisible ? "opacity-100" : "opacity-0",
       )}
     >
-      <div className="alert alert-warning pointer-events-auto m-auto max-w-md">
+      <div className="alert alert-warning text-dark-neutral pointer-events-auto m-auto max-w-md">
         <LuConstruction className="h-5 w-5" />
         <span>We're actively working on this site. You will encounter visual inconsistencies.</span>
         <button

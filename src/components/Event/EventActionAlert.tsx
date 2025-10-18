@@ -59,7 +59,7 @@ export default function EventActionAlert({ event, variant = "default" }: EventAc
   return (
     <div
       className={clsx(
-        "alert flex gap-6 p-6",
+        "alert text-dark-neutral flex gap-6 p-6",
         alertVariantClass[color],
         isCompact
           ? "flex-col items-start 2xl:!flex-row 2xl:!items-center"
