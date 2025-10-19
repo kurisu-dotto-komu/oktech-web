@@ -1,9 +1,7 @@
-export default function ScribbleLine({ vertical = false }: { vertical?: boolean }) {
-  const orientationClass = vertical ? "rotate-90" : undefined;
-
+export default function ScribbleLine({ style }: { style?: React.CSSProperties }) {
   return (
     <svg
-      className={orientationClass}
+      style={style}
       viewBox={"0 0 300 20"}
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"

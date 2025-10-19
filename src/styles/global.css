@@ -73,7 +73,7 @@ body {
 @supports (-webkit-touch-callout: none) {
   @media (hover: none) {
     .btn {
-      -webkit-tap-highlight-color: color-mix(in srgb, var(--color-base-0) 45%, transparent);
+      -webkit-tap-highlight-color: color-mix(in srgb, var(--color-base-900) 25%, transparent);
     }
   }
 }
