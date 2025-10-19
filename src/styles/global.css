@@ -69,3 +69,11 @@ body {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
+
+@supports (-webkit-touch-callout: none) {
+  @media (hover: none) {
+    .btn {
+      -webkit-tap-highlight-color: color-mix(in srgb, var(--color-base-0) 45%, transparent);
+    }
+  }
+}

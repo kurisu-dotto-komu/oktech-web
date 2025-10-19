@@ -64,10 +64,11 @@ function DownScribble({ color, fat }: { color: string; fat?: boolean }) {
   return (
     <div className={clsx("flex h-full w-full items-center justify-center", color)}>
       <div
-        className={clsx(
-          "flex aspect-square h-full rotate-90 items-center justify-center",
-          fat ? "scale-y-400" : "scale-y-200",
-        )}
+        className="flex aspect-square h-full items-center justify-center"
+        style={{
+          transform: `rotate(90deg) scaleY(${fat ? 4 : 2})`,
+          willChange: 'transform',
+        }}
       >
         <ScribbleLine />
       </div>
