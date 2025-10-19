@@ -169,6 +169,13 @@ export function useBlobParagraphScroll({
   // Handle scroll and active paragraph selection
   useEffect(() => {
     const handleScroll = () => {
+      if (window.scrollY <= 0) {
+        if (activeParagraphIndex !== 0) {
+          setActiveParagraphIndex(0);
+        }
+        return;
+      }
+
       let newActiveIndex = activeParagraphIndex;
 
       if (mode === "mobile") {
