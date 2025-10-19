@@ -64,12 +64,7 @@ function DownScribble({ color }: { color: string }) {
   return (
     <div className={clsx("flex h-full w-full items-center justify-center", color)}>
       <div className={clsx("flex aspect-square h-full items-center justify-center")}>
-        <ScribbleLine
-          style={{
-            transform: `rotate3d(0, 0, 1, 90deg) scale3d(1, 2, 1)`,
-            willChange: "transform",
-          }}
-        />
+        <ScribbleLine vertical />
       </div>
     </div>
   );
