@@ -61,7 +61,7 @@ export default function EventProjectorOverlay({
   const legacyEvent = isLegacyEvent(event);
 
   if (legacyEvent) {
-    const projectorImage = event.data.coverProjector ?? event.data.cover;
+    const projectorImage = event.data.coverProjector ?? event.data.coverPage;
 
     return (
       <div

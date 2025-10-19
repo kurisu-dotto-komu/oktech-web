@@ -4,9 +4,9 @@ export default function EventImageBig({ event }: { event: EventEnriched }) {
   return (
     <figure className="rounded-box aspect-video w-full overflow-hidden">
       <img
-        src={event.data.cover.src}
-        srcSet={event.data.cover.srcSet}
-        sizes={event.data.cover.sizes}
+        src={event.data.coverPage.src}
+        srcSet={event.data.coverPage.srcSet}
+        sizes={event.data.coverPage.sizes}
         alt={event.data.title}
         loading="eager"
         fetchPriority="high"

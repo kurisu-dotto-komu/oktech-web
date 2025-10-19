@@ -35,9 +35,9 @@ export const GET = createOGImageRoute(async ({ params }) => {
 
   // Get event cover image if it exists
   let coverImageBase64 = null;
-  if (event.data.cover) {
+  if (event.data.coverPage) {
     // Extract the actual file path from the Vite virtual file system path
-    const coverSrc = event.data.cover.src;
+    const coverSrc = event.data.coverPage.src;
     const match = coverSrc.match(/\/@fs(.+?)\?/);
     if (match) {
       const actualPath = match[1];

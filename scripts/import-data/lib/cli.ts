@@ -52,6 +52,7 @@ function showHelp(): void {
   logger.info("  events           Clear event markdown files");
   logger.info("  venues           Clear venue markdown files");
   logger.info("  image-files      Clear image files");
+  logger.info("  cover-images     Clear event cover images only");
   logger.info("  image-metadata   Clear image metadata files");
   logger.info("  images           Clear images (files and metadata)");
   logger.info("  maps             Clear venue map files");

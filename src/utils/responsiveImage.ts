@@ -40,6 +40,7 @@ export interface ResponsiveImageData {
 export type ImageType =
   | "sidebarLayoutHero"
   | "eventPolaroid"
+  | "eventBig"
   | "eventCompact"
   | "galleryThumbnail"
   | "galleryLightbox"
@@ -66,8 +67,22 @@ export const IMAGE_CONFIGS: Record<ImageType, ImageConfig> = {
     ].join(", "),
     // 100vw mobile, 50vw tablet, 20vw desktop
   },
+  eventBig: {
+    sizes: [
+      `(max-width: ${BP.sm}px) 100vw`,
+      `(max-width: ${BP.lg}px) 60vw`,
+      `(min-width: ${BP.lg + 1}px) 40vw`,
+      "100vw",
+    ].join(", "),
+  },
   eventCompact: {
-    sizes: "200px", // Fixed width
+    sizes: [
+      "(max-width: 480px) 64px",
+      `(max-width: ${BP.sm}px) 96px`,
+      `(max-width: ${BP.md}px) 128px`,
+      "168px",
+    ].join(", "),
+    breakpoints: [168],
   },
   galleryThumbnail: {
     sizes: [

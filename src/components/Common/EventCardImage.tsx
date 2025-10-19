@@ -20,6 +20,12 @@ interface EventCardImageProps {
 export default memo(function EventCardImage({ event, variant }: EventCardImageProps) {
   const isCancelled = event.data.isCancelled === true;
   const isUpcoming = isEventUpcoming(event);
+  const cover =
+    variant === "compact"
+      ? event.data.coverCompact
+      : variant === "big"
+        ? event.data.coverBig
+        : event.data.coverPolaroid;
 
   return (
     <div
@@ -27,7 +33,7 @@ export default memo(function EventCardImage({ event, variant }: EventCardImagePr
         "relative overflow-hidden !rounded-br-none",
         variant === "compact" &&
           "rounded-box-inner-tight aspect-[4/3] h-full w-24 sm:aspect-video sm:w-32 md:w-42",
-        variant !== "compact" && "rounded-box-inner",
+        variant !== "compact" && "rounded-box-inner aspect-video",
       )}
     >
       {variant !== "compact" && (isCancelled || isUpcoming) && (
@@ -37,9 +43,9 @@ export default memo(function EventCardImage({ event, variant }: EventCardImagePr
       )}
       <figure className={clsx("bg-base-400 h-full w-full")}>
         <img
-          src={event.data.cover.src}
-          srcSet={event.data.cover.srcSet}
-          sizes={event.data.cover.sizes}
+          src={cover.src}
+          srcSet={cover.srcSet}
+          sizes={cover.sizes}
           alt={event.data.title}
           loading={event.priority ? "eager" : "lazy"}
           fetchPriority={event.priority ? "high" : "auto"}

@@ -23,8 +23,8 @@ export async function decorateEventSEO(
 
     const isLegacy = isLegacyEvent(event);
     const ogImage =
-      isLegacy && event.data.cover?.src
-        ? event.data.cover.src
+      isLegacy && event.data.coverPage?.src
+        ? event.data.coverPage.src
         : getOGImageWithFallback(pathname, { eventId, title: event.data.title });
 
     const baseKeywords = ["Event", "Technology", "Meetup"];

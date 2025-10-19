@@ -2,9 +2,7 @@
 
 - Visual checks on safari
 - Optimize carousel on wide screen (it doesn't fully scroll to last item?)
-
-- Ensure that the correct srcset is used with new sizes (list view mobile)
-- Improve quality of the projector image
+- Reimport covers when they're higher quality.
 - Better touch feedback for buttons (ipad)
 - Fix: Bug on about page with mega tall screen -- first should always be seleced when no scrolling occurs.
 - FIx down line on timeline safari

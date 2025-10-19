@@ -418,18 +418,8 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
       const imageUrl = config.github.getRawBaseUrl() + event.image.location;
       const imageBuffer = await this.github.downloadFile(imageUrl);
 
-      // Process with Sharp for consistent encoding and resizing
-      const sharp = await import("sharp");
-      const processedBuffer = await sharp
-        .default(imageBuffer)
-        .resize(config.features.maxImageWidth, null, {
-          withoutEnlargement: true, // Don't upscale smaller images
-          fit: "inside", // Preserve aspect ratio
-        })
-        .webp({ quality: config.features.imageQuality }) // Convert to WebP with consistent quality
-        .toBuffer();
-
-      await fs.writeFile(coverLocalPath, processedBuffer);
+      // Write cover image as-is without transformation
+      await fs.writeFile(coverLocalPath, imageBuffer);
       logger.success(`Downloaded cover → ${coverLocalPath}`);
       return coverBasename;
     } catch (err) {

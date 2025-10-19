@@ -30,7 +30,10 @@ export type GalleryImage = CollectionEntry<"eventGalleryImage"> & {
 // Enriched event type that combines CollectionEntry with processed data
 export type EventEnriched = Omit<CollectionEntry<"events">, "data"> & {
   data: Omit<CollectionEntry<"events">["data"], "cover"> & {
-    cover: ResponsiveImageData;
+    coverCompact: ResponsiveImageData;
+    coverPolaroid: ResponsiveImageData;
+    coverBig: ResponsiveImageData;
+    coverPage: ResponsiveImageData;
     coverProjector: ResponsiveImageData;
     isCancelled?: boolean;
   };
@@ -183,9 +186,7 @@ export const getEvents = memoize(
       : allEvents.filter((event) => !event.data.devOnly);
 
     // Enrich each event with venue and gallery data using getEvent logic
-    const enrichedEvents = await Promise.all(
-      filteredEvents.map((event) => getEvent(event.id, true)),
-    );
+    const enrichedEvents = await Promise.all(filteredEvents.map((event) => getEvent(event.id)));
 
     // Sort events by date (newest first) and add priority flag for first 16
     const sortedEvents = enrichedEvents.sort((a, b) => {
@@ -209,48 +210,51 @@ export const getEvents = memoize(
   },
 );
 
-export const getEvent = memoize(
-  async (eventSlug: string, multiple: boolean = false): Promise<EventEnriched> => {
-    const event = await getEntry("events", eventSlug);
+export const getEvent = memoize(async (eventSlug: string): Promise<EventEnriched> => {
+  const event = await getEntry("events", eventSlug);
 
-    if (!event) {
-      throw new Error(`No event found for slug ${eventSlug}`);
+  if (!event) {
+    throw new Error(`No event found for slug ${eventSlug}`);
+  }
+
+  // Get venue data if the event has a venue reference
+  let processedVenue: ProcessedVenue | undefined;
+  let venueSlug: string | undefined;
+  if (event.data.venue) {
+    const venues = await getCollection("venues");
+    // Handle both object with id and plain number/string
+    const venueId = typeof event.data.venue === "object" ? event.data.venue.id : event.data.venue;
+    const venue = venues.find((v) => v.data.meetupId.toString() === venueId?.toString());
+    if (venue) {
+      processedVenue = await processVenue(venue);
+      venueSlug = venue.id;
     }
+  }
 
-    // Get venue data if the event has a venue reference
-    let processedVenue: ProcessedVenue | undefined;
-    let venueSlug: string | undefined;
-    if (event.data.venue) {
-      const venues = await getCollection("venues");
-      // Handle both object with id and plain number/string
-      const venueId = typeof event.data.venue === "object" ? event.data.venue.id : event.data.venue;
-      const venue = venues.find((v) => v.data.meetupId.toString() === venueId?.toString());
-      if (venue) {
-        processedVenue = await processVenue(venue);
-        venueSlug = venue.id;
-      }
-    }
+  // Get gallery images for this event with responsive data
+  const galleryImages = await getGalleryImages(event.id);
 
-    // Get gallery images for this event with responsive data
-    const galleryImages = await getGalleryImages(event.id);
+  // Generate responsive cover images for different layouts
+  const [coverCompact, coverPolaroid, coverBig, coverPage, coverProjector] = await Promise.all([
+    getResponsiveImage(event.data.cover, "eventCompact"),
+    getResponsiveImage(event.data.cover, "eventPolaroid"),
+    getResponsiveImage(event.data.cover, "eventBig"),
+    getResponsiveImage(event.data.cover, "sidebarLayoutHero"),
+    getResponsiveImage(event.data.cover, "galleryLightbox"),
+  ]);
 
-    // Generate responsive cover image directly from path
-    const cover = await getResponsiveImage(
-      event.data.cover,
-      multiple ? "eventPolaroid" : "sidebarLayoutHero",
-    );
-    const coverProjector = await getResponsiveImage(event.data.cover, "galleryLightbox");
-
-    return {
-      ...event,
-      data: {
-        ...event.data,
-        cover,
-        coverProjector,
-      },
-      venue: processedVenue,
-      venueSlug,
-      galleryImages,
-    };
-  },
-);
+  return {
+    ...event,
+    data: {
+      ...event.data,
+      coverCompact,
+      coverPolaroid,
+      coverBig,
+      coverPage,
+      coverProjector,
+    },
+    venue: processedVenue,
+    venueSlug,
+    galleryImages,
+  };
+});

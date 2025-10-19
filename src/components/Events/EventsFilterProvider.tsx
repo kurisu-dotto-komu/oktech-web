@@ -92,7 +92,7 @@ export function EventFilterProvider({
         location,
         venue: event.venue,
         venueName: event.venue?.title || "",
-        poster: event.data.cover,
+        poster: event.data.coverPolaroid,
         slug: event.id,
         hasGallery: event.galleryImages && event.galleryImages.length > 0,
       };

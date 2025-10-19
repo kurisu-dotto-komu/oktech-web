@@ -10,6 +10,7 @@ export type ClearTarget =
   | "events"
   | "venues"
   | "image-files"
+  | "cover-images"
   | "image-metadata"
   | "images"
   | "maps"
@@ -46,6 +47,11 @@ export class Cleaner {
       patterns: ["**/*.jpg", "**/*.jpeg", "**/*.png", "**/*.gif", "**/*.webp"],
       dirs: [config.paths.events],
       description: "image files",
+    },
+    "cover-images": {
+      patterns: ["*/*.jpg", "*/*.jpeg", "*/*.png", "*/*.gif", "*/*.webp"],
+      dirs: [config.paths.events],
+      description: "cover image files",
     },
     "image-metadata": {
       patterns: ["**/*.yaml", "**/*.json"],
@@ -189,6 +195,7 @@ export class Cleaner {
       "events",
       "venues",
       "image-files",
+      "cover-images",
       "image-metadata",
       "images",
       "maps",
