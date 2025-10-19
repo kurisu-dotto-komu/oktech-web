@@ -53,7 +53,7 @@ export default function LandingCTA() {
 
       <div className="relative z-10 -mt-6 md:-mt-8">
         <Container>
-          <BlobIconGrid items={items} className="gap-10 md:gap-16" />
+          <BlobIconGrid items={items} className="md:gap-16" />
         </Container>
       </div>
     </section>
