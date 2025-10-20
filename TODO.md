@@ -1,58 +1,52 @@
 ## Now
 
 - General Refactoring
+- Refactor rawJson usage in the import script.
 - Script to Squash/Purge the git history of images.
 
 ## Presentation
 
 - Nicer Readme, include components style guide - documenting naming conventions, prop patterns, and composition rules
 
-## Nice to Have
+## After Presnetaiton
 
 - Add slides to projector mode (CTAs for discord, next event, beers, etc.)
-- Easter egg in console.log
-- Fix modal backdrop right side weirdness
-- Optimize carousel on wide screen (it doesn't fully scroll to last item?)
-- Reimport covers when they're higher quality.
-- Martin's library?
-- Use the py-responseive and gap-responseive classes more.
-- Refactor rawJson usage in the import script.
-- Update theme script
 - Fix too much content caching / memoization in dev mode.
 - Test no upcoming events
-- Generative OG Image template, Venue OG images, no SVGs in logos
+- Reimport covers when they're higher quality.
 - Refactor sitemap, og cache, utils
-- Implement new fonts API
-
-## Later?
-
-- Ask martin to include link to homepage in meetup.com pages _strip on site_
+- Implement new experimental fonts api in astro
 - Include venue details on event page?
-- Manual test for renaming events
-- Slug Renaming if event name changes
+- Optimize carousel on wide screen (it doesn't fully scroll to last item?)
+
+## Mini Epic: Generative OG Images / Meetup.com Sync Workflow
+
+- Figure out a workflow that works for everyone, and meetup.com
+- Implement template, Venue OG images, no SVGs in logos
+- Update theme script to sync values with OG images.
+- Ask martin to include link to homepage in meetup.com pages _strip on site_
+
+## Later
+
+- Martin's library?
+- Renaming Events: Manual and Automatic Test, Slug Renaming
 - Activity Feed (firehose + event specific)
-- Update built with love link to be the commit on the main repo
-- Remove the noto sans JP if it's super heavy? It's ok to fallback to system font for Japanese.
+- Remove the noto sans JP if it's super heavy? It's ok to fallback to system font for Japanese. See how new astro fonts api works.
 - Venue instructions
-- Create test case for event name changing.
-- Tweak grid count based on new designs.
 - Static Links to files within markdown links.
 - Preview builds for PRs
 - fade between slides in gallery mode.
-- Article for about History.
 - Thank you section on about
 - Test an event witout a map ?
 - Add searchable short description to events?
 - Add info button on the lightbox
-- Carousel for upcoming events
-- Random slideshow of all images
 - Tagging with LLMs and shiz.
 - How to find us photos for hankyu etc.
 - Members: with hasPage: true.
 - Venue type ; inside / outside / etc.
 - Add interactive japan map somewhere, with heatmap of all the event locations.
 - Tree shaking animejs ?
-- Backlog Idea: maybe add the event date to the URL so its easier to see in links how old events are.
+- Add / Include the event date to the URL so its easier to see in links how old events are.
 
 ## Presentation Topic Ideas
 
