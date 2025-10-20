@@ -17,7 +17,7 @@ export default function TopBar() {
   return (
     <div data-testid="top-bar" className="text-base-800 fixed top-0 z-50 w-full">
       <ShrinkingNavbar>
-        <Link href="/" className={clsx(BUTTON_CLASS)} data-astro-prefetch>
+        <Link href="/" className={clsx(BUTTON_CLASS)} prefetch>
           <div className="-mr-1 -ml-2">
             <Brand active={logoActive} className="w-28 sm:w-32 md:w-42" />
           </div>
@@ -27,7 +27,7 @@ export default function TopBar() {
             <Link
               key={item.label}
               href={item.href}
-              data-astro-prefetch
+              prefetch
               className={clsx(BUTTON_CLASS, i > 0 && "-ml-2")}
             >
               {item.label}

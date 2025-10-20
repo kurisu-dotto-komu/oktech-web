@@ -36,7 +36,7 @@ export default function MainMenu({ variant = "default", className = "" }: MainMe
           key={item.label}
           href={item.href}
           className="btn btn-ghost items-center justify-start gap-3 text-lg"
-          data-astro-prefetch
+          prefetch
         >
           {item.label}
         </Link>

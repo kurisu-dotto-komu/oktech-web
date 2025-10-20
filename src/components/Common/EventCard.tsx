@@ -34,7 +34,7 @@ function EventCard({
   return (
     <AnimatedLink
       href={eventUrl}
-      data-astro-prefetch
+      prefetch
       data-testid={`event-card-${event.id}`}
       onMouseEnter={() => api.start({ scale: 1.05 })}
       onMouseLeave={() => api.start({ scale: 1 })}

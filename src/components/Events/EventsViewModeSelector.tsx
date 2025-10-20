@@ -57,7 +57,7 @@ export function EventsViewModeSelector({ currentView }: EventsViewModeSelectorPr
             data-view={view.value}
             data-testid={`view-mode-${view.value}`}
             aria-label={view.label}
-            data-astro-prefetch // TODO disable if it's too expensive?
+            prefetch // TODO disable if it's too expensive?
           >
             {view.label}
           </Link>

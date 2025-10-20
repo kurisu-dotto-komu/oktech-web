@@ -6,15 +6,15 @@ import { urls } from "@/utils/urls";
 
 export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
-  "data-astro-prefetch"?: string | boolean;
+  prefetch?: string | boolean;
 }
 
-export default function Link({ href, children, ...rest }: LinkProps) {
+export default function Link({ href, children, prefetch: prefetchProp, ...rest }: LinkProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    const pfProp = rest["data-astro-prefetch"];
-    const shouldPrefetch = pfProp !== undefined && pfProp !== false && pfProp !== "false";
+    const shouldPrefetch =
+      prefetchProp !== undefined && prefetchProp !== false && prefetchProp !== "false";
 
     if (!shouldPrefetch || !linkRef.current) {
       return;
@@ -39,7 +39,7 @@ export default function Link({ href, children, ...rest }: LinkProps) {
     return () => {
       observer.disconnect();
     };
-  }, [href, rest["data-astro-prefetch"]]);
+  }, [href, prefetchProp]);
 
   const finalHref = urls.withBase(href);
 

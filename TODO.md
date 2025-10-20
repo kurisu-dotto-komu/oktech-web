@@ -15,7 +15,6 @@
 - Optimize carousel on wide screen (it doesn't fully scroll to last item?)
 - Reimport covers when they're higher quality.
 - Martin's library?
-- replace data-astro-prefetch with just `prefetch` for react components
 - Use the py-responseive and gap-responseive classes more.
 - Refactor rawJson usage in the import script.
 - Update theme script
