@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import { useBlobParagraphScroll } from "@/utils/hooks/useBlobParagraphScroll";
+import { useBlobParagraphScroll } from "@/hooks/useBlobParagraphScroll";
 
 import BlobParagraph from "./BlobParagraph";
 import { type BlobParagraphContent, useBlobParagraphAssets } from "./BlobParagraphShared";

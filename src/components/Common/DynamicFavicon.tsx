@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { OKTechLogoIcon, colors } from "@/components/Common/OKTechLogo";
-import { useFocus } from "@/utils/hooks/useFocus";
+import { useFocus } from "@/hooks/useFocus";
 
 export default function DynamicFavicon() {
   const isActive = useFocus();

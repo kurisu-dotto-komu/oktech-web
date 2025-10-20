@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 
-import { useBreakpoint } from "@/utils/hooks/useBreakpoint";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 interface MarqueeBackgroundProps {
   text: string;

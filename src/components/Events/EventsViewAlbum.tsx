@@ -6,8 +6,8 @@ import GalleryDisclaimer from "@/components/Common/GalleryDisclaimer";
 import MegaSlideshowButton from "@/components/Common/MegaSlideshowButton";
 import EventGalleryImages from "@/components/Event/EventGalleryImages";
 import type { EventEnriched } from "@/content";
+import { useIncrementalVisibility } from "@/hooks/useIncrementalVisibility";
 import { filterRecentEvents } from "@/utils/eventFilters";
-import { useIncrementalVisibility } from "@/utils/hooks/useIncrementalVisibility";
 
 import CityBadge from "../Common/CityBadge";
 import Link from "../Common/Link";

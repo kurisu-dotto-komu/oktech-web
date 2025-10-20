@@ -5,7 +5,7 @@ import Link from "@/components/Common/Link";
 import ShrinkingNavbar from "@/components/Common/ShrinkingNavbar";
 import ThemeToggle from "@/components/Common/ThemeToggle";
 import { MENU } from "@/constants";
-import { useFocus } from "@/utils/hooks/useFocus";
+import { useFocus } from "@/hooks/useFocus";
 
 const BUTTON_CLASS =
   "btn btn-md font-bold sm:btn-lg md:btn-xl rounded-field font-bold border-none shadow-none bg-base-0/0 hover:bg-base-0/60 active:bg-base-0/90";

@@ -4,8 +4,8 @@ import { animated, useSpring } from "@react-spring/web";
 import clsx from "clsx";
 
 import Container from "@/components/Common/Container";
-import { type Breakpoint, useBreakpoint } from "@/utils/hooks/useBreakpoint";
-import { useScrolled } from "@/utils/hooks/useScrolled";
+import { type Breakpoint, useBreakpoint } from "@/hooks/useBreakpoint";
+import { useScrolled } from "@/hooks/useScrolled";
 
 interface ShrinkingNavbarProps {
   children: React.ReactNode;

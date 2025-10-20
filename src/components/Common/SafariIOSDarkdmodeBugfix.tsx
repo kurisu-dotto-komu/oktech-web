@@ -86,7 +86,17 @@ export default function SafariIOSDarkdmodeBugfix({
   }, [needsPatch]);
 
   if (!needsPatch) {
-    return <img src={imgSrc} className={className} style={style} alt={alt} role={role} aria-hidden={ariaHidden} {...imgProps} />;
+    return (
+      <img
+        src={imgSrc}
+        className={className}
+        style={style}
+        alt={alt}
+        role={role}
+        aria-hidden={ariaHidden}
+        {...imgProps}
+      />
+    );
   }
 
   const variableStyle = variables.reduce<Record<string, string>>((acc, { name, light, dark }) => {

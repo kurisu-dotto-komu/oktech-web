@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useBreakpoint } from "@/utils/hooks/useBreakpoint";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 export default function DevTools() {
   const [width, setWidth] = useState(0);

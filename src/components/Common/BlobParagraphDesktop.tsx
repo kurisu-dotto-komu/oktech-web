@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 
 import { animated, useSpring } from "@react-spring/web";
 
-import { useBlobParagraphScroll } from "@/utils/hooks/useBlobParagraphScroll";
+import { useBlobParagraphScroll } from "@/hooks/useBlobParagraphScroll";
 
 import BlobParagraph from "./BlobParagraph";
 import { type BlobParagraphContent, useBlobParagraphAssets } from "./BlobParagraphShared";

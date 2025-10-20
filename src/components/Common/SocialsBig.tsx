@@ -4,8 +4,8 @@ import clsx from "clsx";
 
 import discordLogo from "@/assets/logo-discord.svg?url";
 import calendarLogo from "@/assets/logo-gcal.svg?url";
-import githubLogo from "@/assets/logo-github.svg?url";
 import GithubLogoSvg from "@/assets/logo-github.svg?react";
+import githubLogo from "@/assets/logo-github.svg?url";
 import linkedinLogo from "@/assets/logo-linkedin.svg?url";
 import meetupLogo from "@/assets/logo-meetup.svg?url";
 import CalendarSubscribeButton from "@/components/Common/CalendarSubscribeButton";
@@ -123,7 +123,14 @@ function TileContent({
         className="w-full"
       />
     ) : (
-      <img src={logo} alt="" aria-hidden="true" className="w-full" loading="lazy" decoding="async" />
+      <img
+        src={logo}
+        alt=""
+        aria-hidden="true"
+        className="w-full"
+        loading="lazy"
+        decoding="async"
+      />
     );
 
   return (

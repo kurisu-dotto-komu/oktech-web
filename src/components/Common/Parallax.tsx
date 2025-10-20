@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import type { SpringConfig } from "@react-spring/web";
 
-import { useBreakpoint } from "@/utils/hooks/useBreakpoint";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 interface ParallaxProps {
   children: ReactNode;

@@ -2,10 +2,10 @@ import { Fragment, type ReactNode } from "react";
 
 import clsx from "clsx";
 
-import kwddmLogoUrl from "@/assets/kwddm.svg?url";
 import KwddmLogoSvg from "@/assets/kwddm.svg?react";
-import owddmLogoUrl from "@/assets/owddm.svg?url";
+import kwddmLogoUrl from "@/assets/kwddm.svg?url";
 import OwddmLogoSvg from "@/assets/owddm.svg?react";
+import owddmLogoUrl from "@/assets/owddm.svg?url";
 import star from "@/assets/star.png";
 
 import Brand from "./Brand";

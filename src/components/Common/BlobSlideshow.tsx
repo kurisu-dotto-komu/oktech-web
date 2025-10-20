@@ -201,7 +201,16 @@ export default function BlobSlideshow<T = string | ImageData>({
           cacheKey: `${src}|${srcSet ?? ""}`,
         };
       })
-      .filter((entry): entry is { src: string; srcSet?: string; sizes?: string; cacheKey: string } => !!entry);
+      .filter(
+        (
+          entry,
+        ): entry is {
+          src: string;
+          srcSet: string | undefined;
+          sizes: string | undefined;
+          cacheKey: string;
+        } => !!entry,
+      );
 
     if (queue.length === 0) return;
 

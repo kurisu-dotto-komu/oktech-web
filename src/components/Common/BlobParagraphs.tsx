@@ -1,4 +1,4 @@
-import { useBreakpoint } from "@/utils/hooks/useBreakpoint";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 import BlobParagraphDesktop from "./BlobParagraphDesktop";
 import BlobParagraphMobile from "./BlobParagraphMobile";
