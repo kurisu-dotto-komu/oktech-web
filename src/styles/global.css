@@ -77,3 +77,8 @@ body {
     }
   }
 }
+
+/* Fixes modal backdrop right side weirdness */
+.modal {
+  scrollbar-gutter: auto !important;
+}
