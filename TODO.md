@@ -1,23 +1,20 @@
-## Critical Before Presentation
-
-- Visual checks on safari
-- Optimize carousel on wide screen (it doesn't fully scroll to last item?)
-- Reimport covers when they're higher quality.
-- Better touch feedback for buttons (ipad)
-- Fix: Bug on about page with mega tall screen -- first should always be seleced when no scrolling occurs.
-- FIx down line on timeline safari
-- Reduce get involved mobile gap
-
-## Pre-Event Refactoring / Invisible Changes
-
-### Priority
+## Now
 
 - General Refactoring
-- Squash/Purge the git history.
+- Script to Squash/Purge the git history of images.
+
+## Presentation
+
 - Nicer Readme, include components style guide - documenting naming conventions, prop patterns, and composition rules
 
-### Nice to Have
+## Nice to Have
 
+- Add slides to projector mode (CTAs for discord, next event, beers, etc.)
+- Easter egg in console.log
+- Fix modal backdrop right side weirdness
+- Optimize carousel on wide screen (it doesn't fully scroll to last item?)
+- Reimport covers when they're higher quality.
+- Martin's library?
 - replace data-astro-prefetch with just `prefetch` for react components
 - Use the py-responseive and gap-responseive classes more.
 - Refactor rawJson usage in the import script.
