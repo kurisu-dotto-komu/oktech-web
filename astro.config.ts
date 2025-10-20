@@ -1,5 +1,6 @@
 // @ts-check
 import react from "@astrojs/react";
+import svgr from "@svgr/rollup";
 import yaml from "@rollup/plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
@@ -47,6 +48,7 @@ export default defineConfig({
   },
   vite: {
     plugins: [
+      svgr(),
       tailwindcss(),
       yaml(),
       ...(isAnalyze

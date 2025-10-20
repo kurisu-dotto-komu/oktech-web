@@ -2,18 +2,29 @@ import { Fragment, type ReactNode } from "react";
 
 import clsx from "clsx";
 
-import kwddmLogo from "@/assets/kwddm.svg";
-import owddmLogo from "@/assets/owddm.svg";
+import kwddmLogoUrl from "@/assets/kwddm.svg?url";
+import KwddmLogoSvg from "@/assets/kwddm.svg?react";
+import owddmLogoUrl from "@/assets/owddm.svg?url";
+import OwddmLogoSvg from "@/assets/owddm.svg?react";
 import star from "@/assets/star.png";
 
 import Brand from "./Brand";
+import SafariIOSDarkdmodeBugfix from "./SafariIOSDarkdmodeBugfix";
 import ScribbleLine from "./ScribbleLine";
 
 const items: TimelineItem[] = [
   {
     year: "2014",
     text: "Founded in Osaka as OWDDM (Osaka Web Designers & Developers Meetup)",
-    icon: <img src={owddmLogo.src} alt="OWDDM" className="w-20" />,
+    icon: (
+      <SafariIOSDarkdmodeBugfix
+        imgSrc={owddmLogoUrl}
+        Svg={OwddmLogoSvg}
+        variables={[{ name: "--owddm-text-fill", light: "#111111", dark: "#ffffff" }]}
+        alt="OWDDM"
+        className="w-20"
+      />
+    ),
   },
   {
     year: "2015-2022",
@@ -23,7 +34,15 @@ const items: TimelineItem[] = [
   {
     year: "2023",
     text: "Kyoto counterpart, KWDDM, joining this year.",
-    icon: <img src={kwddmLogo.src} alt="KWDDM" className="w-20" />,
+    icon: (
+      <SafariIOSDarkdmodeBugfix
+        imgSrc={kwddmLogoUrl}
+        Svg={KwddmLogoSvg}
+        variables={[{ name: "--kwddm-text-fill", light: "#111111", dark: "#ffffff" }]}
+        alt="KWDDM"
+        className="w-20"
+      />
+    ),
   },
   {
     year: "2025",
