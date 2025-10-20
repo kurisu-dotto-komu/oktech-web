@@ -76,13 +76,8 @@ export default function SafariIOSDarkdmodeBugfix({
     // WebKit bug 199134 prevents prefers-color-scheme CSS inside an <img> SVG from applying.
     // Community write-ups (e.g. https://mediaformat.org/2025/03/light-dark-limitations/) confirm
     // the issue persists, so we mirror the behavior manually when embedded inline.
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    }
-
-    mediaQuery.addListener(handleChange);
-    return () => mediaQuery.removeListener(handleChange);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, [needsPatch]);
 
   if (!needsPatch) {
