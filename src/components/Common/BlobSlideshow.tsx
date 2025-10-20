@@ -48,6 +48,7 @@ export default function BlobSlideshow<T = string | ImageData>({
 }: BlobSlideshowProps<T>) {
   const [currentGlobalIndex, setCurrentGlobalIndex] = useState(0);
   const [renderedImages, setRenderedImages] = useState<Set<number>>(new Set([0, 1]));
+  const preloadedSourcesRef = React.useRef<Set<string>>(new Set());
 
   // Determine which mode we're in
   const items = data || images || [];
@@ -170,6 +171,128 @@ export default function BlobSlideshow<T = string | ImageData>({
     rangeEnd,
     rangeLength,
   ]);
+
+  // Preload all images sequentially without blocking high-priority requests
+  useEffect(() => {
+    if (isDataMode || !images || images.length === 0) return;
+    if (typeof window === "undefined") return;
+
+    const queue = images
+      .map((image) => {
+        if (typeof image === "string") {
+          return {
+            src: image,
+            srcSet: undefined,
+            sizes: undefined,
+            cacheKey: `${image}|`,
+          };
+        }
+
+        const imageData = image as ImageData;
+        const src = imageData.src;
+        if (!src) return null;
+
+        const srcSet = imageData.srcSet;
+        const sizes = imageData.sizes;
+        return {
+          src,
+          srcSet,
+          sizes,
+          cacheKey: `${src}|${srcSet ?? ""}`,
+        };
+      })
+      .filter((entry): entry is { src: string; srcSet?: string; sizes?: string; cacheKey: string } => !!entry);
+
+    if (queue.length === 0) return;
+
+    let pointer = 0;
+    let isCancelled = false;
+    const idleHandles: number[] = [];
+    const timeoutHandles: number[] = [];
+
+    const runNext = () => {
+      if (isCancelled) return;
+
+      while (pointer < queue.length) {
+        const entry = queue[pointer++];
+        if (!entry) continue;
+        const { src, srcSet, sizes, cacheKey } = entry;
+
+        if (!src || preloadedSourcesRef.current.has(cacheKey)) {
+          continue;
+        }
+
+        const imageElement = new Image() as HTMLImageElement & {
+          fetchPriority?: "auto" | "high" | "low";
+        };
+        imageElement.decoding = "async";
+
+        if ("fetchPriority" in imageElement) {
+          imageElement.fetchPriority = "low";
+        }
+
+        if (srcSet) {
+          imageElement.srcset = srcSet;
+        }
+        if (sizes) {
+          imageElement.sizes = sizes;
+        }
+
+        const finalize = () => {
+          imageElement.onload = null;
+          imageElement.onerror = null;
+          preloadedSourcesRef.current.add(cacheKey);
+          scheduleNext();
+        };
+
+        imageElement.onload = finalize;
+        imageElement.onerror = finalize;
+        imageElement.src = src;
+
+        return;
+      }
+    };
+
+    const scheduleNext = () => {
+      if (isCancelled || pointer >= queue.length) return;
+
+      const win = window as Window & {
+        requestIdleCallback?: (callback: () => void, options?: { timeout?: number }) => number;
+        cancelIdleCallback?: (handle: number) => void;
+      };
+
+      if (typeof win.requestIdleCallback === "function") {
+        const handle = win.requestIdleCallback(() => {
+          if (!isCancelled) {
+            runNext();
+          }
+        });
+        idleHandles.push(handle);
+      } else {
+        const handle = window.setTimeout(() => {
+          if (!isCancelled) {
+            runNext();
+          }
+        }, 80);
+        timeoutHandles.push(handle);
+      }
+    };
+
+    scheduleNext();
+
+    return () => {
+      isCancelled = true;
+      const win = window as Window & {
+        cancelIdleCallback?: (handle: number) => void;
+      };
+      idleHandles.forEach((handle) => {
+        win.cancelIdleCallback?.(handle);
+      });
+      timeoutHandles.forEach((handle) => {
+        window.clearTimeout(handle);
+      });
+    };
+  }, [images, isDataMode]);
 
   if (items.length === 0) return null;
 
