@@ -10,6 +10,7 @@ import Toast from "@/components/Common/Toast";
 import DevTools from "@/components/Common/DevTools";
 import SEODevInfo from "@/components/Common/SEODevInfo";
 import ScrollToTopButton from "@/components/Common/ScrollToTopButton";
+import ConsoleEasterEgg from "@/components/Common/ConsoleEasterEgg";
 
 import "@fontsource/lexend/800"; // bold headeer
 import "@fontsource/lexend/600"; // regular header
@@ -73,5 +74,6 @@ import "@fontsource-variable/martian-mono";
     <SEODevInfo client:visible transition:persist="seo-dev-info" />
     <ScrollToTopButton client:visible />
     <slot />
+    <ConsoleEasterEgg client:load />
   </body>
 </html>
