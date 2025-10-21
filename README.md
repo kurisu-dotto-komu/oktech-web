@@ -1,4 +1,4 @@
-<div align="center" style="padding-bottom: 2rem;">
+<div align="center">
   <a href="https://oktech.jp">
     <img src="./src/assets/OKTech-logo-auto.svg" alt="OKTech.jp logo" height="120" />
   </a>
@@ -8,6 +8,8 @@
 </h1>
   <p>OKTech Technology Meetup Group in Osaka, Kyoto, Kansai (formerly OWDDM and KWDDM).</p>
 </div>
+
+---
 
 ## Overview
 
