@@ -26,16 +26,19 @@ type SafariIOSDarkdmodeBugfixProps = Omit<ImgHTMLAttributes<HTMLImageElement>, "
   variables: VariableDefinition[];
 };
 
-function isIOSSafari(): boolean {
+function isSafari(): boolean {
   if (typeof navigator === "undefined") {
     return false;
   }
-  return true;
 
   const ua = navigator.userAgent;
-  const isIOS = /iP(hone|od|ad)/.test(ua);
-  const isSafari = /Safari/i.test(ua) && !/(CriOS|FxiOS|EdgiOS)/.test(ua);
-  return isIOS && isSafari;
+  // Match Safari but exclude Chrome-based browsers (Chrome, Edge, Opera, Brave, etc.)
+  // Safari has "Safari" in UA but Chrome/Edge also include "Safari" + their own identifier
+  const hasSafari = /Safari/i.test(ua);
+  const isNotChromeBased = !/Chrome|CriOS|Chromium|Edg|EdgiOS|OPR|Brave/i.test(ua);
+  const isNotFirefox = !/Firefox|FxiOS/i.test(ua);
+
+  return hasSafari && isNotChromeBased && isNotFirefox;
 }
 
 export default function SafariIOSDarkdmodeBugfix({
@@ -57,7 +60,7 @@ export default function SafariIOSDarkdmodeBugfix({
     // Only run after mount to avoid hydration issues
     setHasMounted(true);
 
-    const shouldPatch = isIOSSafari();
+    const shouldPatch = isSafari();
 
     if (!shouldPatch) {
       return;
@@ -102,20 +105,18 @@ export default function SafariIOSDarkdmodeBugfix({
   }, []);
 
   // Before mount or if patch not needed, render the img tag (matches SSR)
-  const shouldUsePatch = hasMounted && isIOSSafari();
+  const shouldUsePatch = hasMounted && isSafari();
+
+  // Common container props for consistent sizing
+  const containerProps = {
+    className,
+    style,
+    role: role ?? (alt ? "img" : undefined),
+    "aria-hidden": ariaHidden,
+  };
 
   if (!shouldUsePatch) {
-    return (
-      <img
-        src={imgSrc}
-        className={className}
-        style={style}
-        alt={alt}
-        role={role}
-        aria-hidden={ariaHidden}
-        {...imgProps}
-      />
-    );
+    return <img {...containerProps} src={imgSrc} alt={alt} {...imgProps} />;
   }
 
   // After mount, if patch is needed, render the inline SVG with managed variables
@@ -125,18 +126,9 @@ export default function SafariIOSDarkdmodeBugfix({
   }, {});
 
   const svgStyle = {
-    ...style,
+    ...containerProps.style,
     ...variableStyle,
-    backgroundColor: isDark ? "rgba(255, 0, 0, 0.3)" : "rgba(0, 255, 0, 0.3)",
   } as SVGProps<SVGSVGElement>["style"];
 
-  return (
-    <Svg
-      className={className}
-      style={svgStyle}
-      role={role ?? (alt ? "img" : undefined)}
-      aria-label={alt}
-      aria-hidden={ariaHidden}
-    />
-  );
+  return <Svg {...containerProps} width="100%" height="100%" style={svgStyle} aria-label={alt} />;
 }
