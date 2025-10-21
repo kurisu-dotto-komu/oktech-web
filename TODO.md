@@ -1,10 +1,7 @@
 ## Now
 
+- make the bubbles scroll down further on the about page.
 - Squash the git history of images.
-
-## Presentation
-
-- Nicer Readme, include components style guide - documenting naming conventions, prop patterns, and composition rules
 
 ## After Presnetaiton
 

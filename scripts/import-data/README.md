@@ -1,171 +1,147 @@
-# Import Data Script
+# Import Data CLI
 
-This CLI tool imports event and venue data from external JSON sources and processes them into the local content structure for the OKTech website.
+This CLI ingests OKTech event, venue, and photo data from the `oktechjp/public` repository (or a custom override), transforms it into local markdown and assets, and keeps supporting metadata up to date.
 
 ## Data Sources
 
-The script fetches data from GitHub-hosted JSON files:
+- **Events & Venues** – `events.json` combines groups, events, and venue records.
+- **Photos** – `photos.json` provides photo batches plus optional event hints.
 
-- **[Events and Venues](https://github.com/oktechjp/public/blob/main/events.json)**: Contains event metadata and venue information
-- **[Photos](https://github.com/oktechjp/public/blob/main/photos.json)**: Photo batches with optional event associations
-
-## Architecture
+## Directory Layout
 
 ```
 scripts/import-data/
-├── index.ts           # Entry point
+├── index.ts           # CLI bootstrap
 ├── lib/
-│   ├── cli.ts         # CLI interface and command handling
-│   ├── config.ts      # Configuration and constants
-│   ├── importer.ts    # Main import orchestrator
-│   ├── processor.ts   # Content processors (events/venues)
-│   ├── cleaner.ts     # Data cleanup utilities
-│   ├── github.ts      # GitHub API service
-│   ├── maps.ts        # Static map generation
-│   ├── photos.ts      # Photo processing service
-│   └── logger.ts      # Logging utilities
+│   ├── cli.ts         # Commander setup (import + clear commands)
+│   ├── config.ts      # Paths, providers, feature flags, env wiring
+│   ├── importer.ts    # Orchestrates fetch, processing, reporting
+│   ├── processor.ts   # Event & venue content pipelines
+│   ├── photos.ts      # Gallery downloads, caption metadata
+│   ├── maps.ts        # Static map generation (light/dark)
+│   ├── cleaner.ts     # Targeted cleanup strategies
+│   ├── github.ts      # Authenticated GitHub fetch utilities
+│   ├── logger.ts      # Timestamped, colorised logging
+│   └── utils.ts       # Filesystem helpers
 └── README.md
 ```
 
-## Core Features
+## Workflow Overview
 
-### Import Pipeline
+1. **Repository Sync** – Determines the commit to use (latest by default, or `--repo`/`--commit` overrides) and configures downstream services to target that ref.
+2. **Fetch** – Downloads raw JSON for events/venues and photos, keeping the raw payloads for hashing.
+3. **Photos** – Assigns photo batches to events (explicit `event` IDs first, then `photoEventPatches`) and prepares galleries.
+4. **Events** – Writes or updates `content/events/*/event.md`, pulls covers, and manages `gallery/` contents (download, resize to WebP, caption YAML, stale-file cleanup).
+5. **Venues** – Writes or updates `content/venues/*/venue.md` and generates `map.jpg` / `map-dark.jpg` with per-theme overwrite controls.
+6. **Metadata** – Produces `content/meta.json` containing the Git commit, content hash (SHA256 of raw JSON), and the next event end time/slug for runtime features.
+7. **Reporting** – Prints an aligned summary table plus warnings for photo or map issues.
 
-1. **Fetch**: Retrieves latest data from GitHub repository
-2. **Process**: Transforms and validates data
-3. **Generate**: Creates markdown files, downloads images, generates maps
-4. **Report**: Displays comprehensive statistics
+## CLI Usage
 
-### Photo Assignment
-
-Photos are assigned to events through a configuration-based system:
-
-1. **Explicit Assignment**: Photos with event IDs are directly assigned
-2. **Manual Patches**: Photo-to-event mappings defined in `lib/config.ts`:
-   ```typescript
-   photoEventPatches: {
-     1676970780777: "291352411",  // Maps photo batch timestamp to event ID
-     // ...
-   }
-   ```
-
-### Content Processing
-
-- **Events**: Creates structured markdown with frontmatter, manages photo galleries
-  - Processes new images with Sharp
-  - Maintains frontmatter field order for zero-diff builds
-  - Skips existing images to avoid re-processing
-- **Venues**: Generates venue pages with maps (light and dark themes)
-  - Static map generation with configurable providers
-
-Note: Venues are automatically generated, but descriptions and `hasPage` flags must be added manually.
-
-### Image Processing
-
-All images are processed with:
-
-- Consistent WebP encoding at 85% quality
-- Maximum width of 1920px (configurable)
-- Preservation of aspect ratio
-
-## Usage
-
-### Import Commands
+Run the tool through the package script:
 
 ```bash
-# Standard import
 npm run import
-
-# Show help
-npm run import -- --help
-
-# Regenerate all maps (if you change both dark and light providers)
-npm run import -- --overwrite-maps
-
-# Regenerate specific theme maps (if you change the provider for just one theme)
-npm run import -- --overwrite-maps light
-npm run import -- --overwrite-maps dark
 ```
 
-### Clear Commands
+### Import Options
+
+- `--overwrite-maps [theme]` – Regenerate maps. Supply no value to redo both themes, or pass `light` / `dark` to target one.
+- `--repo <owner/repo>` – Source data from a different public repository that matches the JSON schema.
+- `--commit <sha>` – Pin the import to a specific commit hash (useful for rollbacks or testing historical data).
+- `--help` – Display the built-in command reference and valid clear targets.
 
 ```bash
-# Clear specific data types
-npm run import -- clear markdown        # All markdown files
-npm run import -- clear events          # Event files only
-npm run import -- clear venues          # Venue files only
-npm run import -- clear image-files     # Image files only
-npm run import -- clear image-metadata  # Image metadata only
-npm run import -- clear images          # All images and metadata
-npm run import -- clear maps            # Venue maps
-npm run import -- clear empty-dirs      # Empty directories
-npm run import -- clear all             # Complete reset
+npm run import -- --overwrite-maps
+npm run import -- --overwrite-maps dark
+npm run import -- --repo oktechjp/public --commit <sha>
 ```
 
-## Configuration
+### Clear Subcommand (same CLI)
 
-Configuration is centralized in `lib/config.ts`:
+```bash
+npm run import -- clear markdown       # All markdown files (events + venues)
+npm run import -- clear events         # Event markdown only
+npm run import -- clear venues         # Venue markdown only
+npm run import -- clear image-files    # Event images (covers + gallery)
+npm run import -- clear cover-images   # Event cover images only
+npm run import -- clear image-metadata # Gallery YAML / JSON sidecars
+npm run import -- clear images         # All gallery assets + metadata
+npm run import -- clear maps           # Venue map outputs
+npm run import -- clear empty-dirs     # Prune empty folders
+npm run import -- clear all            # Run every strategy + empty dir sweep
+```
+
+`Cleaner.getValidTargets()` drives the valid values, so check `npm run import -- help` if unsure.
+
+## Photo & Gallery Handling
+
+- Photo batches marked `removed` or `instructional` are skipped automatically.
+- Images are downloaded through the GitHub service, resized with Sharp (max width 1920px, aspect preserved), converted to WebP (`imageQuality` default 85), and written to `gallery/`.
+- Captions become YAML files (`<image>.yaml`) alongside the WebP images.
+- Stale gallery files are deleted; empty gallery directories are removed.
+
+## Maps & Venues
+
+- Venue markdown is generated with normalized city names, coordinates, Google Maps URLs, and Meetup IDs.
+- `MapService.generateMaps` produces `map.jpg` and `map-dark.jpg` using the configured providers (`defaultProvider` / `darkModeProvider`). Providers that require API keys (e.g. Stadia) validate the key before rendering.
+- Use `--overwrite-maps` to regenerate outputs when switching map providers or fixing corrupted assets.
+
+## Metadata Output
+
+`content/meta.json` includes:
+
+- `commitDate` / `commitHash` – Source commit information.
+- `contentHash` – SHA256 hash of the raw JSON payloads (matches CI behaviour).
+- `repository` – URL of the data repo.
+- `nextEventEnds` / `nextEventSlug` – Calculated from upcoming events using `@/utils/eventFilters`. Useful for countdowns or cache busting.
+
+## Configuration Snapshot (`lib/config.ts`)
 
 ```typescript
-{
+export const config = {
   github: {
-    repo: 'oktechjp/public',
+    repo: "oktechjp/public",
+    defaultRef: "refs/heads/main",
+    getApiUrl: (endpoint, repo = "oktechjp/public") =>
+      `https://api.github.com/repos/${repo}${endpoint}`,
   },
   paths: {
-    content: 'content',
-    events: 'content/events',
-    venues: 'content/venues',
+    content: "content",
+    events: "content/events",
+    venues: "content/venues",
   },
   features: {
-    parallelDownloads: 5,     // Concurrent download limit
-    maxImageWidth: 1920,      // Maximum image width for resizing
-    imageQuality: 85,         // WebP compression quality
+    parallelDownloads: 5,
+    maxImageWidth: 1920,
+    imageQuality: 85,
   },
   photoEventPatches: {
-    // Manual photo-to-event assignments, e.g. for photos that don't have an event ID:
-    // [batchTimestamp]: "eventId"
     1676970780777: "291352411",
   },
   maps: {
-    defaultProvider: 'stadiaWaterColor',
-    darkModeProvider: 'stadiaAlidadeSmoothDark',
-    defaultOptions: {
-      width: 1024,
-      height: 1024,
-      zoom: 15,
-      type: 'jpeg',
-      quality: 90,
-    }
-  }
-}
+    providers: {
+      openstreetmap: { /* … */ },
+      carto: { /* … */ },
+      stadiaWaterColor: { /* … requires key */ },
+    },
+    defaultProvider: "stadiaWaterColor",
+    darkModeProvider: "stadiaAlidadeSmoothDark",
+    defaultOptions: { width: 1024, height: 1024, zoom: 15, type: "jpeg", quality: 90 },
+  },
+  api: {
+    stadiaApiKey: process.env.STADIA_MAPS_API_KEY,
+  },
+} as const;
 ```
 
-### Map Providers
-
-Available map providers (configured in `lib/config.ts`):
-
-**Free Providers:**
-
-- `openstreetmap` - Standard OSM tiles
-- `carto` - Voyager style
-- `cartoPositron` - Light theme
-- `cartoDarkMatter` - Dark theme
-
-**API Key Required:**
-
-- `stadiaWaterColor` - Watercolor style (default)
-- `stadiaAlidadeSmoothDark` - Dark theme (dark mode default)
-
-You can find more providers here: https://leaflet-extras.github.io/leaflet-providers/preview/
+Update `photoEventPatches` when photo batches need manual assignment, or adjust map providers if you switch tile services.
 
 ## Environment Variables
 
-Optional environment configuration in `.env.local` or github repo secrets:
+Create `.env.local` (auto-loaded) or configure CI secrets:
 
 ```bash
-# Map provider API key (required for Stadia Maps)
-STADIA_MAPS_API_KEY=your_key_here
-
-# GitHub token (only needed in CI environment, automatically set in github actions)
-GITHUB_TOKEN=your_token_here
+STADIA_MAPS_API_KEY=your_key   # Required for Stadia map providers
+GITHUB_TOKEN=ghp_xxx           # Optional; helps avoid API rate limits in CI
 ```
