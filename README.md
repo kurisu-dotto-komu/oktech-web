@@ -1,6 +1,6 @@
-<div align="center">
+<div align="center" style="padding-bottom: 2rem;">
   <a href="https://oktech.jp">
-    <img src="./src/assets/OKTech-logo-auto.svg" alt="OKTech.jp logo" height="160" />
+    <img src="./src/assets/OKTech-logo-auto.svg" alt="OKTech.jp logo" height="120" />
   </a>
 
 <h1>
@@ -56,7 +56,7 @@ You can also manually run the import script within a dev environment. See
 
 ## Contributing
 
-- Review the Style Guide in [./AGENTS.md](./AGENTS.md) before starting work.
+- Review the Style Guide in `./AGENTS.md` before starting work.
 - Fork the repository, create a feature branch, and open a pull request with passing `npm run checks` and relevant tests.
 
 ## Artificial Intelligence (AI) and Large Language Model (LLM) Disclosure
