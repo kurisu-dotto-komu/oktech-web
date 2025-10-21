@@ -2,7 +2,7 @@ import BlobSlideshow from "@/components/Common/BlobSlideshow";
 import { BLOBS } from "@/utils/blobs";
 
 import Container from "./Container";
-import Parallax from "./Parallax";
+import ParallaxInfinite from "./ParallaxInfinite";
 
 // Consolidated blob configurations - all using lazy parallax
 const blobConfigs = {
@@ -62,11 +62,7 @@ export default function BlurryBlobBackground() {
       <Container wide>
         <div className="grid h-[100vh] max-h-[70em] w-full grid-cols-12 items-center">
           <div className="col-span-5">
-            <Parallax
-              maxOffset="infinity"
-              speed={blobConfigs.red.parallaxSpeed}
-              springConfig={blobConfigs.red.parallaxSpring}
-            >
+            <ParallaxInfinite springConfig={blobConfigs.red.parallaxSpring}>
               <div className="-mx-20 aspect-square opacity-35 mix-blend-screen blur-2xl">
                 <BlobSlideshow
                   className={blobConfigs.red.className}
@@ -78,14 +74,10 @@ export default function BlurryBlobBackground() {
                   renderer={() => <div className="h-full w-full" />}
                 />
               </div>
-            </Parallax>
+            </ParallaxInfinite>
           </div>
           <div className="col-span-2">
-            <Parallax
-              maxOffset="infinity"
-              speed={blobConfigs.green.parallaxSpeed}
-              springConfig={blobConfigs.green.parallaxSpring}
-            >
+            <ParallaxInfinite springConfig={blobConfigs.green.parallaxSpring}>
               <div className="-mx-10 mt-90 aspect-square pt-20 opacity-35 mix-blend-screen blur-2xl">
                 <BlobSlideshow
                   className={blobConfigs.green.className}
@@ -97,14 +89,10 @@ export default function BlurryBlobBackground() {
                   renderer={() => <div className="h-full w-full" />}
                 />
               </div>
-            </Parallax>
+            </ParallaxInfinite>
           </div>
           <div className="col-span-5">
-            <Parallax
-              maxOffset="infinity"
-              speed={blobConfigs.blue.parallaxSpeed}
-              springConfig={blobConfigs.blue.parallaxSpring}
-            >
+            <ParallaxInfinite springConfig={blobConfigs.blue.parallaxSpring}>
               <div className="-mx-10 aspect-square opacity-35 mix-blend-screen blur-2xl">
                 <BlobSlideshow
                   className={blobConfigs.blue.className}
@@ -116,7 +104,7 @@ export default function BlurryBlobBackground() {
                   renderer={() => <div className="h-full w-full" />}
                 />
               </div>
-            </Parallax>
+            </ParallaxInfinite>
           </div>
         </div>
       </Container>
