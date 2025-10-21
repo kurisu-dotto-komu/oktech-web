@@ -1,11 +1,10 @@
 ## Now
 
-- make the bubbles scroll down further on the about page.
 - Squash the git history of images.
 
 ## After Presnetaiton
 
-- Add slides to projector mode (CTAs for discord, next event, beers, etc.)
+- Add slides to projector mode (CTAs for discord, next event, after-party, etc.)
 - Fix too much content caching / memoization in dev mode.
 - Test no upcoming events
 - Reimport covers when they're higher quality.

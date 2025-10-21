@@ -121,9 +121,15 @@ export const config = {
   },
   maps: {
     providers: {
-      openstreetmap: { /* … */ },
-      carto: { /* … */ },
-      stadiaWaterColor: { /* … requires key */ },
+      openstreetmap: {
+        /* … */
+      },
+      carto: {
+        /* … */
+      },
+      stadiaWaterColor: {
+        /* … requires key */
+      },
     },
     defaultProvider: "stadiaWaterColor",
     darkModeProvider: "stadiaAlidadeSmoothDark",
