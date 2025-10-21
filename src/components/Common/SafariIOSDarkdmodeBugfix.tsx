@@ -11,7 +11,6 @@ import {
   type ImgHTMLAttributes,
   type SVGProps,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 
