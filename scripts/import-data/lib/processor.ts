@@ -415,8 +415,7 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
       await fs.mkdir(eventDir, { recursive: true });
 
       // Build full URL for the image
-      const imageUrl = config.github.getRawBaseUrl() + event.image.location;
-      const imageBuffer = await this.github.downloadFile(imageUrl);
+      const imageBuffer = await this.github.downloadFile(event.image.location);
 
       // Write cover image as-is without transformation
       await fs.writeFile(coverLocalPath, imageBuffer);

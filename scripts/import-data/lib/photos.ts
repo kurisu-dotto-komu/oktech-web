@@ -3,9 +3,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { stringify as yamlStringify } from "yaml";
 
-import { config } from "./config";
 import { GitHubService } from "./github";
 import { logger } from "./logger";
+import { config } from "./config";
 
 // External JSON types for photos
 export type ExternalPhoto = {
@@ -148,13 +148,11 @@ export class PhotoService {
           stats.unchanged++;
         } else {
           // Re-download if file is empty
-          const imageUrl = config.github.getRawBaseUrl() + photo.location!;
-          await this.downloadAndProcessImage(imageUrl, localPath);
+          await this.downloadAndProcessImage(photo.location!, localPath);
           stats.downloaded++;
         }
       } else {
-        const imageUrl = config.github.getRawBaseUrl() + photo.location!;
-        await this.downloadAndProcessImage(imageUrl, localPath);
+        await this.downloadAndProcessImage(photo.location!, localPath);
         stats.downloaded++;
         logger.success(`Downloaded → ${localPath}`);
       }
@@ -175,8 +173,8 @@ export class PhotoService {
   /**
    * Download and process an image
    */
-  private async downloadAndProcessImage(url: string, localPath: string): Promise<void> {
-    const imageBuffer = await this.github.downloadFile(url);
+  private async downloadAndProcessImage(sourcePath: string, localPath: string): Promise<void> {
+    const imageBuffer = await this.github.downloadFile(sourcePath);
 
     // Process with Sharp for consistent encoding and resizing
     const sharp = await import("sharp");

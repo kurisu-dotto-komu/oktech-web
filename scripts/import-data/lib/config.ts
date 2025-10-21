@@ -6,6 +6,7 @@ dotenvConfig({ path: ".env.local" });
 
 // GitHub configuration
 const GITHUB_REPO = "oktechjp/public";
+const GITHUB_DEFAULT_REF = "refs/heads/main";
 
 // Environment variables
 const STADIA_API_KEY = process.env.STADIA_MAPS_API_KEY;
@@ -68,11 +69,16 @@ export interface MapProviderConfig {
 export const config = {
   github: {
     repo: GITHUB_REPO,
+    defaultRef: GITHUB_DEFAULT_REF,
     token: GITHUB_TOKEN,
-    getApiUrl: (endpoint: string) => `https://api.github.com/repos/${GITHUB_REPO}${endpoint}`,
-    getRawUrl: (commitHash: string, file: string) =>
-      `https://raw.githubusercontent.com/${GITHUB_REPO}/${commitHash}/${file}`,
-    getRawBaseUrl: () => `https://raw.githubusercontent.com/${GITHUB_REPO}/refs/heads/main/`,
+    getApiUrl: (endpoint: string, repo: string = GITHUB_REPO) =>
+      `https://api.github.com/repos/${repo}${endpoint}`,
+    getRawUrl: (ref: string, file: string, repo: string = GITHUB_REPO) => {
+      const normalizedFile = file.replace(/^\/+/, "");
+      return `https://raw.githubusercontent.com/${repo}/${ref}/${normalizedFile}`;
+    },
+    getRawBaseUrl: (ref: string = GITHUB_DEFAULT_REF, repo: string = GITHUB_REPO) =>
+      `https://raw.githubusercontent.com/${repo}/${ref}/`,
   },
 
   paths: {
@@ -144,11 +150,8 @@ export function getMapProviderConfig(
 // Export data source URLs
 export function getDataUrls(commitHash: string, customRepo?: string) {
   const repo = customRepo || GITHUB_REPO;
-  const getRawUrl = (file: string) =>
-    `https://raw.githubusercontent.com/${repo}/${commitHash}/${file}`;
-
   return {
-    events: getRawUrl("events.json"),
-    photos: getRawUrl("photos.json"),
+    events: config.github.getRawUrl(commitHash, "events.json", repo),
+    photos: config.github.getRawUrl(commitHash, "photos.json", repo),
   };
 }

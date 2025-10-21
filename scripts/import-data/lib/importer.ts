@@ -245,6 +245,9 @@ export class Importer {
       logger.info(`Commit date: ${commitInfo.date}`);
     }
 
+    const activeRepo = customRepo || config.github.repo;
+    this.github.configure({ repo: activeRepo, ref: commitInfo.sha });
+
     // Get data URLs
     const urls = getDataUrls(commitInfo.sha, customRepo);
 

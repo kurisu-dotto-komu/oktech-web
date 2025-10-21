@@ -6,11 +6,15 @@ import { logger } from "./logger";
  */
 export class GitHubService {
   private headers: Record<string, string>;
+  private repo: string;
+  private ref: string;
 
-  constructor() {
+  constructor(options: { repo?: string; ref?: string } = {}) {
     this.headers = {
       "User-Agent": "oktech-web-import-script",
     };
+    this.repo = options.repo ?? config.github.repo;
+    this.ref = options.ref ?? config.github.defaultRef;
 
     // Use GitHub token if available
     if (config.github.token) {
@@ -42,6 +46,24 @@ export class GitHubService {
     return response;
   }
 
+  configure(options: { repo?: string; ref?: string }): void {
+    if (options.repo) {
+      this.repo = options.repo;
+    }
+    if (options.ref) {
+      this.ref = options.ref;
+    }
+  }
+
+  getRawBaseUrl(): string {
+    return config.github.getRawBaseUrl(this.ref, this.repo);
+  }
+
+  getRawFileUrl(relativePath: string): string {
+    const normalizedPath = relativePath.replace(/^\/+/, "");
+    return `${this.getRawBaseUrl()}${normalizedPath}`;
+  }
+
   /**
    * Fetch JSON data from GitHub
    */
@@ -65,6 +87,7 @@ export class GitHubService {
       const repo = customRepo || config.github.repo;
       const url = `https://api.github.com/repos/${repo}/commits/main`;
       const data = await this.fetchJSON<any>(url);
+      this.repo = repo;
 
       return {
         sha: data.sha,
@@ -79,10 +102,9 @@ export class GitHubService {
   /**
    * Fetch raw file content from GitHub
    */
-  async fetchRawContent(commitHash: string, filePath: string): Promise<string> {
-    const url = config.github.getRawUrl(commitHash, filePath);
-    const response = await this.fetch(url);
-
+  async fetchRawContent(ref: string, filePath: string, repo = this.repo): Promise<string> {
+    const baseUrl = config.github.getRawUrl(ref, filePath, repo);
+    const response = await this.fetch(baseUrl);
     if (!response.ok) {
       throw new Error(`Failed to fetch raw content: ${response.status} ${response.statusText}`);
     }
@@ -93,9 +115,8 @@ export class GitHubService {
   /**
    * Download a binary file from GitHub
    */
-  async downloadFile(url: string): Promise<Buffer> {
-    const fullUrl = url.startsWith("http") ? url : `${config.github.getRawBaseUrl()}${url}`;
-
+  async downloadFile(pathOrUrl: string): Promise<Buffer> {
+    const fullUrl = pathOrUrl.startsWith("http") ? pathOrUrl : this.getRawFileUrl(pathOrUrl);
     const response = await this.fetch(fullUrl);
 
     if (!response.ok) {
