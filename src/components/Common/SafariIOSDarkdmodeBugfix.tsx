@@ -30,6 +30,7 @@ function isIOSSafari(): boolean {
   if (typeof navigator === "undefined") {
     return false;
   }
+  return true;
 
   const ua = navigator.userAgent;
   const isIOS = /iP(hone|od|ad)/.test(ua);
@@ -126,6 +127,7 @@ export default function SafariIOSDarkdmodeBugfix({
   const svgStyle = {
     ...style,
     ...variableStyle,
+    backgroundColor: isDark ? "rgba(255, 0, 0, 0.3)" : "rgba(0, 255, 0, 0.3)",
   } as SVGProps<SVGSVGElement>["style"];
 
   return (
