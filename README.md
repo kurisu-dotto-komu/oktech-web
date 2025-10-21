@@ -11,13 +11,13 @@
 
 ## Overview
 
-This website is a static site generator built with Astro 5, TypeScript, React, Tailwind, and Daisy UI.
+This project is a Static Site Generator website, built with Astro 5, TypeScript, React, Tailwind, and Daisy UI.
 
 It is hosted on GitHub Pages, available at [oktech.jp](https://oktech.jp).
 
 ## Development Environment
 
-The recommended way to develop is to launch the provided [Dev Container](.devcontainer/devcontainer.json) (see [devcontainers](https://containers.dev/)) which provides a Node 22 environment.
+The recommended way to develop is to launch the provided [Dev Container](.devcontainer/devcontainer.json) (see [containers.dev](https://containers.dev/)) which provides a Node 22 environment.
 
 Install dependencies and run common tasks with the following commands (see [package.json](./package.json) for all scripts):
 
@@ -34,29 +34,29 @@ See [./AGENTS.md](./AGENTS.md) for automation tips, code-style expectations, and
 
 ## Content
 
-- Primary content lives in `content/` and mirrors upstream data from `oktechjp/public`.
-- `content/events` and `content/venues` are synced automatically by the import workflow.
-- `content/articles` are added manually with Astro-compatible frontmatter; use the existing examples as templates.
+Primary content lives in `content/` and syncs with upstream data from [oktechjp/public](https://github.com/oktechjp/public).
+
+- [./content/events](./content/events) are synced automatically by the import [workflow](#workflows).
+- [./content/venues](./content/venues) and [./content/articles](./content/articles) are added manually.
 
 ## Workflows
 
-For now, most of the time, Event content and photos should be edited in the [oktechjp/public](https://github.com/oktechjp/public) repository. This will trigger a [workflow](.github/workflows/scheduler.yml) that [imports](.github/workflows/import.yml) and commits the changes, and triggers a [build](.github/workflows/astro.yml) that that gets deployed to GitHub Pages.
+For now, most of the time, event content and photos should only be edited in the [oktechjp/public](https://github.com/oktechjp/public) repository. This will trigger a [scheduler](.github/workflows/scheduler.yml) workflow that [imports](.github/workflows/import.yml) and commits the changes, and triggers a [build](.github/workflows/astro.yml) that that gets deployed to GitHub Pages.
 
 ## Import Script Overview
 
-- The import script `npm run import` syncs events and image data from `oktechjp/public`, updates `content/meta.json`, and prepares assets for Astro.
-- See `./scripts/import-data/README.md` for invocation details, required environment variables, and troubleshooting steps.
-- Use `npm run import -- --help` to see all options.
+You can also manually run the import script within a dev environment. See
+[./scripts/import-data/README.md](./scripts/import-data/README.md) for invocation details, required environment variables, and troubleshooting steps. Use `npm run import -- --help` to see all options.
 
 ## Tests
 
 - Playwright-based tests live under `test/`.
-- `npm run test:dev` runs against the dev server; `npm run test:build` builds first; `npm run test:dist` is used in CI.
+- `npm run test:dev` runs against the dev server; `npm run test:build` builds first and then tests; `npm run test:dist` test an existing build and is used in CI.
 - Install browsers with `npx playwright install --with-deps` if they are missing and keep fixtures in sync with layout changes.
 
 ## Contributing
 
-- Review the Contributor Guide in `./AGENTS.md` before starting work.
+- Review the Style Guide in [./AGENTS.md](./AGENTS.md) before starting work.
 - Fork the repository, create a feature branch, and open a pull request with passing `npm run checks` and relevant tests.
 
 ## Artificial Intelligence (AI) and Large Language Model (LLM) Disclosure
