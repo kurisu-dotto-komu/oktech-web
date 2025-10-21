@@ -1,11 +1,12 @@
-import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
+import sharp from "sharp";
 import { stringify as yamlStringify } from "yaml";
 
+import { config } from "./config";
 import { GitHubService } from "./github";
 import { logger } from "./logger";
-import { config } from "./config";
+import { pathExists, writeFileEnsured } from "./utils";
 
 // External JSON types for photos
 export type ExternalPhoto = {
@@ -33,6 +34,12 @@ export interface PhotoAssignment {
   photosByEvent: Record<string, ExternalPhoto[]>;
   unassignedCount: number;
   assignedCount: number;
+}
+
+export interface GalleryStats {
+  downloaded: number;
+  unchanged: number;
+  deleted: number;
 }
 
 /**
@@ -82,16 +89,13 @@ export class PhotoService {
   /**
    * Process gallery photos for an event
    */
-  async processGallery(
-    eventDir: string,
-    photos: ExternalPhoto[],
-  ): Promise<{ downloaded: number; unchanged: number; deleted: number }> {
-    const stats = { downloaded: 0, unchanged: 0, deleted: 0 };
+  async processGallery(eventDir: string, photos: ExternalPhoto[]): Promise<GalleryStats> {
+    const stats: GalleryStats = { downloaded: 0, unchanged: 0, deleted: 0 };
 
     if (photos.length === 0) {
       // Clean up empty gallery if it exists
       const galleryDir = path.join(eventDir, "gallery");
-      if (existsSync(galleryDir)) {
+      if (await pathExists(galleryDir)) {
         await this.cleanupGallery(galleryDir, [], stats);
       }
       return stats;
@@ -135,14 +139,14 @@ export class PhotoService {
   private async processPhoto(
     photo: ExternalPhoto,
     galleryDir: string,
-    stats: { downloaded: number; unchanged: number },
+    stats: Pick<GalleryStats, "downloaded" | "unchanged">,
   ): Promise<void> {
     const fileName = path.basename(photo.location!);
     const localPath = path.join(galleryDir, fileName);
 
     try {
       // Check if image already exists
-      if (existsSync(localPath)) {
+      if (await pathExists(localPath)) {
         const fileStats = await fs.stat(localPath);
         if (fileStats.size > 0) {
           stats.unchanged++;
@@ -177,9 +181,7 @@ export class PhotoService {
     const imageBuffer = await this.github.downloadFile(sourcePath);
 
     // Process with Sharp for consistent encoding and resizing
-    const sharp = await import("sharp");
-    const processedBuffer = await sharp
-      .default(imageBuffer)
+    const processedBuffer = await sharp(imageBuffer)
       .resize(config.features.maxImageWidth, null, {
         withoutEnlargement: true, // Don't upscale smaller images
         fit: "inside", // Preserve aspect ratio
@@ -187,7 +189,7 @@ export class PhotoService {
       .webp({ quality: config.features.imageQuality }) // Convert to WebP with consistent quality
       .toBuffer();
 
-    await fs.writeFile(localPath, processedBuffer);
+    await writeFileEnsured(localPath, processedBuffer);
   }
 
   /**
@@ -200,7 +202,7 @@ export class PhotoService {
       { lineWidth: 0, defaultKeyType: "PLAIN", defaultStringType: "QUOTE_DOUBLE" },
     );
 
-    await fs.writeFile(yamlPath, yamlContent);
+    await writeFileEnsured(yamlPath, yamlContent);
   }
 
   /**
@@ -209,9 +211,9 @@ export class PhotoService {
   private async cleanupGallery(
     galleryDir: string,
     validPhotos: ExternalPhoto[],
-    stats: { deleted: number },
+    stats: Pick<GalleryStats, "deleted">,
   ): Promise<void> {
-    if (!existsSync(galleryDir)) return;
+    if (!(await pathExists(galleryDir))) return;
 
     // Build set of expected files
     const expectedFiles = new Set<string>();

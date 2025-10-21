@@ -15,6 +15,7 @@ import {
   type ExternalVenue,
   VenueProcessor,
 } from "./processor";
+import { writeFileEnsured } from "./utils";
 
 /**
  * Format a number with optional suffix for display
@@ -42,6 +43,15 @@ export type ExternalVenueJSON = {
 
 // Combined type for the events.json that includes both groups and venues
 export type ExternalEventsWithVenuesJSON = ExternalEventJSON & ExternalVenueJSON;
+
+type ImportEventSummary = {
+  data: {
+    dateTime: Date;
+    duration?: number;
+  };
+  title: string;
+  id: string;
+};
 
 /**
  * Statistics tracking for import operations
@@ -350,7 +360,7 @@ export class Importer {
     let nextEventSlug: string | null = null;
 
     // Convert events for filtering
-    const allEvents = [];
+    const allEvents: ImportEventSummary[] = [];
     for (const groupData of Object.values(eventsJSON.groups)) {
       for (const event of groupData.events) {
         allEvents.push({
@@ -405,8 +415,7 @@ export class Importer {
     };
 
     const metaPath = path.join(config.paths.content, "meta.json");
-    await fs.mkdir(config.paths.content, { recursive: true });
-    await fs.writeFile(metaPath, JSON.stringify(metaData, null, 2));
+    await writeFileEnsured(metaPath, JSON.stringify(metaData, null, 2));
     logger.success(`Created ${metaPath}`);
   }
 }

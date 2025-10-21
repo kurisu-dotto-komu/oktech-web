@@ -1,10 +1,10 @@
-import fs from "node:fs/promises";
 import path from "node:path";
 // @ts-ignore
 import osmStaticMaps from "osm-static-maps";
 
 import { config, getMapProviderConfig } from "./config";
 import { logger } from "./logger";
+import { pathExists, writeFileEnsured } from "./utils";
 
 export interface MapOptions {
   lat: number;
@@ -54,11 +54,7 @@ export class MapService {
       // Generate the map
       const imageBuffer = await osmStaticMaps(mapOptions);
 
-      // Ensure directory exists
-      await fs.mkdir(path.dirname(outputPath), { recursive: true });
-
-      // Write the image
-      await fs.writeFile(outputPath, imageBuffer);
+      await writeFileEnsured(outputPath, imageBuffer);
 
       logger.success(`Generated ${theme} map → ${outputPath}`);
       return true;
@@ -84,53 +80,43 @@ export class MapService {
 
     // Check existing files
     const [lightExists, darkExists] = await Promise.all([
-      this.fileExists(lightPath),
-      this.fileExists(darkPath),
+      pathExists(lightPath),
+      pathExists(darkPath),
     ]);
 
-    // Determine which maps to generate based on overwrite parameter
-    const shouldGenerateLight = overwrite === true || overwrite === "light" || !lightExists;
-    const shouldGenerateDark = overwrite === true || overwrite === "dark" || !darkExists;
+    const themeRequests: Array<{
+      theme: "light" | "dark";
+      path: string;
+      exists: boolean;
+    }> = [
+      { theme: "light", path: lightPath, exists: lightExists },
+      { theme: "dark", path: darkPath, exists: darkExists },
+    ];
 
-    // Generate light map if needed
-    if (shouldGenerateLight) {
-      if (!lightExists || overwrite) {
-        const success = await this.generate(lightPath, { lat, lng, theme: "light" });
-        if (success) stats.generated++;
-        else stats.failed++;
-      } else {
-        stats.unchanged++;
-      }
-    } else if (lightExists) {
-      stats.unchanged++;
-    }
+    for (const request of themeRequests) {
+      const shouldGenerate = !request.exists || overwrite === true || overwrite === request.theme;
 
-    // Generate dark map if needed
-    if (shouldGenerateDark) {
-      if (!darkExists || overwrite) {
-        const success = await this.generate(darkPath, { lat, lng, theme: "dark" });
-        if (success) stats.generated++;
-        else stats.failed++;
-      } else {
-        stats.unchanged++;
+      if (!shouldGenerate) {
+        if (request.exists) {
+          stats.unchanged++;
+        }
+        continue;
       }
-    } else if (darkExists) {
-      stats.unchanged++;
+
+      const success = await this.generate(request.path, {
+        lat,
+        lng,
+        theme: request.theme,
+      });
+
+      if (success) {
+        stats.generated++;
+      } else {
+        stats.failed++;
+      }
     }
 
     return stats;
-  }
-
-  /**
-   * Check if a file exists
-   */
-  private async fileExists(filePath: string): Promise<boolean> {
-    try {
-      await fs.access(filePath);
-      return true;
-    } catch {
-      return false;
-    }
   }
 
   /**

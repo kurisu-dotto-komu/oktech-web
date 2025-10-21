@@ -10,7 +10,8 @@ import { config } from "./config";
 import { GitHubService } from "./github";
 import { logger } from "./logger";
 import { MapService } from "./maps";
-import { type ExternalPhoto, PhotoService } from "./photos";
+import { type ExternalPhoto, type GalleryStats, PhotoService } from "./photos";
+import { pathExists, writeFileEnsured } from "./utils";
 
 /**
  * Custom YAML engine for gray-matter that uses double quotes for strings
@@ -85,21 +86,10 @@ export abstract class ContentProcessor<T> {
    */
   async process(item: T): Promise<{ created: boolean; updated: boolean; unchanged: boolean }> {
     const contentPath = this.getContentPath(item);
-    const contentDir = path.dirname(contentPath);
-
-    // Ensure directory exists
-    await fs.mkdir(contentDir, { recursive: true });
-
-    // Get frontmatter and body
     const newFrontmatter = this.getFrontmatter(item);
     const body = this.getContentBody(item);
 
-    // Check if content already exists
-    if (existsSync(contentPath)) {
-      return await this.updateContent(contentPath, newFrontmatter, body);
-    } else {
-      return await this.createContent(contentPath, newFrontmatter, body);
-    }
+    return this.writeContent(contentPath, newFrontmatter, body);
   }
 
   /**
@@ -114,7 +104,7 @@ export abstract class ContentProcessor<T> {
       engines: { yaml: doubleQuoteYamlEngine },
     });
 
-    await fs.writeFile(contentPath, content);
+    await writeFileEnsured(contentPath, content);
     logger.success(`Created → ${contentPath}`);
 
     return { created: true, updated: false, unchanged: false };
@@ -141,12 +131,27 @@ export abstract class ContentProcessor<T> {
     const existingContent = await fs.readFile(contentPath, "utf-8");
 
     if (content !== existingContent) {
-      await fs.writeFile(contentPath, content);
+      await writeFileEnsured(contentPath, content);
       logger.info(`Updated → ${contentPath}`);
       return { created: false, updated: true, unchanged: false };
     } else {
       return { created: false, updated: false, unchanged: true };
     }
+  }
+
+  /**
+   * Persist content to disk, creating or updating as needed
+   */
+  protected async writeContent(
+    contentPath: string,
+    frontmatter: Record<string, unknown>,
+    body: string,
+  ): Promise<{ created: boolean; updated: boolean; unchanged: boolean }> {
+    if (existsSync(contentPath)) {
+      return this.updateContent(contentPath, frontmatter, body);
+    }
+
+    return this.createContent(contentPath, frontmatter, body);
   }
 }
 
@@ -227,7 +232,10 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
     return path.join(config.paths.events, slug, "event.md");
   }
 
-  getFrontmatter(event: ExternalEvent): Record<string, unknown> {
+  private buildEventFrontmatter(
+    event: ExternalEvent,
+    context: { group?: number | string; cover?: string } = {},
+  ): Record<string, unknown> {
     const date = new Date(event.time).toLocaleDateString("en-CA", {
       year: "numeric",
       month: "2-digit",
@@ -246,8 +254,14 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
       dateTime: `${date} ${time}`,
     };
 
+    const { cover, group } = context;
+
     if (event.duration) {
       frontmatter.duration = Math.round(event.duration / 60000);
+    }
+
+    if (cover) {
+      frontmatter.cover = cover;
     }
 
     if (event.topics && event.topics.length > 0) {
@@ -259,6 +273,13 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
     }
 
     frontmatter.meetupId = parseInt(event.id);
+    if (group !== undefined) {
+      const parsedGroup =
+        typeof group === "string" ? Number.parseInt(group, 10) : Math.trunc(group);
+      if (!Number.isNaN(parsedGroup)) {
+        frontmatter.group = parsedGroup;
+      }
+    }
     frontmatter.venue = parseInt(event.venue);
 
     if (event.howToFindUs) {
@@ -286,6 +307,10 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
     return frontmatter;
   }
 
+  getFrontmatter(event: ExternalEvent): Record<string, unknown> {
+    return this.buildEventFrontmatter(event);
+  }
+
   getContentBody(event: ExternalEvent): string {
     return `\n${event.description || ""}`;
   }
@@ -296,7 +321,12 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
   async processWithExtras(
     event: ExternalEvent,
     group: string,
-  ): Promise<{ created: boolean; updated: boolean; unchanged: boolean; galleryStats: any }> {
+  ): Promise<{
+    created: boolean;
+    updated: boolean;
+    unchanged: boolean;
+    galleryStats: GalleryStats;
+  }> {
     const slug = this.getSlug(event);
     const eventDir = path.join(config.paths.events, slug);
     const contentPath = this.getContentPath(event);
@@ -307,80 +337,13 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
       coverFilename = await this.processCoverImage(event, eventDir);
     }
 
-    // Build frontmatter in the correct order
-    const date = new Date(event.time).toLocaleDateString("en-CA", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      timeZone: "Asia/Tokyo",
+    const frontmatter = this.buildEventFrontmatter(event, {
+      group,
+      cover: coverFilename ? `./${coverFilename}` : undefined,
     });
-    const time = new Date(event.time).toLocaleTimeString("en-CA", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-      timeZone: "Asia/Tokyo",
-    });
-
-    const frontmatter: Record<string, unknown> = {
-      title: event.title.trim(),
-      dateTime: `${date} ${time}`,
-    };
-
-    if (event.duration) {
-      frontmatter.duration = Math.round(event.duration / 60000);
-    }
-
-    // Add cover after dateTime/duration
-    if (coverFilename) {
-      frontmatter.cover = `./${coverFilename}`;
-    }
-
-    if (event.topics && event.topics.length > 0) {
-      frontmatter.topics = event.topics;
-    }
-
-    if (typeof event.isCancelled === "boolean") {
-      frontmatter.isCancelled = event.isCancelled;
-    }
-
-    frontmatter.meetupId = parseInt(event.id);
-    frontmatter.group = parseInt(group);
-    frontmatter.venue = parseInt(event.venue);
-
-    if (event.howToFindUs) {
-      frontmatter.howToFindUs = event.howToFindUs;
-    }
-
-    // Handle links structure
-    if (event.links) {
-      // Validate known link types
-      const knownLinkTypes = ["linkedIn", "luma", "discord"];
-      for (const key of Object.keys(event.links)) {
-        if (key === "meetup") {
-          logger.warn(
-            `Event ${event.id} has "meetup" in links object. Meetup URLs should be generated from meetupId field instead.`,
-          );
-        } else if (!knownLinkTypes.includes(key)) {
-          logger.warn(
-            `Unknown link type "${key}" in event ${event.id}. Consider adding it to the presets.`,
-          );
-        }
-      }
-      frontmatter.links = event.links;
-    }
-
-    // Get body content
     const body = this.getContentBody(event);
 
-    // Create or update the content with modified frontmatter
-    await fs.mkdir(eventDir, { recursive: true });
-    let result: { created: boolean; updated: boolean; unchanged: boolean };
-
-    if (existsSync(contentPath)) {
-      result = await this.updateContent(contentPath, frontmatter, body);
-    } else {
-      result = await this.createContent(contentPath, frontmatter, body);
-    }
+    const result = await this.writeContent(contentPath, frontmatter, body);
 
     // Process photo gallery
     const eventPhotos = this.photos[event.id] || [];
@@ -402,23 +365,17 @@ export class EventProcessor extends ContentProcessor<ExternalEvent> {
     const coverLocalPath = path.join(eventDir, coverBasename);
 
     // Check if the cover image already exists
-    try {
-      await fs.access(coverLocalPath);
-      // logger.info(`Cover already exists → ${coverLocalPath}`);
+    const coverExists = await pathExists(coverLocalPath);
+    if (coverExists) {
       return coverBasename;
-    } catch {
-      // File doesn't exist, download it
     }
 
     try {
-      // Ensure directory exists before downloading
-      await fs.mkdir(eventDir, { recursive: true });
-
       // Build full URL for the image
       const imageBuffer = await this.github.downloadFile(event.image.location);
 
       // Write cover image as-is without transformation
-      await fs.writeFile(coverLocalPath, imageBuffer);
+      await writeFileEnsured(coverLocalPath, imageBuffer);
       logger.success(`Downloaded cover → ${coverLocalPath}`);
       return coverBasename;
     } catch (err) {
