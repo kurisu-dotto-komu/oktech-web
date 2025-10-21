@@ -98,6 +98,18 @@ export async function loadImageAsBase64(imagePath: string): Promise<string | nul
   }
 }
 
+function bufferToArrayBuffer(buffer: Buffer): ArrayBuffer {
+  const { buffer: underlying, byteOffset, byteLength } = buffer;
+
+  if (underlying instanceof ArrayBuffer) {
+    return underlying.slice(byteOffset, byteOffset + byteLength);
+  }
+
+  const arrayBuffer = new ArrayBuffer(byteLength);
+  new Uint8Array(arrayBuffer).set(buffer);
+  return arrayBuffer;
+}
+
 // ============================================================================
 // OG Image Generation
 // ============================================================================
@@ -131,7 +143,7 @@ export function createOGImageRoute(
       // Check cache (always check, even in development for testing)
       const cachedBuffer = await cache.getCachedImage(cacheKeyData);
       if (cachedBuffer) {
-        return new Response(cachedBuffer, {
+        return new Response(bufferToArrayBuffer(cachedBuffer), {
           headers: {
             "Content-Type": "image/png",
             "Cache-Control": cacheControl,
@@ -156,7 +168,7 @@ export function createOGImageRoute(
       await cache.cacheImage(cacheKeyData, pngBuffer);
 
       // Return the image
-      return new Response(pngBuffer, {
+      return new Response(bufferToArrayBuffer(pngBuffer), {
         headers: {
           "Content-Type": "image/png",
           "Cache-Control": cacheControl,

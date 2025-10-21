@@ -1,9 +1,6 @@
 ## Now
 
-- General Refactoring
 - Squash the git history of images.
-- Confirm Safari Fix for SVGs is working.
-- Update astro
 
 ## Presentation
 
