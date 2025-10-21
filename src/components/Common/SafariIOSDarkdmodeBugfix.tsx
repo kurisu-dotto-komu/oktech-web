@@ -38,14 +38,6 @@ function isIOSSafari(): boolean {
   return isIOS && isSafari;
 }
 
-function getInitialIsDark(needsPatch: boolean) {
-  if (!needsPatch || typeof window === "undefined" || typeof window.matchMedia !== "function") {
-    return false;
-  }
-
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
-}
-
 export default function SafariIOSDarkdmodeBugfix({
   imgSrc,
   Svg,
@@ -57,30 +49,62 @@ export default function SafariIOSDarkdmodeBugfix({
   "aria-hidden": ariaHidden,
   ...imgProps
 }: SafariIOSDarkdmodeBugfixProps) {
-  const needsPatch = useMemo(isIOSSafari, []);
-  const [isDark, setIsDark] = useState(() => getInitialIsDark(needsPatch));
+  // Track if component has mounted to avoid hydration mismatch
+  const [hasMounted, setHasMounted] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    if (!needsPatch || typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    // Only run after mount to avoid hydration issues
+    setHasMounted(true);
+
+    const shouldPatch = isIOSSafari();
+
+    if (!shouldPatch) {
       return;
     }
 
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleChange = () => {
-      setIsDark(mediaQuery.matches);
+    const updateTheme = () => {
+      // Check data-theme attribute first (set by ThemeToggle)
+      const dataTheme = document.documentElement.getAttribute("data-theme");
+      if (dataTheme === "dark" || dataTheme === "light") {
+        setIsDark(dataTheme === "dark");
+      } else if (typeof window.matchMedia === "function") {
+        // Fall back to OS preference if no explicit theme set
+        setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      }
     };
 
-    handleChange();
+    // Initialize state immediately
+    updateTheme();
 
-    // WebKit bug 199134 prevents prefers-color-scheme CSS inside an <img> SVG from applying.
-    // Community write-ups (e.g. https://mediaformat.org/2025/03/light-dark-limitations/) confirm
-    // the issue persists, so we mirror the behavior manually when embedded inline.
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [needsPatch]);
+    // Watch for theme changes via MutationObserver
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "attributes" && mutation.attributeName === "data-theme") {
+          updateTheme();
+        }
+      });
+    });
 
-  if (!needsPatch) {
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    // Also listen to media query changes as fallback
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", updateTheme);
+
+    return () => {
+      observer.disconnect();
+      mediaQuery.removeEventListener("change", updateTheme);
+    };
+  }, []);
+
+  // Before mount or if patch not needed, render the img tag (matches SSR)
+  const shouldUsePatch = hasMounted && isIOSSafari();
+
+  if (!shouldUsePatch) {
     return (
       <img
         src={imgSrc}
@@ -94,12 +118,16 @@ export default function SafariIOSDarkdmodeBugfix({
     );
   }
 
+  // After mount, if patch is needed, render the inline SVG with managed variables
   const variableStyle = variables.reduce<Record<string, string>>((acc, { name, light, dark }) => {
     acc[name] = isDark ? dark : light;
     return acc;
   }, {});
 
-  const svgStyle = { ...style, ...variableStyle } as SVGProps<SVGSVGElement>["style"];
+  const svgStyle = {
+    ...style,
+    ...variableStyle,
+  } as SVGProps<SVGSVGElement>["style"];
 
   return (
     <Svg

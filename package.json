@@ -35,7 +35,6 @@
     "@react-spring/web": "^10.0.3",
     "@resvg/resvg-js": "^2.6.2",
     "@rollup/plugin-yaml": "^4.1.2",
-    "@svgr/rollup": "^8.1.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.10",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
@@ -70,6 +69,7 @@
     "tw-to-css": "^0.0.12",
     "typescript": "^5.8.3",
     "unist-util-visit": "^5.0.0",
+    "vite-plugin-svgr": "^4.5.0",
     "yaml": "^2.8.0",
     "yet-another-react-lightbox": "^3.25.0"
   }

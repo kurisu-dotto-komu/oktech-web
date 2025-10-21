@@ -1,10 +1,10 @@
 // @ts-check
 import react from "@astrojs/react";
 import yaml from "@rollup/plugin-yaml";
-import svgr from "@svgr/rollup";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { visualizer } from "rollup-plugin-visualizer";
+import svgr from "vite-plugin-svgr";
 
 import { remarkDescription, remarkReadingTime } from "./src/utils/remarkPlugins";
 

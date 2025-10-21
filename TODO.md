@@ -1,8 +1,9 @@
 ## Now
 
 - General Refactoring
-- Refactor rawJson usage in the import script.
-- Script to Squash/Purge the git history of images.
+- Squash the git history of images.
+- Confirm Safari Fix for SVGs is working.
+- Update astro
 
 ## Presentation
 
